@@ -1,0 +1,67 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&8➣ Vote Time'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 4
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - '&8» &eYou currently don''t have'
+      - '&8» &6permission to do this'
+      - ''
+  ######################
+  #+                  +#
+  #       ITEMS        #
+  #+                  +#
+  ######################
+day:
+  ACTION: 'vote:%day%'
+  NAME: '&eDAY'
+  DESCRIPTION:
+    - '&7➲ &e&lDay'
+  ICON-ITEM: 54
+  DATA-VALUE: 0
+  POSITION-X: 3
+  POSITION-Y: 2
+sunset:
+  ACTION: 'vote:%sunset%'
+  NAME: '&6SUNSET'
+  DESCRIPTION:
+    - '&7➲ &6&lSunset'
+  ICON-ITEM: 54
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 2
+night:
+  ACTION: 'vote:%night%'
+  NAME: '&9NIGHT'
+  DESCRIPTION:
+    - '&7➲ &9&lNight'
+  ICON-ITEM: 54
+  DATA-VALUE: 0
+  POSITION-X: 7
+  POSITION-Y: 2
+back:
+  ACTION: 'open:vote.yml'
+  NAME: '&aBack'
+  DESCRIPTION:
+    - ''
+  ICON-ITEM: 368
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 4

@@ -1,0 +1,11 @@
+name: SkyWars
+version: ${project.version}
+main: com.dazzhub.skywars.Main
+api-version: 1.13
+authors: [DazzHub]
+commands:
+  skywars:
+    aliases: ['sw']
+  join:
+  leave:
+    aliases: ['quit', 'salir']

@@ -1,0 +1,237 @@
+Messages:
+  inGame: '&c&l✘ &fArena in game'
+  Full: '&c&l✘ &fArena is full'
+  alredyInGame: '&c&l✘ &fYou are already at game'
+  JoinMessage: '&8» &9%player% &fhas joined &8(&2%playing%&8/&2%max%&8)&f!'
+  LeaveMessage: '&8» &9%player%&f has quit!'
+  JoinSpectator: '&8» &fYou joined spectator mode'
+  LeaveSpectator: '&8» &fYou left spectator mode'
+  Arena-Not-Available: '&c&l✘ &fYou can''t join the arena now'
+  NoUseChat: '&e&l⚠&e You can''t chat until the game starts'
+  EndTime: '&e&l⚠&e Game time over'
+  item-deny: '&e&l⚠&e You do not have permission'
+  menu-deny: '&e&l⚠&e You do not have permission'
+  Kit:
+    Received: '&8» &fThe kit %kit% was received'
+    Selected: '&a&l✔&f You choose the kit: &9%kit%'
+    Buy: '&a&l✔&f You bought the kit: &9%kit%'
+    InsufficientCoins: '&c&l✘ &fYou need %coins% coins, to be able to buy it'
+  JoinTitle:
+    Info: '&b&lSkyWars;&fModo %mode%'#TITLE;SUBTITLE
+    Fade: 10
+    Stay: 40
+    Out: 10
+  Sounds:
+    Cancelled: 'BLOCK_NOTE_BLOCK_PLING'
+    Starting:
+      5: 'UI_BUTTON_CLICK'#SOUNDS 1.15
+      4: 'UI_BUTTON_CLICK'
+      3: 'UI_BUTTON_CLICK'
+      2: 'UI_BUTTON_CLICK'
+      1: 'UI_BUTTON_CLICK'
+  Timer:
+    Cancelled: '&c&l✘ &fNot enought players.'
+    Starting:
+      15: '&c&l➥ &fThe game starts in &9%seconds%&f seconds!'
+      10: '&c&l➥ &fThe game starts in &9%seconds%&f seconds!'
+      5: '&c&l➥ &fThe game starts in &9%seconds%&f seconds!'
+      4: '&c&l➥ &fThe game starts in &9%seconds%&f seconds!'
+      3: '&c&l➥ &fThe game starts in &9%seconds%&f seconds!'
+      2: '&c&l➥ &fThe game starts in &9%seconds%&f seconds!'
+      1: '&c&l➥ &fThe game starts in &9%seconds%&f seconds!'
+  Title:
+    Fade: 10
+    Stay: 40
+    Out: 10
+    Starting:
+      15: '&a%seconds%&e seconds;&cFor start'
+      10: '&e%seconds% seconds;&cChoose a kit!'
+      5: '&c%seconds%;&ePrepare to fight!'
+      4: '&c%seconds%;&ePrepare to fight!'
+      3: '&c%seconds%;&ePrepare to fight!'
+      2: '&c%seconds%;&ePrepare to fight!'
+      1: '&c%seconds%;&ePrepare to fight!'
+  InfoGame:
+    - '%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '%center%&9&lDazzWars'
+    - ''
+    - '%center%&fChest type &8» &a%chest%'
+    - '%center%&fType of time &8» &6%time%'
+    - '%center%&fKind of hearts &8» &e%heart%'
+    - '%center%&fType of Events &8» &9%event%'
+    - '%center%&fType of scenario &8» &d%scenario%'
+    - '%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '&6Teaming is not allowed on Solo mode!'
+  LuckTitle:
+    Fade: 10
+    Stay: 40
+    Out: 10
+    Info: '&cTo fight!;&eLuck ㋡'
+  WinnerTitle:
+    Fade: 10
+    Stay: 40
+    Out: 10
+    Info: '&e&lVICTORY!;&7You were the last man standing!'
+  RefillTitle:
+    ChatAlert: '&e&l⚠&f Alert, all chests have been &brefill&f!'
+    Info: '&9&lREFILL CHESTS;&e㋡'#TITLE;SUBTITLE
+    Fade: 10
+    Stay: 40
+    Out: 10
+  TypeVote:
+    VoteFor: '&8» &f%player% voted for &a%vote% (%votes%)'
+    AlreadyVote: '&8» &fYou already voted'
+    Chest:
+      basic: 'Basic'
+      normal: 'Normal'
+      op: 'OP'
+    Time:
+      day: 'Day'
+      sunset: 'Sunset'
+      night: 'Night'
+    Heart:
+      10h: '10 ❤'
+      20h: '20 ❤'
+      30h: '30 ❤'
+    TypeName:
+      CHEST: 'Chest'
+      TIME: 'Time'
+      HEART: 'Heart'
+    none: 'None'
+  ScoreBoard:
+    Waiting: 'Waiting'
+    Refill: 'Refill: %time%'
+    EndGame: 'End of game'
+    None: 'None'
+  MenuArena:
+    TITLE: '&8&l&nArenas'
+    ROWS: 6
+    FIREWORK:
+      NAME: '&e%arena%'
+      DESCRIPTION:
+        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+        - ''
+        - '&fClick to join &e%arena%'
+        - '&fState &8» &6%state%'
+        - '&fMode &8» &a%mode%'
+        - '&fPlayers &8» &a%online%/%maxPlayers%'
+        - ''
+        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    CustomItem:
+      Use: false
+      WAITTING:
+        ICON-ITEM: 95
+        DATA-VALUE: 5
+        NAME: '&l&n%arena%'
+        DESCRIPTION:
+          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+          - ''
+          - '&fClick to join &e%arena%'
+          - '&fState &8» &6%state%'
+          - '&fMode &8» &a%mode%'
+          - '&fPlayers &8» &a%online%/%maxPlayers%'
+          - ''
+          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+      STARTING:
+        ICON-ITEM: 95
+        DATA-VALUE: 4
+        NAME: '&l&n%arena%'
+        DESCRIPTION:
+          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+          - ''
+          - '&fClick to join &e%arena%'
+          - '&fState &8» &6%state%'
+          - '&fMode &8» &a%mode%'
+          - '&fPlayers &8» &a%online%/%maxPlayers%'
+          - ''
+          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+      INGAME:
+        ICON-ITEM: 95
+        DATA-VALUE: 14
+        NAME: '&l&n%arena%'
+        DESCRIPTION:
+          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+          - ''
+          - '&fClick to join &e%arena%'
+          - '&fState &8» &6%state%'
+          - '&fMode &8» &a%mode%'
+          - '&fPlayers &8» &a%online%/%maxPlayers%'
+          - ''
+          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+      RESTARTING:
+        ICON-ITEM: 95
+        DATA-VALUE: 11
+        NAME: '&l&n%arena%'
+        DESCRIPTION:
+          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+          - ''
+          - '&fClick to join &e%arena%'
+          - '&fState &8» &6%state%'
+          - '&fMode &8» &a%mode%'
+          - '&fPlayers &8» &a%online%/%maxPlayers%'
+          - ''
+          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    Close:
+      ICON-ITEM: 'ENDER_PEARL'
+      DATA-VALUE: 0
+      NAME: '&eCerrar'
+      DESCRIPTION:
+        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+        - ''
+        - '&fClick to &eclose'
+        - ''
+        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+      POSITION-X: 5
+      POSITION-Y: 6
+  MenuSpectator:
+    TITLE: '&8&l&nRestantes'
+    ROWS: 4
+    Player:
+      NAME: '&6&n%player%'
+      DESCRIPTION:
+        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+        - ''
+        - '&7click to spectate!'
+        - ''
+        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    Close:
+      NAME: '&eCerrar'
+      ICON-ITEM: 'ENDER_PEARL'
+      DATA-VALUE: 0
+      DESCRIPTION:
+        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+        - ''
+        - '&fClick to &eclose'
+        - ''
+        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+      POSITION-X: 5
+      POSITION-Y: 3
+  Cmd:
+    error: '&c&l➥ &cError command'
+    sw:
+      - '%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-'
+      - ''
+      - '%center%&7/join <arena>/<solo/team> &8| &eJoin to arena'
+      - '%center%&7/leave &8| &eExit to arena'
+      - ''
+      - '%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-'
+    swadmin:
+      - '%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-'
+      - ''
+      - '%center%&7/sw setlobby &8| &eSet lobby'
+      - '%center%&7/sw world &8| &eEdit world before create arena'
+      - '%center%&7/sw create &8| &eCreate arena'
+      - '%center%&7/sw addspawn &8| &eAdd spawn points'
+      - '%center%&7/sw setmin &8| &eSet min player to start'
+      - '%center%&7/sw setmax &8| &eSet max player in arena'
+      - '%center%&7/sw setspectator &8| &eSet spectator spawn'
+      - '%center%&7/sw coins <arena> &8| &eManager coins'
+      - '%center%&7/sw wandc &8| &eMark corners for create cages'
+      - '%center%&7/sw addcage &8| &eAdd cages'
+      - '%center%&7/sw addkit &8| &eAdd kits from inventory'
+      - '%center%&7/sw addhologram &8| &eAdd holograms'
+      - ''
+      - '%center%&7/sw join <arena> &8| &eEntra a una Arena'
+      - '%center%&7/sw leave &8| &eSalir de la Arena'
+      - ''
+      - '%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-'

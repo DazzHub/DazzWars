@@ -1,0 +1,23 @@
+kitsolo:
+  - Default
+kitteam:
+  - Default
+menu-settings:
+  # name - appears as the title - REQUIRED
+  name: '&8➣ Kits | {type}'
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: 'kit{type}'
+templateKit:
+  NAME: '&6&l%name%'
+  DESCRIPTION:
+    - '&7➲ &ePrice: %cost%'
+  DESCRIPTION-PURCHASED:
+    - ''
+    - '&7➲ &eOBTAINED'
+    - ''
+  DESCRIPTION-SELECTED:
+    - ''
+    - '&7➲ &eSELECTED'
+    - ''

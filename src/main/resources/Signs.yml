@@ -1,0 +1,34 @@
+Format:
+  - '&lSkyWars'
+  - '%status%'
+  - '&nMap: %map%'
+  - '%online%/%max%'
+Searching:
+  - '&l----------'
+  - '&fSEARCHING'
+  - '&fGAMES'
+  - '&l----------'
+Status:
+  Waiting:
+    material: 'STAINED_GLASS' # if using +13 ignore id
+    id: 5
+    msg: '&aWaiting'
+  Starting:
+    material: 'STAINED_GLASS'
+    id: 4
+    msg: '&6Starting'
+  InGame:
+    material: 'STAINED_GLASS'
+    id: 14
+    msg: '&4In Game'
+  Restarting:
+    material: 'STAINED_GLASS'
+    id: 11
+    msg: '&cRestarting'
+  Full:
+    material: 'STAINED_GLASS'
+    id: 10
+    msg: '&5Full'
+  Searching:
+    material: 'STAINED_GLASS'
+    id: 0

@@ -1,0 +1,34 @@
+#AtEntity - Clicks - ByDamage
+play:
+  ACTION: 'arenas'
+  NAME: '&6&lPLAY &7(Right-Click)'
+  DESCRIPTION:
+    - ''
+    - '&7Right-click to open menu'
+    - ''
+  INTERACT: 'Clicks'
+  ICON-ITEM: 345
+  DATA-VALUE: 0
+  SLOT: 0
+autojoin:
+  ACTION: 'autojoin'
+  NAME: '&6&lAUTOJOIN &7(Right-Click)'
+  DESCRIPTION:
+    - ''
+    - '&7Right-click to open menu'
+    - ''
+  INTERACT: 'Clicks'
+  ICON-ITEM: 339
+  DATA-VALUE: 0
+  SLOT: 1
+buy:
+  ACTION: 'open:shop.yml'
+  NAME: '&a&lSHOP &7(Right-Click)'
+  DESCRIPTION:
+    - ''
+    - '&7Right-click to open menu'
+    - ''
+  INTERACT: 'Clicks'
+  ICON-ITEM: 388
+  DATA-VALUE: 0
+  SLOT: 2

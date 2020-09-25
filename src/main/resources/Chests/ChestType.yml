@@ -1,0 +1,6 @@
+maxItemChest: 10
+Types:
+  - 'BASIC'
+  - 'NORMAL'
+  - 'OP'
+  - 'CENTER'

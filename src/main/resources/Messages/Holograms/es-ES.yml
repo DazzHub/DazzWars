@@ -1,0 +1,26 @@
+#Compatible with any variable of the plugin and placeholderapi
+TypeHolograms:
+  STATS:
+    - '&8» &f%player%'
+    - ''
+  TOPKILLSSOLO:
+    - 'Top Kills:'
+    - '%topkillssolo%'
+  TOPKILLSTEAN:
+    - 'Top Kills:'
+    - '%topkillsteam%'
+  TOPDEATHSSOLO:
+    - 'Top Kills:'
+    - '%topdeathssolo%'
+  TOPDEATHSTEAN:
+    - 'Top Kills:'
+    - '%topdeathsteam%'
+  TOPWINSSOLO:
+    - 'Top Kills:'
+    - '%topwinssolo%'
+  TOPWINSTEAN:
+    - 'Top Kills:'
+    - '%topwinsteam%'
+format:
+  top: '&6{0} &8&l➠ &a{1}'
+  error: '-/-'

@@ -1,0 +1,63 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&8➣ Vote menu'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+  
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+  
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - '&8» &eYou currently don''t have'
+      - '&8» &6permission to do this'
+      - ''
+chests:
+  ACTION: 'open: vote-chest.yml'
+  NAME: '&e&lCHESTS'
+  DESCRIPTION:
+    - '&7➲ &2&lVIPS&f ACCESS ONLY'
+  ICON-ITEM: 130
+  DATA-VALUE: 0
+  POSITION-X: 3
+  POSITION-Y: 2
+heart:
+  ACTION: 'open: vote-heart.yml'
+  NAME: '&4&lHEART'
+  DESCRIPTION:
+    - '&7➲ &2&lVIPS&f ACCESS ONLY'
+  ICON-ITEM: 260
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 2
+time:
+  ACTION: 'open: vote-time.yml'
+  NAME: '&6&lTIME'
+  DESCRIPTION:
+    - '&7➲ &2&lVIPS&f ACCESS ONLY'
+  ICON-ITEM: 175
+  DATA-VALUE: 0
+  POSITION-X: 7
+  POSITION-Y: 2
+close:
+  ACTION: 'close'
+  NAME: '&cClose'
+  DESCRIPTION:
+    - ''
+  ICON-ITEM: 368
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 4
+

@@ -1,0 +1,44 @@
+MySQL:
+  enabled: false
+  hostname: "127.0.0.1"
+  port: 3306
+  database: "SkyWars"
+  username: "root"
+  password: ""
+#Upon entering, it will show you an update announcement
+checkVersion: true
+#Join player save dates in mysql/sql
+Default:
+  Cage:
+    Solo: 'Default'
+    Team: 'Default'
+  WinEffect:
+    Solo: 'Default'
+    Team: 'Default'
+  KillEffect:
+    Solo: 'Default'
+    Team: 'Default'
+  KillSound:
+    Solo: 'Default'
+    Team: 'Default'
+  Trail:
+    Solo: 'Default'
+    Team: 'Default'
+  Kit:
+    Solo: 'Default'
+    Team: 'Default'
+  Lang: 'en-EN' #Default language en-EN, es-ES
+Coins:
+  DeathSolo: 8
+  DeathTeam: 8
+
+  FirstKillSolo: 30
+  FirstKillTeam: 30
+
+  KillSolo: 16
+  KillTeam: 16
+
+  WinSolo: 50
+  WinTeam: 50
+ReTeleportCage: 2
+Holograms:

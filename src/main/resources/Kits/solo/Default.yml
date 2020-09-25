@@ -1,0 +1,51 @@
+ITEM:
+  PRICE: 0
+  ACTION: 'kit: %name%'
+  NAME: '&6&l%name%'
+  DESCRIPTION:
+    - ''
+    - '&7➲ &eEspada De Madera'
+    - '&7➲ &eArco'
+    - '&7➲ &e5 Flechas'
+    - ''
+    - '&7➲ &eCasco De Cuero'
+    - '&7➲ &eBotas De Cuero'
+    - ''
+    - '&7➲ &ePrice: %cost%'
+  DESCRIPTION-PURCHASED:
+    - ''
+    - '&7➲ &eOBTAINED'
+    - ''
+  DESCRIPTION-SELECTED:
+    - ''
+    - '&7➲ &eSELECTED'
+    - ''
+  ICON-ITEM: 261
+  DATA-VALUE: 0
+  POSITION-X: 2
+  POSITION-Y: 2
+KIT:
+  Inventory:
+    '0':
+      ==: org.bukkit.inventory.ItemStack
+      type: WOOD_SWORD
+    '1':
+      ==: org.bukkit.inventory.ItemStack
+      type: BOW
+    '17':
+      ==: org.bukkit.inventory.ItemStack
+      type: ARROW
+      amount: 5
+  Armor:
+    - ==: org.bukkit.inventory.ItemStack
+      type: LEATHER_BOOTS
+    - ==: org.bukkit.inventory.ItemStack
+      type: AIR
+      damage: -1
+      amount: 0
+    - ==: org.bukkit.inventory.ItemStack
+      type: AIR
+      damage: -1
+      amount: 0
+    - ==: org.bukkit.inventory.ItemStack
+      type: LEATHER_HELMET

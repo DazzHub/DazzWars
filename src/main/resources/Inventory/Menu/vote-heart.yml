@@ -1,0 +1,68 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&8➣ Vote Heart'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 4
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+  
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - '&8» &eYou currently don''t have'
+      - '&8» &6permission to do this'
+      - ''
+  ######################
+  #+                  +#
+  #       ITEMS        #
+  #+                  +#
+  ######################
+
+10heart:
+  ACTION: 'vote:%heart10%'
+  NAME: '&410 Heart'
+  DESCRIPTION:
+    - '&7➲  &4&l10 Heart'
+  ICON-ITEM: 260
+  DATA-VALUE: 0
+  POSITION-X: 3
+  POSITION-Y: 2
+20heart:
+  ACTION: 'vote:%heart20%'
+  NAME: '&420 Heart'
+  DESCRIPTION:
+    - '&7➲  &4&l20 Heart'
+  ICON-ITEM: 260
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 2
+30heart:
+  ACTION: 'vote:%heart30%'
+  NAME: '&430 Heart'
+  DESCRIPTION:
+    - '&7➲  &4&l30 Heart'
+  ICON-ITEM: 260
+  DATA-VALUE: 0
+  POSITION-X: 7
+  POSITION-Y: 2
+back:
+  ACTION: 'open:vote.yml'
+  NAME: '&aBack'
+  DESCRIPTION:
+    - ''
+  ICON-ITEM: 368
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 4
