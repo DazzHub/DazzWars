@@ -6,7 +6,7 @@ MySQL:
   username: "root"
   password: ""
 #Upon entering, it will show you an update announcement
-checkVersion: true
+checkVersion: false
 #Join player save dates in mysql/sql
 Default:
   Cage:

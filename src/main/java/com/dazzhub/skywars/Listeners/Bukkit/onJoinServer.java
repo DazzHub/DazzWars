@@ -23,18 +23,23 @@ public class onJoinServer implements Listener {
     public void Join(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        main.getServer().getScheduler().runTaskAsynchronously(main, () -> main.getPlayerDB().loadPlayer(p.getUniqueId()));
+        main.getServer().getScheduler().runTaskAsynchronously(main, () -> {
+            main.getPlayerDB().loadPlayer(p.getUniqueId());
 
-        if (main.getLobbyManager().getLobby() != null){
-            p.teleport(main.getLobbyManager().getLobby());
-        }
+            Bukkit.getScheduler().runTask(main, () -> {
 
-        main.getItemManager().giveItems(p, "lobby", true);
+                if (main.getLobbyManager().getLobby() != null){
+                    p.teleport(main.getLobbyManager().getLobby());
+                }
 
-        Bukkit.getScheduler().runTaskLater(main, () -> {
-            main.getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY);
-            main.getHologramsManager().loadHologram(p);
-        },5);
+                main.getItemManager().giveItems(p, "lobby", true);
+
+                main.getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY);
+                main.getHologramsManager().loadHologram(p);
+
+            });
+        });
+
 
         if (p.hasPermission("dazzwars.admin") && main.getSettings().getBoolean("checkVersion")) main.checkVersionPlayer(p);
         if (p.getName().equals("DazzHub")) p.sendMessage(c("&d&l➠ &fDazzWars use"));
