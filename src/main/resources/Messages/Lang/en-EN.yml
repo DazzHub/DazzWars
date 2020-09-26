@@ -16,6 +16,10 @@ Messages:
     Selected: '&a&l✔&f You choose the kit: &9%kit%'
     Buy: '&a&l✔&f You bought the kit: &9%kit%'
     InsufficientCoins: '&c&l✘ &fYou need %coins% coins, to be able to buy it'
+  Cage:
+    Selected: '&a&l✔&f You choose the cage: &9%cage%'
+    Buy: '&a&l✔&f You bought the cage: &9%cage%'
+    InsufficientCoins: '&c&l✘ &fYou need %coins% coins, to be able to buy it'
   JoinTitle:
     Info: '&b&lSkyWars;&fModo %mode%'#TITLE;SUBTITLE
     Fade: 10

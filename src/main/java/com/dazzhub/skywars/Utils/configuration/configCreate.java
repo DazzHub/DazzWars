@@ -23,12 +23,4 @@ public class configCreate
             p.saveResource(configname + ".yml", false);
         }
     }
-    //s
-    public void setupSchematic(Plugin p, String configname) {
-        File pluginDir = p.getDataFolder();
-        this.configFile = new File(pluginDir, configname + ".schematic");
-        if (!this.configFile.exists()) {
-            p.saveResource(configname + ".schematic", false);
-        }
-    }
 }

@@ -34,9 +34,6 @@ public class IKitManager {
     private HashMap<String, IKit> kitSoloHashMap;
     private HashMap<String, IKit> kitTeamHashMap;
 
-    private IMenu KitMenuSolo;
-    private IMenu KitMenuTeam;
-
     public IKitManager(Main main) {
         this.main = main;
         this.kitSoloHashMap = new HashMap<>();
@@ -54,13 +51,8 @@ public class IKitManager {
         kitsololist.forEach(this::importKitSolo);
         kitteamlist.forEach(this::importKitTeam);
 
-        if (!kitsololist.isEmpty()){
-            createMenuSolo();
-        }
-
-        if (!kitteamlist.isEmpty()){
-            createMenuTeam();
-        }
+        createMenuSolo();
+        createMenuTeam();
 
         Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eLoaded kits solo: &a" + kitSoloHashMap.size()));
         Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eLoaded kits team: &a" + kitTeamHashMap.size()));
@@ -287,7 +279,6 @@ public class IKitManager {
         }
 
         IMenu iMenu = new IMenu(menuName, menuRows, menuCommand, items);
-        KitMenuSolo = iMenu;
 
         main.getMenuManager().getMenuFileName().put("kitsolo", iMenu);
         main.getMenuManager().getMenuTileName().put(menuName, iMenu);
@@ -314,7 +305,6 @@ public class IKitManager {
         }
 
         IMenu iMenu = new IMenu(menuName, menuRows, menuCommand, items);
-        KitMenuTeam = iMenu;
 
         main.getMenuManager().getMenuFileName().put("kitteam", iMenu);
         main.getMenuManager().getMenuTileName().put(menuName, iMenu);

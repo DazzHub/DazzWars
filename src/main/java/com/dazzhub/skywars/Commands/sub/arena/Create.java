@@ -36,7 +36,7 @@ public class Create implements subCommand {
             main.getArenaManager().createArena(p, nameArena, nameWorld);
 
         } else {
-            this.help(sender);
+            sender.sendMessage(this.help(sender));
         }
 
     }

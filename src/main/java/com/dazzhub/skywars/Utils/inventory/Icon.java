@@ -2,14 +2,11 @@ package com.dazzhub.skywars.Utils.inventory;
 
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Utils.inventory.actions.OptionClickEvent;
 import com.dazzhub.skywars.Utils.xseries.XMaterial;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import lombok.Getter;
-import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -35,10 +32,17 @@ public class Icon {
     private String permissionView;
     private ItemStack permissionViewItem;
 
-    private int price;
+    /* KIT */
+    private int priceKit;
     private String kitName;
-    private List<String> lorePurchased;
-    private List<String> loreSelected;
+    private List<String> lorePurchasedKit;
+    private List<String> loreSelectedKit;
+
+    /* CAGE */
+    private int priceCage;
+    private String CageName;
+    private List<String> lorePurchasedCage;
+    private List<String> loreSelectedCage;
 
     public Icon(XMaterial m, int amount, short dataValue){
         item = new ItemStack(m.parseItem().getType(), amount != 0 ? amount : 1, dataValue);
@@ -46,10 +50,17 @@ public class Icon {
 
         permissionViewItem = null;
 
-        price = 0;
+        priceKit = 0;
         kitName = "";
-        lorePurchased = null;
-        loreSelected = null;
+        lorePurchasedKit = null;
+        loreSelectedKit = null;
+
+        //////////////////////
+
+        priceCage = 0;
+        CageName = "";
+        lorePurchasedCage = null;
+        loreSelectedCage = null;
     }
 
     public Icon addDamage(short damage) {
@@ -80,10 +91,18 @@ public class Icon {
     }
 
     public Icon setKit(Integer price, String kitName, List<String> lorePurchased, List<String> loreSelected){
-        this.price = price;
-        this.lorePurchased = lorePurchased;
-        this.loreSelected = loreSelected;
+        this.priceKit = price;
+        this.lorePurchasedKit = lorePurchased;
+        this.loreSelectedKit = loreSelected;
         this.kitName = kitName;
+        return this;
+    }
+
+    public Icon setCage(int price, String name, List<String> lorePurchased, List<String> loreSelected) {
+        this.priceCage = price;
+        this.lorePurchasedCage = lorePurchased;
+        this.loreSelectedCage = loreSelected;
+        this.CageName = name;
         return this;
     }
 
@@ -114,7 +133,8 @@ public class Icon {
         im.setDisplayName(c(im.getDisplayName())
                 .replaceAll("%player%", p.getName())
                 .replaceAll("%name%", kitName)
-                .replaceAll("%price%", String.valueOf(price)));
+                .replaceAll("%cage%", CageName)
+                .replaceAll("%price%", String.valueOf(priceCage)));
 
         item.setItemMeta(im);
     }
@@ -125,7 +145,9 @@ public class Icon {
         for (String s : im.getLore()) {
             list.add(c(s)
                     .replaceAll("%player%", p.getName())
-                    .replaceAll("%cost%", String.valueOf(price))
+                    .replaceAll("%cost%", String.valueOf(priceKit))
+                    .replaceAll("%cage%", CageName)
+                    .replaceAll("%price%", String.valueOf(priceCage))
             );
         }
 
@@ -133,10 +155,13 @@ public class Icon {
         item.setItemMeta(im);
     }
 
-    private void replaceLorePurchased(Player p) {
+    private void replaceLorePurchasedKit(Player p) {
         List<String> list = new ArrayList<>();
-        for (String s : lorePurchased) {
-            String replaceAll = c(s).replaceAll("%player%", p.getName()).replaceAll("%cost%", String.valueOf(price));
+        for (String s : lorePurchasedKit) {
+            String replaceAll = c(s)
+                    .replaceAll("%player%", p.getName())
+                    .replaceAll("%name%", kitName)
+                    .replaceAll("%cost%", String.valueOf(priceKit));
             list.add(replaceAll);
         }
 
@@ -144,8 +169,38 @@ public class Icon {
         item.setItemMeta(im);
     }
 
-    private void replaceLoreSelected(Player p) {
-        List<String> list = loreSelected.stream().map(s -> c(s).replaceAll("%player%", p.getName()).replaceAll("%cost%", String.valueOf(price))).collect(Collectors.toList());
+    private void replaceLoreSelectedKit(Player p) {
+        List<String> list = loreSelectedKit.stream().map(s -> c(s)
+                .replaceAll("%player%", p.getName())
+                .replaceAll("%name%", kitName)
+                .replaceAll("%cost%", String.valueOf(priceKit)))
+                .collect(Collectors.toList());
+
+        im.setLore(list);
+        item.setItemMeta(im);
+    }
+
+    private void replaceLorePurchasedCage(Player p) {
+        List<String> list = new ArrayList<>();
+        for (String s : lorePurchasedCage) {
+            String replaceAll = c(s)
+                    .replaceAll("%player%", p.getName())
+                    .replaceAll("%cage%", CageName)
+                    .replaceAll("%price%", String.valueOf(priceCage)
+            );
+            list.add(replaceAll);
+        }
+
+        im.setLore(list);
+        item.setItemMeta(im);
+    }
+
+    private void replaceLoreSelectedCage(Player p) {
+        List<String> list = loreSelectedCage.stream().map(s -> c(s)
+                .replaceAll("%player%", p.getName())
+                .replaceAll("%cage%", CageName)
+                .replaceAll("%price%", String.valueOf(priceCage)))
+        .collect(Collectors.toList());
 
         im.setLore(list);
         item.setItemMeta(im);
@@ -162,26 +217,45 @@ public class Icon {
             return permissionViewItem;
         }
 
+        if (im.getLore() != null) {
+            this.replaceLore(p);
+        }
+
         String invName = p.getOpenInventory().getTitle();
         String invKit = "§r"+Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(),"Kits/kits").getString("menu-settings.name").replace("&","§");
+        String invCage = "§r"+Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(),"Cages/cages").getString("menu-settings.name").replace("&","§");
 
-        if (lorePurchased != null && invName.equals(invKit.replace("{type}", "Solo")) && gamePlayer.getKitSoloList().contains(kitName)){
-            this.replaceLorePurchased(p);
-        } else if (lorePurchased != null && invName.equals(invKit.replace("{type}", "Team")) &&  gamePlayer.getKitTeamList().contains(kitName)){
-            this.replaceLorePurchased(p);
-        } else {
-            if (im.getLore() != null){
-                this.replaceLore(p);
-            }
+        if (lorePurchasedKit != null && invName.equals(invKit.replace("{type}", "Solo")) && gamePlayer.getKitSoloList().contains(kitName)){
+            this.replaceLorePurchasedKit(p);
+        } else if (lorePurchasedKit != null && invName.equals(invKit.replace("{type}", "Team")) &&  gamePlayer.getKitTeamList().contains(kitName)){
+            this.replaceLorePurchasedKit(p);
         }
 
         if (kitName != null && !kitName.isEmpty()) {
             if (gamePlayer.getKitSolo().equalsIgnoreCase(kitName) && invName.equals(invKit.replace("{type}", "Solo"))) {
-                this.replaceLoreSelected(p);
+                this.replaceLoreSelectedKit(p);
                 item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
             } else if (gamePlayer.getKitTeam().equalsIgnoreCase(kitName) && invName.equals(invKit.replace("{type}", "Team"))){
-                this.replaceLoreSelected(p);
+                this.replaceLoreSelectedKit(p);
                 item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+            }
+        }
+
+        if (lorePurchasedCage != null && invName.equals(invCage.replace("{type}", "Solo")) && gamePlayer.getCagesSoloList().contains(CageName)){
+            this.replaceLorePurchasedCage(p);
+        } else if (lorePurchasedCage != null && invName.equals(invCage.replace("{type}", "Team")) && gamePlayer.getCagesTeamList().contains(CageName)){
+            this.replaceLorePurchasedCage(p);
+        }
+
+        if (CageName != null && !CageName.isEmpty()) {
+            if (gamePlayer.getCageSolo().equalsIgnoreCase(CageName) && invName.equals(invCage.replace("{type}", "Solo"))) {
+                this.replaceLoreSelectedCage(p);
+                item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                System.out.println("SelectedCage solo");
+            } else if (gamePlayer.getCageTeam().equalsIgnoreCase(CageName) && invName.equals(invCage.replace("{type}", "Team"))) {
+                this.replaceLoreSelectedCage(p);
+                item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                System.out.println("SelectedCage team");
             }
         }
 

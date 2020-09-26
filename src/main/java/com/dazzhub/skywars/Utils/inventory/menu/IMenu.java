@@ -136,10 +136,8 @@ public class IMenu {
 
         ItemMeta meta = item.getItemMeta();
         if (isNullOrEmpty(meta.getItemFlags())) {
-            if (!meta.hasEnchants()) {
-                meta.addItemFlags(ItemFlag.values());
-                item.setItemMeta(meta);
-            }
+            meta.addItemFlags(ItemFlag.values());
+            item.setItemMeta(meta);
         }
         return item;
     }
@@ -189,67 +187,49 @@ public class IMenu {
                     action = action.substring(1);
                 }
 
-                String[] actioncage = action.split("/");
+                String[] cage = action.split("/");
 
-                String cage = actioncage[0];
-                int price = Integer.parseInt(actioncage[1]);
-                String mode = actioncage[2];
+                if (cage[1].equalsIgnoreCase("SOLO")) {
+                    if (main.getCageManager().getCagesSolo().containsKey(cage[0])) {
 
-                if (mode.equalsIgnoreCase("SOLO")) {
-                    System.out.println(main.getCageManager().getCagesSolo().containsKey(cage));
-                    if (main.getCageManager().getCagesSolo().containsKey(cage)) {
-                        if (!gamePlayer.getCagesSoloList().contains(cage)) {
-                            if (gamePlayer.getCoins() >= price) {
-                                gamePlayer.getCagesSoloList().add(cage);
-                                gamePlayer.setCageSolo(cage);
-                                gamePlayer.removeCoins(price);
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage));
+                        if (!gamePlayer.getCagesSoloList().contains(cage[0])) {
 
-                                if (gamePlayer.isInArena()) {
-                                    main.getCageManager().getCagesSolo().get(gamePlayer.getCageSolo()).loadCage(gamePlayer.getArenaTeam().getSpawn());
-                                }
-
+                            int coins = Integer.parseInt(cmd.split("/")[2]);
+                            if (gamePlayer.getCoins() >= coins) {
+                                gamePlayer.getCagesSoloList().add(cage[0]);
+                                gamePlayer.setCageSolo(cage[0]);
+                                gamePlayer.removeCoins(coins);
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
                             } else {
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.InsufficientCoins").replace("%coins%", String.valueOf(coins)));
                             }
                         } else {
-                            if (!gamePlayer.getCageSolo().equals(cage)) {
-                                gamePlayer.setCageSolo(cage);
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage));
-
-                                if (gamePlayer.isInArena()) {
-                                    main.getCageManager().getCagesSolo().get(gamePlayer.getCageSolo()).loadCage(gamePlayer.getArenaTeam().getSpawn());
-                                }
-                            }
+                            gamePlayer.setCageSolo(cage[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
                         }
+
                     }
-                } else if (mode.equalsIgnoreCase("TEAM")) {
-                    if (main.getCageManager().getCagesTeam().containsKey(cage)) {
-                        if (!gamePlayer.getCagesTeamList().contains(cage)) {
-                            if (gamePlayer.getCoins() >= price) {
-                                gamePlayer.getCagesTeamList().add(cage);
-                                gamePlayer.setCageTeam(cage);
-                                gamePlayer.removeCoins(price);
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage));
+                } else if (cage[1].equalsIgnoreCase("TEAM")) {
+                    if (main.getCageManager().getCagesTeam().containsKey(cage[0])) {
 
-                                if (gamePlayer.isInArena()) {
-                                    main.getCageManager().getCagesTeam().get(gamePlayer.getCageTeam()).loadCage(gamePlayer.getArenaTeam().getSpawn());
-                                }
+                        if (!gamePlayer.getCagesTeamList().contains(cage[0])) {
+                            int coins = Integer.parseInt(cmd.split("/")[2]);
+                            if (gamePlayer.getCoins() >= coins) {
+                                gamePlayer.getCagesTeamList().add(cage[0]);
+                                gamePlayer.setCageTeam(cage[0]);
+                                gamePlayer.removeCoins(coins);
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
                             } else {
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.InsufficientCoins").replace("%coins%", String.valueOf(coins)));
                             }
                         } else {
-                            if (!gamePlayer.getCageTeam().equals(cage)) {
-                                gamePlayer.setCageTeam(cage);
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage));
-
-                                if (gamePlayer.isInArena()) {
-                                    main.getCageManager().getCagesTeam().get(gamePlayer.getCageTeam()).loadCage(gamePlayer.getArenaTeam().getSpawn());
-                                }
-                            }
+                            gamePlayer.setCageTeam(cage[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
                         }
+
                     }
                 }
+
             } else if (cmd.startsWith("kit:")) {
                 String action = cmd.substring(4);
                 if (action.startsWith(" ")) {

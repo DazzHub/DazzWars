@@ -36,7 +36,7 @@ public class ScoreBoardAPI {
                 scoreboard.lines(line, charsLobby(p, s));
                 line--;
             }
-        }, 0, 20).getTaskId();
+        }, 2, 20).getTaskId();
 
         p.setScoreboard(scoreboard.getScoreboard());
         this.scoretask.put(p.getUniqueId(), id);

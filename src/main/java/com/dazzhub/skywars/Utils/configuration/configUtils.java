@@ -36,22 +36,9 @@ public class configUtils
         return config;
     }
 
-    public FileConfiguration getConfigSchem(Plugin plugin, String configname) {
-        File pluginDir = plugin.getDataFolder();
-        File configFile = new File(pluginDir, configname + ".schematic");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-        return config;
-    }
-
     public File getFile(Plugin plugin, String configname) {
         File pluginDir = plugin.getDataFolder();
         File configFile = new File(pluginDir, configname + ".yml");
-        return configFile;
-    }
-
-    public File getFileSchematic(Plugin plugin, String configname) {
-        File pluginDir = plugin.getDataFolder();
-        File configFile = new File(pluginDir, configname + ".schematic");
         return configFile;
     }
 }

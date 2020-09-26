@@ -1,3 +1,24 @@
+ITEM:
+  PRICE: 0
+  ACTION: 'buycage: %cage%'
+  NAME: '&6&l%name%'
+  DESCRIPTION:
+    - '&7➲ &e'
+    - '&7➲ &eCage %cage%'
+    - '&7➲ &e'
+    - '&7➲ &ePrice: %price%'
+  DESCRIPTION-PURCHASED:
+    - ''
+    - '&7➲ &eOBTAINED'
+    - ''
+  DESCRIPTION-SELECTED:
+    - ''
+    - '&7➲ &eSELECTED'
+    - ''
+  ICON-ITEM: 20
+  DATA-VALUE: 0
+  POSITION-X: 2
+  POSITION-Y: 2
 Name: Default
 Diff:
   x: 4
