@@ -36,7 +36,7 @@
                     <relocations>
                         <relocation>
                             <pattern>com.cryptomorin.xseries</pattern>
-                            <shadedPattern>com.dazzhub.skywars</shadedPattern>
+                            <shadedPattern>com.dazzhub.skywars.xseries</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

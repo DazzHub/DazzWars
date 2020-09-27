@@ -416,7 +416,7 @@ public class GamePlayer {
     }
 
     public getTypeKills getTypeKill(String mode) {
-
+        mode = mode.toLowerCase();
         getTypeKills getType;
 
         switch (mode){
@@ -456,7 +456,6 @@ public class GamePlayer {
                 getType = new wave(this);
                 break;
             }
-
             default:{
                 getType = null;
                 break;
@@ -467,7 +466,7 @@ public class GamePlayer {
     }
 
     public getTypeWins getTypeWin(String mode) {
-
+        mode = mode.toLowerCase();
         getTypeWins getType;
 
         switch (mode) {
