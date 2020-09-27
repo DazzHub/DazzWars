@@ -1,12 +1,13 @@
 package com.dazzhub.skywars.Utils;
 
 import com.dazzhub.skywars.Main;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
+import com.dazzhub.skywars.Utils.inventory.Icon;
+import com.cryptomorin.xseries.XMaterial;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ public class itemsCustom {
     public itemsCustom(Main main) {
         this.main = main;
 
-        cageWand = new ItemStackBuilder(XMaterial.STICK,1)
+        cageWand = new Icon(XMaterial.STICK)
                 .setName(c("&6&l&nCAGE WAND"))
                 .setLore(c("&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"),
                         c(""),
@@ -35,7 +36,7 @@ public class itemsCustom {
     }
 
     public ItemStack addSpawn(String namea){
-        this.addSpawn = new ItemStackBuilder(XMaterial.STICK,1)
+        this.addSpawn = new Icon(XMaterial.STICK)
                 .setName(c("&6&l&nADD SPAWNS:&r &e&l") + namea)
                 .setLore(c("&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"),
                         c(""),
@@ -47,7 +48,7 @@ public class itemsCustom {
     }
 
     public ItemStack setSpectator(String namea) {
-        this.setSpectator = new ItemStackBuilder(XMaterial.STICK, 1)
+        this.setSpectator = new Icon(XMaterial.STICK)
                 .setName(c("&6&l&nSET SPECTATOR:&r &e&l") + namea)
                 .setLore(c("&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"),
                         c(""),
@@ -59,7 +60,7 @@ public class itemsCustom {
     }
 
     public ItemStack addChestCenter(String namea) {
-        this.addChestCenter = new ItemStackBuilder(XMaterial.STICK, 1)
+        this.addChestCenter = new Icon(XMaterial.STICK)
                 .setName(c("&6&l&nADD CENTER CHEST:&r &e&l") + namea)
                 .setLore(c("&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"),
                         c(""),

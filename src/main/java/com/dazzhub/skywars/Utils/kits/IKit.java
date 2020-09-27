@@ -2,7 +2,7 @@ package com.dazzhub.skywars.Utils.kits;
 
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Utils.inventory.Icon;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;

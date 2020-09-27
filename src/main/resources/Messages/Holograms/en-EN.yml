@@ -7,20 +7,20 @@ TypeHolograms:
   - 'Top Kills:'
   - '%topkillssolo%'
   TOPKILLSTEAN:
-    - 'Top Kills:'
-    - '%topkillsteam%'
+  - 'Top Kills:'
+  - '%topkillsteam%'
   TOPDEATHSSOLO:
-    - 'Top Kills:'
-    - '%topdeathssolo%'
+  - 'Top Deaths:'
+  - '%topdeathssolo%'
   TOPDEATHSTEAN:
-    - 'Top Kills:'
-    - '%topdeathsteam%'
+  - 'Top Deaths:'
+  - '%topdeathsteam%'
   TOPWINSSOLO:
-    - 'Top Kills:'
-    - '%topwinssolo%'
+  - 'Top Wins:'
+  - '%topwinssolo%'
   TOPWINSTEAN:
-    - 'Top Kills:'
-    - '%topwinsteam%'
+  - 'Top Wins:'
+  - '%topwinsteam%'
 format:
   top: '&6{0} &8&l➠ &a{1}'
   error: '-/-'

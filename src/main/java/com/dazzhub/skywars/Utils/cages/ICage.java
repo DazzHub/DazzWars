@@ -3,7 +3,7 @@ package com.dazzhub.skywars.Utils.cages;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Utils.Cuboid;
 import com.dazzhub.skywars.Utils.inventory.Icon;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;

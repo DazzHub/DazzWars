@@ -30,8 +30,7 @@ public class addSpectator implements Listener {
             gamePlayer.getArenaTeam().removeTeam(gamePlayer);
         }
 
-        main.getPlayerLobby().remove(p.getUniqueId());
-
+        gamePlayer.setLobby(false);
         gamePlayer.setArena(arena);
         arena.getPlayers().remove(gamePlayer);
         arena.getSpectators().add(gamePlayer);

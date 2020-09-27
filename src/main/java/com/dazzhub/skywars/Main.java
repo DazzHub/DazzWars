@@ -76,7 +76,6 @@ public class Main extends JavaPlugin {
 
     /* LOBBY MANAGER */
     private lobbyManager lobbyManager;
-    private List<UUID> playerLobby;
 
     private ScoreBoardAPI scoreBoardAPI;
 
@@ -110,8 +109,6 @@ public class Main extends JavaPlugin {
         this.scoreBoardAPI = new ScoreBoardAPI(this);
 
         this.lobbyManager = new lobbyManager(this);
-        this.playerLobby = new ArrayList<>();
-
     }
 
     @Override
@@ -151,10 +148,7 @@ public class Main extends JavaPlugin {
 
         this.getPlayerDB.loadMySQL();
 
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> Bukkit.getOnlinePlayers().forEach(p -> {
-            getPlayerDB().loadPlayer(p.getUniqueId());
-            playerLobby.add(p.getUniqueId());
-        }));
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> Bukkit.getOnlinePlayers().forEach(p -> getPlayerDB().loadPlayer(p.getUniqueId())));
 
         new Placeholders(this).register();
 
@@ -258,10 +252,6 @@ public class Main extends JavaPlugin {
 
     public IKitManager getiKitManager() {
         return iKitManager;
-    }
-
-    public List<UUID> getPlayerLobby() {
-        return playerLobby;
     }
 
     public ScoreBoardAPI getScoreBoardAPI() {

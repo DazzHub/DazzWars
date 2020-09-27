@@ -2,7 +2,7 @@ package com.dazzhub.skywars.Utils.signs;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;

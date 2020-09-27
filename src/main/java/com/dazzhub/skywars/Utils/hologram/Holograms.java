@@ -43,7 +43,7 @@ public class Holograms {
 
         if (loc2 == null) return;
 
-        loc2.add(0, 3, 0);
+        loc2.add(0, 3.5, 0);
 
         Hologram hologram = HologramsAPI.createHologram(main, loc2);
 
@@ -140,7 +140,7 @@ public class Holograms {
                 String[] TOPSpli = topPlayers.split(":");
                 holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
             }
-        } else if (transformed.equalsIgnoreCase("%topdeathsolo%")) {
+        } else if (transformed.equalsIgnoreCase("%topdeathssolo%")) {
             String[] top = main.getPlayerDB().TopDeathsSolo();
             for (String topPlayers : top) {
 
@@ -152,7 +152,7 @@ public class Holograms {
                 String[] TOPSpli = topPlayers.split(":");
                 holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
             }
-        } else if (transformed.equalsIgnoreCase("%topdeathteam%")) {
+        } else if (transformed.equalsIgnoreCase("%topdeathsteam%")) {
             String[] top = main.getPlayerDB().TopDeathsTeam();
             for (String topPlayers : top) {
 

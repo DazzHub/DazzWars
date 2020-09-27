@@ -1,6 +1,7 @@
 package com.dazzhub.skywars.Utils.chests;
 
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.configuration.configCreate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,7 +32,7 @@ public class IChestManager {
             this.chestHashMap.put(chest, new IChest(this.main, chest));
         }
 
-        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eLoaded chests: &a"+getChestHashMap().size()));
+        Console.info("&eLoaded chests: &a" + getChestHashMap().size());
     }
 
     public HashMap<String, IChest> getChestHashMap() {

@@ -4,7 +4,8 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.WinEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Utils.Enums;
-import com.dazzhub.skywars.Utils.xseries.Titles;
+import com.cryptomorin.xseries.messages.Titles;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -26,8 +27,8 @@ public class onWin implements Listener {
                     gamePlayer.getLangMessage().getInt("Messages.WinnerTitle.Fade"),
                     gamePlayer.getLangMessage().getInt("Messages.WinnerTitle.Stay"),
                     gamePlayer.getLangMessage().getInt("Messages.WinnerTitle.Out"),
-                    gamePlayer.getLangMessage().getString("Messages.WinnerTitle.Info").split(";")[0].replaceAll("%player%", gamePlayer.getPlayer().getName()),
-                    gamePlayer.getLangMessage().getString("Messages.WinnerTitle.Info").split(";")[1].replaceAll("%player%", gamePlayer.getPlayer().getName())
+                    c(gamePlayer.getLangMessage().getString("Messages.WinnerTitle.Info").split(";")[0]).replaceAll("%player%", gamePlayer.getPlayer().getName()),
+                    c(gamePlayer.getLangMessage().getString("Messages.WinnerTitle.Info").split(";")[1]).replaceAll("%player%", gamePlayer.getPlayer().getName())
             );
 
             if (arena.getMode().equals(Enums.Mode.SOLO)) {
@@ -38,6 +39,10 @@ public class onWin implements Listener {
         });
 
         arena.getEndGameTask().runTaskTimerAsynchronously(main, 0, 20L);
+    }
+
+    private String c(String c) {
+        return ChatColor.translateAlternateColorCodes('&', c);
     }
 
 }

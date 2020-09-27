@@ -1,6 +1,7 @@
 package com.dazzhub.skywars.MySQL;
 
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import org.bukkit.Bukkit;
 
 import java.io.File;
@@ -40,27 +41,25 @@ public class MySQL {
                     properties.setProperty("useSSL", "false");
                     properties.setProperty("requireSSL", "false");
                     MySQL.con = DriverManager.getConnection("jdbc:mysql://" + MySQL.host + ":" + MySQL.port + "/" + MySQL.database, properties);
-                    Bukkit.getConsoleSender().sendMessage("§9SkyWars §8> §e[MySQL] The connection to MySQL has been established!");
+                    Console.info("[MySQL] The connection to MySQL has been established!");
                 } else {
                     File db = new File(plugin.getDataFolder(), MySQL.database + ".db");
                     if (!db.exists()) {
                         try {
                             db.createNewFile();
                         } catch (IOException e) {
-                            plugin.getLogger().log(Level.SEVERE, "§e[SQL] File Write Error: " + MySQL.database + ".db");
+                            Console.error("[SQL] File Write Error: " + MySQL.database + ".db");
                         }
                     }
                     Class.forName("org.sqlite.JDBC");
                     MySQL.con = DriverManager.getConnection("jdbc:sqlite:" + db);
-                    Bukkit.getConsoleSender().sendMessage("§9SkyWars §8> §e[SQLite] The connection to SQLite has been established!");
+                    Console.info("[SQLite] The connection to SQLite has been established!");
 
                 }
             } catch (SQLException e) {
-                Bukkit.getConsoleSender().sendMessage("§9SkyWars §8> §e[MySQL] Error connecting to MySQL connection!");
-                e.printStackTrace();
+                Console.error("[MySQL] " + e.getMessage());
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                Bukkit.getConsoleSender().sendMessage("§9SkyWars §8> §e[SQLite] Error connecting to SQLite connection!");
+                Console.error("[SQLite] " + e.getMessage());
             }
         }
     }
@@ -70,7 +69,7 @@ public class MySQL {
             try {
                 MySQL.con.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
         }
     }
@@ -84,7 +83,7 @@ public class MySQL {
             try {
                 MySQL.con.createStatement().executeUpdate(qry);
             } catch (SQLException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
         }
     }
@@ -94,7 +93,7 @@ public class MySQL {
             try {
                 return MySQL.con.createStatement().executeQuery(qry);
             } catch (SQLException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
         }
         return null;
@@ -110,18 +109,6 @@ public class MySQL {
         } catch (Exception ex) {
         }
         return null;
-    }
-
-    public static int getFirstInt(ResultSet rs, int l, String re, int t) {
-        try {
-            while (rs.next()) {
-                if (rs.getString(l).equalsIgnoreCase(re)) {
-                    return rs.getInt(t);
-                }
-            }
-        } catch (Exception ex) {
-        }
-        return 0;
     }
 
     public static Connection getConnection() {

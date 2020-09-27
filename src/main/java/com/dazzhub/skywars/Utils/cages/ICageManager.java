@@ -1,12 +1,14 @@
 package com.dazzhub.skywars.Utils.cages;
 
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Cuboid;
 import com.dazzhub.skywars.Utils.configuration.configCreate;
 import com.dazzhub.skywars.Utils.inventory.menu.IMenu;
 import com.dazzhub.skywars.Utils.inventory.ordItems;
 import com.dazzhub.skywars.Utils.kits.IKit;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -15,12 +17,16 @@ import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.cryptomorin.xseries.XSound.ENTITY_VILLAGER_YES;
 
 @Getter
 @Setter
@@ -50,11 +56,11 @@ public class ICageManager {
         createMenuSolo();
         createMenuTeam();
 
-        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eLoaded cages solo: &a"+getCagesSolo().size()));
-        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eLoaded cages team: &a"+getCagesTeam().size()));
+        Console.info("&eLoaded cages solo: &a"+getCagesSolo().size());
+        Console.info("&eLoaded cages team: &a"+getCagesTeam().size());
     }
 
-    public void createCage(Integer price, String nameCage, String mode, Cuboid cuboid){
+    public void createCage(Player p, Integer price, String nameCage, String mode, Cuboid cuboid){
 
         mode = mode.toLowerCase();
 
@@ -72,7 +78,7 @@ public class ICageManager {
             config2.set("cage" + mode, list);
             config2.save(file2);
         } catch (IOException e) {
-            Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cError: " + e.getMessage()));
+            Console.error(e.getMessage());
         }
 
         List<String> blockList = new ArrayList<>();
@@ -80,7 +86,8 @@ public class ICageManager {
         cuboid.iterator().forEachRemaining(block -> {
 
             if (main.checkVersion()) {
-                XMaterial material = XMaterial.matchXMaterial(block.getType().name(), block.getData()).get();
+                ItemStack item = new ItemStack(block.getType(), 1, block.getData());
+                XMaterial material = XMaterial.matchXMaterial(item);
                 blockList.add(material.name());
             } else {
                 blockList.add(XMaterial.getMajorVersion(block.getType().name()));
@@ -101,7 +108,7 @@ public class ICageManager {
         try {
             config.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.error(e.getMessage());
         }
 
         Material material = config.isInt("ITEM.ICON-ITEM") ? Material.getMaterial(config.getInt("ITEM.ICON-ITEM")) : Material.getMaterial(config.getString("ITEM.ICON-ITEM"));
@@ -138,10 +145,11 @@ public class ICageManager {
                     )
             );
         } else {
-            Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cCage error create: " + nameCage));
+            Console.info("&cCage error create: " + nameCage);
         }
 
-
+        p.sendMessage(c("&a&l\u2714 &fCage &e" + nameCage + "&f created successfully"));
+        XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
     }
 
 
@@ -149,7 +157,7 @@ public class ICageManager {
         File sf = new File(this.main.getDataFolder() + "/Cages/solo", name + ".yml");
 
         if (!sf.exists()) {
-            Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cCage File does not exist " + name));
+            Console.warning("&cCage File does not exist " + name);
             return;
         }
 
@@ -175,7 +183,7 @@ public class ICageManager {
         File sf = new File(this.main.getDataFolder() + "/Cages/team", name + ".yml");
 
         if (!sf.exists()) {
-            Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cCage File does not exist " + name));
+            Console.warning("&cCage File does not exist " + name);
             return;
         }
 
@@ -214,7 +222,7 @@ public class ICageManager {
         try {
             config.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.error(e.getMessage());
         }
     }
 

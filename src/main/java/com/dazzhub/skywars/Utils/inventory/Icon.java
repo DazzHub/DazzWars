@@ -1,10 +1,9 @@
 package com.dazzhub.skywars.Utils.inventory;
 
+import com.cryptomorin.xseries.SkullUtils;
+import com.cryptomorin.xseries.XMaterial;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
@@ -15,11 +14,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter
@@ -45,7 +43,7 @@ public class Icon {
     private List<String> loreSelectedCage;
 
     public Icon(XMaterial m, int amount, short dataValue){
-        item = new ItemStack(m.parseItem().getType(), amount != 0 ? amount : 1, dataValue);
+        item = new ItemStack(m.parseMaterial(), amount != 0 ? amount : 1, dataValue);
         im = item.getItemMeta();
 
         permissionViewItem = null;
@@ -61,6 +59,11 @@ public class Icon {
         CageName = "";
         lorePurchasedCage = null;
         loreSelectedCage = null;
+    }
+
+    public Icon(XMaterial m){
+        item = new ItemStack(m.parseMaterial(), 1);
+        im = item.getItemMeta();
     }
 
     public Icon addDamage(short damage) {
@@ -79,11 +82,16 @@ public class Icon {
     }
 
     public Icon setLore(List<String> lore){
-        ArrayList<String> fullLore = new ArrayList<>();
+        ArrayList<String> fullLore = lore.stream().map(this::c).collect(Collectors.toCollection(ArrayList::new));
 
-        for(String s : lore) {
-            fullLore.add(c(s));
-        }
+        im.setLore(fullLore);
+        item.setItemMeta(im);
+        return this;
+    }
+
+    public Icon setLore(String... lore) {
+
+        ArrayList<String> fullLore = Arrays.stream(lore).map(this::c).collect(Collectors.toCollection(ArrayList::new));
 
         im.setLore(fullLore);
         item.setItemMeta(im);
@@ -139,6 +147,11 @@ public class Icon {
         item.setItemMeta(im);
     }
 
+    private void replaceName() {
+        im.setDisplayName(c(im.getDisplayName()));
+        item.setItemMeta(im);
+    }
+
     private void replaceLore(Player p) {
         List<String> list = new ArrayList<>();
 
@@ -149,6 +162,17 @@ public class Icon {
                     .replaceAll("%cage%", CageName)
                     .replaceAll("%price%", String.valueOf(priceCage))
             );
+        }
+
+        im.setLore(list);
+        item.setItemMeta(im);
+    }
+
+    private void replaceLore() {
+        List<String> list = new ArrayList<>();
+
+        for (String s : im.getLore()) {
+            list.add(c(s));
         }
 
         im.setLore(list);
@@ -206,6 +230,19 @@ public class Icon {
         item.setItemMeta(im);
     }
 
+    public ItemStack build() {
+
+        if (im.getDisplayName() != null) {
+            this.replaceName();
+        }
+
+        if (im.getLore() != null) {
+            this.replaceLore();
+        }
+
+        return item;
+    }
+
     public ItemStack build(Player p) {
         GamePlayer gamePlayer = Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId());
 
@@ -251,11 +288,9 @@ public class Icon {
             if (gamePlayer.getCageSolo().equalsIgnoreCase(CageName) && invName.equals(invCage.replace("{type}", "Solo"))) {
                 this.replaceLoreSelectedCage(p);
                 item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
-                System.out.println("SelectedCage solo");
             } else if (gamePlayer.getCageTeam().equalsIgnoreCase(CageName) && invName.equals(invCage.replace("{type}", "Team"))) {
                 this.replaceLoreSelectedCage(p);
                 item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
-                System.out.println("SelectedCage team");
             }
         }
 
@@ -269,18 +304,10 @@ public class Icon {
                 if (skullOwner.length() <= 16) {
                     skullMeta.setOwner(this.skullOwner);
                 } else {
-                    GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-
-                    profile.getProperties().put("textures", new Property("textures", skullOwner));
-                    try {
-                        Field profileField = skullMeta.getClass().getDeclaredField("profile");
-                        profileField.setAccessible(true);
-                        profileField.set(skullMeta, profile);
-                    }
-                    catch (IllegalArgumentException | NoSuchFieldException | SecurityException | IllegalAccessException ignored) { }
-
+                    SkullUtils.applySkin(skullMeta, this.skullOwner);
                 }
             }
+            item.setItemMeta(im);
         }
 
         return replace(p, item);

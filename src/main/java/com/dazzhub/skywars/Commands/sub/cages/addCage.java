@@ -40,7 +40,7 @@ public class addCage implements subCommand {
 
             if (gamePlayer.getCage1() == null || gamePlayer.getCage2() == null) return;
 
-            main.getCageManager().createCage(price, name, mode, new Cuboid(gamePlayer.getCage1(), gamePlayer.getCage2()));
+            main.getCageManager().createCage(p, price, name, mode, new Cuboid(gamePlayer.getCage1(), gamePlayer.getCage2()));
         } else {
             sender.sendMessage(help(sender));
         }

@@ -16,7 +16,7 @@ import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.locUtils;
 import com.dazzhub.skywars.Utils.signs.ISign;
 import com.dazzhub.skywars.Utils.vote.VotesSystem;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;

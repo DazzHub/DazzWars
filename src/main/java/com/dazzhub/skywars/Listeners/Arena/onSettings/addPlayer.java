@@ -1,14 +1,14 @@
 package com.dazzhub.skywars.Listeners.Arena.onSettings;
 
+import com.cryptomorin.xseries.messages.Titles;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addPlayerEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Runnables.startingGame;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
-import com.dazzhub.skywars.Utils.xseries.Titles;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,10 +35,9 @@ public class addPlayer implements Listener {
             gamePlayer.getArenaTeam().removeTeam(gamePlayer);
         }
 
-        main.getPlayerLobby().remove(p.getUniqueId());
-
         gamePlayer.setArena(arena);
         gamePlayer.setSpectating(false);
+        gamePlayer.setLobby(false);
         arena.getPlayers().add(gamePlayer);
 
         Bukkit.getScheduler().runTask(main, () -> {
@@ -84,8 +83,8 @@ public class addPlayer implements Listener {
                 gamePlayer.getLangMessage().getInt("Messages.JoinTitle.Fade"),
                 gamePlayer.getLangMessage().getInt("Messages.JoinTitle.Stay"),
                 gamePlayer.getLangMessage().getInt("Messages.JoinTitle.Out"),
-                gamePlayer.getLangMessage().getString("Messages.JoinTitle.Info").split(";")[0].replaceAll("%player%", p.getName()).replace("%mode%", arena.getMode().toString()),
-                gamePlayer.getLangMessage().getString("Messages.JoinTitle.Info").split(";")[1].replaceAll("%player%", p.getName()).replace("%mode%", arena.getMode().toString())
+                c(gamePlayer.getLangMessage().getString("Messages.JoinTitle.Info").split(";")[0]).replaceAll("%player%", p.getName()).replace("%mode%", arena.getMode().toString()),
+                c(gamePlayer.getLangMessage().getString("Messages.JoinTitle.Info").split(";")[1]).replaceAll("%player%", p.getName()).replace("%mode%", arena.getMode().toString())
         );
 
         if (arena.checkStart() && !arena.isUsable()) {
@@ -94,5 +93,9 @@ public class addPlayer implements Listener {
             arena.setUsable(true);
             arena.setGameStatus(Enums.GameStatus.STARTING);
         }
+    }
+
+    private String c(String c) {
+        return ChatColor.translateAlternateColorCodes('&', c);
     }
 }

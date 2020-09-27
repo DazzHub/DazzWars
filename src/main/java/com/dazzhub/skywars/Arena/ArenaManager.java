@@ -1,8 +1,9 @@
 package com.dazzhub.skywars.Arena;
 
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.locUtils;
-import com.dazzhub.skywars.Utils.xseries.XSound;
+import com.cryptomorin.xseries.XSound;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import static com.dazzhub.skywars.Utils.xseries.XSound.*;
+import static com.cryptomorin.xseries.XSound.*;
 
 public class ArenaManager {
 
@@ -43,18 +44,18 @@ public class ArenaManager {
                     this.arenaList.add(arena);
                 }
             } else {
-                Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eError in the arena: &4" + nameArena + " &ethe &4Settings.yml&e file is missing"));
+                Console.error("&eError in the arena: &4" + nameArena + " &ethe &4Settings.yml&e file is missing");
             }
         });
 
-        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eLoaded arenas: &a"+getArenas().size()));
+        Console.info("&eLoaded arenas: &a"+getArenas().size());
     }
 
     public void createArena(Player p, String nameArena, String nameWorld) {
 
         if (getArenas().containsKey(nameArena)) {
             p.sendMessage(c("&c&l\u2718 &fThat arena already exists"));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
             return;
         }
 
@@ -62,6 +63,11 @@ public class ArenaManager {
         FileConfiguration config = this.main.getConfigUtils().getConfig(this.main, "Arenas/" + nameArena + "/Settings");
         File file2 = this.main.getConfigUtils().getFile(this.main, "Arenas/Arenas");
         FileConfiguration config2 = this.main.getConfigUtils().getConfig(this.main, "Arenas/Arenas");
+
+        List<Integer> refilltimes = new ArrayList<>();
+        refilltimes.add(180);
+        refilltimes.add(160);
+        refilltimes.add(60);
 
         config.set("Arena.name", nameArena);
         config.set("Arena.world", nameWorld);
@@ -75,12 +81,12 @@ public class ArenaManager {
         config.set("Arena.durationGame", 900);
         config.set("Arena.startingGame", 15);
         config.set("Arena.finishedGame", 10);
-        config.set("Arena.refill", new ArrayList<>().add(120));
+        config.set("Arena.refill", refilltimes);
         config.set("Arena.mode", "SOLO");
         try {
             config.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.error(e.getMessage());
         }
 
         try {
@@ -89,18 +95,14 @@ public class ArenaManager {
             config2.set("Arenas", list);
             config2.save(file2);
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            Console.error(e.getMessage());
         }
 
 
         File map = new File(main.getServer().getWorldContainer(), nameWorld);
         File foldermaps = new File(main.getDataFolder(), "Arenas/" + nameArena + "/" + nameWorld);
 
-        try {
-            main.getResetWorld().copyDir(map, foldermaps);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        main.getResetWorld().copyDir(map, foldermaps);
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
             loadWorld(nameWorld);
@@ -109,7 +111,7 @@ public class ArenaManager {
 
 
         p.sendMessage(c("&a&l\u2714 &fArena &e" + nameArena + "&f created successfully"));
-        XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
+        XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
 
         p.getInventory().clear();
 
@@ -123,7 +125,6 @@ public class ArenaManager {
         Arena arena = new Arena(nameArena);
         arenas.put(nameArena, arena);
         this.arenaList.add(arena);
-
     }
 
     public void addSpawn(Player p, Location location, String name, boolean useitem) {
@@ -147,14 +148,14 @@ public class ArenaManager {
                 arenaConfig.save(file);
             }
             catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fSpawn has been added &9#" + spawn + "&f in the arena &9" + name + "&f."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
         }
         else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 
@@ -165,7 +166,7 @@ public class ArenaManager {
 
             if (arenaConfig.getStringList("Arena.centerChest").contains(locUtils.locToString(location))){
                 p.sendMessage(this.c("&c&l\u2718 &fThis location has already been added."));
-                XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+                XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
                 return;
             }
 
@@ -177,14 +178,14 @@ public class ArenaManager {
             try {
                 arenaConfig.save(file);
             } catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
 
             p.sendMessage(this.c("&a&l\u2714 &fChest has been added&f in the arena &9" + name + "&f."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
         } else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 
@@ -202,14 +203,14 @@ public class ArenaManager {
                 arenaConfig.save(file);
             }
             catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fSpectator set for arena &9" + name + "&f."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
         }
         else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 
@@ -229,14 +230,14 @@ public class ArenaManager {
                 arenaConfig.save(file);
             }
             catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fPrevious spawn has remove for arena &9" + name + " &f(&9#"+spawn+"&f)."));
-            XSound.playSoundFromString(p, String.valueOf(BLOCK_STONE_BREAK.parseSound()));
+            XSound.play(p, String.valueOf(BLOCK_STONE_BREAK.parseSound()));
         }
         else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 
@@ -249,14 +250,14 @@ public class ArenaManager {
                 arenaConfig.save(file);
             }
             catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fPrevious chest has remove for arena &9" + name + " &f."));
-            XSound.playSoundFromString(p, String.valueOf(BLOCK_STONE_BREAK.parseSound()));
+            XSound.play(p, String.valueOf(BLOCK_STONE_BREAK.parseSound()));
         }
         else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 
@@ -269,14 +270,14 @@ public class ArenaManager {
                 arenaConfig.save(file);
             }
             catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fSpectator spawn remove for arena &9" + name + "&f."));
-            XSound.playSoundFromString(p, String.valueOf(BLOCK_GRASS_BREAK.parseSound()));
+            XSound.play(p, String.valueOf(BLOCK_GRASS_BREAK.parseSound()));
         }
         else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 
@@ -289,14 +290,14 @@ public class ArenaManager {
                 arenaConfig.save(file);
             }
             catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fYou have set the max players in the arena &9" + name + "&f."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
         }
         else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 
@@ -309,14 +310,14 @@ public class ArenaManager {
                 arenaConfig.save(file);
             }
             catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fYou have set the min players in the arena &9" + name + "&f."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
         }
         else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 
@@ -332,15 +333,15 @@ public class ArenaManager {
             try {
                 config.save(file);
             } catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
 
             p.sendMessage(c("&a&l\u2714 &fArena &e" + name + "&f changed to team"));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
 
         } else {
             p.sendMessage(c("&c&l\u2718 &fThat arena already exists"));
-            XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
 

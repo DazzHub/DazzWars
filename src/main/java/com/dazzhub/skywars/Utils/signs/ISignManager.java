@@ -2,8 +2,9 @@ package com.dazzhub.skywars.Utils.signs;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.locUtils;
-import com.dazzhub.skywars.Utils.xseries.XSound;
+import com.cryptomorin.xseries.XSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -49,7 +50,7 @@ public class ISignManager {
 
         if (signs.containsKey(sign.getLocation())){
             p.sendMessage(c("&a&l\u2714 &fThe sign for the arena &9" + arena.getNameArena() + "&f already exist!"));
-            XSound.playSoundFromString(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
             return;
         }
 
@@ -66,13 +67,13 @@ public class ISignManager {
         try {
             config.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.error(e.getMessage());
         }
 
         signs.put(location, arena);
 
         p.sendMessage(c("&a&l\u2714 &fThe sign for the arena &9" + arena.getNameArena() + "&f created successfully!"));
-        XSound.playSoundFromString(p, String.valueOf(XSound.ENTITY_VILLAGER_YES.parseSound()));
+        XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_YES.parseSound()));
     }
 
     public void removeSign(Player player, Arena arena, Location location){
@@ -83,7 +84,7 @@ public class ISignManager {
         try {
             config.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.error(e.getMessage());
         }
 
         arena.setISign(null);
@@ -91,7 +92,7 @@ public class ISignManager {
         signs.remove(location);
 
         player.sendMessage(c("&a&l\u2714 &fRemoved game sign"));
-        XSound.playSoundFromString(player, String.valueOf(XSound.BLOCK_ANVIL_USE.parseSound()));
+        XSound.play(player, String.valueOf(XSound.BLOCK_ANVIL_USE.parseSound()));
     }
 
     private String c(String c) {

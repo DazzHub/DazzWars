@@ -30,7 +30,7 @@ public class removeSpectator implements Listener {
             gamePlayer.resetPlayer(true);
 
             if (e.isGoLobby()) {
-                main.getPlayerLobby().add(p.getUniqueId());
+                gamePlayer.setLobby(true);
 
                 if (!arena.getGameStatus().equals(Enums.GameStatus.RESTARTING)) {
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.LeaveSpectator"));
@@ -42,7 +42,7 @@ public class removeSpectator implements Listener {
                 p.teleport(main.getLobbyManager().getLobby());
                 if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().reloadHologram();
             } else {
-                main.getPlayerLobby().remove(p.getUniqueId());
+                gamePlayer.setLobby(false);
             }
         });
 

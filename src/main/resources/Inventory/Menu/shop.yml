@@ -1,0 +1,72 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&8➣ Shop menu'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+  
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: 'shop'
+  
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - '&8» &eYou currently don''t have'
+      - '&8» &6permission to do this'
+      - ''
+cagesolo:
+  ACTION: 'open: cagesolo'
+  NAME: '&e&lBUY CAGE SOLO'
+  DESCRIPTION:
+    - '&7➲ &2&lCLICK&f to buy cages'
+  ICON-ITEM: 20
+  DATA-VALUE: 0
+  POSITION-X: 2
+  POSITION-Y: 2
+cageteam:
+  ACTION: 'open: cageteam'
+  NAME: '&e&lBUY CAGE TEAM'
+  DESCRIPTION:
+    - '&7➲ &2&lCLICK&f to buy cages'
+  ICON-ITEM: 20
+  DATA-VALUE: 0
+  POSITION-X: 4
+  POSITION-Y: 2
+kitsolo:
+  ACTION: 'open: kitsolo'
+  NAME: '&e&lBUY KIT SOLO'
+  DESCRIPTION:
+    - '&7➲ &2&lCLICK&f to buy cages'
+  ICON-ITEM: 261
+  DATA-VALUE: 0
+  POSITION-X: 6
+  POSITION-Y: 2
+kitteam:
+  ACTION: 'open: kitteam'
+  NAME: '&e&lBUY KIT TEAM'
+  DESCRIPTION:
+    - '&7➲ &2&lCLICK&f to buy cages'
+  ICON-ITEM: 261
+  DATA-VALUE: 0
+  POSITION-X: 8
+  POSITION-Y: 2
+close:
+  ACTION: 'close'
+  NAME: '&cClose'
+  DESCRIPTION:
+    - ''
+  ICON-ITEM: 368
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 5
+

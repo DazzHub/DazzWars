@@ -2,10 +2,12 @@ package com.dazzhub.skywars.Utils.hologram;
 
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.locUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -24,7 +26,7 @@ public class HologramsManager {
 
     public void createHologram(Player p, String typeHologram) {
         if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")){
-            p.sendMessage("&8> &eHolographicDisplays plugin is not active");
+            p.sendMessage(c("&8> &eHolographicDisplays plugin is not active"));
             return;
         }
 
@@ -35,7 +37,7 @@ public class HologramsManager {
             config.set("Holograms."+typeHologram, locUtils.locToString(p.getLocation()));
             config.save(file);
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            Console.error(e.getMessage());
         }
 
         Bukkit.getScheduler().runTaskLater(main, () -> {
@@ -64,4 +66,7 @@ public class HologramsManager {
         }
     }
 
+    private String c(String msg){
+        return ChatColor.translateAlternateColorCodes('&', msg);
+    }
 }

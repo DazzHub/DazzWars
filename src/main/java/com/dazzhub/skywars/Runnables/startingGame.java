@@ -1,15 +1,15 @@
 package com.dazzhub.skywars.Runnables;
 
+import com.cryptomorin.xseries.messages.Titles;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
-import com.dazzhub.skywars.Utils.xseries.Titles;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.craftbukkit.libs.org.ibex.nestedvm.util.ELF;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
@@ -63,7 +63,7 @@ public class startingGame extends BukkitRunnable {
 
             gamePlayer.getLangMessage().getConfigurationSection("Messages.Sounds.Starting").getKeys(false).stream().filter(s -> timer == Integer.parseInt(s)).forEach(s -> gamePlayer.playSound(gamePlayer.getLangMessage().getString("Messages.Sounds.Starting." + s)));
 
-            gamePlayer.getLangMessage().getConfigurationSection("Messages.Title.Starting").getKeys(false).stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> Titles.sendTitle(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getInt("Messages.Title.Fade"), gamePlayer.getLangMessage().getInt("Messages.Title.Stay"), gamePlayer.getLangMessage().getInt("Messages.Title.Out"), gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config).split(";")[0].replaceAll("%seconds%", String.valueOf(timer)), gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config).split(";")[1].replaceAll("%seconds%", String.valueOf(timer))));
+            gamePlayer.getLangMessage().getConfigurationSection("Messages.Title.Starting").getKeys(false).stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> Titles.sendTitle(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getInt("Messages.Title.Fade"), gamePlayer.getLangMessage().getInt("Messages.Title.Stay"), gamePlayer.getLangMessage().getInt("Messages.Title.Out"), c(gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config).split(";")[0]).replaceAll("%seconds%", String.valueOf(timer)), c(gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config).split(";")[1]).replaceAll("%seconds%", String.valueOf(timer))));
         });
 
         if (timer <= 0){
@@ -72,7 +72,7 @@ public class startingGame extends BukkitRunnable {
 
             arena.getPlayers().forEach(p -> {
                 /* ASYNC DATA */
-                Titles.sendTitle(p.getPlayer(), p.getLangMessage().getInt("Messages.LuckTitle.Fade"), p.getLangMessage().getInt("Messages.LuckTitle.Stay"), p.getLangMessage().getInt("Messages.LuckTitle.Out"), p.getLangMessage().getString("Messages.LuckTitle.Info").split(";")[0].replace("%player%", p.getPlayer().getName()), p.getLangMessage().getString("Messages.LuckTitle.Info").split(";")[1].replace("%player%", p.getPlayer().getName()));
+                Titles.sendTitle(p.getPlayer(), p.getLangMessage().getInt("Messages.LuckTitle.Fade"), p.getLangMessage().getInt("Messages.LuckTitle.Stay"), p.getLangMessage().getInt("Messages.LuckTitle.Out"), c(p.getLangMessage().getString("Messages.LuckTitle.Info").split(";")[0]).replace("%player%", p.getPlayer().getName()), c(p.getLangMessage().getString("Messages.LuckTitle.Info").split(";")[1]).replace("%player%", p.getPlayer().getName()));
                 announcerVote(p);
 
                 /* SYNC DATA */
@@ -142,4 +142,7 @@ public class startingGame extends BukkitRunnable {
         message.forEach(gamePlayer::sendMessage);
     }
 
+    private String c(String c) {
+        return ChatColor.translateAlternateColorCodes('&', c);
+    }
 }

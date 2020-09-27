@@ -53,7 +53,7 @@ public class removePlayer implements Listener {
             main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY);
         });
 
-        main.getPlayerLobby().add(p.getUniqueId());
+        gamePlayer.setLobby(true);
         if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().reloadHologram();
     }
 }

@@ -1,11 +1,12 @@
 package com.dazzhub.skywars.Utils.inventory.menu;
 
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.configuration.configCreate;
 import com.dazzhub.skywars.Utils.inventory.Icon;
 import com.dazzhub.skywars.Utils.inventory.listEnchants;
 import com.dazzhub.skywars.Utils.inventory.ordItems;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -43,6 +44,7 @@ public class IMenuManager {
         configCreate.get().setup(main, "Inventory/Menu/vote-chest");
         configCreate.get().setup(main, "Inventory/Menu/vote-heart");
         configCreate.get().setup(main, "Inventory/Menu/vote-time");
+        configCreate.get().setup(main, "Inventory/Menu/shop");
 
         File file = new File(main.getDataFolder(), "Inventory/Menu");
         File[] files = file.listFiles();
@@ -91,12 +93,12 @@ public class IMenuManager {
         }
 
         if (menuName == null || menuName.length() == 0) {
-            Bukkit.getConsoleSender().sendMessage("§9SkyWars §8> §e[Menu] The menu§2 " + filename + " §ecan't load: It was not found 'name', check your menu-settings");
+            Console.info("[Menu] The menu§2 " + filename + " §ecan't load: It was not found 'name', check your menu-settings");
             return;
         }
 
         if (menuRows == 0) {
-            Bukkit.getConsoleSender().sendMessage("§9SkyWars §8> §e[Menu] The menu§2 " + filename + " §ecan't load: It was not found 'row', check your menu-settings");
+            Console.info("[Menu] The menu§2 " + filename + " §ecan't load: It was not found 'row', check your menu-settings");
             return;
         }
 

@@ -3,7 +3,7 @@ package com.dazzhub.skywars.Commands.sub.arena;
 import com.dazzhub.skywars.Commands.adminCmd;
 import com.dazzhub.skywars.Commands.subCommand;
 import com.dazzhub.skywars.Main;
-import com.dazzhub.skywars.Utils.xseries.XSound;
+import com.cryptomorin.xseries.XSound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -38,12 +38,12 @@ public class Coins implements subCommand {
                 if (args[1].equalsIgnoreCase("add")) {
                     main.getPlayerManager().getPlayer(target.getUniqueId()).addCoins(Integer.parseInt(args[3]));
                     sender.sendMessage(c("&a&l\u2714 &fCoins added to: &9" + target.getName()));
-                    XSound.playSoundFromString(p, String.valueOf(XSound.ENTITY_CHICKEN_EGG.parseSound()));
+                    XSound.play(p, String.valueOf(XSound.ENTITY_CHICKEN_EGG.parseSound()));
                 }
                 else if (args[1].equalsIgnoreCase("set")) {
                     main.getPlayerManager().getPlayer(target.getUniqueId()).setCoins(Integer.parseInt(args[3]));
                     sender.sendMessage(c("&a&l\u2714 &fCoins established to: &9" + target.getName()));
-                    XSound.playSoundFromString(p, String.valueOf(XSound.ENTITY_CHICKEN_EGG.parseSound()));
+                    XSound.play(p, String.valueOf(XSound.ENTITY_CHICKEN_EGG.parseSound()));
                 }
             } else {
                 sender.sendMessage(c("&c&l\u2718 &fError name"));

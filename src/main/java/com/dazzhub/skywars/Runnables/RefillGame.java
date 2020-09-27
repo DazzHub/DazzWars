@@ -3,7 +3,7 @@ package com.dazzhub.skywars.Runnables;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Utils.xseries.Titles;
+import com.cryptomorin.xseries.messages.Titles;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,8 +32,8 @@ public class RefillGame extends BukkitRunnable {
                         p.getLangMessage().getInt("Messages.RefillTitle.Fade"),
                         p.getLangMessage().getInt("Messages.RefillTitle.Stay"),
                         p.getLangMessage().getInt("Messages.RefillTitle.Out"),
-                        p.getLangMessage().getString("Messages.RefillTitle.Info").split(";")[0].replace("%player%", p.getPlayer().getName()),
-                        p.getLangMessage().getString("Messages.RefillTitle.Info").split(";")[1].replace("%player%", p.getPlayer().getName()));
+                        c(p.getLangMessage().getString("Messages.RefillTitle.Info").split(";")[0]).replace("%player%", p.getPlayer().getName()),
+                        c(p.getLangMessage().getString("Messages.RefillTitle.Info").split(";")[1]).replace("%player%", p.getPlayer().getName()));
 
                 p.sendMessage(c(p.getLangMessage().getString("Messages.RefillTitle.ChatAlert")));
             }

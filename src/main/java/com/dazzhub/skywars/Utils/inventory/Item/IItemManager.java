@@ -5,7 +5,7 @@ import com.dazzhub.skywars.Utils.configuration.configCreate;
 import com.dazzhub.skywars.Utils.inventory.Icon;
 import com.dazzhub.skywars.Utils.inventory.listEnchants;
 import com.dazzhub.skywars.Utils.inventory.ordItems;
-import com.dazzhub.skywars.Utils.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;

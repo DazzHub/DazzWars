@@ -2,6 +2,7 @@ package com.dazzhub.skywars.Utils.resetWorld;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -29,25 +30,19 @@ public class resetWorld {
             if (unLoad) {
                 unLoadWorld(nameWorld);
             }
-            try {
-                copyDir(source, target);
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
-                    main.getArenaManager().loadWorld(nameWorld);
+            copyDir(source, target);
 
-                    arena.setGameStatus(Enums.GameStatus.WAITING);
-                    arena.setUsable(false);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                main.getArenaManager().loadWorld(nameWorld);
 
-                    arena.loadSpawns();
+                arena.setGameStatus(Enums.GameStatus.WAITING);
+                arena.setUsable(false);
 
-                    if (arena.getISign() != null) arena.getISign().updateSign();
-                },5);
+                arena.loadSpawns();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Failed to reset world \"" + source.getName() + "\" - could not import the world from backup.");
-            }
-
+                if (arena.getISign() != null) arena.getISign().updateSign();
+            }, 5);
         }
     }
 
@@ -91,7 +86,7 @@ public class resetWorld {
         }
     }
 
-    public void copyDir(File source, File target) throws IOException {
+    public void copyDir(File source, File target) {
         if (source.isDirectory()) {
             if (!target.exists()) {
                 target.mkdir();
@@ -103,15 +98,19 @@ public class resetWorld {
                 copyDir(srcFile, destFile);
             }
         } else {
-            InputStream in = new FileInputStream(source);
-            OutputStream out = new FileOutputStream(target);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = in.read(buffer)) > 0) {
-                out.write(buffer, 0, length);
+            try {
+                InputStream in = new FileInputStream(source);
+                OutputStream out = new FileOutputStream(target);
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, length);
+                }
+                in.close();
+                out.close();
+            } catch (IOException e){
+                Console.error(e.getMessage());
             }
-            in.close();
-            out.close();
         }
     }
 }

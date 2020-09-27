@@ -4,7 +4,7 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Utils.Enums;
-import com.dazzhub.skywars.Utils.xseries.XSound;
+import com.cryptomorin.xseries.XSound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -72,7 +72,7 @@ public class onSign implements Listener {
 
         if (!player.hasPermission("skywars.admin")) {
             player.sendMessage(c("&c&l\u2718 &fYou don't have permission to do that!"));
-            XSound.playSoundFromString(player, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(player, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
             return;
         }
 

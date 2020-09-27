@@ -10,16 +10,16 @@ TypeHolograms:
     - 'Top Kills:'
     - '%topkillsteam%'
   TOPDEATHSSOLO:
-    - 'Top Kills:'
+    - 'Top Deaths:'
     - '%topdeathssolo%'
   TOPDEATHSTEAN:
-    - 'Top Kills:'
+    - 'Top Deaths:'
     - '%topdeathsteam%'
   TOPWINSSOLO:
-    - 'Top Kills:'
+    - 'Top Wins:'
     - '%topwinssolo%'
   TOPWINSTEAN:
-    - 'Top Kills:'
+    - 'Top Wins:'
     - '%topwinsteam%'
 format:
   top: '&6{0} &8&l➠ &a{1}'

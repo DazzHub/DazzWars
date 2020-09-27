@@ -5,8 +5,12 @@ import com.dazzhub.skywars.Arena.ArenaTeam;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Party.Party;
 import com.dazzhub.skywars.Utils.CenterMessage;
+import com.dazzhub.skywars.Utils.effects.getTypeKills;
+import com.dazzhub.skywars.Utils.effects.getTypeWins;
+import com.dazzhub.skywars.Utils.effects.kills.*;
+import com.dazzhub.skywars.Utils.effects.wins.*;
 import com.dazzhub.skywars.Utils.hologram.Holograms;
-import com.dazzhub.skywars.Utils.xseries.XSound;
+import com.cryptomorin.xseries.XSound;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import lombok.Data;
 import lombok.Getter;
@@ -98,6 +102,7 @@ public class GamePlayer {
     private ArenaTeam arenaTeam;
     private int killsStreak;
     private int taskId;
+    private boolean isLobby;
 
     private Party party;
     private GamePlayer ownerParty;
@@ -223,6 +228,7 @@ public class GamePlayer {
         this.Arena = null;
         this.arenaTeam = null;
         this.killsStreak = 0;
+        this.isLobby = true;
 
         this.party = null;
         this.ownerParty = null;
@@ -347,7 +353,11 @@ public class GamePlayer {
     }
 
     public void playSound(String sound) {
-        XSound.playSoundFromString(getPlayer(), XSound.valueOf(sound).toString());
+        XSound.play(getPlayer(), XSound.valueOf(sound).toString());
+    }
+
+    public void addCoins(int amount) {
+        this.setCoins(this.getCoins() + amount);
     }
 
     public void addSpectating(){
@@ -395,14 +405,103 @@ public class GamePlayer {
     }
 
     private void setInvClear() {
-        ItemStack[] emptyinv = new ItemStack[getPlayer().getInventory().getContents().length];
-        getPlayer().getInventory().setContents(emptyinv);
+        Player p = getPlayer();
+        if (p == null || !p.isOnline()) return;
 
-        ItemStack[] emptyinv2 = new ItemStack[getPlayer().getInventory().getArmorContents().length];
-        getPlayer().getInventory().setArmorContents(emptyinv2);
+        ItemStack[] emptyinv = new ItemStack[p.getInventory().getContents().length];
+        p.getInventory().setContents(emptyinv);
+
+        ItemStack[] emptyinv2 = new ItemStack[p.getInventory().getArmorContents().length];
+        p.getInventory().setArmorContents(emptyinv2);
     }
 
-    public void addCoins(int amount) {
-        this.setCoins(this.getCoins() + amount);
+    public getTypeKills getTypeKill(String mode) {
+
+        getTypeKills getType;
+
+        switch (mode){
+            case "dropsoup":{
+                getType = new dropSoup(this);
+                break;
+            }
+            case "frostflame":{
+                getType = new frostFlame(this);
+                break;
+            }
+            case "headexplode":{
+                getType = new headExplode(this);
+                break;
+            }
+            case "heart":{
+                getType = new heart(this);
+                break;
+            }
+            case "redstone":{
+                getType = new redstone(this);
+                break;
+            }
+            case "satan":{
+                getType = new satan(this);
+                break;
+            }
+            case "squid":{
+                getType = new squid(this);
+                break;
+            }
+            case "twister":{
+                getType = new twister(this);
+                break;
+            }
+            case "wave":{
+                getType = new wave(this);
+                break;
+            }
+
+            default:{
+                getType = null;
+                break;
+            }
+        }
+
+        return getType;
     }
+
+    public getTypeWins getTypeWin(String mode) {
+
+        getTypeWins getType;
+
+        switch (mode) {
+            case "antigravity":{
+                getType = new antigravity(this);
+                break;
+            }
+            case "chickens":{
+                getType = new chickens(this);
+                break;
+            }
+            case "fallingblocks":{
+                getType = new fallingblocks(this);
+                break;
+            }
+            case "fallingsheep":{
+                getType = new fallingsheep(this);
+                break;
+            }
+            case "parachute":{
+                getType = new parachute(this);
+                break;
+            }
+            case "fireworks":{
+                getType = new fireworks(getPlayer().getLocation());
+                break;
+            }
+            default:{
+                getType = null;
+                break;
+            }
+        }
+
+        return getType;
+    }
+
 }

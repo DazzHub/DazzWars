@@ -2,10 +2,11 @@ package com.dazzhub.skywars.Utils.kits;
 
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.configuration.configCreate;
 import com.dazzhub.skywars.Utils.inventory.menu.IMenu;
 import com.dazzhub.skywars.Utils.inventory.ordItems;
-import com.dazzhub.skywars.Utils.xseries.XSound;
+import com.cryptomorin.xseries.XSound;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.stream.Collectors;
 
-import static com.dazzhub.skywars.Utils.xseries.XSound.ENTITY_VILLAGER_YES;
+import static com.cryptomorin.xseries.XSound.ENTITY_VILLAGER_YES;
 
 @Getter
 public class IKitManager {
@@ -54,8 +55,8 @@ public class IKitManager {
         createMenuSolo();
         createMenuTeam();
 
-        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eLoaded kits solo: &a" + kitSoloHashMap.size()));
-        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &eLoaded kits team: &a" + kitTeamHashMap.size()));
+        Console.info("&eLoaded kits solo: &a" + kitSoloHashMap.size());
+        Console.info("&eLoaded kits team: &a" + kitTeamHashMap.size());
     }
 
     public void giveKit(String namekit, String mode, Player p, GamePlayer gamePlayer){
@@ -81,13 +82,13 @@ public class IKitManager {
     public void createKit(Player p, String namekit, int price, String mode){
         if (mode.equals("solo") && kitSoloHashMap.containsKey(namekit)){
             p.sendMessage(c("&a&l\u2714 &fKit &e" + namekit + "&f already exists"));
-            XSound.playSoundFromString(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
             return;
         }
 
         if (mode.equals("team") && kitTeamHashMap.containsKey(namekit)){
             p.sendMessage(c("&a&l\u2714 &fKit &e" + namekit + "&f already exists"));
-            XSound.playSoundFromString(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
+            XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
             return;
         }
 
@@ -97,7 +98,7 @@ public class IKitManager {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                Console.error(e.getMessage());
             }
         }
 
@@ -134,11 +135,11 @@ public class IKitManager {
         try {
             config2.save(file2);
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.error(e.getMessage());
         }
 
         p.sendMessage(c("&a&l\u2714 &fKit &e" + namekit + "&f has been created"));
-        XSound.playSoundFromString(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
+        XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
     }
 
     private void setTemplate(int price, File file, FileConfiguration config){
@@ -158,7 +159,7 @@ public class IKitManager {
         try {
             config.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.error(e.getMessage());
         }
     }
 
@@ -196,7 +197,7 @@ public class IKitManager {
         try {
             config.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.error(e.getMessage());
         }
     }
 
@@ -204,7 +205,7 @@ public class IKitManager {
         File sf = main.getConfigUtils().getFile(this.main, "Kits/solo/" + name);
 
         if (!sf.exists()) {
-            Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cKit File does not exist " + name));
+            Console.warning("&cKit File does not exist " + name);
             return;
         }
 
@@ -234,7 +235,7 @@ public class IKitManager {
         File sf = main.getConfigUtils().getFile(this.main, "Kits/team/" + name);
 
         if (!sf.exists()) {
-            Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cKit File does not exist " + name));
+            Console.warning("&cKit File does not exist " + name);
             return;
         }
 

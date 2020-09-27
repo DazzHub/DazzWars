@@ -2,9 +2,10 @@ package com.dazzhub.skywars.Listeners.Bukkit;
 
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Utils.xseries.XSound;
+import com.cryptomorin.xseries.XSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,7 +51,7 @@ public class onCorner implements Listener {
             e.setCancelled(true);
         }
 
-        if (compareItem(p.getItemInHand(), main.getItemsCustom().getAddChestCenter())) {
+        if (e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST  && compareItem(p.getItemInHand(), main.getItemsCustom().getAddChestCenter())) {
             if (e.getAction().equals(Action.LEFT_CLICK_BLOCK)){
                 Main.getPlugin().getArenaManager().addChestCenter(p, e.getClickedBlock().getLocation(), namearena);
             }
@@ -93,7 +94,7 @@ public class onCorner implements Listener {
                 gamePlayer.setCage2(location);
             }
 
-            XSound.playSoundFromString(player, String.valueOf(XSound.BLOCK_LAVA_POP.parseSound()));
+            XSound.play(player, String.valueOf(XSound.BLOCK_LAVA_POP.parseSound()));
             player.sendMessage(c("&a&l\u2714 &fYou have set the &9#" + (n + 1)));
         }
     }
