@@ -25,7 +25,7 @@ public class endGame extends BukkitRunnable {
     @Override
     public void run() {
 
-        if (timer >= 2) {
+        if (timer == arena.getFinishedGame()) {
             Bukkit.getScheduler().runTask(Main.getPlugin(), () -> {
                 for (GamePlayer gamePlayer: arena.getPlayers()) {
                     switch (gamePlayer.getArena().getMode()){

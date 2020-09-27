@@ -12,7 +12,7 @@ vote:
   DATA-VALUE: 0
   SLOT: 0
 kits:
-  ACTION: 'open: kitteam'
+  ACTION: 'open: kit-team.yml'
   NAME: '&5&lKITS &7(Right-Click)'
   DESCRIPTION:
     - ''

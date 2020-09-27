@@ -4,11 +4,13 @@ import com.cryptomorin.xseries.XSound;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.effects.getTypeWins;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -57,7 +59,7 @@ public class antigravity implements getTypeWins {
                     if (i == 20){
                         p.setVelocity(new Vector(0, 0.1, 0));
                         p.playSound(p.getLocation(), XSound.ENTITY_GENERIC_EXPLODE.parseSound(), 1.4f, 1.5f);
-                        new fireworks(p.getLocation()).playWinEffect();
+                        spawn(p.getLocation());
 
                         as.remove();
                         as = null;
@@ -68,5 +70,24 @@ public class antigravity implements getTypeWins {
             }.runTaskTimer(Main.getPlugin(),1,0);
 
         }
+    }
+
+    private void spawn(Location location){
+        Firework fw = (Firework) location.getWorld().spawnEntity(location, EntityType.FIREWORK);
+        FireworkMeta fwm = fw.getFireworkMeta();
+
+        fwm.setPower(2);
+        fwm.addEffect(FireworkEffect.builder()
+                .withColor(Color.LIME)
+                .withColor(Color.FUCHSIA)
+                .withColor(Color.RED)
+                .flicker(true)
+                .trail(true)
+                .withFade(Color.GREEN)
+                .build()
+        );
+        fw.setFireworkMeta(fwm);
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), fw::detonate, 5);
     }
 }

@@ -502,7 +502,7 @@ public class GamePlayer {
 
             case "default":
             case "fireworks": {
-                getType = new fireworks(getPlayer().getLocation());
+                getType = new fireworks(this);
                 break;
             }
 
