@@ -1,0 +1,47 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&8➣ Cage solo #1'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+  
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+  
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - '&8» &eYou currently don''t have'
+      - '&8» &6permission to do this'
+      - ''
+default:
+  PRICE: 0
+  ACTION: 'cage: Default/SOLO'
+  NAME: '&e&lDefault'
+  DESCRIPTION:
+    - ''
+    - '&7➲ &e&l%name%'
+    - '&7➲ &2&lCLICK&f to buy cage %price%'
+    - ''
+  DESCRIPTION-PURCHASED:
+    - ''
+    - '&7➲ &eOBTAINED'
+    - ''
+  DESCRIPTION-SELECTED:
+    - ''
+    - '&7➲ &eSELECTED'
+    - ''
+  ICON-ITEM: 298
+  DATA-VALUE: 0
+  POSITION-X: 2
+  POSITION-Y: 2

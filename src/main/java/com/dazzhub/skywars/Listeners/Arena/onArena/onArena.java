@@ -14,16 +14,14 @@ import org.bukkit.block.Chest;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -438,6 +436,42 @@ public class onArena implements Listener {
             if (e.getSlot() == Main.getRelativePosition(config.getInt("Messages.MenuSpectator.Close.POSITION-X"),config.getInt("Messages.MenuSpectator.Close.POSITION-Y"))) {
                 p.closeInventory();
             }
+        }
+    }
+
+    @EventHandler
+    public void onTrails(EntityShootBowEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player p = (Player) e.getEntity();
+            GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
+            if (gamePlayer.isInArena()) {
+                Projectile proj = (Projectile) e.getProjectile();
+
+                if (proj != null && !gamePlayer.getProjectilesList().contains(proj)) {
+                    switch (gamePlayer.getArena().getMode()){
+                        case SOLO:{
+                            gamePlayer.getTrail(gamePlayer.getTrailSolo(), proj);
+                            break;
+                        }
+                        case TEAM:{
+                            gamePlayer.getTrail(gamePlayer.getTrailTeam(), proj);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void offTrails(ProjectileHitEvent e) {
+        if (e.getEntity().getShooter() instanceof Player) {
+            Player p = (Player) e.getEntity().getShooter();
+            GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
+            Projectile proj = e.getEntity();
+            gamePlayer.getProjectilesList().remove(proj);
         }
     }
 

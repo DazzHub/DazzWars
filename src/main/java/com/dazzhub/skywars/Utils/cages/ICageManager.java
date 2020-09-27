@@ -53,9 +53,6 @@ public class ICageManager {
         cagesolo.forEach(this::importSchematicSolo);
         cageteam.forEach(this::importSchematicTeam);
 
-        createMenuSolo();
-        createMenuTeam();
-
         Console.info("&eLoaded cages solo: &a"+getCagesSolo().size());
         Console.info("&eLoaded cages team: &a"+getCagesTeam().size());
     }
@@ -97,8 +94,6 @@ public class ICageManager {
         File file = this.main.getConfigUtils().getFile(this.main, "Cages/" + mode + "/" + nameCage);
         FileConfiguration config = this.main.getConfigUtils().getConfig(this.main, "Cages/" + mode + "/"+ nameCage);
 
-        setTemplate(price, file, config);
-
         config.set("Name", nameCage);
         config.set("Diff.x", xDiff);
         config.set("Diff.y", yDiff);
@@ -111,39 +106,10 @@ public class ICageManager {
             Console.error(e.getMessage());
         }
 
-        Material material = config.isInt("ITEM.ICON-ITEM") ? Material.getMaterial(config.getInt("ITEM.ICON-ITEM")) : Material.getMaterial(config.getString("ITEM.ICON-ITEM"));
-
         if (mode.equals("solo")){
-
-            cagesSolo.put(nameCage,
-                    new ICage(nameCage, xDiff, yDiff, zDiff, blockList,
-                        config.getString("ITEM.ACTION"),
-                        config.getInt("ITEM.PRICE"),
-                        config.getString("ITEM.NAME"),
-                        config.getStringList("ITEM.DESCRIPTION"),
-                        config.getStringList("ITEM.DESCRIPTION-PURCHASED"),
-                        config.getStringList("ITEM.DESCRIPTION-SELECTED"),
-                        material,
-                        (short) config.getInt("ITEM.DATA-VALUE"),
-                        config.getString("ITEM.PERMISSION"),
-                        Main.getRelativePosition(config.getInt("ITEM.POSITION-X"), config.getInt("ITEM.POSITION-Y"))
-                    )
-            );
-
+            cagesSolo.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
         } else if (mode.equals("team")){
-            cagesTeam.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList,
-                            config.getString("ITEM.ACTION"),
-                            config.getInt("ITEM.PRICE"),
-                            config.getString("ITEM.NAME"),
-                            config.getStringList("ITEM.DESCRIPTION"),
-                            config.getStringList("ITEM.DESCRIPTION-PURCHASED"),
-                            config.getStringList("ITEM.DESCRIPTION-SELECTED"),
-                            material,
-                            (short) config.getInt("ITEM.DATA-VALUE"),
-                            config.getString("ITEM.PERMISSION"),
-                            Main.getRelativePosition(config.getInt("ITEM.POSITION-X"), config.getInt("ITEM.POSITION-Y"))
-                    )
-            );
+            cagesTeam.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
         } else {
             Console.info("&cCage error create: " + nameCage);
         }
@@ -162,21 +128,8 @@ public class ICageManager {
         }
 
         FileConfiguration sc = YamlConfiguration.loadConfiguration(sf);
-        Material material = sc.isInt("ITEM.ICON-ITEM") ? Material.getMaterial(sc.getInt("ITEM.ICON-ITEM")) : Material.getMaterial(sc.getString("ITEM.ICON-ITEM"));
 
-        cagesSolo.put(sc.getString("Name"), new ICage(sc.getString("Name"), sc.getInt("Diff.x"), sc.getInt("Diff.y"), sc.getInt("Diff.z"), sc.getStringList("Blocks"),
-                        sc.getString("ITEM.ACTION"),
-                        sc.getInt("ITEM.PRICE"),
-                        sc.getString("ITEM.NAME"),
-                        sc.getStringList("ITEM.DESCRIPTION"),
-                        sc.getStringList("ITEM.DESCRIPTION-PURCHASED"),
-                        sc.getStringList("ITEM.DESCRIPTION-SELECTED"),
-                        material,
-                        (short) sc.getInt("ITEM.DATA-VALUE"),
-                        sc.getString("ITEM.PERMISSION"),
-                        Main.getRelativePosition(sc.getInt("ITEM.POSITION-X"), sc.getInt("ITEM.POSITION-Y"))
-                )
-        );
+        cagesSolo.put(sc.getString("Name"), new ICage(sc.getString("Name"), sc.getInt("Diff.x"), sc.getInt("Diff.y"), sc.getInt("Diff.z"), sc.getStringList("Blocks")));
     }
 
     private void importSchematicTeam(String name) {
@@ -188,94 +141,8 @@ public class ICageManager {
         }
 
         FileConfiguration sc = YamlConfiguration.loadConfiguration(sf);
-        Material material = sc.isInt("ITEM.ICON-ITEM") ? Material.getMaterial(sc.getInt("ITEM.ICON-ITEM")) : Material.getMaterial(sc.getString("ITEM.ICON-ITEM"));
 
-        cagesTeam.put(sc.getString("Name"), new ICage(sc.getString("Name"), sc.getInt("Diff.x"), sc.getInt("Diff.y"), sc.getInt("Diff.z"), sc.getStringList("Blocks"),
-                        sc.getString("ITEM.ACTION"),
-                        sc.getInt("ITEM.PRICE"),
-                        sc.getString("ITEM.NAME"),
-                        sc.getStringList("ITEM.DESCRIPTION"),
-                        sc.getStringList("ITEM.DESCRIPTION-PURCHASED"),
-                        sc.getStringList("ITEM.DESCRIPTION-SELECTED"),
-                        material,
-                        (short) sc.getInt("ITEM.DATA-VALUE"),
-                        sc.getString("ITEM.PERMISSION"),
-                        Main.getRelativePosition(sc.getInt("ITEM.POSITION-X"), sc.getInt("ITEM.POSITION-Y"))
-                )
-        );
-    }
-
-    private void setTemplate(int price, File file, FileConfiguration config){
-        Configuration configcage = this.main.getConfigUtils().getConfig(this.main, "Cages/cages");
-
-        config.set("ITEM.PRICE", price);
-        config.set("ITEM.ACTION", "buycage: %cage%");
-        config.set("ITEM.NAME", configcage.getString("templateCage.NAME"));
-        config.set("ITEM.DESCRIPTION", configcage.getStringList("templateCage.DESCRIPTION"));
-        config.set("ITEM.DESCRIPTION-PURCHASED", configcage.getStringList("templateCage.DESCRIPTION-PURCHASED"));
-        config.set("ITEM.DESCRIPTION-SELECTED", configcage.getStringList("templateCage.DESCRIPTION-SELECTED"));
-        config.set("ITEM.ICON-ITEM", 0);
-        config.set("ITEM.DATA-VALUE", 0);
-        config.set("ITEM.POSITION-X", 0);
-        config.set("ITEM.POSITION-Y", 0);
-
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            Console.error(e.getMessage());
-        }
-    }
-
-    private void createMenuSolo() {
-        Configuration config = main.getConfigUtils().getConfig(this.main, "Cages/cages");
-        if (cagesSolo.isEmpty()) return;
-
-        HashMap<Integer, ordItems> items = new HashMap<>();
-        for (String solo : cagesSolo.keySet()) {
-            ICage iCage = cagesSolo.get(solo);
-            items.put(iCage.getSlot(), new ordItems(iCage.icon(), iCage.getSlot(), iCage.getActionCage().replace("%cage%", iCage.getName() + "/" + "SOLO" + "/" + iCage.getPrice()), iCage.getPermission(), null));
-        }
-
-        String menuName = config.getString("menu-settings.name").replace("{type}", "Solo");
-        int menuRows = config.getInt("menu-settings.rows");
-        String menuCommand = config.getString("menu-settings.command").replace("{type}", "solo");
-
-        menuName = "§r" + menuName.replace("&", "§");
-        if (menuName.length() > 32) {
-            menuName = "§rError, name too long!";
-        }
-
-        IMenu iMenu = new IMenu(menuName, menuRows, menuCommand, items);
-
-        main.getMenuManager().getMenuFileName().put("cagesolo", iMenu);
-        main.getMenuManager().getMenuTileName().put(menuName, iMenu);
-        main.getMenuManager().getMenuCommand().put(menuCommand, "cagesolo");
-    }
-
-    private void createMenuTeam() {
-        Configuration config = main.getConfigUtils().getConfig(this.main, "Cages/cages");
-        if (cagesTeam.isEmpty()) return;
-
-        HashMap<Integer, ordItems> items = new HashMap<>();
-        for (String solo : cagesTeam.keySet()) {
-            ICage iCage = cagesTeam.get(solo);
-            items.put(iCage.getSlot(), new ordItems(iCage.icon(), iCage.getSlot(), iCage.getActionCage().replace("%cage%", iCage.getName() + "/" + "TEAM" + "/" + iCage.getPrice()), iCage.getPermission(), null));
-        }
-
-        String menuName = config.getString("menu-settings.name").replace("{type}", "Team");
-        int menuRows = config.getInt("menu-settings.rows");
-        String menuCommand = config.getString("menu-settings.command").replace("{type}", "team");
-
-        menuName = "§r" + menuName.replace("&", "§");
-        if (menuName.length() > 32) {
-            menuName = "§rError, name too long!";
-        }
-
-        IMenu iMenu = new IMenu(menuName, menuRows, menuCommand, items);
-
-        main.getMenuManager().getMenuFileName().put("cageteam", iMenu);
-        main.getMenuManager().getMenuTileName().put(menuName, iMenu);
-        main.getMenuManager().getMenuCommand().put(menuCommand, "cageteam");
+        cagesTeam.put(sc.getString("Name"), new ICage(sc.getString("Name"), sc.getInt("Diff.x"), sc.getInt("Diff.y"), sc.getInt("Diff.z"), sc.getStringList("Blocks")));
     }
 
     public String c(String msg){ return ChatColor.translateAlternateColorCodes('&', msg); }

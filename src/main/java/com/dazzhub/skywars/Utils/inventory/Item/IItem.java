@@ -70,7 +70,7 @@ public class IItem {
             if (ordItems == null) return;
             if (slot == ordItems.getSlot()) {
                 if (compareItem(playerInteractEvent.getItem(), ordItems.getIcon().build(p))) return;
-                OptionClickEvent e = new OptionClickEvent(p, null, ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract());
+                OptionClickEvent e = new OptionClickEvent(p, null, ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract(), ordItems.getPrice());
                 if (hasPerm(p, e)) {
                     if (e.getInteract().equalsIgnoreCase("Clicks")) {
                         this.handler.onOptionClick(e);
@@ -89,7 +89,7 @@ public class IItem {
 
             if (slot == ordItems.getSlot()) {
                 if (compareItem(p.getItemInHand(), ordItems.getIcon().build(p))) return;
-                OptionClickEvent e = new OptionClickEvent(p, target.getName(), ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract());
+                OptionClickEvent e = new OptionClickEvent(p, target.getName(), ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract(), ordItems.getPrice());
                 if (hasPerm(p, e)) {
                     if (e.getInteract().equalsIgnoreCase("AtEntity")) {
                         this.handler.onOptionClick(e);
@@ -108,7 +108,7 @@ public class IItem {
 
             if (slot == ordItems.getSlot()) {
                 if (compareItem(p.getItemInHand(), ordItems.getIcon().build(p))) return;
-                OptionClickEvent e = new OptionClickEvent(p, target.getName(), ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract());
+                OptionClickEvent e = new OptionClickEvent(p, target.getName(), ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract(), ordItems.getPrice());
                 if (hasPerm(p, e)) {
                     if (e.getInteract().equalsIgnoreCase("ByDamage")) {
                         this.handler.onOptionClick(e);

@@ -6,6 +6,7 @@ import com.dazzhub.skywars.Listeners.Custom.WinEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.effects.getTypeKills;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,14 +60,19 @@ public class onDeath implements Listener {
 
         if (killer != null) {
             killer.addKillsArena();
-
             switch (arena.getMode()) {
-                case SOLO:
+                case SOLO: {
                     killer.addKillsSolo();
+                    getTypeKills effect = killer.getTypeKill(killer.getKillEffectSolo());
+                    if (effect != null) effect.playKillEffect();
                     break;
-                case TEAM:
+                }
+                case TEAM: {
                     killer.addKillsTeam();
+                    getTypeKills effect = killer.getTypeKill(killer.getKillEffectTeam());
+                    if (effect != null) effect.playKillEffect();
                     break;
+                }
             }
         }
     }

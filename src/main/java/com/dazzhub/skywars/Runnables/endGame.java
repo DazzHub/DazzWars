@@ -3,6 +3,7 @@ package com.dazzhub.skywars.Runnables;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.effects.getTypeWins;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -23,6 +24,25 @@ public class endGame extends BukkitRunnable {
 
     @Override
     public void run() {
+
+        if (timer >= 2) {
+            Bukkit.getScheduler().runTask(Main.getPlugin(), () -> {
+                for (GamePlayer gamePlayer: arena.getPlayers()) {
+                    switch (gamePlayer.getArena().getMode()){
+                        case SOLO:{
+                            getTypeWins win = gamePlayer.getTypeWin(gamePlayer.getWinEffectSolo());
+                            if (win != null) win.playWinEffect();
+                            break;
+                        }
+                        case TEAM:{
+                            getTypeWins win = gamePlayer.getTypeWin(gamePlayer.getWinEffectTeam());
+                            if (win != null) win.playWinEffect();
+                            break;
+                        }
+                    }
+                }
+            });
+        }
 
         if (timer <= 1) {
             Bukkit.getScheduler().runTask(Main.getPlugin(), () -> {

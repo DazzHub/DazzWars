@@ -40,11 +40,24 @@ public class IMenuManager {
     }
 
     public void loadFiles() {
-        configCreate.get().setup(main, "Inventory/Menu/vote");
-        configCreate.get().setup(main, "Inventory/Menu/vote-chest");
-        configCreate.get().setup(main, "Inventory/Menu/vote-heart");
-        configCreate.get().setup(main, "Inventory/Menu/vote-time");
-        configCreate.get().setup(main, "Inventory/Menu/shop");
+        File menuFolder = new File(main.getDataFolder(), "Inventory/Menu");
+        if (!menuFolder.exists()) {
+            configCreate.get().setup(main, "Inventory/Menu/vote");
+            configCreate.get().setup(main, "Inventory/Menu/vote-chest");
+            configCreate.get().setup(main, "Inventory/Menu/vote-heart");
+            configCreate.get().setup(main, "Inventory/Menu/vote-time");
+            configCreate.get().setup(main, "Inventory/Menu/shop");
+            configCreate.get().setup(main, "Inventory/Menu/cage-solo");
+            configCreate.get().setup(main, "Inventory/Menu/cage-team");
+            configCreate.get().setup(main, "Inventory/Menu/killeffect-solo");
+            configCreate.get().setup(main, "Inventory/Menu/killeffect-team");
+            configCreate.get().setup(main, "Inventory/Menu/kit-solo");
+            configCreate.get().setup(main, "Inventory/Menu/kit-team");
+            configCreate.get().setup(main, "Inventory/Menu/wineffect-solo");
+            configCreate.get().setup(main, "Inventory/Menu/wineffect-team");
+            configCreate.get().setup(main, "Inventory/Menu/traileffect-solo");
+            configCreate.get().setup(main, "Inventory/Menu/traileffect-team");
+        }
 
         File file = new File(main.getDataFolder(), "Inventory/Menu");
         File[] files = file.listFiles();
@@ -115,11 +128,16 @@ public class IMenuManager {
         menuNodes.forEach(s -> {
             ConfigurationSection confSection = config.getConfigurationSection(s);
             if (!s.equals("menu-settings")) {
+                int price = confSection.getInt("PRICE");
                 String command = confSection.getString("ACTION");
 
                 String name = confSection.getString("NAME");
                 String permission = confSection.getString("PERMISSION");
+
                 List<String> description = confSection.getStringList("DESCRIPTION");
+                List<String> descriptionpurchased = confSection.getStringList("DESCRIPTION-PURCHASED");
+                List<String>  descriptionselected = confSection.getStringList("DESCRIPTION-SELECTED");
+
                 String skullplayer = confSection.getString("SKULL-OWNER");
 
                 int amount = confSection.getInt("ICON-AMOUNT");
@@ -142,13 +160,17 @@ public class IMenuManager {
                 Icon icon = new Icon(XMaterial.matchXMaterial(material), amount, data)
                         .setName(name)
                         .setLore(description)
+                        .setLorePurchased(descriptionpurchased)
+                        .setLoreSelected(descriptionselected)
+                        .setPrice(price)
+                        .setType(command)
                         .setSkull(skullplayer)
                         .addEnchantment(enchantments)
                         .addDamage(durability)
                         .addPermissionView(permission, finalMaterialview, finalDataView, finalLoreView)
                 ;
 
-                items.put(Main.getRelativePosition(slotX, slotY), new ordItems(icon, Main.getRelativePosition(slotX, slotY), command, permission, null));
+                items.put(Main.getRelativePosition(slotX, slotY), new ordItems(icon, Main.getRelativePosition(slotX, slotY), command, permission, null, price));
             }
         });
 

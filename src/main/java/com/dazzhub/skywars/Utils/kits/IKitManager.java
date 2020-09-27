@@ -52,9 +52,6 @@ public class IKitManager {
         kitsololist.forEach(this::importKitSolo);
         kitteamlist.forEach(this::importKitTeam);
 
-        createMenuSolo();
-        createMenuTeam();
-
         Console.info("&eLoaded kits solo: &a" + kitSoloHashMap.size());
         Console.info("&eLoaded kits team: &a" + kitTeamHashMap.size());
     }
@@ -109,14 +106,12 @@ public class IKitManager {
 
         switch (mode){
             case "solo":{
-                setTemplate(price, file, config);
                 saveInventory(p, file, config);
 
                 importKitSolo(namekit);
                 break;
             }
             case "team":{
-                setTemplate(price, file, config);
                 saveInventory(p, file, config);
 
                 importKitTeam(namekit);
@@ -141,28 +136,6 @@ public class IKitManager {
         p.sendMessage(c("&a&l\u2714 &fKit &e" + namekit + "&f has been created"));
         XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
     }
-
-    private void setTemplate(int price, File file, FileConfiguration config){
-        Configuration configkits = this.main.getConfigUtils().getConfig(this.main, "Kits/kits");
-
-        config.set("ITEM.PRICE", price);
-        config.set("ITEM.ACTION", "kit: %name%");
-        config.set("ITEM.NAME", configkits.getString("templateKit.NAME"));
-        config.set("ITEM.DESCRIPTION", configkits.getStringList("templateKit.DESCRIPTION"));
-        config.set("ITEM.DESCRIPTION-PURCHASED", configkits.getStringList("templateKit.DESCRIPTION-PURCHASED"));
-        config.set("ITEM.DESCRIPTION-SELECTED", configkits.getStringList("templateKit.DESCRIPTION-SELECTED"));
-        config.set("ITEM.ICON-ITEM", 0);
-        config.set("ITEM.DATA-VALUE", 0);
-        config.set("ITEM.POSITION-X", 0);
-        config.set("ITEM.POSITION-Y", 0);
-
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            Console.error(e.getMessage());
-        }
-    }
-
 
     private void saveInventory(Player p, File file, FileConfiguration config) {
         List<String> tempInfo = new ArrayList<>();
@@ -211,24 +184,7 @@ public class IKitManager {
 
         FileConfiguration sc = YamlConfiguration.loadConfiguration(sf);
 
-        Material material = sc.isInt("ITEM.ICON-ITEM") ? Material.getMaterial(sc.getInt("ITEM.ICON-ITEM")) : Material.getMaterial(sc.getString("ITEM.ICON-ITEM"));
-
-        kitSoloHashMap.put(sf.getName().toLowerCase().replace(".yml", ""),
-                new IKit(
-                        sf.getName().replace(".yml", ""),
-                        sc.getString("ITEM.ACTION"),
-                        sc.getInt("ITEM.PRICE"),
-                        sc.getString("ITEM.NAME"),
-                        sc.getStringList("ITEM.DESCRIPTION"),
-                        sc.getStringList("ITEM.DESCRIPTION-PURCHASED"),
-                        sc.getStringList("ITEM.DESCRIPTION-SELECTED"),
-                        material,
-                        (short) sc.getInt("ITEM.DATA-VALUE"),
-                        sc.getString("ITEM.PERMISSION"),
-                        Main.getRelativePosition( sc.getInt("ITEM.POSITION-X"), sc.getInt("ITEM.POSITION-Y"))
-                )
-        );
-
+        kitSoloHashMap.put(sf.getName().toLowerCase().replace(".yml", ""), new IKit(sf.getName().replace(".yml", "")));
     }
 
     private void importKitTeam(String name) {
@@ -241,75 +197,7 @@ public class IKitManager {
 
         FileConfiguration sc = YamlConfiguration.loadConfiguration(sf);
 
-        Material material = sc.isInt("ITEM.ICON-ITEM") ? Material.getMaterial(sc.getInt("ITEM.ICON-ITEM")) : Material.getMaterial(sc.getString("ITEM.ICON-ITEM"));
-
-        kitTeamHashMap.put(sf.getName().toLowerCase().replace(".yml", ""),
-                new IKit(
-                        sf.getName().replace(".yml", ""),
-                        sc.getString("ITEM.ACTION"),
-                        sc.getInt("ITEM.PRICE"),
-                        sc.getString("ITEM.NAME"),
-                        sc.getStringList("ITEM.DESCRIPTION"),
-                        sc.getStringList("ITEM.DESCRIPTION-PURCHASED"),
-                        sc.getStringList("ITEM.DESCRIPTION-SELECTED"),
-                        material,
-                        (short) sc.getInt("ITEM.DATA-VALUE"),
-                        sc.getString("ITEM.PERMISSION"),
-                        Main.getRelativePosition( sc.getInt("ITEM.POSITION-X"), sc.getInt("ITEM.POSITION-Y"))
-                )
-        );
-
-    }
-
-    private void createMenuSolo() {
-        Configuration config = main.getConfigUtils().getConfig(this.main, "Kits/kits");
-        if (kitSoloHashMap.isEmpty()) return;
-        HashMap<Integer, ordItems> items = new HashMap<>();
-        for (String solo : kitSoloHashMap.keySet()) {
-            IKit iKit = kitSoloHashMap.get(solo);
-            items.put(iKit.getSlot(), new ordItems(iKit.icon(), iKit.getSlot(), iKit.getActionKit().replace("%name%", iKit.getNameKit() + "/" + "SOLO" + "/" + iKit.getPrice()), iKit.getPermission(), null));
-        }
-
-        String menuName = config.getString("menu-settings.name").replace("{type}", "Solo");
-        int menuRows = config.getInt("menu-settings.rows");
-        String menuCommand = config.getString("menu-settings.command").replace("{type}", "solo");
-
-        menuName = "§r" + menuName.replace("&", "§");
-        if (menuName.length() > 32) {
-            menuName = "§rError, name too long!";
-        }
-
-        IMenu iMenu = new IMenu(menuName, menuRows, menuCommand, items);
-
-        main.getMenuManager().getMenuFileName().put("kitsolo", iMenu);
-        main.getMenuManager().getMenuTileName().put(menuName, iMenu);
-        main.getMenuManager().getMenuCommand().put(menuCommand, "kitsolo");
-    }
-
-    private void createMenuTeam() {
-        Configuration config = main.getConfigUtils().getConfig(this.main, "Kits/kits");
-        if (kitTeamHashMap.isEmpty()) return;
-
-        HashMap<Integer, ordItems> items = new HashMap<>();
-        for (String team : kitTeamHashMap.keySet()) {
-            IKit iKit = kitTeamHashMap.get(team);
-            items.put(iKit.getSlot(), new ordItems(iKit.icon(), iKit.getSlot(), iKit.getActionKit().replace("%name%", iKit.getNameKit() + "/" + "TEAM" + "/" + iKit.getPrice()), iKit.getPermission(), null));
-        }
-
-        String menuName = config.getString("menu-settings.name").replace("{type}", "Team");
-        int menuRows = config.getInt("menu-settings.rows");
-        String menuCommand = config.getString("menu-settings.command").replace("{type}", "team");
-
-        menuName = "§r" + menuName.replace("&", "§");
-        if (menuName.length() > 32) {
-            menuName = "§rError, name too long!";
-        }
-
-        IMenu iMenu = new IMenu(menuName, menuRows, menuCommand, items);
-
-        main.getMenuManager().getMenuFileName().put("kitteam", iMenu);
-        main.getMenuManager().getMenuTileName().put(menuName, iMenu);
-        main.getMenuManager().getMenuCommand().put(menuCommand, "kitteam");
+        kitTeamHashMap.put(sf.getName().toLowerCase().replace(".yml", ""), new IKit(sf.getName().replace(".yml", "")));
     }
 
     private String c(String c) {

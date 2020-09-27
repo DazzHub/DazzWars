@@ -17,6 +17,10 @@ public class Console {
         Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cERROR&8> &e" + message));
     }
 
+    public static void debug(String message){
+        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &cDEBUG &8> &e" + message));
+    }
+
     private static String c(String msg){ return ChatColor.translateAlternateColorCodes('&', msg); }
 
 }

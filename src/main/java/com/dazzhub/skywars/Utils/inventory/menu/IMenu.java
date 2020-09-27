@@ -52,7 +52,10 @@ public class IMenu {
         this.handler = (event -> {
             Player player = event.getPlayer();
             String target = event.getTarget();
+            Integer price = event.getPrice();
+
             String cmd = event.getCmd();
+
             if (cmd == null || cmd.equals("")) {
                 return;
             }
@@ -65,11 +68,11 @@ public class IMenu {
                         if (sub.startsWith(" ")) {
                             sub = sub.substring(1);
                         }
-                        parseCommand(player, target, sub);
+                        parseCommand(player, target, sub, price);
                     }
                 }
                 else {
-                    parseCommand(player, target, cmd);
+                    parseCommand(player, target, cmd, price);
                 }
             }, 2L);
         });
@@ -110,7 +113,7 @@ public class IMenu {
             if (ordItems == null) return;
 
             if (slot == ordItems.getSlot()) {
-                OptionClickEvent e = new OptionClickEvent(p, inv.getTitle().contains("/") ? inv.getTitle().split("/")[1] : null, ordItems.getIcon(), slot, ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract());
+                OptionClickEvent e = new OptionClickEvent(p, inv.getTitle().contains("/") ? inv.getTitle().split("/")[1] : null, ordItems.getIcon(), slot, ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract(), ordItems.getPrice());
                 if (hasPerm(p, e)) {
                     this.handler.onOptionClick(e);
                 } else {
@@ -146,7 +149,7 @@ public class IMenu {
         return coll == null || coll.isEmpty();
     }
 
-    private void parseCommand(Player p, String target, String cmd) {
+    private void parseCommand(Player p, String target, String cmd, Integer price) {
         if (cmd != null && !cmd.equals("")) {
 
             if (cmd.contains("%player%")) {
@@ -158,6 +161,13 @@ public class IMenu {
             }
 
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
+            if (price != 0 && gamePlayer.getCoins() < price) {
+                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                return;
+            } else {
+                gamePlayer.removeCoins(price);
+            }
 
             if (cmd.startsWith("console:")) {
                 String consoleCommand = cmd.substring(8);
@@ -181,8 +191,8 @@ public class IMenu {
                 if (menu == null) return;
 
                 menu.open(p, target);
-            } else if (cmd.startsWith("buycage:")) {
-                String action = cmd.substring(8);
+            } else if (cmd.startsWith("cage:")) {
+                String action = cmd.substring(5);
                 if (action.startsWith(" ")) {
                     action = action.substring(1);
                 }
@@ -194,15 +204,10 @@ public class IMenu {
 
                         if (!gamePlayer.getCagesSoloList().contains(cage[0])) {
 
-                            int coins = Integer.parseInt(cmd.split("/")[2]);
-                            if (gamePlayer.getCoins() >= coins) {
-                                gamePlayer.getCagesSoloList().add(cage[0]);
-                                gamePlayer.setCageSolo(cage[0]);
-                                gamePlayer.removeCoins(coins);
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
-                            } else {
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.InsufficientCoins").replace("%coins%", String.valueOf(coins)));
-                            }
+                            gamePlayer.getCagesSoloList().add(cage[0]);
+                            gamePlayer.setCageSolo(cage[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
+
                         } else {
                             gamePlayer.setCageSolo(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
@@ -213,20 +218,14 @@ public class IMenu {
                     if (main.getCageManager().getCagesTeam().containsKey(cage[0])) {
 
                         if (!gamePlayer.getCagesTeamList().contains(cage[0])) {
-                            int coins = Integer.parseInt(cmd.split("/")[2]);
-                            if (gamePlayer.getCoins() >= coins) {
-                                gamePlayer.getCagesTeamList().add(cage[0]);
-                                gamePlayer.setCageTeam(cage[0]);
-                                gamePlayer.removeCoins(coins);
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
-                            } else {
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.InsufficientCoins").replace("%coins%", String.valueOf(coins)));
-                            }
+                            gamePlayer.getCagesTeamList().add(cage[0]);
+                            gamePlayer.setCageTeam(cage[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
+
                         } else {
                             gamePlayer.setCageTeam(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
                         }
-
                     }
                 }
 
@@ -242,16 +241,9 @@ public class IMenu {
                     if (main.getiKitManager().getKitSoloHashMap().containsKey(kit[0].toLowerCase())) {
 
                         if (!gamePlayer.getKitSoloList().contains(kit[0])) {
-
-                            int coins = Integer.parseInt(cmd.split("/")[2]);
-                            if (gamePlayer.getCoins() >= coins) {
-                                gamePlayer.getKitSoloList().add(kit[0]);
-                                gamePlayer.setKitSolo(kit[0]);
-                                gamePlayer.removeCoins(coins);
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
-                            } else {
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.InsufficientCoins").replace("%coins%", String.valueOf(coins)));
-                            }
+                            gamePlayer.getKitSoloList().add(kit[0]);
+                            gamePlayer.setKitSolo(kit[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
                         } else {
                             gamePlayer.setKitSolo(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Selected").replace("%kit%", kit[0]));
@@ -262,15 +254,9 @@ public class IMenu {
                     if (main.getiKitManager().getKitTeamHashMap().containsKey(kit[0].toLowerCase())) {
 
                         if (!gamePlayer.getKitTeamList().contains(kit[0])) {
-                            int coins = Integer.parseInt(cmd.split("/")[2]);
-                            if (gamePlayer.getCoins() >= coins) {
-                                gamePlayer.getKitTeamList().add(kit[0]);
-                                gamePlayer.setKitTeam(kit[0]);
-                                gamePlayer.removeCoins(coins);
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
-                            } else {
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.InsufficientCoins").replace("%coins%", String.valueOf(coins)));
-                            }
+                            gamePlayer.getKitTeamList().add(kit[0]);
+                            gamePlayer.setKitTeam(kit[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
                         } else {
                             gamePlayer.setKitTeam(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Selected").replace("%kit%", kit[0]));
@@ -278,7 +264,87 @@ public class IMenu {
 
                     }
                 }
+            } else if (cmd.startsWith("wineffect:")) {
+                String action = cmd.substring(10);
+                if (action.startsWith(" ")) {
+                    action = action.substring(1);
+                }
 
+                String[] wineffect = action.split("/");
+
+                if (wineffect[1].equalsIgnoreCase("SOLO")) {
+                    if (!gamePlayer.getWinEffectsSoloList().contains(wineffect[0])) {
+                        gamePlayer.getWinEffectsSoloList().add(wineffect[0]);
+                        gamePlayer.setWinEffectSolo(wineffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
+                    } else {
+                        gamePlayer.setWinEffectSolo(wineffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Selected").replace("%win%", wineffect[0]));
+                    }
+                } else if (wineffect[1].equalsIgnoreCase("TEAM")) {
+                    if (!gamePlayer.getWinEffectsTeamList().contains(wineffect[0])) {
+                        gamePlayer.getWinEffectsTeamList().add(wineffect[0]);
+                        gamePlayer.setWinEffectTeam(wineffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
+                    } else {
+                        gamePlayer.setWinEffectTeam(wineffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Selected").replace("%win%", wineffect[0]));
+                    }
+                }
+            } else if (cmd.startsWith("killeffect:")) {
+                String action = cmd.substring(11);
+                if (action.startsWith(" ")) {
+                    action = action.substring(1);
+                }
+
+                String[] killeffect = action.split("/");
+
+                if (killeffect[1].equalsIgnoreCase("SOLO")) {
+                    if (!gamePlayer.getKillEffectsSoloList().contains(killeffect[0])) {
+                        gamePlayer.getKillEffectsSoloList().add(killeffect[0]);
+                        gamePlayer.setKillEffectSolo(killeffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
+                    } else {
+                        gamePlayer.setKillEffectSolo(killeffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Selected").replace("%kill%", killeffect[0]));
+                    }
+                } else if (killeffect[1].equalsIgnoreCase("TEAM")) {
+                    if (!gamePlayer.getKillEffectsTeamList().contains(killeffect[0])) {
+                        gamePlayer.getKillEffectsTeamList().add(killeffect[0]);
+                        gamePlayer.setKillEffectTeam(killeffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
+                    } else {
+                        gamePlayer.setKillEffectTeam(killeffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Selected").replace("%kill%", killeffect[0]));
+                    }
+                }
+            } else if (cmd.startsWith("traileffect:")) {
+                String action = cmd.substring(12);
+                if (action.startsWith(" ")) {
+                    action = action.substring(1);
+                }
+
+                String[] traileffect = action.split("/");
+
+                if (traileffect[1].equalsIgnoreCase("SOLO")) {
+                    if (!gamePlayer.getTrailsSoloList().contains(traileffect[0])) {
+                        gamePlayer.getTrailsSoloList().add(traileffect[0]);
+                        gamePlayer.setTrailSolo(traileffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
+                    } else {
+                        gamePlayer.setTrailSolo(traileffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
+                    }
+                } else if (traileffect[1].equalsIgnoreCase("TEAM")) {
+                    if (!gamePlayer.getTrailsTeamList().contains(traileffect[0])) {
+                        gamePlayer.getTrailsTeamList().add(traileffect[0]);
+                        gamePlayer.setTrailTeam(traileffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
+                    } else {
+                        gamePlayer.setTrailTeam(traileffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
+                    }
+                }
             } else if (cmd.startsWith("vote:")) {
                 String vote = cmd.substring(5);
                 if (vote.startsWith(" ")) {

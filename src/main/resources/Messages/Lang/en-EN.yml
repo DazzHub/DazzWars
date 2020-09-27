@@ -11,15 +11,23 @@ Messages:
   EndTime: '&e&l⚠&e Game time over'
   item-deny: '&e&l⚠&e You do not have permission'
   menu-deny: '&e&l⚠&e You do not have permission'
+  InsufficientCoins: '&c&l✘ &fYou need %coins% coins, to be able to buy it'
   Kit:
     Received: '&8» &fThe kit %kit% was received'
     Selected: '&a&l✔&f You choose the kit: &9%kit%'
-    Buy: '&a&l✔&f You bought the kit: &9%kit%'
-    InsufficientCoins: '&c&l✘ &fYou need %coins% coins, to be able to buy it'
+    Buy: '&a&l✔&f You bought the kit: &9%cage%'
   Cage:
     Selected: '&a&l✔&f You choose the cage: &9%cage%'
     Buy: '&a&l✔&f You bought the cage: &9%cage%'
-    InsufficientCoins: '&c&l✘ &fYou need %coins% coins, to be able to buy it'
+  WinEffect:
+    Selected: '&a&l✔&f You choose the effect: &9%win%'
+    Buy: '&a&l✔&f You bought the effect: &9%win%'
+  KillEffect:
+    Selected: '&a&l✔&f You choose the effect: &9%kill%'
+    Buy: '&a&l✔&f You bought the effect: &9%kill%'
+  TrailEffect:
+    Selected: '&a&l✔&f You choose the effect: &9%trail%'
+    Buy: '&a&l✔&f You bought the effect: &9%trail%'
   JoinTitle:
     Info: '&b&lSkyWars;&fModo %mode%'#TITLE;SUBTITLE
     Fade: 10
@@ -57,13 +65,11 @@ Messages:
       1: '&c%seconds%;&ePrepare to fight!'
   InfoGame:
     - '%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-    - '%center%&9&lDazzWars'
+    - '%center%&9&lSkyWars'
     - ''
     - '%center%&fChest type &8» &a%chest%'
     - '%center%&fType of time &8» &6%time%'
     - '%center%&fKind of hearts &8» &e%heart%'
-    - '%center%&fType of Events &8» &9%event%'
-    - '%center%&fType of scenario &8» &d%scenario%'
     - '%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
     - '&6Teaming is not allowed on Solo mode!'
   LuckTitle:
@@ -71,6 +77,18 @@ Messages:
     Stay: 40
     Out: 10
     Info: '&cTo fight!;&eLuck ㋡'
+  WinnerGame:
+    - ''
+    - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '%center%&9&lSkyWars'
+    - ''
+    - '%center%&eWinner &7- %winner%'
+    - ''
+    - '%center%&e1st Killer&7 - %player1% &7- %kills1%'
+    - '%center%&62nd Killer&7 - %player2% &7- %kills2%'
+    - '%center%&c3rd Killer&7 - %player3% &7- %kills3%'
+    - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '&aYou won! &eWant to play again? &b&lCLICK HERE!'
   WinnerTitle:
     Fade: 10
     Stay: 40

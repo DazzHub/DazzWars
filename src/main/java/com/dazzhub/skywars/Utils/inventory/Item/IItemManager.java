@@ -96,7 +96,7 @@ public class IItemManager {
                         .addDamage(durability)
                 ;
 
-                items.put(slot, new ordItems(icon, slot, command, permission, interact));
+                items.put(slot, new ordItems(icon, slot, command, permission, interact, 0));
 
         });
 

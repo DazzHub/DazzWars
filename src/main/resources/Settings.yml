@@ -9,24 +9,24 @@ MySQL:
 checkVersion: false
 #Join player save dates in mysql/sql
 Default:
+  Kit:
+    Solo: 'Default'
+    Team: 'Default'
   Cage:
     Solo: 'Default'
     Team: 'Default'
   WinEffect:
-    Solo: 'Default'
-    Team: 'Default'
+    Solo: 'fireworks'
+    Team: 'fireworks'
   KillEffect:
-    Solo: 'Default'
-    Team: 'Default'
-  KillSound:
-    Solo: 'Default'
-    Team: 'Default'
+    Solo: 'none'
+    Team: 'none'
   Trail:
-    Solo: 'Default'
-    Team: 'Default'
-  Kit:
-    Solo: 'Default'
-    Team: 'Default'
+    Solo: 'none'
+    Team: 'none'
+  KillSound:
+    Solo: 'BLOCK_NOTE_BLOCK_PLING' #use sounds 1.16
+    Team: 'BLOCK_NOTE_BLOCK_PLING'
   Lang: 'en-EN' #Default language en-EN, es-ES
 Coins:
   DeathSolo: 8

@@ -12,7 +12,7 @@ public class OptionClickEvent {
     private Player player;
     private String target;
 
-    private int position;
+    private Integer position;
 
     private Icon icon;
     private String name;
@@ -21,7 +21,9 @@ public class OptionClickEvent {
 
     private String interact;
 
-    public OptionClickEvent(Player p, String target, Icon icon, int position, String command, String permission, String interact) {
+    private Integer price;
+
+    public OptionClickEvent(Player p, String target, Icon icon, Integer position, String command, String permission, String interact, Integer price) {
         this.player = p;
         this.target = target;
         this.icon = icon;
@@ -29,5 +31,6 @@ public class OptionClickEvent {
         this.cmd = command;
         this.permission = permission;
         this.interact = interact;
+        this.price = price;
     }
 }

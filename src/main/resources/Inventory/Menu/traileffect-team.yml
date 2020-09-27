@@ -1,0 +1,120 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&8➣ Trail Effect team #1'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - '&8» &eYou currently don''t have'
+      - '&8» &6permission to do this'
+      - ''
+default:
+  PRICE: 0
+  ACTION: 'traileffect: FLAME/TEAM'
+  NAME: '&e&lFLAME'
+  DESCRIPTION:
+    - ''
+    - '&7➲ &e&l%name%'
+    - '&7➲ &2&lCLICK&f to buy trail %price%'
+    - ''
+  DESCRIPTION-PURCHASED:
+    - ''
+    - '&7➲ &eOBTAINED'
+    - ''
+  DESCRIPTION-SELECTED:
+    - ''
+    - '&7➲ &eSELECTED'
+    - ''
+  ICON-ITEM: 298
+  DATA-VALUE: 0
+  POSITION-X: 2
+  POSITION-Y: 2
+# ASH
+# BARRIER
+# BLOCK_CRACK
+# BLOCK_DUST
+# BUBBLE_COLUMN_UP
+# BUBBLE_POP
+# CAMPFIRE_COSY_SMOKE
+# CAMPFIRE_SIGNAL_SMOKE
+# CLOUD
+# COMPOSTER
+# CRIMSON_SPORE
+# CRIT
+# CRIT_MAGIC
+# CURRENT_DOWN
+# DAMAGE_INDICATOR
+# DOLPHIN
+# DRAGON_BREATH
+# DRIP_LAVA
+# DRIP_WATER
+# DRIPPING_HONEY
+# DRIPPING_OBSIDIAN_TEAR
+# ENCHANTMENT_TABLE
+# END_ROD
+# EXPLOSION_HUGE
+# EXPLOSION_LARGE
+# EXPLOSION_NORMAL
+# FALLING_DUST
+# FALLING_HONEY
+# FALLING_NECTAR
+# FALLING_OBSIDIAN_TEAR
+# FIREWORKS_SPARK
+# FLAME
+# FLASH
+# FOOTSTEP
+# HEART
+# ITEM_CRACK
+# LANDING_HONEY
+# LANDING_OBSIDIAN_TEAR
+# LAVA
+# MOB_APPEARANCE
+# NAUTILUS
+# NOTE
+# PORTAL
+# REDSTONE
+# REVERSE_PORTAL
+# SLIME
+# SMOKE_LARGE
+# SMOKE_NORMAL
+# SNEEZE
+# SNOWBALL
+# SNOW_SHOVEL
+# SOUL
+# SOUL_FIRE_FLAME
+# SPELL
+# SPELL_INSTANT
+# SPELL_MOB
+# SPELL_MOB_AMBIENT
+# SPELL_WITCH
+# SPIT
+# SQUID_INK
+# SUSPENDED
+# SUSPENDED_DEPTH
+# SWEEP_ATTACK
+# TOTEM
+# TOWN_AURA
+# VILLAGER_ANGRY
+# VILLAGER_HAPPY
+# WARPED_SPORE
+# WATER_BUBBLE
+# WATER_DROP
+# WATER_SPLASH
+# WATER_WAKE
+# WHITE_ASH

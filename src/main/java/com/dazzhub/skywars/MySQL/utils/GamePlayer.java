@@ -5,6 +5,7 @@ import com.dazzhub.skywars.Arena.ArenaTeam;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Party.Party;
 import com.dazzhub.skywars.Utils.CenterMessage;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.effects.getTypeKills;
 import com.dazzhub.skywars.Utils.effects.getTypeWins;
 import com.dazzhub.skywars.Utils.effects.kills.*;
@@ -16,16 +17,16 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,56 +113,58 @@ public class GamePlayer {
     private Location cage1;
     private Location cage2;
 
+    private List<Projectile> projectilesList;
+
     public GamePlayer(
-                      UUID uuid,
-                      String name,
-                      int winsSolo,
-                      int winsTeam,
+            UUID uuid,
+            String name,
+            int winsSolo,
+            int winsTeam,
 
-                      int killsSolo,
-                      int killsTeam,
+            int killsSolo,
+            int killsTeam,
 
-                      int deathsSolo,
-                      int deathsTeam,
+            int deathsSolo,
+            int deathsTeam,
 
-                      int gamesSolo,
-                      int gamesTeam,
+            int gamesSolo,
+            int gamesTeam,
 
-                      int shotsSolo,
-                      int shotsTeam,
+            int shotsSolo,
+            int shotsTeam,
 
-                      int hitsSolo,
-                      int hitsTeam,
+            int hitsSolo,
+            int hitsTeam,
 
-                      int blockPlaced,
-                      int blockBroken,
-                      int itemsEnchanted,
-                      int itemsCrafted,
-                      double distanceWalked,
+            int blockPlaced,
+            int blockBroken,
+            int itemsEnchanted,
+            int itemsCrafted,
+            double distanceWalked,
 
-                      int coins,
-                      int souls,
+            int coins,
+            int souls,
 
-                      String cageSolo,
-                      String cageTeam,
+            String cageSolo,
+            String cageTeam,
 
-                      String winEffectSolo,
-                      String winEffectTeam,
+            String winEffectSolo,
+            String winEffectTeam,
 
-                      String killEffectSolo,
-                      String killEffectTeam,
+            String killEffectSolo,
+            String killEffectTeam,
 
-                      String killSoundSolo,
-                      String killSoundTeam,
+            String killSoundSolo,
+            String killSoundTeam,
 
-                      String trailSolo,
-                      String trailTeam,
+            String trailSolo,
+            String trailTeam,
 
-                      String kitSolo,
-                      String kitTeam,
+            String kitSolo,
+            String kitTeam,
 
-                      String lang
-        ) {
+            String lang
+    ) {
 
         this.uuid = uuid;
         this.name = name;
@@ -237,6 +240,8 @@ public class GamePlayer {
 
         this.cage1 = null;
         this.cage2 = null;
+
+        this.projectilesList = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -245,19 +250,19 @@ public class GamePlayer {
 
     /* LANG */
     public Configuration getLangMessage() {
-        return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Lang/"+this.lang);
+        return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Lang/" + this.lang);
     }
 
     public Configuration getScoreboardMessage() {
-        return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Scoreboards/"+this.lang);
+        return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Scoreboards/" + this.lang);
     }
 
     public Configuration getHologramMessage() {
-        return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Holograms/"+this.lang);
+        return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Holograms/" + this.lang);
     }
 
-    protected void typeMessage(boolean useFor, String msgSimple, List<String> lines){
-        if (useFor){
+    protected void typeMessage(boolean useFor, String msgSimple, List<String> lines) {
+        if (useFor) {
             lines.forEach(msg -> this.getPlayer().sendMessage(PlaceholderAPI.setPlaceholders(this.getPlayer(), c(msg.startsWith("%center%") ? CenterMessage.centerMessage(msg.replace("%center%", "")) : c(msg)))));
         } else {
             this.getPlayer().sendMessage(PlaceholderAPI.setPlaceholders(this.getPlayer(), c(msgSimple.startsWith("%center%") ? CenterMessage.centerMessage(msgSimple.replace("%center%", "")) : c(msgSimple))));
@@ -344,7 +349,7 @@ public class GamePlayer {
         this.setCoins(Math.max((this.getCoins() - amount), 0));
     }
 
-    protected String c(String cmd){
+    protected String c(String cmd) {
         return ChatColor.translateAlternateColorCodes('&', cmd);
     }
 
@@ -360,7 +365,7 @@ public class GamePlayer {
         this.setCoins(this.getCoins() + amount);
     }
 
-    public void addSpectating(){
+    public void addSpectating() {
         Player p = this.getPlayer();
 
         this.setInvClear();
@@ -417,47 +422,51 @@ public class GamePlayer {
 
     public getTypeKills getTypeKill(String mode) {
         mode = mode.toLowerCase();
+
+        if (mode.equalsIgnoreCase("none")) return null;
+
         getTypeKills getType;
 
-        switch (mode){
-            case "dropsoup":{
+        switch (mode) {
+            case "dropsoup": {
                 getType = new dropSoup(this);
                 break;
             }
-            case "frostflame":{
+            case "frostflame": {
                 getType = new frostFlame(this);
                 break;
             }
-            case "headexplode":{
+            case "headexplode": {
                 getType = new headExplode(this);
                 break;
             }
-            case "heart":{
+            case "heart": {
                 getType = new heart(this);
                 break;
             }
-            case "redstone":{
+            case "redstone": {
                 getType = new redstone(this);
                 break;
             }
-            case "satan":{
+            case "satan": {
                 getType = new satan(this);
                 break;
             }
-            case "squid":{
+            case "squid": {
                 getType = new squid(this);
                 break;
             }
-            case "twister":{
+            case "twister": {
                 getType = new twister(this);
                 break;
             }
-            case "wave":{
+            case "wave": {
                 getType = new wave(this);
                 break;
             }
-            default:{
+            default: {
                 getType = null;
+                Console.error("KillEffect: " + mode + " not exist");
                 break;
             }
         }
@@ -470,37 +479,62 @@ public class GamePlayer {
         getTypeWins getType;
 
         switch (mode) {
-            case "antigravity":{
+            case "antigravity": {
                 getType = new antigravity(this);
                 break;
             }
-            case "chickens":{
+            case "chickens": {
                 getType = new chickens(this);
                 break;
             }
-            case "fallingblocks":{
+            case "fallingblocks": {
                 getType = new fallingblocks(this);
                 break;
             }
-            case "fallingsheep":{
+            case "fallingsheep": {
                 getType = new fallingsheep(this);
                 break;
             }
-            case "parachute":{
+            case "parachute": {
                 getType = new parachute(this);
                 break;
             }
-            case "fireworks":{
+
+            case "default":
+            case "fireworks": {
                 getType = new fireworks(getPlayer().getLocation());
                 break;
             }
-            default:{
+
+            default: {
                 getType = null;
+                Console.error("WinEffect: " + mode + " not exist");
                 break;
             }
         }
 
         return getType;
+    }
+
+    public void getTrail(String mode, Projectile proj) {
+        if (!mode.equalsIgnoreCase("none")) {
+            projectilesList.add(proj);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < projectilesList.size(); i++) {
+                        Projectile arrows = projectilesList.get(i);
+                        ParticleEffect.valueOf(mode).display(arrows.getLocation(), 0f, 0f, 0f, 0f, 10, null);
+
+                        if (i == projectilesList.size()) {
+                            this.cancel();
+                        }
+                    }
+                }
+            }.runTaskTimerAsynchronously(Main.getPlugin(), 0, 1);
+        }
+
     }
 
 }

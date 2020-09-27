@@ -11,15 +11,23 @@ Messages:
   EndTime: '&e&l⚠&e Tiempo de juego terminado'
   item-deny: '&e&l⚠&e No tienes permiso'
   menu-deny: '&e&l⚠&e No tienes permiso'
+  InsufficientCoins: '&c&l✘ &fNecesitas %coins% monedas, para poder comprarlo'
   Kit:
     Received: '&8» &fEl Kit %kit% fue Recibido'
     Selected: '&a&l✔&f Tu eliges el kit: &9%kit%'
     Buy: '&a&l✔&f Compraste el kit: &9%kit%'
-    InsufficientCoins: '&c&l✘ &fNecesitas %coins% monedas, para poder comprarlo'
   Cage:
     Selected: '&a&l✔&f Tu eliges la caja: &9%cage%'
     Buy: '&a&l✔&f Compraste la caja: &9%cage%'
-    InsufficientCoins: '&c&l✘ &fNecesitas %coins% monedas, para poder comprarlo'
+  WinEffect:
+    Selected: '&a&l✔&f Tu eliges la effecto: &9%win%'
+    Buy: '&a&l✔&f Compraste la effecto: &9%win%'
+  KillEffect:
+    Selected: '&a&l✔&f Tu eliges el effecto: &9%kill%'
+    Buy: '&a&l✔&f Compraste la effecto: &9%kill%'
+  TrailEffect:
+    Selected: '&a&l✔&f Tu eliges el effecto: &9%trail%'
+    Buy: '&a&l✔&f Compraste la effecto: &9%trail%'
   JoinTitle:
     Info: '&b&lSkyWars;&fModo %mode%'#TITLE;SUBTITLE
     Fade: 10
@@ -56,14 +64,12 @@ Messages:
       2: '&c%seconds%;&ePreparate para pelear!'
       1: '&c%seconds%;&eA pelear!'
   InfoGame:
-    - '&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
     - '%center%&b&lDazzWars'
     - ''
     - '%center%&fTipo de Cofre &8» &a%chest%'
     - '%center%&fTipo de Tiempo &8» &6%time%'
     - '%center%&fTipo de corazones &8» &e%heart%'
-    - '%center%&fTipo de Eventos &8» &9%event%'
-    - '%center%&fTipo de escenario &8» &d%scenario%'
     - '%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
     - '&6El Team no está permitido en el modo Solo!'
   LuckTitle:
@@ -71,6 +77,18 @@ Messages:
     Stay: 40
     Out: 10
     Info: '&cA luchar!;&eSuerte ㋡'
+  WinnerGame:
+    - ''
+    - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '%center%&b&lSkyWars'
+    - ''
+    - '%center%&eGanador &7- %winner%'
+    - ''
+    - '%center%&e1st Killer&7 - %player1% &7- %kills1%'
+    - '%center%&62nd Killer&7 - %player2% &7- %kills2%'
+    - '%center%&c3rd Killer&7 - %player3% &7- %kills3%'
+    - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '&aGanaste! &eQuieres jugar de nuevo? &b&lCLICK HERE!'
   WinnerTitle:
     Fade: 10
     Stay: 40
