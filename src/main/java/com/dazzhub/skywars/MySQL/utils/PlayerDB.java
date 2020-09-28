@@ -555,13 +555,13 @@ public class PlayerDB implements getPlayerDB {
     }
 
     @Override
-    public String[] TopKillsSolo() {
-        String[] result = new String[10];
+    public String[] TopKillsSolo(int top) {
+        String[] result = new String[top];
         try {
 
-            ResultSet infoResult = MySQL.query("SELECT `Name`, `KillsSolo` FROM `Statistics_Solo` ORDER BY `KillsSolo` DESC LIMIT 10");
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `KillsSolo` FROM `Statistics_Solo` ORDER BY `KillsSolo` DESC LIMIT "+top);
             assert infoResult != null;
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {
                     result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("KillsSolo");
                 } else {
@@ -576,13 +576,13 @@ public class PlayerDB implements getPlayerDB {
     }
 
     @Override
-    public String[] TopKillsTeam() {
-        String[] result = new String[10];
+    public String[] TopKillsTeam(int top) {
+        String[] result = new String[top];
         try {
 
-            ResultSet infoResult = MySQL.query("SELECT `Name`, `KillsTeam` FROM `Statistics_Team` ORDER BY `KILLS` DESC LIMIT 10");
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `KillsTeam` FROM `Statistics_Team` ORDER BY `KILLS` DESC LIMIT "+top);
             assert infoResult != null;
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {
                     result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("KillsTeam");
                 } else {
@@ -597,13 +597,13 @@ public class PlayerDB implements getPlayerDB {
     }
 
     @Override
-    public String[] TopDeathsSolo() {
-        String[] result = new String[10];
+    public String[] TopDeathsSolo(int top) {
+        String[] result = new String[top];
         try {
 
-            ResultSet infoResult = MySQL.query("SELECT `Name`, `DeathsSolo` FROM `Statistics_Solo` ORDER BY `DeathsSolo` DESC LIMIT 10");
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `DeathsSolo` FROM `Statistics_Solo` ORDER BY `DeathsSolo` DESC LIMIT "+top);
             assert infoResult != null;
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {
                     result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("DeathsSolo");
                 } else {
@@ -618,13 +618,13 @@ public class PlayerDB implements getPlayerDB {
     }
 
     @Override
-    public String[] TopDeathsTeam() {
-        String[] result = new String[10];
+    public String[] TopDeathsTeam(int top) {
+        String[] result = new String[top];
         try {
 
-            ResultSet infoResult = MySQL.query("SELECT `Name`, `DeathsTeam` FROM `Statistics_Team` ORDER BY `DeathsTeam` DESC LIMIT 10");
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `DeathsTeam` FROM `Statistics_Team` ORDER BY `DeathsTeam` DESC LIMIT "+top);
             assert infoResult != null;
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {
                     result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("DeathsTeam");
                 } else {
@@ -639,13 +639,13 @@ public class PlayerDB implements getPlayerDB {
     }
 
     @Override
-    public String[] TopWinsSolo() {
-        String[] result = new String[10];
+    public String[] TopWinsSolo(int top) {
+        String[] result = new String[top];
         try {
 
-            ResultSet infoResult = MySQL.query("SELECT `Name`, `WinsSolo` FROM `Statistics_Solo` ORDER BY `WinsSolo` DESC LIMIT 10");
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `WinsSolo` FROM `Statistics_Solo` ORDER BY `WinsSolo` DESC LIMIT "+top);
             assert infoResult != null;
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {
                     result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("WinsSolo");
                 } else {
@@ -660,13 +660,13 @@ public class PlayerDB implements getPlayerDB {
     }
 
     @Override
-    public String[] TopWinsTeam() {
-        String[] result = new String[10];
+    public String[] TopWinsTeam(int top) {
+        String[] result = new String[top];
         try {
 
-            ResultSet infoResult = MySQL.query("SELECT `Name`, `WinsTeam` FROM `Statistics_Team` ORDER BY `WinsTeam` DESC LIMIT 10");
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `WinsTeam` FROM `Statistics_Team` ORDER BY `WinsTeam` DESC LIMIT "+top);
             assert infoResult != null;
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {
                     result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("WinsTeam");
                 } else {

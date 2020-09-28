@@ -11,7 +11,8 @@ import com.dazzhub.skywars.Listeners.Bukkit.onJoinServer;
 import com.dazzhub.skywars.Listeners.Bukkit.onLeftServer;
 import com.dazzhub.skywars.Listeners.Inventory.onItem;
 import com.dazzhub.skywars.Listeners.Inventory.onMenu;
-import com.dazzhub.skywars.Listeners.Sign.onSign;
+import com.dazzhub.skywars.Listeners.Sign.onSignArena;
+import com.dazzhub.skywars.Listeners.Sign.onSignTop;
 import com.dazzhub.skywars.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -45,7 +46,8 @@ public class regListeners {
         this.onLoad(new removeSpectator(main));
 
         /* SIGNS */
-        this.onLoad(new onSign(main));
+        this.onLoad(new onSignArena(main));
+        this.onLoad(new onSignTop(main));
 
         /* INVENTORY */
         this.onLoad(new onItem(main));

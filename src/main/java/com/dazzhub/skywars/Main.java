@@ -1,6 +1,5 @@
 package com.dazzhub.skywars;
 
-import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Arena.ArenaManager;
 import com.dazzhub.skywars.Arena.Menu.ArenasMenu;
 import com.dazzhub.skywars.Commands.adminCmd;
@@ -27,15 +26,12 @@ import com.dazzhub.skywars.Utils.pluginutils.SpigotUpdater;
 import com.dazzhub.skywars.Utils.resetWorld.resetWorld;
 import com.dazzhub.skywars.Utils.scoreboard.Placeholders;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
-import com.dazzhub.skywars.Utils.signs.ISignManager;
+import com.dazzhub.skywars.Utils.signs.arena.ISignManager;
+import com.dazzhub.skywars.Utils.signs.top.ITopManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
@@ -76,8 +72,10 @@ public class Main extends JavaPlugin {
 
     /* LOBBY MANAGER */
     private lobbyManager lobbyManager;
-
     private ScoreBoardAPI scoreBoardAPI;
+
+    /* TOP SIGNS */
+    private ITopManager iTopManager;
 
     private String version;
 
@@ -104,9 +102,11 @@ public class Main extends JavaPlugin {
         this.iKitManager = new IKitManager(this);
 
         this.getPlayerDB = new PlayerDB(this);
-        this.playerManager = new PlayerManager();
 
+        this.playerManager = new PlayerManager();
         this.scoreBoardAPI = new ScoreBoardAPI(this);
+
+        this.iTopManager = new ITopManager(this);
 
         this.lobbyManager = new lobbyManager(this);
     }
@@ -148,6 +148,8 @@ public class Main extends JavaPlugin {
 
         this.getPlayerDB.loadMySQL();
 
+        this.iTopManager.loadSign();
+
         Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 getPlayerDB().loadPlayer(p.getUniqueId());
@@ -171,6 +173,7 @@ public class Main extends JavaPlugin {
 
         arenaManager.getArenas().values().forEach(arena -> Bukkit.getServer().unloadWorld(arena.getNameWorld(), false));
 
+        Bukkit.getScheduler().cancelTasks(this);
         MySQL.disconnect();
     }
 
@@ -208,6 +211,10 @@ public class Main extends JavaPlugin {
 
     public ArenasMenu getArenasMenu() {
         return arenasMenu;
+    }
+
+    public ITopManager getTopManager() {
+        return iTopManager;
     }
 
     public HologramsManager getHologramsManager() {
@@ -273,7 +280,6 @@ public class Main extends JavaPlugin {
     public static Main getPlugin() {
         return plugin;
     }
-
 
     public static int getRelativePosition(int x, int y) {
         --x;

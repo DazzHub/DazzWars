@@ -1,7 +1,6 @@
 package com.dazzhub.skywars.Arena;
 
 import com.dazzhub.skywars.Arena.Menu.SpectatorMenu;
-import com.dazzhub.skywars.Arena.comparables.compare.killerComparator;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addPlayerEvent;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addSpectatorEvent;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.removePlayerEvent;
@@ -16,7 +15,7 @@ import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Cuboid;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.locUtils;
-import com.dazzhub.skywars.Utils.signs.ISign;
+import com.dazzhub.skywars.Utils.signs.arena.ISign;
 import com.dazzhub.skywars.Utils.vote.VotesSystem;
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.base.Functions;
@@ -30,7 +29,6 @@ import org.bukkit.block.Chest;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;

@@ -117,7 +117,7 @@ public class Holograms {
         }
 
         if (transformed.equalsIgnoreCase("%topkillssolo%")) {
-            String[] top = main.getPlayerDB().TopKillsSolo();
+            String[] top = main.getPlayerDB().TopKillsSolo(10);
             for (String topPlayers : top) {
 
                 if (topPlayers.startsWith("error")){
@@ -129,7 +129,7 @@ public class Holograms {
                 holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
             }
         } else if (transformed.equalsIgnoreCase("%topkillsteam%")) {
-            String[] top = main.getPlayerDB().TopKillsTeam();
+            String[] top = main.getPlayerDB().TopKillsTeam(10);
             for (String topPlayers : top) {
 
                 if (topPlayers.startsWith("error")){
@@ -141,7 +141,7 @@ public class Holograms {
                 holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
             }
         } else if (transformed.equalsIgnoreCase("%topdeathssolo%")) {
-            String[] top = main.getPlayerDB().TopDeathsSolo();
+            String[] top = main.getPlayerDB().TopDeathsSolo(10);
             for (String topPlayers : top) {
 
                 if (topPlayers.startsWith("error")){
@@ -153,7 +153,7 @@ public class Holograms {
                 holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
             }
         } else if (transformed.equalsIgnoreCase("%topdeathsteam%")) {
-            String[] top = main.getPlayerDB().TopDeathsTeam();
+            String[] top = main.getPlayerDB().TopDeathsTeam(10);
             for (String topPlayers : top) {
 
                 if (topPlayers.startsWith("error")){
@@ -165,7 +165,7 @@ public class Holograms {
                 holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
             }
         } else if (transformed.equalsIgnoreCase("%topwinssolo%")) {
-            String[] top = main.getPlayerDB().TopWinsSolo();
+            String[] top = main.getPlayerDB().TopWinsSolo(10);
             for (String topPlayers : top) {
 
                 if (topPlayers.startsWith("error")){
@@ -177,7 +177,7 @@ public class Holograms {
                 holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
             }
         } else if (transformed.equalsIgnoreCase("%topwinsteam%")) {
-            String[] top = main.getPlayerDB().TopWinsTeam();
+            String[] top = main.getPlayerDB().TopWinsTeam(10);
             for (String topPlayers : top) {
 
                 if (topPlayers.startsWith("error")){

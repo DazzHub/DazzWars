@@ -345,6 +345,20 @@ public class IMenu {
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
                     }
                 }
+            } else if (cmd.startsWith("lang:")) {
+                String action = cmd.substring(5);
+                if (action.startsWith(" ")) {
+                    action = action.substring(1);
+                }
+
+                if (!main.getSettings().getStringList("ListLanguage").contains(action)) {
+                    gamePlayer.sendMessage("Messages.error");
+                    return;
+                }
+
+                gamePlayer.setLang(action);
+
+                gamePlayer.sendMessage("Messages.Language");
             } else if (cmd.startsWith("vote:")) {
                 String vote = cmd.substring(5);
                 if (vote.startsWith(" ")) {

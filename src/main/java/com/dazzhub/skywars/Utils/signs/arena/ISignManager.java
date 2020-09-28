@@ -1,10 +1,10 @@
-package com.dazzhub.skywars.Utils.signs;
+package com.dazzhub.skywars.Utils.signs.arena;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Utils.Console;
-import com.dazzhub.skywars.Utils.locUtils;
 import com.cryptomorin.xseries.XSound;
+import com.dazzhub.skywars.Utils.signs.ISignLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;

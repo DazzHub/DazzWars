@@ -41,4 +41,9 @@ Coins:
   WinSolo: 50
   WinTeam: 50
 ReTeleportCage: 2
+#update time in seconds
+TopUpdate: 600 #10m
+ListLanguage:
+  - 'en-EN'
+  - 'es-ES'
 Holograms:

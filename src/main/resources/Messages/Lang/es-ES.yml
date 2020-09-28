@@ -12,6 +12,9 @@ Messages:
   item-deny: '&e&l⚠&e No tienes permiso'
   menu-deny: '&e&l⚠&e No tienes permiso'
   InsufficientCoins: '&c&l✘ &fNecesitas %coins% monedas, para poder comprarlo'
+  Language:
+    change: '&a&l✔ &fTu idioma fue traducido al Español'
+    error: '&c&l✘ &fEl idioma seleccionado no está en la lista'
   Kit:
     Received: '&8» &fEl Kit %kit% fue Recibido'
     Selected: '&a&l✔&f Tu eliges el kit: &9%kit%'
@@ -125,6 +128,11 @@ Messages:
     Refill: 'Relleno: %time%'
     EndGame: 'Fin del juego'
     None: 'Ninguno'
+    Team:
+      killCount: true
+      Spectator: '&7:&f' #Prefix : Suffix
+      Game: '&c:&f'
+      TeamsFriends: '&a:&f'
   MenuArena:
     TITLE: '&8&l&nArenas'
     ROWS: 6
@@ -233,8 +241,9 @@ Messages:
     sw:
       - '%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-'
       - ''
-      - '%center%&7/join <arena>/<solo/team> &8| &eJoin to arena'
-      - '%center%&7/leave &8| &eExit to arena'
+      - '%center%&7/join <arena>/<solo/team> &8| &eEntrar a una arena'
+      - '%center%&7/leave &8| &eSalir de una arena'
+      - '%center%&7/sw lang <idioma> &8| &eCambiar idioma'
       - ''
       - '%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-'
     swadmin:
@@ -247,11 +256,13 @@ Messages:
       - '%center%&7/sw setmin &8| &eMinimo de jugadores'
       - '%center%&7/sw setmax &8| &eMaximo de jugadores'
       - '%center%&7/sw setspectator &8| &eSpawn del spectador'
+      - '%center%&7/sw enable &8| &eActivar arena'
       - '%center%&7/sw coins <arena> &8| &eManejar coins'
       - '%center%&7/sw wandc &8| &eMarcar cornes para las cajas'
       - '%center%&7/sw addcage &8| &eAgregar cajas'
       - '%center%&7/sw addkit &8| &eCrear kits desde el inventario'
       - '%center%&7/sw addhologram &8| &eAgregar hologramas'
+      - '%center%&7/sw reload &8| &eRecargar configuracion'
       - ''
       - '%center%&7/sw join <arena> &8| &eEntra a una Arena'
       - '%center%&7/leave &8| &eSalir de la Arena'

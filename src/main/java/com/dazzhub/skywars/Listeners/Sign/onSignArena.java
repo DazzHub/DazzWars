@@ -18,11 +18,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class onSign implements Listener {
+public class onSignArena implements Listener {
 
     private Main main;
 
-    public onSign(Main main) {
+    public onSignArena(Main main) {
         this.main = main;
     }
 

@@ -1,4 +1,4 @@
-package com.dazzhub.skywars.Utils.signs;
+package com.dazzhub.skywars.Utils.signs.arena;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;

@@ -3,11 +3,11 @@ Format:
   - '%status%'
   - '&nMap: %map%'
   - '%online%/%max%'
-Searching:
-  - '&l----------'
-  - '&fSEARCHING'
-  - '&fGAMES'
-  - '&l----------'
+FormatTop:
+  - '&0Top &c#%rank%'
+  - '&l%top%'
+  - '&n%player%'
+  - '-* &c%count%&0 *-'
 Status:
   Waiting:
     material: 'STAINED_GLASS' # if using +13 ignore id
@@ -32,3 +32,5 @@ Status:
   Searching:
     material: 'STAINED_GLASS'
     id: 0
+
+Top:

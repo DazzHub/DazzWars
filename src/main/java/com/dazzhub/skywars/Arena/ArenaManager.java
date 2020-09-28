@@ -51,6 +51,13 @@ public class ArenaManager {
         Console.info("&eLoaded arenas: &a"+getArenas().size());
     }
 
+    public void resetArena(String name){
+        if (arenas.containsKey(name)) {
+            Arena arena = arenas.get(name);
+            arena.resetArena();
+        }
+    }
+
     public void createArena(Player p, String nameArena, String nameWorld) {
 
         if (getArenas().containsKey(nameArena)) {

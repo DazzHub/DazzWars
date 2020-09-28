@@ -10,11 +10,11 @@ public class Console {
     }
 
     public static void warning(String message){
-        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cWARNING&8> &e" + message));
+        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &cWARNING &8> &e" + message));
     }
 
     public static void error(String message){
-        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &8> &cERROR&8> &e" + message));
+        Bukkit.getConsoleSender().sendMessage(c("&9SkyWars &cERROR &8> &e" + message));
     }
 
     public static void debug(String message){

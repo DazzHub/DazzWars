@@ -57,6 +57,7 @@ public class IMenuManager {
             configCreate.get().setup(main, "Inventory/Menu/wineffect-team");
             configCreate.get().setup(main, "Inventory/Menu/traileffect-solo");
             configCreate.get().setup(main, "Inventory/Menu/traileffect-team");
+            configCreate.get().setup(main, "Inventory/Menu/lang-change");
         }
 
         File file = new File(main.getDataFolder(), "Inventory/Menu");

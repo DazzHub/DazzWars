@@ -10,12 +10,12 @@ public interface getPlayerDB {
 
     void loadMySQL();
 
-    String[] TopKillsSolo();
-    String[] TopKillsTeam();
+    String[] TopKillsSolo(int top);
+    String[] TopKillsTeam(int top);
 
-    String[] TopDeathsSolo();
-    String[] TopDeathsTeam();
+    String[] TopDeathsSolo(int top);
+    String[] TopDeathsTeam(int top);
 
-    String[] TopWinsSolo();
-    String[] TopWinsTeam();
+    String[] TopWinsSolo(int top);
+    String[] TopWinsTeam(int top);
 }
