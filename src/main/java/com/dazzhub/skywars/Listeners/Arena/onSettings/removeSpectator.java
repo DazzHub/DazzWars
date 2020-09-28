@@ -36,7 +36,7 @@ public class removeSpectator implements Listener {
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.LeaveSpectator"));
                 }
 
-                main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY);
+                main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY,false,false,false, false);
                 main.getItemManager().giveItems(p, "lobby", false);
 
                 p.teleport(main.getLobbyManager().getLobby());

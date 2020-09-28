@@ -60,6 +60,7 @@ public class onDeath implements Listener {
 
         if (killer != null) {
             killer.addKillsArena();
+            arena.getKillers().put(killer.getName(), arena.getKillers().containsKey(killer.getName()) ? (arena.getKillers().get(killer.getName()) + 1) : 1);
             switch (arena.getMode()) {
                 case SOLO: {
                     killer.addKillsSolo();

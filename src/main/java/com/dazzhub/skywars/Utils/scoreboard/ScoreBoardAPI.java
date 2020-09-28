@@ -22,10 +22,13 @@ public class ScoreBoardAPI {
 
     }
 
-    public void setScoreBoard(Player p, ScoreboardType scoreboardType) {
+    public void setScoreBoard(Player p, ScoreboardType scoreboardType, boolean health, boolean spectator, boolean gamePlayers, boolean teams) {
+        GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
         removeScoreBoard(p);
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-        ScoreBoardBuilder scoreboard = new ScoreBoardBuilder(p, randomString(), false);
+
+        ScoreBoardBuilder scoreboard = new ScoreBoardBuilder(p, randomString(), health, spectator, gamePlayers, teams);
 
         int id = Bukkit.getScheduler().runTaskTimerAsynchronously(main, () -> {
             Configuration config = main.getPlayerManager().getPlayer(p.getUniqueId()).getScoreboardMessage();
@@ -36,7 +39,14 @@ public class ScoreBoardAPI {
                 scoreboard.lines(line, charsLobby(p, s));
                 line--;
             }
-        }, 2, 20).getTaskId();
+
+            if (gamePlayer.isInArena()){
+                if (health) scoreboard.updatelife(gamePlayer.getArena());
+                if (spectator) scoreboard.updateSpectator(gamePlayer.getArena());
+                if (gamePlayers) scoreboard.updateEnemy(gamePlayer, gamePlayer.getArena());
+                if (teams) scoreboard.updateTeams(gamePlayer);
+            }
+        }, 0, 20).getTaskId();
 
         p.setScoreboard(scoreboard.getScoreboard());
         this.scoretask.put(p.getUniqueId(), id);

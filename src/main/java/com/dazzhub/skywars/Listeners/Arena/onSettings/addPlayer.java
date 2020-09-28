@@ -51,7 +51,7 @@ public class addPlayer implements Listener {
                     p.teleport(cageLoc);
 
                     main.getCageManager().getCagesSolo().get(gamePlayer.getCageSolo()).loadCage(cageLoc);
-                    main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.STARTING);
+                    main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.STARTING,false,false,true,true);
 
                     main.getItemManager().giveItems(p, "arenasolo", false);
                     break;
@@ -63,7 +63,7 @@ public class addPlayer implements Listener {
                     p.teleport(cageLoc);
 
                     main.getCageManager().getCagesTeam().get(gamePlayer.getCageTeam()).loadCage(cageLoc);
-                    main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.STARTINGTEAM);
+                    main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.STARTINGTEAM,false,false,true,true);
 
                     main.getItemManager().giveItems(p, "arenateam", false);
                     break;
@@ -93,6 +93,8 @@ public class addPlayer implements Listener {
             arena.setUsable(true);
             arena.setGameStatus(Enums.GameStatus.STARTING);
         }
+
+        arena.getKillers().put(gamePlayer.getName(), 0);
     }
 
     private String c(String c) {

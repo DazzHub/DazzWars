@@ -43,7 +43,7 @@ public class addSpectator implements Listener {
 
             gamePlayer.getPlayer().teleport(arena.getSpawnSpectator());
 
-            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.SPECTATOR);
+            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.SPECTATOR,false,true,true,false);
         });
 
         gamePlayer.setSpectating(true);

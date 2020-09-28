@@ -1,6 +1,7 @@
 package com.dazzhub.skywars.Arena;
 
 import com.dazzhub.skywars.Arena.Menu.SpectatorMenu;
+import com.dazzhub.skywars.Arena.comparables.compare.killerComparator;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addPlayerEvent;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addSpectatorEvent;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.removePlayerEvent;
@@ -11,12 +12,16 @@ import com.dazzhub.skywars.Runnables.RefillGame;
 import com.dazzhub.skywars.Runnables.endGame;
 import com.dazzhub.skywars.Runnables.inGame;
 import com.dazzhub.skywars.Runnables.startingGame;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Cuboid;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.locUtils;
 import com.dazzhub.skywars.Utils.signs.ISign;
 import com.dazzhub.skywars.Utils.vote.VotesSystem;
 import com.cryptomorin.xseries.XMaterial;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableSortedMap;
+import com.google.common.collect.Ordering;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
@@ -25,10 +30,8 @@ import org.bukkit.block.Chest;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -92,6 +95,9 @@ public class Arena {
     private RefillGame refillGame;
     private List<Integer> refillTime;
 
+    /* TOP KILLERS */
+    private HashMap<String, Integer> killers;
+
     private boolean damageFallStarting;
 
     public Arena(String nameArena) {
@@ -127,6 +133,9 @@ public class Arena {
         /* REFILL*/
         this.refillGame = null;
         this.refillTime = new ArrayList<>();
+
+        /* TOP KILLERS */
+        this.killers = new HashMap<>();
 
         Configuration arenac = main.getConfigUtils().getConfig(main, "Arenas/" + nameArena + "/Settings");
         if (arenac != null) {
@@ -192,6 +201,9 @@ public class Arena {
         if (arenac != null) {
             this.refillTime.addAll(arenac.getIntegerList("Arena.refill"));
         }
+
+        /* TOP KILLERS */
+        this.killers = new HashMap<>();
 
         this.damageFallStarting = true;
 
@@ -320,6 +332,47 @@ public class Arena {
                 Chest chest = (Chest) location.getBlock().getState();
                 main.getChestManager().getChestHashMap().get("CENTER").refillChest(chest);
             }
+        }
+    }
+
+    public void getWinners(GamePlayer gamePlayer) {
+        List<String> message1 = gamePlayer.getLangMessage().getStringList("Messages.WinnerGame");
+        List<String> message = new ArrayList<>();
+        List<String> winners = new ArrayList<>();
+
+        if (this.killers.size() <= 2) {
+            this.killers.put("NONE", 0);
+        }
+
+        for (GamePlayer winnersPlayers : this.players) {
+            winners.add(winnersPlayers.getName());
+        }
+
+        String win = winners.toString().replace("[", "").replace("]", "");
+
+        try {
+            SortedMap<String, Integer> sortedMap = ImmutableSortedMap.copyOf(killers, Ordering.natural().reverse().onResultOf(Functions.forMap(killers)).compound(Ordering.natural().reverse()));
+
+            String kills = String.valueOf(sortedMap.values()).replace("[", "").replace("]", "");
+            String player = String.valueOf(sortedMap.keySet()).replace("[", "").replace("]", "");
+
+            for (String s : message1) {
+                message.add(s
+                        .replace("%winner%", win)
+
+                        .replace("%player1%", player.split(",")[0])
+                        .replace("%player2%", player.split(", ")[1])
+                        .replace("%player3%", player.split(", ")[2])
+
+                        .replace("%kills1%", kills.split(",")[0])
+                        .replace("%kills2%", kills.split(", ")[1])
+                        .replace("%kills3%", kills.split(", ")[2]));
+            }
+
+            Bukkit.getScheduler().runTaskLater(main, () -> gamePlayer.sendMessage(message), 5);
+
+        } catch (Exception e) {
+            Console.warning("Win message no work");
         }
     }
 

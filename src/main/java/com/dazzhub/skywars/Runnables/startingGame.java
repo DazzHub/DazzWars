@@ -82,7 +82,7 @@ public class startingGame extends BukkitRunnable {
 
                     switch (arena.getMode()) {
                         case SOLO:
-                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAME);
+                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAME,true,false,true,true);
 
                             if (!p.getKitSolo().equals("none")) {
                                 main.getiKitManager().giveKit(p.getKitSolo().toLowerCase(), arena.getMode().getName(), p.getPlayer(), p);
@@ -91,7 +91,7 @@ public class startingGame extends BukkitRunnable {
                             p.addGamesSolo();
                             break;
                         case TEAM:
-                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAMETEAM);
+                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAMETEAM,true,false,true,true);
 
                             if (!p.getKitTeam().equals("none")) {
                                 main.getiKitManager().giveKit(p.getKitTeam().toLowerCase(), arena.getMode().getName(), p.getPlayer(), p);

@@ -148,11 +148,15 @@ public class Main extends JavaPlugin {
 
         this.getPlayerDB.loadMySQL();
 
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> Bukkit.getOnlinePlayers().forEach(p -> getPlayerDB().loadPlayer(p.getUniqueId())));
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                getPlayerDB().loadPlayer(p.getUniqueId());
+            }
+
+            Bukkit.getScheduler().runTask(this, () -> Bukkit.getOnlinePlayers().forEach(p -> getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY,false,false,false,false)));
+        });
 
         new Placeholders(this).register();
-
-        Bukkit.getOnlinePlayers().forEach(p -> getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY));
 
         this.getCommand("skywars").setExecutor(new adminCmd(this));
         this.getCommand("join").setExecutor(new JoinArena(this));

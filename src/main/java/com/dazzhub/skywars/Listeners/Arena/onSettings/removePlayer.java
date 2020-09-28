@@ -50,7 +50,7 @@ public class removePlayer implements Listener {
 
             gamePlayer.getPlayer().teleport(main.getLobbyManager().getLobby());
 
-            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY);
+            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY,false,false,false,false);
         });
 
         gamePlayer.setLobby(true);

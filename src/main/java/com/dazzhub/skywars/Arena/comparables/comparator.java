@@ -10,5 +10,4 @@ public class comparator {
     public static void checkArenaPlayer(List<Arena> arenas){
         arenas.sort(new arenaComparator());
     }
-
 }

@@ -34,7 +34,7 @@ public class onJoinServer implements Listener {
 
                 main.getItemManager().giveItems(p, "lobby", true);
 
-                main.getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY);
+                main.getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY,false,false, false,false);
                 main.getHologramsManager().loadHologram(p);
 
             });

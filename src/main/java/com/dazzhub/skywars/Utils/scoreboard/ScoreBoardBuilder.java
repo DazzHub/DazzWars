@@ -1,8 +1,15 @@
 package com.dazzhub.skywars.Utils.scoreboard;
 
+import com.dazzhub.skywars.Arena.Arena;
+import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Console;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -11,18 +18,147 @@ import org.bukkit.scoreboard.Team;
 public class ScoreBoardBuilder {
 
     private Scoreboard scoreboard;
-    private boolean reset;
 
     private Objective scoreObjective;
+    private Objective tabObjective;
+    private Objective nameHealthObj;
 
-    public ScoreBoardBuilder(Player p, String score_name, boolean health) {
+    private Team GameSpectator;
+    private Team gameTeams;
+    private Team gameEnemy;
+
+    public ScoreBoardBuilder(Player p, String score_name, boolean health, boolean spectator, boolean gamePlayers, boolean teams) {
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.scoreObjective = this.scoreboard.registerNewObjective(score_name, "dummy");
         this.scoreObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        if (health) {
+            this.nameHealthObj = this.scoreboard.registerNewObjective("namelifee", "health");
+            this.nameHealthObj.setDisplaySlot(DisplaySlot.BELOW_NAME);
+            this.nameHealthObj.setDisplayName(ChatColor.DARK_RED + "\u2764");
+        }
+
+        GamePlayer player = Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId());
+        Arena arena = player.getArena();
+
+        if (spectator){
+            if (arena == null) return;
+
+            this.GameSpectator = this.scoreboard.registerNewTeam("Spectator");
+            for (GamePlayer gamePlayer : arena.getSpectators()) {
+                if (gamePlayer != null) {
+                    if (!gamePlayer.getPlayer().isOnline()) {
+                        continue;
+                    }
+                    this.GameSpectator.addEntry(p.getName());
+                }
+            }
+        }
+
+        if (gamePlayers){
+            this.gameEnemy = this.scoreboard.registerNewTeam("PlayerGaming");
+
+            if (player.getLangMessage().getBoolean("Messages.ScoreBoard.Team.killCount")) {
+                this.tabObjective = this.scoreboard.registerNewObjective("PlayerGaming", "dummy");
+                this.tabObjective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+            }
+
+            if (arena == null) return;
+            for (GamePlayer gamePlayer : arena.getPlayers()) {
+                if (gamePlayer.getLangMessage().getBoolean("Messages.ScoreBoard.Team.killCount")) {
+                    if (this.tabObjective != null){ this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak()); }
+                }
+                this.gameEnemy.addEntry(gamePlayer.getName());
+            }
+        }
+
+        if (teams){
+            this.gameTeams = this.scoreboard.registerNewTeam("TeamsFriends");
+            if (arena == null) return;
+            if (!player.isSpectating()) {
+                if (player.getArenaTeam() != null && !player.getArenaTeam().getMembers().isEmpty()) {
+                    for (GamePlayer gamePlayer1 : player.getArenaTeam().getMembers()) {
+                        this.gameTeams.setPrefix(chars(gamePlayer1.getPlayer(), player.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[0]));
+                        this.gameTeams.setSuffix(chars(gamePlayer1.getPlayer(), player.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer1.getKillsStreak())));
+                    }
+                }
+            }
+        }
+    }
+
+    public void updatelife(Arena arena) {
+        if (nameHealthObj == null) return;
+
+        for (GamePlayer gamePlayer : arena.getPlayers()) {
+            Player player2;
+            Player player = player2 = gamePlayer.getPlayer();
+            this.nameHealthObj.getScore(player.getName()).setScore((int) (player2).getHealth() + absorbHearts(player2));
+        }
+    }
+
+    public void updateSpectator(Arena arena) {
+        if (GameSpectator == null) return;
+        for (GamePlayer gamePlayer : arena.getSpectators()) {
+            if (gamePlayer != null) {
+                this.GameSpectator.setPrefix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Spectator").split(":")[0]));
+                this.GameSpectator.setSuffix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Spectator").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer.getKillsStreak())));
+            }
+        }
+    }
+
+    public void updateEnemy(GamePlayer player, Arena arena) {
+        for (GamePlayer gamePlayer : arena.getPlayers()) {
+
+            if (player.getArenaTeam() != null && player.getArenaTeam().getMembers().contains(gamePlayer)) continue;
+
+            if (!this.gameEnemy.hasEntry(gamePlayer.getName())) {
+                this.tabObjective.getScore(gamePlayer.getName()).setScore(gamePlayer.getKillsStreak());
+                this.gameEnemy.addEntry(gamePlayer.getName());
+            }
+            this.gameEnemy.setPrefix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Game").split(":")[0]));
+            this.gameEnemy.setSuffix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Game").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer.getKillsStreak())));
+            this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak());
+        }
+    }
+
+    public void updateTeams(GamePlayer gamePlayer) {
+        if (!gamePlayer.isSpectating()) {
+            if (gamePlayer.getArenaTeam() != null && !gamePlayer.getArenaTeam().getMembers().isEmpty()) {
+                for (GamePlayer gamePlayer1 : gamePlayer.getArenaTeam().getMembers()) {
+                    if (!gameTeams.hasEntry(gamePlayer1.getName())){
+                        gameTeams.addEntry(gamePlayer1.getName());
+                        this.tabObjective.getScore(gamePlayer.getName()).setScore(gamePlayer.getKillsStreak());
+                    }
+
+                    this.gameTeams.setPrefix(chars(gamePlayer1.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[0]));
+                    this.gameTeams.setSuffix(chars(gamePlayer1.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer1.getKillsStreak())));
+                    this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak());
+                }
+            }
+        }
+    }
+
+    private String chars(Player p, String c) {
+        String transformed = (ChatColor.translateAlternateColorCodes('&', c));
+
+        if (Main.getPlugin().getSettings().getBoolean("UsePlaceholderAPI")) {
+            transformed = PlaceholderAPI.setPlaceholders(p, transformed);
+        }
+
+        return transformed;
+    }
+
+    private int absorbHearts(Player pl) {
+        for (PotionEffect pe : pl.getActivePotionEffects()) {
+            if (pe.getType().equals(PotionEffectType.ABSORPTION)) {
+                return pe.getAmplifier() * 2 + 2;
+            }
+        }
+        return 0;
     }
 
     public String color(String s) {
-        return s.replaceAll("&", "§");
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 
     public void setName(String substring) {
@@ -31,7 +167,6 @@ public class ScoreBoardBuilder {
         }
         this.scoreObjective.setDisplayName(this.color(substring));
     }
-
 
     public void lines(Integer line, String text) {
         text = color(text);
@@ -141,14 +276,6 @@ public class ScoreBoardBuilder {
         return this.scoreboard;
     }
 
-    public boolean isReset() {
-        return this.reset;
-    }
-
-    public void setReset(boolean reset) {
-        this.reset = reset;
-    }
-
     public void build(Player player) {
         player.setScoreboard(this.scoreboard);
     }
@@ -160,15 +287,15 @@ public class ScoreBoardBuilder {
             sb.deleteCharAt(sb.length() - 1);
             sb2.insert(0, '§');
         }
-        String string = "";
+        StringBuilder string = new StringBuilder();
         for (int i = 0; i < sb.toString().length(); ++i) {
             if (sb.toString().charAt(i) == '§' && i < sb.toString().length() - 1) {
-                string = string + "§" + sb.toString().charAt(i + 1);
+                string.append("§").append(sb.toString().charAt(i + 1));
             }
         }
         String string2 = String.valueOf(sb2);
         if (sb.length() > 14) {
-            string2 = (string.isEmpty() ? ("§" + string2) : (string + string2));
+            string2 = ((string.length() == 0) ? ("§" + string2) : (string + string2));
         }
         return new String[]{(sb.toString().length() > 16) ? sb.toString().substring(0, 16) : sb.toString(), (string2.length() > 16) ? string2.substring(0, 16) : string2};
     }

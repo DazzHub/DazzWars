@@ -3,6 +3,7 @@ package com.dazzhub.skywars.Listeners.Arena.onArena;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.WinEvent;
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Enums;
 import com.cryptomorin.xseries.messages.Titles;
 import org.bukkit.ChatColor;
@@ -31,12 +32,16 @@ public class onWin implements Listener {
                     c(gamePlayer.getLangMessage().getString("Messages.WinnerTitle.Info").split(";")[1]).replaceAll("%player%", gamePlayer.getPlayer().getName())
             );
 
+            arena.getWinners(gamePlayer);
+
             if (arena.getMode().equals(Enums.Mode.SOLO)) {
                 gamePlayer.addWinsSolo();
             } else if (arena.getMode().equals(Enums.Mode.TEAM)) {
                 gamePlayer.addWinsTeam();
             }
         });
+
+        arena.getSpectators().forEach(arena::getWinners);
 
         arena.getEndGameTask().runTaskTimerAsynchronously(main, 0, 20L);
     }
