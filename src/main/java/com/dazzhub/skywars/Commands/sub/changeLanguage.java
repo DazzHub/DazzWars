@@ -7,6 +7,7 @@ import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -27,21 +28,19 @@ public class changeLanguage implements subCommand {
             return;
         }
 
-        if (!sender.hasPermission("skywars.admin")) {
-            return;
-        }
         if (args.length == 2) {
             Player p = (Player) sender;
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+            Configuration lang = gamePlayer.getLangMessage();
 
-            String lang = args[1];
-            if (!main.getSettings().getStringList("ListLanguage").contains(lang)) {
-                gamePlayer.sendMessage("Messages.error");
+            String select = args[1];
+            if (!main.getSettings().getStringList("ListLanguage").contains(select)) {
+                gamePlayer.sendMessage(lang.getString("Messages.Language.error"));
                 return;
             }
 
-            gamePlayer.setLang(lang);
-            gamePlayer.sendMessage("Messages.Language");
+            gamePlayer.setLang(select);
+            gamePlayer.sendMessage(lang.getString("Messages.Language.change"));
         } else {
             sender.sendMessage(this.help(sender));
         }

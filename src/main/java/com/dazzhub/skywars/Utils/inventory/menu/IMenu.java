@@ -350,15 +350,16 @@ public class IMenu {
                 if (action.startsWith(" ")) {
                     action = action.substring(1);
                 }
+                Configuration lang = gamePlayer.getLangMessage();
 
                 if (!main.getSettings().getStringList("ListLanguage").contains(action)) {
-                    gamePlayer.sendMessage("Messages.error");
+                    gamePlayer.sendMessage(lang.getString("Messages.Language.error"));
                     return;
                 }
 
                 gamePlayer.setLang(action);
 
-                gamePlayer.sendMessage("Messages.Language");
+                gamePlayer.sendMessage(lang.getString("Messages.Language.change"));
             } else if (cmd.startsWith("vote:")) {
                 String vote = cmd.substring(5);
                 if (vote.startsWith(" ")) {
