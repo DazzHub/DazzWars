@@ -58,6 +58,8 @@ public class IMenuManager {
             configCreate.get().setup(main, "Inventory/Menu/traileffect-solo");
             configCreate.get().setup(main, "Inventory/Menu/traileffect-team");
             configCreate.get().setup(main, "Inventory/Menu/lang-change");
+            configCreate.get().setup(main, "Inventory/Menu/vote-events");
+            configCreate.get().setup(main, "Inventory/Menu/vote-scenarios");
         }
 
         File file = new File(main.getDataFolder(), "Inventory/Menu");

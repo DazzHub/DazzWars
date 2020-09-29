@@ -7,14 +7,14 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&8➣ Vote menu'
+  name: '&8➣ Vote Events'
 
   # rows - the number of rows of the chest - REQUIRED
-  rows: 5
-  
+  rows: 4
+
   # command - OPTIONAL (you can remove this or set it to '')
   command: ''
-  
+
   # permissionView - MATERIAL NAME - DATA
   permissionView:
     ICON-ITEM: 'SIGN'
@@ -24,58 +24,62 @@ menu-settings:
       - '&8» &eYou currently don''t have'
       - '&8» &6permission to do this'
       - ''
-chests:
-  ACTION: 'open: vote-chest.yml'
-  NAME: '&e&lCHESTS'
+  ######################
+  #+                  +#
+  #       ITEMS        #
+  #+                  +#
+  ######################
+border:
+  ACTION: 'vote:%BORDER%'
+  NAME: '&cBORDER'
   DESCRIPTION:
-    - '&7➲ &2&lVIPS&f ACCESS ONLY'
-  ICON-ITEM: 130
+    - '&7➲  &2&lclick to vote'
+  ICON-ITEM: 166
   DATA-VALUE: 0
   POSITION-X: 3
   POSITION-Y: 2
-heart:
-  ACTION: 'open: vote-heart.yml'
-  NAME: '&4&lHEART'
+dragon:
+  ACTION: 'vote:%DRAGON%'
+  NAME: '&cDRAGON'
   DESCRIPTION:
-    - '&7➲ &2&lVIPS&f ACCESS ONLY'
-  ICON-ITEM: 260
+    - '&7➲  &2&lclick to vote'
+  ICON-ITEM: 122
   DATA-VALUE: 0
   POSITION-X: 5
   POSITION-Y: 2
-time:
-  ACTION: 'open: vote-time.yml'
-  NAME: '&6&lTIME'
+dropparty:
+  ACTION: 'vote:%DROPPARTY%'
+  NAME: '&DROPPARTY'
   DESCRIPTION:
-    - '&7➲ &2&lVIPS&f ACCESS ONLY'
-  ICON-ITEM: 175
+    - '&7➲  &2&lclick to vote'
+  ICON-ITEM: 38
   DATA-VALUE: 0
   POSITION-X: 7
   POSITION-Y: 2
-scenarios:
-  COMMAND: 'open: vote-scenarios.yml'
-  NAME: '&e&lSCENARIOS'
+STORM:
+  ACTION: 'vote:%STORM%'
+  NAME: '&cSTORM'
   DESCRIPTION:
-    - '&8» &2&lVIPS&f ACCESS ONLY'
-  ICON-ITEM: 389
-  DATA-VALUE: 0
+    - '&7➲  &2&lclick to vote'
+  ICON-ITEM: 351
+  DATA-VALUE: 7
   POSITION-X: 4
   POSITION-Y: 3
-Events:
-  COMMAND: 'open: vote-events.yml'
-  NAME: '&5&lEVENTS'
+TNTFALL:
+  ACTION: 'vote:%TNTFALL%'
+  NAME: '&cTNTFALL'
   DESCRIPTION:
-    - '&8» &2&lVIPS&f ACCESS ONLY'
-  ICON-ITEM: 50
+    - '&7➲  &2&lclick to vote'
+  ICON-ITEM: 46
   DATA-VALUE: 0
   POSITION-X: 6
   POSITION-Y: 3
-close:
-  ACTION: 'close'
-  NAME: '&cClose'
+back:
+  ACTION: 'open:vote.yml'
+  NAME: '&aBack'
   DESCRIPTION:
     - ''
   ICON-ITEM: 368
   DATA-VALUE: 0
   POSITION-X: 5
   POSITION-Y: 4
-

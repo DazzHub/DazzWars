@@ -1,0 +1,63 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&8➣ Vote Scenarios'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - '&8» &eYou currently don''t have'
+      - '&8» &6permission to do this'
+      - ''
+
+noclean:
+  ACTION: 'vote:%NOCLEAN%'
+  NAME: '&cNOCLEAN'
+  DESCRIPTION:
+    - '&8» &e&lNoClean'
+  ICON-ITEM: 322
+  DATA-VALUE: 0
+  POSITION-X: 3
+  POSITION-Y: 2
+nofall:
+  ACTION: 'vote:%NOFALL%'
+  NAME: '&bNO-FALL'
+  DESCRIPTION:
+    - '&8» &c&lNoFall'
+  ICON-ITEM: 288
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 2
+noprojectile:
+  ACTION: 'vote:%NOPROJECTILE%'
+  NAME: '&6NO-PROJECTILE'
+  DESCRIPTION:
+    - '&8» &6&lNoProjectile'
+  ICON-ITEM: 262
+  DATA-VALUE: 0
+  POSITION-X: 7
+  POSITION-Y: 2
+back:
+  ACTION: 'open:vote.yml'
+  NAME: '&aBack'
+  DESCRIPTION:
+    - ''
+  ICON-ITEM: 368
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 4
