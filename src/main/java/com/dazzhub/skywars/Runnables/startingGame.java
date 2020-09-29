@@ -118,7 +118,7 @@ public class startingGame extends BukkitRunnable {
         List<String> message1 = lang.getStringList("Messages.InfoGame");
 
         List<String> message = message1.stream().map(s -> s
-                .replace("%chest%", arena.getChestType().name()
+                .replace("%chest%", arena.getChestType()
                         .replace("BASIC", lang.getString("Messages.TypeVote.Chest.basic", "basic"))
                         .replace("NORMAL", lang.getString("Messages.TypeVote.Chest.normal", "normal"))
                         .replace("OP", lang.getString("Messages.TypeVote.Chest.op", "op"))

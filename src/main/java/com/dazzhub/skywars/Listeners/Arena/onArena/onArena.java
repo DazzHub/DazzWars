@@ -68,7 +68,7 @@ public class onArena implements Listener {
                                     && !arena.getChestsAddInGame().contains(e.getClickedBlock().getLocation())
                                     && !arena.getCenterChest().contains(e.getClickedBlock().getLocation())
                                     && !arena.getCenterChestCheck().contains(e.getClickedBlock().getLocation())) {
-                                main.getChestManager().getChestHashMap().get(arena.getChestType().name()).refillChest(chest);
+                                main.getChestManager().getChestHashMap().get(arena.getChestType()).refillChest(chest);
                                 arena.getIslandChest().add(chest.getLocation());
                             }
                         }

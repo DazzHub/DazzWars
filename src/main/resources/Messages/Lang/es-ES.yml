@@ -103,6 +103,60 @@ Messages:
     Fade: 10
     Stay: 40
     Out: 10
+  TypeEvent:
+    Dragon:
+      Starting:
+        240: '&e&l⚠&7 El dragon aparecere en &9%seconds%'
+        120: '&e&l⚠&7 El dragon aparecere en &5%seconds%'
+        60: '&e&l⚠&7 El dragon aparecere en &4%seconds%'
+        10: '&e&l⚠&7 El dragon aparecere en &c%seconds%'
+        5: '&e&l⚠&7 El dragon aparecere en &d%seconds%'
+        4: '&e&l⚠&7 El dragon aparecere en &2%seconds%'
+        3: '&e&l⚠&7 El dragon aparecere en &a%seconds%'
+        2: '&e&l⚠&7 El dragon aparecere en &e%seconds%'
+        1: '&e&l⚠&7 El dragon aparecere en &c%seconds%'
+    Border:
+      Starting:
+        120: '&e&l⚠&7 El borde comenzará a encogerse en &5%seconds%'
+        60: '&e&l⚠&7 El borde comenzará a encogerse en &4%seconds%'
+        10: '&e&l⚠&7 El borde comenzará a encogerse en &c%seconds%'
+        5: '&e&l⚠&7 El borde comenzará a encogerse en &d%seconds%'
+        4: '&e&l⚠&7 El borde comenzará a encogerse en &2%seconds%'
+        3: '&e&l⚠&7 El borde comenzará a encogerse en &a%seconds%'
+        2: '&e&l⚠&7 El borde comenzará a encogerse en &e%seconds%'
+        1: '&e&l⚠&7 El borde comenzará a encogerse en &c%seconds%'
+    DropParty:
+      Starting:
+        100: '&e&l⚠&7 La lluvia de items aparecere en &5%seconds%'
+        60: '&e&l⚠&7 La lluvia de items aparecere en &4%seconds%'
+        10: '&e&l⚠&7 La lluvia de items aparecere en &c%seconds%'
+        5: '&e&l⚠&7 La lluvia de items aparecere en &d%seconds%'
+        4: '&e&l⚠&7 La lluvia de items aparecere en &2%seconds%'
+        3: '&e&l⚠&7 La lluvia de items aparecere en &a%seconds%'
+        2: '&e&l⚠&7 La lluvia de items aparecere en &e%seconds%'
+        1: '&e&l⚠&7 La lluvia de items aparecere en &c%seconds%'
+    Storm:
+      Starting:
+        200: '&e&l⚠&7 La tormenta aparecere en &9%seconds%'
+        120: '&e&l⚠&7 La tormenta aparecere en &5%seconds%'
+        60: '&e&l⚠&7 La tormenta aparecere en &4%seconds%'
+        10: '&e&l⚠&7 La tormenta aparecere en &c%seconds%'
+        5: '&e&l⚠&7 La tormenta aparecere en &d%seconds%'
+        4: '&e&l⚠&7 La tormenta aparecere en &2%seconds%'
+        3: '&e&l⚠&7 La tormenta aparecere en &a%seconds%'
+        2: '&e&l⚠&7 La tormenta aparecere en &e%seconds%'
+        1: '&e&l⚠&7 La tormenta aparecere en &c%seconds%'
+    TntFall:
+      Starting:
+        200: '&e&l⚠&7 La lluvia de tnt aparecere en &9%seconds%'
+        120: '&e&l⚠&7 La lluvia de tnt aparecere en &5%seconds%'
+        60: '&e&l⚠&7 La lluvia de tnt aparecere en &4%seconds%'
+        10: '&e&l⚠&7 La lluvia de tnt aparecere en &c%seconds%'
+        5: '&e&l⚠&7 La lluvia de tnt aparecere en &d%seconds%'
+        4: '&e&l⚠&7 La lluvia de tnt aparecere en &2%seconds%'
+        3: '&e&l⚠&7 La lluvia de tnt aparecere en &a%seconds%'
+        2: '&e&l⚠&7 La lluvia de tnt aparecere en &e%seconds%'
+        1: '&e&l⚠&7 La lluvia de tnt aparecere en &c%seconds%'
   TypeVote:
     VoteFor: '&8» &f%player% ha votado por &a%vote% (%votes%)'
     AlreadyVote: '&8» &fYa has votado'

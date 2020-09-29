@@ -79,7 +79,7 @@ public class Arena {
     private endGame endGameTask;
 
     /* TYPE VOTES */
-    private Enums.TypeVotes chestType;
+    private String chestType;
     private Enums.TypeVotes healthType;
     private Enums.TypeVotes timeType;
     private Enums.TypeVotes eventsType;
@@ -95,6 +95,8 @@ public class Arena {
 
     /* TOP KILLERS */
     private HashMap<String, Integer> killers;
+
+    private Configuration arenac;
 
     private boolean damageFallStarting;
 
@@ -123,7 +125,7 @@ public class Arena {
         this.chestsAddInGame = new ArrayList<>();
 
         /* TYPE VOTES */
-        this.chestType = Enums.TypeVotes.NORMAL;
+        this.chestType = Enums.TypeVotes.NORMAL.name();
         this.healthType = Enums.TypeVotes.HEART10;
         this.timeType = Enums.TypeVotes.DAY;
         this.votesSystem = new VotesSystem(this);
@@ -135,7 +137,7 @@ public class Arena {
         /* TOP KILLERS */
         this.killers = new HashMap<>();
 
-        Configuration arenac = main.getConfigUtils().getConfig(main, "Arenas/" + nameArena + "/Settings");
+        this.arenac = main.getConfigUtils().getConfig(main, "Arenas/" + nameArena + "/Settings");
         if (arenac != null) {
             this.nameWorld = arenac.getString("Arena.world");
 
@@ -187,7 +189,7 @@ public class Arena {
         this.endGameTask = new endGame(this);
 
         /* TYPE VOTES */
-        this.chestType = Enums.TypeVotes.NORMAL;
+        this.chestType = Enums.TypeVotes.NORMAL.name();
         this.healthType = Enums.TypeVotes.HEART10;
         this.timeType = Enums.TypeVotes.DAY;
         this.votesSystem = new VotesSystem(this);
@@ -195,7 +197,7 @@ public class Arena {
         /* REFILL */
         this.refillGame = null;
         this.refillTime = new ArrayList<>();
-        Configuration arenac = main.getConfigUtils().getConfig(main, "Arenas/" + nameArena + "/Settings");
+
         if (arenac != null) {
             this.refillTime.addAll(arenac.getIntegerList("Arena.refill"));
         }
@@ -303,15 +305,15 @@ public class Arena {
 
     public void fillChests() {
         switch (this.chestType) {
-            case BASIC: {
+            case "BASIC": {
                 getChests("BASIC");
                 break;
             }
-            case NORMAL: {
+            case "NORMAL": {
                 getChests("NORMAL");
                 break;
             }
-            case OP: {
+            case "OP": {
                 getChests("OP");
                 break;
             }
@@ -483,8 +485,6 @@ public class Arena {
 
 
     public void loadSpawns() {
-        Configuration arenac = main.getConfigUtils().getConfig(main, "Arenas/" + nameArena + "/Settings");
-
         if (!arenac.getString("Arena.spawns", "").isEmpty()) {
             arenac.getConfigurationSection("Arena.spawns").getKeys(false).forEach(key ->
                     spawns.add(new ArenaTeam(this, locUtils.stringToLoc(arenac.getString("Arena.spawns." + key))))

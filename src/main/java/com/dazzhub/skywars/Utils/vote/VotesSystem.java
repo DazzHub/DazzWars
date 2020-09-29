@@ -17,6 +17,7 @@ public class VotesSystem
     private List<UUID> basicChests;
     private List<UUID> normalChests;
     private List<UUID> opChests;
+    private List<UUID> customChests;
     private List<UUID> dayTime;
     private List<UUID> sunsetTime;
     private List<UUID> nightTime;
@@ -32,7 +33,7 @@ public class VotesSystem
     private List<UUID> tntfall;
     private List<UUID> storm;
 
-    private HashMap<Enums.TypeVotes, Integer> checkChest;
+    private HashMap<String, Integer> checkChest;
     private HashMap<Enums.TypeVotes, Integer> checkTime;
     private HashMap<Enums.TypeVotes, Integer> checkLife;
     private HashMap<Enums.TypeVotes, Integer> checkScenarios;
@@ -43,6 +44,7 @@ public class VotesSystem
         this.basicChests = new ArrayList<>();
         this.normalChests = new ArrayList<>();
         this.opChests = new ArrayList<>();
+        this.customChests = new ArrayList<>();
         this.dayTime = new ArrayList<>();
         this.sunsetTime = new ArrayList<>();
         this.nightTime = new ArrayList<>();
@@ -65,21 +67,26 @@ public class VotesSystem
         this.checkEvent = new HashMap<>();
     }
 
+    public void addCustomChests(Player p, String Type) {
+        this.customChests.add(p.getUniqueId());
+        this.checkChest.put(Type, customChests.size());
+    }
+
     public void addVote(Player p, Enums.TypeVotes Type) {
         switch (Type) {
             case BASIC: {
                 this.basicChests.add(p.getUniqueId());
-                this.checkChest.put(Type, basicChests.size());
+                this.checkChest.put(Type.name(), basicChests.size());
                 break;
             }
             case NORMAL: {
                 this.normalChests.add(p.getUniqueId());
-                this.checkChest.put(Type, normalChests.size());
+                this.checkChest.put(Type.name(), normalChests.size());
                 break;
             }
             case OP: {
                 this.opChests.add(p.getUniqueId());
-                this.checkChest.put(Type, opChests.size());
+                this.checkChest.put(Type.name(), opChests.size());
                 break;
             }
             case HEART10: {
@@ -159,18 +166,18 @@ public class VotesSystem
 
     private void checkChests() {
         while (this.checkChest.size() < 1) {
-            this.checkChest.put(Enums.TypeVotes.NONE, 0);
+            this.checkChest.put(Enums.TypeVotes.NONE.name(), 0);
         }
 
-        SortedMap<Enums.TypeVotes, Comparable<Integer>> sortedMap = ImmutableSortedMap.copyOf(checkChest, Ordering.natural().reverse().onResultOf(Functions.forMap(checkChest)).compound(Ordering.natural().reverse()));
+        SortedMap<String, Comparable<Integer>> sortedMap = ImmutableSortedMap.copyOf(checkChest, Ordering.natural().reverse().onResultOf(Functions.forMap(checkChest)).compound(Ordering.natural().reverse()));
 
         String votes = String.valueOf(sortedMap.values()).replace("[", "").replace("]", "");
         String type = String.valueOf(sortedMap.keySet()).replace("[", "").replace("]", "");
 
         if (!votes.split(",")[0].equals("0")){
-            this.arena.setChestType(Enums.TypeVotes.valueOf(type.split(",")[0]));
+            this.arena.setChestType(type.split(",")[0]);
         } else {
-            this.arena.setChestType(Enums.TypeVotes.NORMAL);
+            this.arena.setChestType(Enums.TypeVotes.NORMAL.name());
         }
     }
 
@@ -231,6 +238,7 @@ public class VotesSystem
 
     public void removeFromVotes(Player pl) {
         UUID p = pl.getUniqueId();
+        this.customChests.remove(p);
         this.basicChests.remove(p);
         this.normalChests.remove(p);
         this.opChests.remove(p);

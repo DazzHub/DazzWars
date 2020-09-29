@@ -103,6 +103,60 @@ Messages:
     Fade: 10
     Stay: 40
     Out: 10
+  TypeEvent:
+    Dragon:
+      Starting:
+        240: '&e&l⚠&7 The dragon appears in &9%seconds%'
+        120: '&e&l⚠&7 The dragon appears in &5%seconds%'
+        60: '&e&l⚠&7 The dragon appears in &4%seconds%'
+        10: '&e&l⚠&7 The dragon appears in &c%seconds%'
+        5: '&e&l⚠&7 The dragon appears in &d%seconds%'
+        4: '&e&l⚠&7 The dragon appears in &2%seconds%'
+        3: '&e&l⚠&7 The dragon appears in &a%seconds%'
+        2: '&e&l⚠&7 The dragon appears in &e%seconds%'
+        1: '&e&l⚠&7 The dragon appears in &c%seconds%'
+    Border:
+      Starting:
+        120: '&e&l⚠&7 The border will start to shrink &5%seconds%'
+        60: '&e&l⚠&7 The border will start to shrink &4%seconds%'
+        10: '&e&l⚠&7 The border will start to shrink &c%seconds%'
+        5: '&e&l⚠&7 The border will start to shrink &d%seconds%'
+        4: '&e&l⚠&7 The border will start to shrink &2%seconds%'
+        3: '&e&l⚠&7 The border will start to shrink &a%seconds%'
+        2: '&e&l⚠&7 The border will start to shrink &e%seconds%'
+        1: '&e&l⚠&7 The border will start to shrink &c%seconds%'
+    DropParty:
+      Starting:
+        100: '&e&l⚠&7 The dropParty start in &5%seconds%'
+        60: '&e&l⚠&7 The dropParty start in &4%seconds%'
+        10: '&e&l⚠&7 The dropParty start in &c%seconds%'
+        5: '&e&l⚠&7 The dropParty start in &d%seconds%'
+        4: '&e&l⚠&7 The dropParty start in &2%seconds%'
+        3: '&e&l⚠&7 The dropParty start in &a%seconds%'
+        2: '&e&l⚠&7 The dropParty start in &e%seconds%'
+        1: '&e&l⚠&7 The dropParty start in &c%seconds%'
+    Storm:
+      Starting:
+        200: '&e&l⚠&7 The Storm start in &9%seconds%'
+        120: '&e&l⚠&7 The Storm start in &5%seconds%'
+        60: '&e&l⚠&7 The Storm start in &4%seconds%'
+        10: '&e&l⚠&7 The Storm start in &c%seconds%'
+        5: '&e&l⚠&7 The Storm start in &d%seconds%'
+        4: '&e&l⚠&7 The Storm start in &2%seconds%'
+        3: '&e&l⚠&7 The Storm start in &a%seconds%'
+        2: '&e&l⚠&7 The Storm start in &e%seconds%'
+        1: '&e&l⚠&7 The Storm start in &c%seconds%'
+    TntFall:
+      Starting:
+        200: '&e&l⚠&7 The TnTFall start in &9%seconds%'
+        120: '&e&l⚠&7 The TnTFall start in &5%seconds%'
+        60: '&e&l⚠&7 The TnTFall start in &4%seconds%'
+        10: '&e&l⚠&7 The TnTFall start in &c%seconds%'
+        5: '&e&l⚠&7 The TnTFall start in &d%seconds%'
+        4: '&e&l⚠&7 The TnTFall start in &2%seconds%'
+        3: '&e&l⚠&7 The TnTFall start in &a%seconds%'
+        2: '&e&l⚠&7 The TnTFall start in &e%seconds%'
+        1: '&e&l⚠&7 The TnTFall start in &c%seconds%'
   TypeVote:
     VoteFor: '&8» &f%player% voted for &a%vote% (%votes%)'
     AlreadyVote: '&8» &fYou already voted'

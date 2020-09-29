@@ -360,6 +360,31 @@ public class IMenu {
                 gamePlayer.setLang(action);
 
                 gamePlayer.sendMessage(lang.getString("Messages.Language.change"));
+            } else if (cmd.startsWith("chest:")) {
+                String vote = cmd.substring(6);
+                if (vote.startsWith(" ")) {
+                    vote = vote.substring(1);
+                }
+
+                vote = vote.replace("%", "");
+
+                if (gamePlayer.isInArena()) {
+                    Arena arena = gamePlayer.getArena();
+
+                    if (!arena.getVotesSystem().getCustomChests().contains(p.getUniqueId())) {
+                        arena.getVotesSystem().addCustomChests(p, vote);
+
+                        for (GamePlayer game : arena.getPlayers()) {
+                            Configuration lang = game.getLangMessage();
+
+                            game.sendMessage(lang.getString("Messages.TypeVote.VoteFor")
+                                    .replace("%player%", p.getName())
+                                    .replace("%vote%", vote)
+                                    .replace("%votes%", String.valueOf(arena.getVotesSystem().getCustomChests().size()))
+                            );
+                        }
+                    }
+                }
             } else if (cmd.startsWith("vote:")) {
                 String vote = cmd.substring(5);
                 if (vote.startsWith(" ")) {

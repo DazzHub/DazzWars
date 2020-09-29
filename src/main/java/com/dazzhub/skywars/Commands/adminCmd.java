@@ -1,5 +1,6 @@
 package com.dazzhub.skywars.Commands;
 
+import com.dazzhub.skywars.Commands.sub.*;
 import com.dazzhub.skywars.Commands.sub.arena.Coins;
 import com.dazzhub.skywars.Commands.sub.arena.Enable;
 import com.dazzhub.skywars.Commands.sub.arena.Join;
@@ -10,12 +11,8 @@ import com.dazzhub.skywars.Commands.sub.arena.config.setMin;
 import com.dazzhub.skywars.Commands.sub.arena.config.setSpectator;
 import com.dazzhub.skywars.Commands.sub.cages.addCage;
 import com.dazzhub.skywars.Commands.sub.cages.wandCage;
-import com.dazzhub.skywars.Commands.sub.changeLanguage;
 import com.dazzhub.skywars.Commands.sub.holograms.addHologram;
 import com.dazzhub.skywars.Commands.sub.kit.addKit;
-import com.dazzhub.skywars.Commands.sub.reload;
-import com.dazzhub.skywars.Commands.sub.setLobby;
-import com.dazzhub.skywars.Commands.sub.worldTP;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.CenterMessage;
@@ -60,6 +57,8 @@ public class adminCmd implements CommandExecutor {
         new addHologram(main);
         new reload(main);
         new changeLanguage(main);
+
+        new testEvents(main);
 
     }
 

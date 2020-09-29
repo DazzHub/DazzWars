@@ -34,6 +34,8 @@ public class inGame extends BukkitRunnable {
             this.cancel();
             if (arena.getRefillGame() != null) {
                 arena.getRefillGame().cancel();
+                arena.setRefillGame(null);
+                arena.getRefillTime().clear();
             }
             Bukkit.getPluginManager().callEvent(new WinEvent(this.arena));
         }
@@ -42,6 +44,8 @@ public class inGame extends BukkitRunnable {
             this.cancel();
             if (arena.getRefillGame() != null) {
                 arena.getRefillGame().cancel();
+                arena.setRefillGame(null);
+                arena.getRefillTime().clear();
             }
             Bukkit.getPluginManager().callEvent(new WinEvent(this.arena));
         }
@@ -58,6 +62,8 @@ public class inGame extends BukkitRunnable {
             this.cancel();
             if (arena.getRefillGame() != null) {
                 arena.getRefillGame().cancel();
+                arena.setRefillGame(null);
+                arena.getRefillTime().clear();
             }
             Bukkit.getPluginManager().callEvent(new WinEvent(this.arena));
 

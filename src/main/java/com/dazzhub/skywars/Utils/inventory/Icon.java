@@ -374,7 +374,7 @@ public class Icon {
         }
 
         if (permissionViewItem != null && !hasPerm(p)){
-            return permissionViewItem;
+            return replace(p, permissionViewItem);
         }
 
         if (im.getLore() != null) {

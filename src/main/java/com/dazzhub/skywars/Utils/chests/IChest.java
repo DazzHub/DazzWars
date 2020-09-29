@@ -93,6 +93,20 @@ public class IChest {
         }
     }
 
+    public ItemStack getRandomItems(){
+        for (int chance : chestItemList.keySet()) {
+            for (ItemStack item : chestItemList.get(chance)) {
+                if (item != null && !item.getType().equals(Material.AIR)) {
+                    if (this.r.nextInt(100) + 1 <= chance) {
+                        return item;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     private boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
