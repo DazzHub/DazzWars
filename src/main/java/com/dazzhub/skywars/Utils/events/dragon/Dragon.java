@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +18,7 @@ public class Dragon implements eventDragon {
     private Main main;
     private Arena arena;
 
-    private Monster dragon;
+    private EnderDragon dragon;
     private int timer;
 
     public Dragon(Arena arena) {
@@ -44,7 +45,7 @@ public class Dragon implements eventDragon {
                         World world = Bukkit.getWorld(arena.getNameWorld());
                         Location loc = arena.getSpawnSpectator().add(0,5,0);
 
-                        dragon = (Monster) world.spawnEntity(loc, EntityType.ENDER_DRAGON);
+                        dragon = (EnderDragon) world.spawnEntity(loc, EntityType.ENDER_DRAGON);
 
                         dragon.setCustomName(c(arena.getArenac().getString("Arena.dragon.Name")));
                         dragon.setCustomNameVisible(true);

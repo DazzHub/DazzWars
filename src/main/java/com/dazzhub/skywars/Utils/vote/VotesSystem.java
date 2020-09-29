@@ -119,6 +119,46 @@ public class VotesSystem
                 this.checkTime.put(Type, nightTime.size());
                 break;
             }
+            case BORDER: {
+                this.border.add(p.getUniqueId());
+                this.checkEvent.put(Type, border.size());
+                break;
+            }
+            case DRAGON: {
+                this.dragon.add(p.getUniqueId());
+                this.checkEvent.put(Type, dragon.size());
+                break;
+            }
+            case DROPPARTY: {
+                this.dropParty.add(p.getUniqueId());
+                this.checkEvent.put(Type, dropParty.size());
+                break;
+            }
+            case STORM: {
+                this.storm.add(p.getUniqueId());
+                this.checkEvent.put(Type, storm.size());
+                break;
+            }
+            case TNTFALL: {
+                this.tntfall.add(p.getUniqueId());
+                this.checkEvent.put(Type, tntfall.size());
+                break;
+            }
+            case NOCLEAN: {
+                this.noclean.add(p.getUniqueId());
+                this.checkScenarios.put(Type, noclean.size());
+                break;
+            }
+            case NOFALL: {
+                this.nofall.add(p.getUniqueId());
+                this.checkScenarios.put(Type, nofall.size());
+                break;
+            }
+            case NOPROJECTILE: {
+                this.noprojectil.add(p.getUniqueId());
+                this.checkScenarios.put(Type, nofall.size());
+                break;
+            }
         }
     }
 
@@ -126,8 +166,8 @@ public class VotesSystem
         this.checkChests();
         this.checkHealth();
         this.checkTime();
-        //this.checkScenarios();
-        //this.checkEvents();
+        this.checkEvents();
+        this.checkScenarios();
     }
 
     private void checkHealth() {

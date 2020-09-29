@@ -183,6 +183,10 @@ public class onArena implements Listener {
                 if (arena.isDamageFallStarting()) {
                     e.setCancelled(true);
                 }
+
+                if (arena.isNoFall()) {
+                    e.setCancelled(true);
+                }
             }
         }
     }
@@ -282,9 +286,9 @@ public class onArena implements Listener {
     @EventHandler
     public void ArrowHits(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Arrow) {
-            final Arrow a = (Arrow)e.getDamager();
+            final Arrow a = (Arrow) e.getDamager();
             if (a.getShooter() instanceof Player) {
-                Player p = (Player)a.getShooter();
+                Player p = (Player) a.getShooter();
 
                 GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
@@ -296,16 +300,27 @@ public class onArena implements Listener {
                     Arena arena = gamePlayer.getArena();
 
                     if (arena.getGameStatus() == Enums.GameStatus.INGAME) {
-                        switch (arena.getMode()){
-                            case SOLO:{
+                        switch (arena.getMode()) {
+                            case SOLO: {
                                 gamePlayer.addHitsSolo();
                                 break;
                             }
-                            case TEAM:{
+                            case TEAM: {
                                 gamePlayer.addHitsTeam();
                                 break;
                             }
                         }
+                    }
+
+
+                    if (e.getDamager() instanceof Projectile || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
+                        if (arena.isNoProjectile()) {
+                            if (gamePlayer.getLangMessage().getBoolean("Messages.notifyVotes.Scenario.Projectile.enabled")) {
+                                gamePlayer.sendMessage(c(gamePlayer.getLangMessage().getString("Messages.notifyVotes.Scenario.Projectile.isProjectile")));
+                            }
+                            e.setCancelled(true);
+                        }
+
                     }
                 }
             }

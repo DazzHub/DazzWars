@@ -58,8 +58,6 @@ public class adminCmd implements CommandExecutor {
         new reload(main);
         new changeLanguage(main);
 
-        new testEvents(main);
-
     }
 
     @Override

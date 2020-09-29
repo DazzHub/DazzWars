@@ -73,6 +73,9 @@ Messages:
     - '%center%&fChest type &8» &a%chest%'
     - '%center%&fType of time &8» &6%time%'
     - '%center%&fKind of hearts &8» &e%heart%'
+    - '%center%&fType of Events &8» &9%event%'
+    - '%center%&fType of scenario &8» &d%scenario%'
+    - ''
     - '%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
     - '&6Teaming is not allowed on Solo mode!'
   LuckTitle:
@@ -172,11 +175,21 @@ Messages:
       10h: '10 ❤'
       20h: '20 ❤'
       30h: '30 ❤'
-    TypeName:
-      CHEST: 'Chest'
-      TIME: 'Time'
-      HEART: 'Heart'
+    Events:
+      border: 'Border'
+      dragon: 'Dragon'
+      dropparty: 'DropParty'
+      storm: 'Storm'
+      tntfall: 'TntFall'
+    Scenario:
+      noclean: 'NoClean'
+      nofall: 'NoFall'
+      noprojectile: 'NoProjectile'
     none: 'None'
+  notifyVotes:
+    Projectile:
+      enabled: true
+      isProjectile: '&e&l⚠&f The scenario Proj is enabled!'
   ScoreBoard:
     Waiting: 'Waiting'
     Refill: 'Refill: %time%'

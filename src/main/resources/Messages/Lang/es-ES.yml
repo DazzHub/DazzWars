@@ -73,6 +73,9 @@ Messages:
     - '%center%&fTipo de Cofre &8» &a%chest%'
     - '%center%&fTipo de Tiempo &8» &6%time%'
     - '%center%&fTipo de corazones &8» &e%heart%'
+    - '%center%&fTipo de Eventos &8» &9%event%'
+    - '%center%&fTipo de escenario &8» &d%scenario%'
+    - ''
     - '%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
     - '&6El Team no está permitido en el modo Solo!'
   LuckTitle:
@@ -172,11 +175,21 @@ Messages:
       10h: '10 ❤'
       20h: '20 ❤'
       30h: '30 ❤'
-    TypeName:
-      CHEST: 'Cofres'
-      TIME: 'Tiempo'
-      HEART: 'Corazones'
+    Events:
+      dragon: 'Dragon'
+      border: 'Borde'
+      dropparty: 'Lluvia de items'
+      tntfall: 'Lluvia de tnt'
+      storm: 'Tormentas'
+    Scenario:
+      noclean: 'NoClean'
+      nofall: 'NoFall'
+      noprojectile: 'NoProjectile'
     none: 'None'
+  notifyVotes:
+    Projectile:
+      enabled: true
+      isProjectile: '&e&l⚠&f The scenario Proj is enabled!'
   ScoreBoard:
     Waiting: 'Esperando'
     Refill: 'Relleno: %time%'

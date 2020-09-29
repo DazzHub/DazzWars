@@ -89,6 +89,38 @@ public class ArenaManager {
         config.set("Arena.startingGame", 15);
         config.set("Arena.finishedGame", 10);
         config.set("Arena.refill", refilltimes);
+
+
+        /* EVENT BORDER */
+        config.set("Arena.border.SpawnDefault", false);
+        config.set("Arena.border.TimeSpawn", 120);
+        config.set("Arena.border.Settings.Size", 100);
+        config.set("Arena.border.Settings.Damage.inborder", 1);
+        config.set("Arena.border.Settings.Damage.border", 1);
+
+        /* EVENT DRAGON */
+        config.set("Arena.dragon.TimeSpawn", 120);
+        config.set("Arena.dragon.Name", "&bDRAGON");
+
+        /* EVENT DROPPARTY */
+        config.set("Arena.dropparty.TimeStarting", 120);
+        config.set("Arena.dropparty.TimeDrop", 50);
+        config.set("Arena.dropparty.Chest", "DROPPARTY");
+        config.set("Arena.dropparty.AmountDrop", 1);
+        config.set("Arena.dropparty.Radio", 35);
+
+        /* EVENT STORM */
+        config.set("Arena.storm.TimeSpawn", 120);
+        config.set("Arena.storm.TimeDuration", 50);
+        config.set("Arena.storm.AmountLight", 2);
+        config.set("Arena.storm.Radio", 35);
+
+        /* EVENT TNTFALL */
+        config.set("Arena.tntfall.TimeSpawn", 120);
+        config.set("Arena.tntfall.TimeDuration", 50);
+        config.set("Arena.tntfall.AmountFallTnT", 2);
+        config.set("Arena.tntfall.Radio", 35);
+
         config.set("Arena.mode", "SOLO");
         try {
             config.save(file);

@@ -49,6 +49,16 @@ public class Enums {
         HEART20,
         HEART30,
 
+        BORDER,
+        DRAGON,
+        DROPPARTY,
+        STORM,
+        TNTFALL,
+
+        NOCLEAN,
+        NOFALL,
+        NOPROJECTILE,
+
         NONE;
     }
 

@@ -14,6 +14,16 @@ import com.dazzhub.skywars.Runnables.startingGame;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Cuboid;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.events.border.Border;
+import com.dazzhub.skywars.Utils.events.border.eventBorder;
+import com.dazzhub.skywars.Utils.events.dragon.Dragon;
+import com.dazzhub.skywars.Utils.events.dragon.eventDragon;
+import com.dazzhub.skywars.Utils.events.dropParty.dropParty;
+import com.dazzhub.skywars.Utils.events.dropParty.eventParty;
+import com.dazzhub.skywars.Utils.events.strom.Storm;
+import com.dazzhub.skywars.Utils.events.strom.eventStorm;
+import com.dazzhub.skywars.Utils.events.tntfall.TNTFall;
+import com.dazzhub.skywars.Utils.events.tntfall.eventTNT;
 import com.dazzhub.skywars.Utils.locUtils;
 import com.dazzhub.skywars.Utils.signs.arena.ISign;
 import com.dazzhub.skywars.Utils.vote.VotesSystem;
@@ -86,6 +96,18 @@ public class Arena {
     private Enums.TypeVotes scenariosType;
     private VotesSystem votesSystem;
 
+    /* EVENTS */
+    private eventBorder eventBorder;
+    private eventDragon eventDragon;
+    private eventParty eventParty;
+    private eventStorm eventStorm;
+    private eventTNT eventTNT;
+
+    /* SCENARIOS */
+    private boolean NoClean;
+    private boolean NoFall;
+    private boolean NoProjectile;
+
     /* SING */
     private ISign iSign;
 
@@ -128,6 +150,14 @@ public class Arena {
         this.chestType = Enums.TypeVotes.NORMAL.name();
         this.healthType = Enums.TypeVotes.HEART10;
         this.timeType = Enums.TypeVotes.DAY;
+        this.eventsType = Enums.TypeVotes.NONE;
+        this.scenariosType = Enums.TypeVotes.NONE;
+
+        /* SCENARIOS */
+        this.NoClean = false;
+        this.NoFall = false;
+        this.NoProjectile = false;
+
         this.votesSystem = new VotesSystem(this);
 
         /* REFILL*/
@@ -192,6 +222,14 @@ public class Arena {
         this.chestType = Enums.TypeVotes.NORMAL.name();
         this.healthType = Enums.TypeVotes.HEART10;
         this.timeType = Enums.TypeVotes.DAY;
+        this.eventsType = Enums.TypeVotes.NONE;
+        this.scenariosType = Enums.TypeVotes.NONE;
+
+        /* SCENARIOS */
+        this.NoClean = false;
+        this.NoFall = false;
+        this.NoProjectile = false;
+
         this.votesSystem = new VotesSystem(this);
 
         /* REFILL */
@@ -301,6 +339,53 @@ public class Arena {
             }
         }
 
+        switch (this.eventsType){
+            case BORDER:{
+                eventBorder e = new Border(this);
+                e.startEvent();
+                this.eventBorder = e;
+                break;
+            }
+            case DRAGON:{
+                eventDragon e = new Dragon(this);
+                e.startEvent();
+                this.eventDragon = e;
+                break;
+            }
+            case DROPPARTY:{
+                dropParty e = new dropParty(this);
+                e.startEvent();
+                this.eventParty = e;
+                break;
+            }
+            case STORM:{
+                eventStorm e = new Storm(this);
+                e.startEvent();
+                this.eventStorm = e;
+                break;
+            }
+            case TNTFALL:{
+                eventTNT e = new TNTFall(this);
+                e.startEvent();
+                this.eventTNT = e;
+                break;
+            }
+        }
+
+        switch (this.scenariosType){
+            case NOCLEAN:{
+                this.NoClean = true;
+                break;
+            }
+            case NOFALL:{
+                this.NoFall = true;
+                break;
+            }
+            case NOPROJECTILE:{
+                this.NoProjectile = true;
+                break;
+            }
+        }
     }
 
     public void fillChests() {

@@ -23,7 +23,6 @@ public class Border implements eventBorder {
         this.main = Main.getPlugin();
 
         this.arena = arena;
-        this.wb = null;
         this.timer = arena.getArenac().getInt("Arena.border.TimeSpawn");
     }
 
@@ -36,6 +35,8 @@ public class Border implements eventBorder {
             wb.setCenter(this.arena.getSpawnSpectator());
             wb.setSize(this.arena.getArenac().getInt("Arena.border.Settings.Size"));
             wb.setWarningDistance(0);
+
+            this.wb = wb;
         }
     }
 
@@ -50,6 +51,8 @@ public class Border implements eventBorder {
             wb.setDamageBuffer(this.arena.getArenac().getInt("Arena.border.Settings.Damage.inborder"));
             wb.setDamageAmount(this.arena.getArenac().getInt("Arena.border.Settings.Damage.borde"));
             wb.setWarningDistance(0);
+
+            this.wb = wb;
         }
 
         this.task = new BukkitRunnable() {

@@ -145,7 +145,10 @@ public class Icon {
         if (im.getLore() != null){
             List<String> list = new ArrayList<>();
             for (String s : im.getLore()) {
-                list.add(c(s).replaceAll("%player%", p.getName()));
+                list.add(c(s)
+                        .replaceAll("%player%", p.getName())
+                        .replaceAll("%price%", String.valueOf(price))
+                );
             }
 
             im.setLore(list);

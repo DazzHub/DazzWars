@@ -419,6 +419,16 @@ public class IMenu {
                                     .replace("%HEART20%", lang.getString("Messages.TypeVote.Heart.20h", "20 hearts"))
                                     .replace("%HEART30%", lang.getString("Messages.TypeVote.Heart.30h", "30 hearts"))
 
+                                    .replace("%BORDER%", lang.getString("Messages.TypeVote.Events.border", "border"))
+                                    .replace("%DRAGON%", lang.getString("Messages.TypeVote.Events.dragon", "dragon"))
+                                    .replace("%DROPPARTY%", lang.getString("Messages.TypeVote.Events.dropparty", "dropparty"))
+                                    .replace("%STORM%", lang.getString("Messages.TypeVote.Events.storm", "storm"))
+                                    .replace("%TNTFALL%", lang.getString("Messages.TypeVote.Events.tntfall", "tntfall"))
+
+                                    .replace("%NOCLEAN%", lang.getString("Messages.TypeVote.Scenario.noclean", "noclean"))
+                                    .replace("%NOFALL%", lang.getString("Messages.TypeVote.Scenario.nofall", "nofall"))
+                                    .replace("%NOPROJECTILE%", lang.getString("Messages.TypeVote.Scenario.noprojectile", "noprojectile"))
+
                                     .replace("%votes%", String.valueOf(arena.getVotesSystem().getVotes(vote.replace("%", ""))))
                                     .replace("%NONE%", lang.getString("Messages.TypeVote.none"))
                             );

@@ -136,6 +136,20 @@ public class startingGame extends BukkitRunnable {
                         .replace("HEART30", lang.getString("Messages.TypeVote.Heart.30h", "30 hearts"))
                 )
 
+                .replace("%event%", arena.getEventsType().name()
+                        .replace("BORDER", lang.getString("Messages.TypeVote.Events.border", "border"))
+                        .replace("DRAGON", lang.getString("Messages.TypeVote.Events.dragon", "dragon"))
+                        .replace("DROPPARTY", lang.getString("Messages.TypeVote.Events.dropparty", "dropparty"))
+                        .replace("STORM", lang.getString("Messages.TypeVote.Events.storm", "storm"))
+                        .replace("TNTFALL", lang.getString("Messages.TypeVote.Events.tntfall", "tntfall"))
+                )
+
+                .replace("%scenario%", arena.getScenariosType().name()
+                        .replace("NOCLEAN", lang.getString("Messages.TypeVote.Scenario.noclean", "noclean"))
+                        .replace("NOFALL", lang.getString("Messages.TypeVote.Scenario.nofall", "nofall"))
+                        .replace("NOPROJECTILE", lang.getString("Messages.TypeVote.Scenario.noprojectile", "noprojectile"))
+                )
+
                 .replace("NONE", lang.getString("Messages.TypeVote.none", "none"))
         ).collect(Collectors.toList());
 
