@@ -11,6 +11,7 @@ import com.dazzhub.skywars.MySQL.getPlayerDB;
 import com.dazzhub.skywars.MySQL.utils.PlayerDB;
 import com.dazzhub.skywars.MySQL.utils.PlayerManager;
 import com.dazzhub.skywars.Utils.CenterMessage;
+import com.dazzhub.skywars.Utils.Lines;
 import com.dazzhub.skywars.Utils.cages.ICageManager;
 import com.dazzhub.skywars.Utils.chests.IChestManager;
 import com.dazzhub.skywars.Utils.configuration.configCreate;
@@ -136,6 +137,8 @@ public class Main extends JavaPlugin {
 
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         this.version = version.substring(0, version.lastIndexOf("_"));
+
+        new Lines(this).loadConfig();
 
         this.regListeners.onReg();
         this.arenaManager.loadArenas();

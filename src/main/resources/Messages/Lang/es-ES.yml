@@ -200,6 +200,7 @@ Messages:
       Spectator: '&7:&f' #Prefix : Suffix
       Game: '&c:&f'
       TeamsFriends: '&a:&f'
+      test: '&a:&f'
   MenuArena:
     TITLE: '&8&l&nArenas'
     ROWS: 6

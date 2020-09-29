@@ -69,6 +69,8 @@ public class onGlobal implements Listener {
             for (int i = 0; i < main.getArenaManager().getArenas().size(); i++) {
                 if (e.getSlot() == i) {
                     Arena arena = main.getArenaManager().getArenas().get(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+                    if (arena == null) return;
+
                     if (arena.checkUsable()) {
                         JoinEvent joinEvent = new JoinEvent(p, arena, Enums.JoinCause.MENU);
                         Bukkit.getPluginManager().callEvent(joinEvent);
