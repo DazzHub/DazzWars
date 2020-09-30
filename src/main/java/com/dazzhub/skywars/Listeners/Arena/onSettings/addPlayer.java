@@ -53,7 +53,7 @@ public class addPlayer implements Listener {
                     main.getCageManager().getCagesSolo().get(gamePlayer.getCageSolo()).loadCage(cageLoc);
                     main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.STARTING,false,false,true,true);
 
-                    main.getItemManager().giveItems(p, "arenasolo", false);
+                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Solo"), false);
                     break;
                 }
                 case TEAM: {
@@ -65,7 +65,7 @@ public class addPlayer implements Listener {
                     main.getCageManager().getCagesTeam().get(gamePlayer.getCageTeam()).loadCage(cageLoc);
                     main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.STARTINGTEAM,false,false,true,true);
 
-                    main.getItemManager().giveItems(p, "arenateam", false);
+                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Team"), false);
                     break;
                 }
             }

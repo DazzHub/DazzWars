@@ -14,19 +14,24 @@ import java.util.*;
 public class VotesSystem
 {
     private Arena arena;
+
     private List<UUID> basicChests;
     private List<UUID> normalChests;
     private List<UUID> opChests;
     private List<UUID> customChests;
+
     private List<UUID> dayTime;
     private List<UUID> sunsetTime;
     private List<UUID> nightTime;
+
     private List<UUID> normalLife;
     private List<UUID> doubleLife;
     private List<UUID> tripleLife;
+
     private List<UUID> noclean;
     private List<UUID> nofall;
     private List<UUID> noprojectil;
+
     private List<UUID> dragon;
     private List<UUID> border;
     private List<UUID> dropParty;

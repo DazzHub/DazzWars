@@ -219,6 +219,110 @@ public class Placeholders extends PlaceholderExpansion {
                 return String.valueOf(gamePlayer.getKillsStreak());
             }
 
+            /* VOTE CHESTS */
+            case "arena_vote_chest_basic": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getBasicChests());
+            }
+            case "arena_vote_chest_normal": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getNormalChests());
+            }
+            case "arena_vote_chest_op": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getOpChests());
+            }
+            case "arena_vote_chest_custom": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getCustomChests());
+            }
+
+            /* VOTE TIME */
+            case "arena_vote_time_day": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getDayTime());
+            }
+            case "arena_vote_time_sunset": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getSunsetTime());
+            }
+            case "arena_vote_time_night": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getNightTime());
+            }
+
+            /* VOTE HEART */
+            case "arena_vote_heart_normal": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getNormalLife());
+            }
+            case "arena_vote_heart_double": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getDoubleLife());
+            }
+            case "arena_vote_heart_triple": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getTripleLife());
+            }
+
+            /* VOTE SCENARIOS */
+            case "arena_vote_scenario_noclean": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getNoclean());
+            }
+            case "arena_vote_scenario_nofall": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getNofall());
+            }
+            case "arena_vote_scenario_noprojectil": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getNoprojectil());
+            }
+
+            /* VOTE EVENTS */
+            case "arena_vote_event_dragon": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getDragon());
+            }
+            case "arena_vote_event_border": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getBorder());
+            }
+            case "arena_vote_event_dropParty": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getDropParty());
+            }
+            case "arena_vote_event_tntfall": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getTntfall());
+            }
+            case "arena_vote_event_storm": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getStorm());
+            }
+
+            /* TOTAL */
+            case "arena_vote_chest_total": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getCheckChest());
+            }
+            case "arena_vote_time_total": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getCheckTime());
+            }
+            case "arena_vote_heart_total": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getCheckLife());
+            }
+            case "arena_vote_scenarios_total": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getCheckScenarios());
+            }
+            case "arena_vote_event_total": {
+                if (arena == null) return "Error.";
+                return String.valueOf(arena.getVotesSystem().getCheckEvent());
+            }
+
             default: {
                 return "Error.";
             }

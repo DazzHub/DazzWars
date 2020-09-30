@@ -6,7 +6,7 @@ MySQL:
   username: "root"
   password: ""
 #Upon entering, it will show you an update announcement
-checkVersion: false
+checkVersion: true
 #Join player save dates in mysql/sql
 Default:
   Kit:
@@ -40,6 +40,12 @@ Coins:
 
   WinSolo: 50
   WinTeam: 50
+Inventory:
+  Lobby: 'lobby'
+  Arena:
+    Solo: 'arenasolo'
+    Team: 'arenateam'
+    Spectator: 'spectator'
 ReTeleportCage: 2
 #update time in seconds
 TopUpdate: 600 #10m
@@ -47,3 +53,32 @@ ListLanguage:
   - 'en-EN'
   - 'es-ES'
 Holograms:
+lobbies:
+  onScoreboard:
+    - world
+  onItemJoin:
+    - world
+  onBreak:
+    - world
+  onPlace:
+    - world
+  onTime:
+    - world
+  onPortal:
+    - world
+  onDrop:
+    - world
+  onVoidTP:
+    - world
+  onDamage:
+    - world
+  onExplosion:
+    - world
+  onFlow:
+    - world
+  onFeed:
+    - world
+  onHealth:
+    - world
+  onResetGameMode:
+    - world

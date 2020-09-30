@@ -39,7 +39,7 @@ public class addSpectator implements Listener {
             arena.getPlayers().forEach(online -> online.getPlayer().hidePlayer(p));
 
             gamePlayer.addSpectating();
-            main.getItemManager().giveItems(p, "spectator", false);
+            main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Spectator"), false);
 
             gamePlayer.getPlayer().teleport(arena.getSpawnSpectator());
 

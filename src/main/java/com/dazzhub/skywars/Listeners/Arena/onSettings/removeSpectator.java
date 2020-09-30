@@ -31,15 +31,18 @@ public class removeSpectator implements Listener {
 
             if (e.isGoLobby()) {
                 gamePlayer.setLobby(true);
+                p.teleport(main.getLobbyManager().getLobby());
 
                 if (!arena.getGameStatus().equals(Enums.GameStatus.RESTARTING)) {
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.LeaveSpectator"));
                 }
 
                 main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY,false,false,false, false);
-                main.getItemManager().giveItems(p, "lobby", false);
 
-                p.teleport(main.getLobbyManager().getLobby());
+                if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
+                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), false);
+                }
+
                 if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().reloadHologram();
             } else {
                 gamePlayer.setLobby(false);

@@ -40,7 +40,7 @@ public class removePlayer implements Listener {
         Bukkit.getScheduler().runTask(main, () -> {
             gamePlayer.resetPlayer(true);
 
-            main.getItemManager().giveItems(p, "lobby", false);
+            gamePlayer.getPlayer().teleport(main.getLobbyManager().getLobby());
 
             if (arena.getMode().equals(Enums.Mode.SOLO)) {
                 if (gamePlayer.getArenaTeam() != null) {
@@ -48,7 +48,9 @@ public class removePlayer implements Listener {
                 }
             }
 
-            gamePlayer.getPlayer().teleport(main.getLobbyManager().getLobby());
+            if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
+                main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), false);
+            }
 
             main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY,false,false,false,false);
         });

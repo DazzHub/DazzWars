@@ -11,6 +11,7 @@ import com.dazzhub.skywars.Listeners.Bukkit.onJoinServer;
 import com.dazzhub.skywars.Listeners.Bukkit.onLeftServer;
 import com.dazzhub.skywars.Listeners.Inventory.onItem;
 import com.dazzhub.skywars.Listeners.Inventory.onMenu;
+import com.dazzhub.skywars.Listeners.Lobby.*;
 import com.dazzhub.skywars.Listeners.Sign.onSignArena;
 import com.dazzhub.skywars.Listeners.Sign.onSignTop;
 import com.dazzhub.skywars.Main;
@@ -52,6 +53,13 @@ public class regListeners {
         /* INVENTORY */
         this.onLoad(new onItem(main));
         this.onLoad(new onMenu(main));
+
+        /* LOBBIES */
+        this.onLoad(new onBreak(main));
+        this.onLoad(new onDamage(main));
+        this.onLoad(new onPlace(main));
+        this.onLoad(new onPlayer(main));
+        this.onLoad(new onTime(main));
     }
 
     private void onLoad(Listener listener){

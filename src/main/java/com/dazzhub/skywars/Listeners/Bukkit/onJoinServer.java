@@ -32,7 +32,9 @@ public class onJoinServer implements Listener {
                     p.teleport(main.getLobbyManager().getLobby());
                 }
 
-                main.getItemManager().giveItems(p, "lobby", true);
+                if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
+                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), true);
+                }
 
                 main.getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY,false,false, false,false);
                 main.getHologramsManager().loadHologram(p);

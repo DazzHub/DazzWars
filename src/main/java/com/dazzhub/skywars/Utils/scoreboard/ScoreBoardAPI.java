@@ -26,6 +26,13 @@ public class ScoreBoardAPI {
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
         removeScoreBoard(p);
+
+        if (scoreboardType == ScoreboardType.LOBBY) {
+            if (!main.getSettings().getStringList("lobbies.onScoreboard").contains(p.getWorld().getName())){
+                return;
+            }
+        }
+
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
         ScoreBoardBuilder scoreboard = new ScoreBoardBuilder(p, randomString(), health, spectator, gamePlayers, teams);

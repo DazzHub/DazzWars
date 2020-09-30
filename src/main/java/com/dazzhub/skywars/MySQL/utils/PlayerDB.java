@@ -580,7 +580,7 @@ public class PlayerDB implements getPlayerDB {
         String[] result = new String[top];
         try {
 
-            ResultSet infoResult = MySQL.query("SELECT `Name`, `KillsTeam` FROM `Statistics_Team` ORDER BY `KILLS` DESC LIMIT "+top);
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `KillsTeam` FROM `Statistics_Team` ORDER BY `KillsTeam` DESC LIMIT "+top);
             assert infoResult != null;
             for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {

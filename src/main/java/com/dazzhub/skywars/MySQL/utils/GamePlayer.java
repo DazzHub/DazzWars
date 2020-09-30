@@ -104,6 +104,7 @@ public class GamePlayer {
     private int killsStreak;
     private int taskId;
     private boolean isLobby;
+    private boolean editMode;
 
     private Party party;
     private GamePlayer ownerParty;
@@ -232,6 +233,7 @@ public class GamePlayer {
         this.arenaTeam = null;
         this.killsStreak = 0;
         this.isLobby = true;
+        this.editMode = false;
 
         this.party = null;
         this.ownerParty = null;
@@ -465,6 +467,7 @@ public class GamePlayer {
                 break;
             }
             default: {
+                if (mode.equalsIgnoreCase("none")) return null;
                 getType = null;
                 Console.error("KillEffect: " + mode + " not exist");
                 break;
@@ -507,6 +510,7 @@ public class GamePlayer {
             }
 
             default: {
+                if (mode.equalsIgnoreCase("none")) return null;
                 getType = null;
                 Console.error("WinEffect: " + mode + " not exist");
                 break;
