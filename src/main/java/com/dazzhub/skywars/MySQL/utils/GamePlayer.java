@@ -12,14 +12,11 @@ import com.dazzhub.skywars.Utils.effects.kills.*;
 import com.dazzhub.skywars.Utils.effects.wins.*;
 import com.dazzhub.skywars.Utils.hologram.Holograms;
 import com.cryptomorin.xseries.XSound;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.*;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
@@ -41,24 +38,31 @@ public class GamePlayer {
 
     private int WinsSolo;
     private int WinsTeam;
+    private int WinsRanked;
 
     private int KillsSolo;
     private int KillsTeam;
+    private int KillsRanked;
 
     private int DeathsSolo;
     private int DeathsTeam;
+    private int DeathsRanked;
 
     private int GamesSolo;
     private int GamesTeam;
+    private int GamesRanked;
 
     private int ShotsSolo;
     private int ShotsTeam;
+    private int ShotsRanked;
 
     private int HitsSolo;
     private int HitsTeam;
+    private int HitsRanked;
 
     private int Coins;
     private int Souls;
+    private int LvlRanked;
 
     private int BlockPlaced;
     private int BlockBroken;
@@ -68,33 +72,45 @@ public class GamePlayer {
 
     private String CageSolo;
     private String CageTeam;
+    private String CageRanked;
     private List<String> cagesSoloList;
     private List<String> cagesTeamList;
+    private List<String> cagesRankedList;
 
     private String WinEffectSolo;
     private String WinEffectTeam;
+    private String WinEffectRanked;
     private List<String> WinEffectsSoloList;
     private List<String> WinEffectsTeamList;
+    private List<String> WinEffectsRankedList;
 
     private String KillEffectSolo;
     private String KillEffectTeam;
+    private String KillEffectRanked;
     private List<String> KillEffectsSoloList;
     private List<String> KillEffectsTeamList;
+    private List<String> KillEffectsRankedList;
 
     private String KillSoundSolo;
     private String KillSoundTeam;
+    private String KillSoundRanked;
     private List<String> KillSoundsSoloList;
     private List<String> KillSoundsTeamList;
+    private List<String> KillSoundsRankedList;
 
     private String TrailSolo;
     private String TrailTeam;
+    private String TrailRanked;
     private List<String> TrailsSoloList;
     private List<String> TrailsTeamList;
+    private List<String> TrailsRankedList;
 
     private String kitSolo;
     private String kitTeam;
+    private String kitRanked;
     private List<String> kitSoloList;
     private List<String> kitTeamList;
+    private List<String> kitRankedList;
 
     private Holograms holograms;
 
@@ -121,21 +137,27 @@ public class GamePlayer {
             String name,
             int winsSolo,
             int winsTeam,
+            int winsRanked,
 
             int killsSolo,
             int killsTeam,
+            int killsRanked,
 
             int deathsSolo,
             int deathsTeam,
+            int deathsRanked,
 
             int gamesSolo,
             int gamesTeam,
+            int gamesRanked,
 
             int shotsSolo,
             int shotsTeam,
+            int shotsRanked,
 
             int hitsSolo,
             int hitsTeam,
+            int hitsRanked,
 
             int blockPlaced,
             int blockBroken,
@@ -145,24 +167,31 @@ public class GamePlayer {
 
             int coins,
             int souls,
+            int lvlRanked,
 
             String cageSolo,
             String cageTeam,
+            String cageRanked,
 
             String winEffectSolo,
             String winEffectTeam,
+            String winEffectRanked,
 
             String killEffectSolo,
             String killEffectTeam,
+            String killEffectRanked,
 
             String killSoundSolo,
             String killSoundTeam,
+            String killSoundRanked,
 
             String trailSolo,
             String trailTeam,
+            String trailRanked,
 
             String kitSolo,
             String kitTeam,
+            String kitRanked,
 
             String lang
     ) {
@@ -172,21 +201,27 @@ public class GamePlayer {
 
         this.WinsSolo = winsSolo;
         this.WinsTeam = winsTeam;
+        this.WinsRanked = winsRanked;
 
         this.KillsSolo = killsSolo;
         this.KillsTeam = killsTeam;
+        this.KillsRanked = killsRanked;
 
         this.DeathsSolo = deathsSolo;
         this.DeathsTeam = deathsTeam;
+        this.DeathsRanked = deathsRanked;
 
         this.GamesSolo = gamesSolo;
         this.GamesTeam = gamesTeam;
+        this.GamesRanked = gamesRanked;
 
         this.ShotsSolo = shotsSolo;
         this.ShotsTeam = shotsTeam;
+        this.ShotsRanked = shotsRanked;
 
         this.HitsSolo = hitsSolo;
         this.HitsTeam = hitsTeam;
+        this.HitsRanked = hitsRanked;
 
         this.BlockPlaced = blockPlaced;
         this.BlockBroken = blockBroken;
@@ -196,37 +231,51 @@ public class GamePlayer {
 
         this.Coins = coins;
         this.Souls = souls;
+        this.LvlRanked = lvlRanked;
 
         this.CageSolo = cageSolo;
         this.CageTeam = cageTeam;
+        this.CageRanked = cageRanked;
         this.cagesSoloList = new ArrayList<>();
         this.cagesTeamList = new ArrayList<>();
+        this.cagesRankedList = new ArrayList<>();
 
         this.WinEffectSolo = winEffectSolo;
         this.WinEffectTeam = winEffectTeam;
+        this.WinEffectRanked = winEffectRanked;
         this.WinEffectsSoloList = new ArrayList<>();
         this.WinEffectsTeamList = new ArrayList<>();
+        this.WinEffectsRankedList = new ArrayList<>();
 
         this.KillEffectSolo = killEffectSolo;
         this.KillEffectTeam = killEffectTeam;
+        this.KillEffectRanked = killEffectRanked;
         this.KillEffectsSoloList = new ArrayList<>();
         this.KillEffectsTeamList = new ArrayList<>();
+        this.KillEffectsRankedList = new ArrayList<>();
 
         this.KillSoundSolo = killSoundSolo;
         this.KillSoundTeam = killSoundTeam;
+        this.KillSoundRanked = killSoundRanked;
         this.KillSoundsSoloList = new ArrayList<>();
         this.KillSoundsTeamList = new ArrayList<>();
+        this.KillSoundsRankedList = new ArrayList<>();
 
         this.TrailSolo = trailSolo;
         this.TrailTeam = trailTeam;
+        this.TrailRanked = trailRanked;
 
         this.TrailsSoloList = new ArrayList<>();
         this.TrailsTeamList = new ArrayList<>();
+        this.TrailsRankedList = new ArrayList<>();
 
         this.kitSolo = kitSolo;
         this.kitTeam = kitTeam;
+        this.kitRanked = kitRanked;
+
         this.kitSoloList = new ArrayList<>();
         this.kitTeamList = new ArrayList<>();
+        this.kitRankedList = new ArrayList<>();
 
         this.isSpectating = false;
         this.Arena = null;
@@ -254,11 +303,9 @@ public class GamePlayer {
     public Configuration getLangMessage() {
         return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Lang/" + this.lang);
     }
-
     public Configuration getScoreboardMessage() {
         return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Scoreboards/" + this.lang);
     }
-
     public Configuration getHologramMessage() {
         return Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), "Messages/Holograms/" + this.lang);
     }
@@ -274,97 +321,109 @@ public class GamePlayer {
     public void sendMessage(String simple) {
         this.typeMessage(false, simple, null);
     }
-
     public void sendMessage(List<String> lines) {
         this.typeMessage(true, null, lines);
     }
 
+    /* WINS */
     public void addWinsSolo() {
         this.setWinsSolo(this.getWinsSolo() + 1);
     }
-
     public void addWinsTeam() {
         this.setWinsTeam(this.getWinsTeam() + 1);
     }
+    public void addWinsRanked() {
+        this.setWinsRanked(this.getWinsRanked() + 1);
+    }
 
+    /* KILLS */
     public void addKillsSolo() {
         this.setKillsSolo(this.getKillsSolo() + 1);
     }
-
     public void addKillsTeam() {
         this.setKillsTeam(this.getKillsTeam() + 1);
     }
+    public void addKillsRanked() {
+        this.setKillsRanked(this.getKillsRanked() + 1);
+    }
 
+    /* DEATHS */
     public void addDeathsSolo() {
         this.setDeathsSolo(this.getDeathsSolo() + 1);
     }
-
     public void addDeathsTeam() {
         this.setDeathsTeam(this.getDeathsTeam() + 1);
     }
+    public void addDeathsRanked() {
+        this.setDeathsRanked(this.getDeathsRanked() + 1);
+    }
 
+    /* GAMES */
     public void addGamesSolo() {
         this.setGamesSolo(this.getGamesSolo() + 1);
     }
-
     public void addGamesTeam() {
         this.setGamesTeam(this.getGamesTeam() + 1);
     }
+    public void addGamesRanked() {
+        this.setGamesRanked(this.getGamesRanked() + 1);
+    }
 
+    /* SHOTS */
     public void addShotsSolo() {
         this.setShotsSolo(this.getShotsSolo() + 1);
     }
-
     public void addShotsTeam() {
         this.setShotsTeam(this.getShotsTeam() + 1);
     }
+    public void addShotsRanked() {
+        this.setShotsRanked(this.getShotsRanked() + 1);
+    }
 
+    /* HITS */
     public void addHitsSolo() {
         this.setHitsSolo(this.getHitsSolo() + 1);
     }
-
     public void addHitsTeam() {
         this.setHitsTeam(this.getHitsTeam() + 1);
     }
+    public void addHitsRanked() {
+        this.setHitsRanked(this.getHitsRanked() + 1);
+    }
 
+    /* MISSIONS */
     public void addBlockPlaced() {
         this.setBlockPlaced(this.getBlockPlaced() + 1);
     }
-
     public void addBlockBroken() {
         this.setBlockBroken(this.getBlockBroken() + 1);
     }
-
     public void addItemEnchanted() {
         this.setItemsEnchanted(this.getItemsEnchanted() + 1);
     }
-
     public void addItemCrafted() {
         this.setItemsCrafted(this.getItemsCrafted() + 1);
     }
 
-    public void addKillsArena() {
-        this.setKillsStreak(this.getKillsStreak() + 1);
+    /* POINTS */
+    public void addCoins(int amount) {
+        this.setCoins(this.getCoins() + amount);
     }
-
+    public void addRanked(int amount) {
+        this.setLvlRanked(this.getLvlRanked() + amount);
+    }
     public void removeCoins(int amount) {
-        this.setCoins(Math.max((this.getCoins() - amount), 0));
+        this.setCoins(this.getCoins() - amount);
     }
-
-    protected String c(String cmd) {
-        return ChatColor.translateAlternateColorCodes('&', cmd);
+    public void removeLvlRanked(int amount) {
+        this.setLvlRanked(this.getLvlRanked() - amount);
     }
 
     public boolean isInArena() {
         return this.Arena != null;
     }
-
-    public void playSound(String sound) {
-        XSound.play(getPlayer(), XSound.valueOf(sound).toString());
-    }
-
-    public void addCoins(int amount) {
-        this.setCoins(this.getCoins() + amount);
+    public void addKillsArena() {
+        this.setKillsStreak(this.getKillsStreak() + 1);
     }
 
     public void addSpectating() {
@@ -420,6 +479,10 @@ public class GamePlayer {
 
         ItemStack[] emptyinv2 = new ItemStack[p.getInventory().getArmorContents().length];
         p.getInventory().setArmorContents(emptyinv2);
+    }
+
+    public void playSound(String sound) {
+        XSound.play(getPlayer(), XSound.valueOf(sound).toString());
     }
 
     public getTypeKills getTypeKill(String mode) {
@@ -539,6 +602,10 @@ public class GamePlayer {
             }.runTaskTimerAsynchronously(Main.getPlugin(), 0, 1);
         }
 
+    }
+
+    protected String c(String cmd) {
+        return ChatColor.translateAlternateColorCodes('&', cmd);
     }
 
 }

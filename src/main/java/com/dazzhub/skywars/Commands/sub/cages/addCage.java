@@ -30,17 +30,16 @@ public class addCage implements subCommand {
             return;
         }
 
-        if (args.length == 4) {
+        if (args.length == 3) {
             Player p = (Player) sender;
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
-            Integer price = Integer.valueOf(args[1]);
-            String name = args[2];
-            String mode = args[3];
+            String name = args[1];
+            String mode = args[2];
 
             if (gamePlayer.getCage1() == null || gamePlayer.getCage2() == null) return;
 
-            main.getCageManager().createCage(p, price, name, mode, new Cuboid(gamePlayer.getCage1(), gamePlayer.getCage2()));
+            main.getCageManager().createCage(p, name, mode, new Cuboid(gamePlayer.getCage1(), gamePlayer.getCage2()));
         } else {
             sender.sendMessage(help(sender));
         }
@@ -49,7 +48,7 @@ public class addCage implements subCommand {
 
     @Override
     public String help(CommandSender sender) {
-        return c("&e/Sw addcage <price> <name> <solo/team> &8>&f Add cages");
+        return c("&e/Sw addcage <name> <solo/team> &8>&f Add cages");
     }
 
     private String c(String c) {

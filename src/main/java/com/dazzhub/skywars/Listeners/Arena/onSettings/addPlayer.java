@@ -68,6 +68,19 @@ public class addPlayer implements Listener {
                     main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Team"), false);
                     break;
                 }
+
+                case RANKED: {
+                    arena.getRandomTeam().addPlayer(gamePlayer);
+
+                    Location cageLoc = gamePlayer.getArenaTeam().getSpawn();
+                    p.teleport(cageLoc);
+
+                    main.getCageManager().getCagesRanked().get(gamePlayer.getCageRanked()).loadCage(cageLoc);
+                    main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.STARTINGRANKED,false,false,true,true);
+
+                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Ranked"), false);
+                    break;
+                }
             }
         });
 

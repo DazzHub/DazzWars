@@ -5,11 +5,13 @@ import com.dazzhub.skywars.Arena.Menu.ArenasMenu;
 import com.dazzhub.skywars.Commands.adminCmd;
 import com.dazzhub.skywars.Commands.others.JoinArena;
 import com.dazzhub.skywars.Commands.others.LeftArena;
+import com.dazzhub.skywars.Commands.others.Party;
 import com.dazzhub.skywars.Listeners.regListeners;
 import com.dazzhub.skywars.MySQL.MySQL;
 import com.dazzhub.skywars.MySQL.getPlayerDB;
 import com.dazzhub.skywars.MySQL.utils.PlayerDB;
 import com.dazzhub.skywars.MySQL.utils.PlayerManager;
+import com.dazzhub.skywars.Party.PartyManager;
 import com.dazzhub.skywars.Utils.CenterMessage;
 import com.dazzhub.skywars.Utils.Lines;
 import com.dazzhub.skywars.Utils.cages.ICageManager;
@@ -51,6 +53,10 @@ public class Main extends JavaPlugin {
 
     private ArenasMenu arenasMenu;
 
+    /* PARTY */
+    private PartyManager partyManager;
+
+    /* SIGNS */
     private ISignManager iSignManager;
     private HologramsManager hologramsManager;
 
@@ -88,6 +94,8 @@ public class Main extends JavaPlugin {
         this.arenaManager = new ArenaManager(this);
         this.resetWorld = new resetWorld(this);
         this.itemsCustom = new itemsCustom(this);
+
+        this.partyManager = new PartyManager();
 
         this.cageManager = new ICageManager(this);
 
@@ -166,6 +174,7 @@ public class Main extends JavaPlugin {
         this.getCommand("skywars").setExecutor(new adminCmd(this));
         this.getCommand("join").setExecutor(new JoinArena(this));
         this.getCommand("leave").setExecutor(new LeftArena(this));
+        this.getCommand("party").setExecutor(new Party(this));
 
         new Metrics(this, 8943);
     }
@@ -214,6 +223,10 @@ public class Main extends JavaPlugin {
 
     public ArenasMenu getArenasMenu() {
         return arenasMenu;
+    }
+
+    public PartyManager getPartyManager() {
+        return partyManager;
     }
 
     public ITopManager getTopManager() {

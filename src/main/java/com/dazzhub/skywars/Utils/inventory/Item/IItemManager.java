@@ -30,10 +30,14 @@ public class IItemManager {
     }
 
     public void loadFiles() {
-        configCreate.get().setup(main, "Inventory/Player/lobby");
-        configCreate.get().setup(main, "Inventory/Player/arenasolo");
-        configCreate.get().setup(main, "Inventory/Player/arenateam");
-        configCreate.get().setup(main, "Inventory/Player/spectator");
+        File playerFolder = new File(main.getDataFolder(), "Inventory/Player");
+        if (!playerFolder.exists()) {
+            configCreate.get().setup(main, "Inventory/Player/lobby");
+            configCreate.get().setup(main, "Inventory/Player/arenasolo");
+            configCreate.get().setup(main, "Inventory/Player/arenateam");
+            configCreate.get().setup(main, "Inventory/Player/arenaranked");
+            configCreate.get().setup(main, "Inventory/Player/spectator");
+        }
 
         File file = new File(main.getDataFolder(), "Inventory/Player");
         File[] files = file.listFiles();

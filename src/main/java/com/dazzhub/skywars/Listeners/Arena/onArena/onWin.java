@@ -38,6 +38,9 @@ public class onWin implements Listener {
                 gamePlayer.addWinsSolo();
             } else if (arena.getMode().equals(Enums.Mode.TEAM)) {
                 gamePlayer.addWinsTeam();
+            } else if (arena.getMode().equals(Enums.Mode.RANKED)) {
+                gamePlayer.addWinsRanked();
+                gamePlayer.addRanked(main.getSettings().getInt("Coins.lvlRanked"));
             }
         });
 

@@ -227,6 +227,19 @@ public class IMenu {
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
                         }
                     }
+                } else if (cage[1].equalsIgnoreCase("RANKED")) {
+                    if (main.getCageManager().getCagesRanked().containsKey(cage[0])) {
+
+                        if (!gamePlayer.getCagesRankedList().contains(cage[0])) {
+                            gamePlayer.getCagesRankedList().add(cage[0]);
+                            gamePlayer.setCageRanked(cage[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
+
+                        } else {
+                            gamePlayer.setCageRanked(cage[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
+                        }
+                    }
                 }
 
             } else if (cmd.startsWith("kit:")) {
@@ -263,6 +276,19 @@ public class IMenu {
                         }
 
                     }
+                } else if (kit[1].equalsIgnoreCase("RANKED")) {
+                    if (main.getiKitManager().getKitRankedHashMap().containsKey(kit[0].toLowerCase())) {
+
+                        if (!gamePlayer.getKitRankedList().contains(kit[0])) {
+                            gamePlayer.getKitRankedList().add(kit[0]);
+                            gamePlayer.setKitRanked(kit[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
+                        } else {
+                            gamePlayer.setKitRanked(kit[0]);
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Selected").replace("%kit%", kit[0]));
+                        }
+
+                    }
                 }
             } else if (cmd.startsWith("wineffect:")) {
                 String action = cmd.substring(10);
@@ -288,6 +314,15 @@ public class IMenu {
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
                     } else {
                         gamePlayer.setWinEffectTeam(wineffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Selected").replace("%win%", wineffect[0]));
+                    }
+                } else if (wineffect[1].equalsIgnoreCase("RANKED")) {
+                    if (!gamePlayer.getWinEffectsRankedList().contains(wineffect[0])) {
+                        gamePlayer.getWinEffectsRankedList().add(wineffect[0]);
+                        gamePlayer.setWinEffectRanked(wineffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
+                    } else {
+                        gamePlayer.setWinEffectRanked(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Selected").replace("%win%", wineffect[0]));
                     }
                 }
@@ -317,6 +352,15 @@ public class IMenu {
                         gamePlayer.setKillEffectTeam(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Selected").replace("%kill%", killeffect[0]));
                     }
+                } else if (killeffect[1].equalsIgnoreCase("RANKED")) {
+                    if (!gamePlayer.getKillEffectsRankedList().contains(killeffect[0])) {
+                        gamePlayer.getKillEffectsRankedList().add(killeffect[0]);
+                        gamePlayer.setKillEffectRanked(killeffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
+                    } else {
+                        gamePlayer.setKillEffectRanked(killeffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Selected").replace("%kill%", killeffect[0]));
+                    }
                 }
             } else if (cmd.startsWith("traileffect:")) {
                 String action = cmd.substring(12);
@@ -342,6 +386,15 @@ public class IMenu {
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
                     } else {
                         gamePlayer.setTrailTeam(traileffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
+                    }
+                } else if (traileffect[1].equalsIgnoreCase("RANKED")) {
+                    if (!gamePlayer.getTrailsRankedList().contains(traileffect[0])) {
+                        gamePlayer.getTrailsRankedList().add(traileffect[0]);
+                        gamePlayer.setTrailRanked(traileffect[0]);
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
+                    } else {
+                        gamePlayer.setTrailRanked(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
                     }
                 }

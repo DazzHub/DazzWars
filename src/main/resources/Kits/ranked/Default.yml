@@ -1,0 +1,25 @@
+KIT:
+  Inventory:
+    '0':
+      ==: org.bukkit.inventory.ItemStack
+      type: WOOD_SWORD
+    '1':
+      ==: org.bukkit.inventory.ItemStack
+      type: BOW
+    '17':
+      ==: org.bukkit.inventory.ItemStack
+      type: ARROW
+      amount: 5
+  Armor:
+    - ==: org.bukkit.inventory.ItemStack
+      type: LEATHER_BOOTS
+    - ==: org.bukkit.inventory.ItemStack
+      type: AIR
+      damage: -1
+      amount: 0
+    - ==: org.bukkit.inventory.ItemStack
+      type: AIR
+      damage: -1
+      amount: 0
+    - ==: org.bukkit.inventory.ItemStack
+      type: LEATHER_HELMET

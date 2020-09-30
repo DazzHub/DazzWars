@@ -33,40 +33,46 @@ public class PlayerDB implements getPlayerDB {
         if (!playerExist(p)) {
             String CageSolo = main.getSettings().getString("Default.Cage.Solo", "Default");
             String CageTeam = main.getSettings().getString("Default.Cage.Team", "Default");
+            String CageRanked = main.getSettings().getString("Default.Cage.Ranked", "Default");
 
             String WinEffectSolo = main.getSettings().getString("Default.WinEffect.Solo", "Default");
             String WinEffectTeam = main.getSettings().getString("Default.WinEffect.Team", "Default");
+            String WinEffectRanked = main.getSettings().getString("Default.WinEffect.Ranked", "Default");
 
             String KillEffectSolo = main.getSettings().getString("Default.KillEffect.Solo", "Default");
             String KillEffectTeam = main.getSettings().getString("Default.KillEffect.Team", "Default");
+            String KillEffectRanked = main.getSettings().getString("Default.KillEffect.Ranked", "Default");
 
             String TrailSolo = main.getSettings().getString("Default.Trail.Solo", "Default");
             String TrailTeam = main.getSettings().getString("Default.Trail.Team", "Default");
+            String TrailRanked = main.getSettings().getString("Default.Trail.Ranked", "Default");
 
             String KillSoundSolo = main.getSettings().getString("Default.KillSound.Solo", "Default");
-            String KillSoundTeam = main.getSettings().getString("Default.KillSound.Solo", "Default");
+            String KillSoundTeam = main.getSettings().getString("Default.KillSound.Team", "Default");
+            String KillSoundRanked = main.getSettings().getString("Default.KillSound.Ranked", "Default");
 
             String KitSolo = main.getSettings().getString("Default.Kit.Solo", "Default");
             String KitTeam = main.getSettings().getString("Default.Kit.Team", "Default");
+            String KitRanked = main.getSettings().getString("Default.Kit.Ranked", "Default");
 
             String Lang = main.getSettings().getString("Default.Lang", "Default");
 
             GamePlayer gamePlayer = new GamePlayer(
                     p.getUniqueId(), p.getName(),
-                    0, 0,
-                    0, 0,
-                    0, 0,
-                    0, 0,
-                    0, 0,
-                    0, 0,
+                    0, 0,0,
+                    0, 0,0,
+                    0, 0,0,
+                    0, 0,0,
+                    0, 0,0,
+                    0, 0,0,
                     0, 0, 0, 0, 0,
-                    0, 0,
-                    CageSolo, CageTeam,
-                    WinEffectSolo, WinEffectTeam,
-                    KillEffectSolo, KillEffectTeam,
-                    KillSoundSolo, KillSoundTeam,
-                    TrailSolo, TrailTeam,
-                    KitSolo, KitTeam,
+                    0, 0,0,
+                    CageSolo, CageTeam, CageRanked,
+                    WinEffectSolo, WinEffectTeam, WinEffectRanked,
+                    KillEffectSolo, KillEffectTeam, KillEffectRanked,
+                    KillSoundSolo, KillSoundTeam, KillSoundRanked,
+                    TrailSolo, TrailTeam, TrailRanked,
+                    KitSolo, KitTeam, KitRanked,
                     Lang);
 
             gamePlayer.getCagesSoloList().add(CageSolo);
@@ -104,6 +110,7 @@ public class PlayerDB implements getPlayerDB {
 
             addNewPlayerSolo(p, gamePlayer);
             addNewPlayerTeam(p, gamePlayer);
+            addNewPlayerRanked(p, gamePlayer);
 
             main.getPlayerManager().addPlayer(p.getUniqueId(), gamePlayer);
         } else {
@@ -230,37 +237,101 @@ public class PlayerDB implements getPlayerDB {
                 ");");
     }
 
+    private void addNewPlayerRanked(Player p, GamePlayer gamePlayer) {
+        String CageRanked = main.getSettings().getString("Default.Cage.Ranked", "Default");
+        String WinEffectRanked = main.getSettings().getString("Default.WinEffect.Ranked", "Default");
+        String KillEffectRanked = main.getSettings().getString("Default.KillEffect.Ranked", "Default");
+        String TrailRanked = main.getSettings().getString("Default.Trail.Ranked", "Default");
+        String KillSoundRanked = main.getSettings().getString("Default.KillSound.Ranked", "Default");
+        String KitRanked = main.getSettings().getString("Default.Kit.Ranked", "Default");
+
+        MySQL.update("INSERT INTO Statistics_Ranked (" +
+                "UUID, " + "Name, " +
+
+                "LvlRanked, " +
+                "WinsRanked, " +
+                "KillsRanked, " +
+                "DeathsRanked, " +
+                "GamesRanked, " +
+                "ShotsRanked, " +
+                "HitsRanked, " +
+
+                "CageRanked, " +
+                "WinEffectRanked, " +
+                "KillEffectRanked, " +
+                "KillSoundRanked, " +
+                "TrailRanked, " +
+                "KitRanked, " +
+
+                "CagesRanked, " +
+                "WinEffectsRanked, " +
+                "KillEffectsRanked, " +
+                "KillSoundsRanked, " +
+                "TrailsRanked, " +
+                "KitsRanked" +
+
+                ") VALUES (" +
+
+                "'" + p.getUniqueId() + "', " + "'" + p.getName() + "', " +
+                "'0', " +
+                "'0', " +
+                "'0', " +
+                "'0', " +
+                "'0', " +
+                "'0', " +
+                "'0', " +
+
+                "'" + CageRanked + "', " +
+                "'" + WinEffectRanked + "', " +
+                "'" + KillEffectRanked + "', " +
+                "'" + KillSoundRanked + "', " +
+                "'" + TrailRanked + "', " +
+                "'" + KitRanked + "', " +
+
+                "'" + Base64.toBase64(gamePlayer.getCagesRankedList()) + "', " +
+                "'" + Base64.toBase64(gamePlayer.getWinEffectsRankedList()) + "', " +
+                "'" + Base64.toBase64(gamePlayer.getKillEffectsRankedList()) + "', " +
+                "'" + Base64.toBase64(gamePlayer.getKillSoundsRankedList()) + "', " +
+                "'" + Base64.toBase64(gamePlayer.getTrailsRankedList()) + "', " +
+                "'" + Base64.toBase64(gamePlayer.getKitRankedList()) + "'" +
+
+                ");");
+    }
+
     private void alreadyExistPlayer(Player p){
         GamePlayer gamePlayer = new GamePlayer(
                 p.getUniqueId(), p.getName(),
-                0, 0,
-                0, 0,
-                0, 0,
-                0, 0,
-                0, 0,
-                0, 0,
+                0, 0,0,
+                0, 0,0,
+                0, 0,0,
+                0, 0,0,
+                0, 0,0,
+                0, 0,0,
                 0, 0, 0, 0, 0,
-                0, 0,
-                "", "",
-                "", "",
-                "", "",
-                "", "",
-                "", "",
-                "", "",
+                0, 0,0,
+                "", "", "",
+                "", "","",
+                "", "","",
+                "", "","",
+                "", "","",
+                "", "","",
                 "");
 
         ResultSet infoResult;
         ResultSet infoResult_solo;
         ResultSet infoResult_team;
+        ResultSet infoResult_ranked;
 
         try {
             infoResult = MySQL.query("SELECT * FROM Statistics WHERE UUID='" + p.getUniqueId().toString() + "'");
             infoResult_solo = MySQL.query("SELECT * FROM Statistics_Solo WHERE UUID='" + p.getUniqueId().toString() + "'");
             infoResult_team = MySQL.query("SELECT * FROM Statistics_Team WHERE UUID='" + p.getUniqueId().toString() + "'");
+            infoResult_ranked = MySQL.query("SELECT * FROM Statistics_Ranked WHERE UUID='" + p.getUniqueId().toString() + "'");
         } catch (SQLException e) {
             infoResult = null;
             infoResult_solo = null;
             infoResult_team = null;
+            infoResult_ranked = null;
             e.printStackTrace();
         }
 
@@ -316,7 +387,29 @@ public class PlayerDB implements getPlayerDB {
                 gamePlayer.setKillSoundsTeamList((List<String>) Base64.fromBase64(infoResult_team.getString("KillSoundsTeam")));
                 gamePlayer.setTrailsTeamList((List<String>) Base64.fromBase64(infoResult_team.getString("TrailsTeam")));
                 gamePlayer.setKitTeamList((List<String>) Base64.fromBase64(infoResult_team.getString("KitsTeam")));
+            }
 
+            if (infoResult_ranked != null && infoResult_ranked.next()) {
+                gamePlayer.setLvlRanked(infoResult_ranked.getInt("LvlRanked"));
+                gamePlayer.setWinsRanked(infoResult_ranked.getInt("WinsRanked"));
+                gamePlayer.setKillsRanked(infoResult_ranked.getInt("KillsRanked"));
+                gamePlayer.setDeathsRanked(infoResult_ranked.getInt("DeathsRanked"));
+                gamePlayer.setGamesRanked(infoResult_ranked.getInt("GamesRanked"));
+                gamePlayer.setShotsRanked(infoResult_ranked.getInt("ShotsRanked"));
+                gamePlayer.setHitsRanked(infoResult_ranked.getInt("HitsRanked"));
+                gamePlayer.setCageRanked(infoResult_ranked.getString("CageRanked"));
+                gamePlayer.setWinEffectRanked(infoResult_ranked.getString("WinEffectRanked"));
+                gamePlayer.setKillEffectRanked(infoResult_ranked.getString("KillEffectRanked"));
+                gamePlayer.setKillSoundRanked(infoResult_ranked.getString("KillSoundRanked"));
+                gamePlayer.setTrailRanked(infoResult_ranked.getString("TrailRanked"));
+                gamePlayer.setKitRanked(infoResult_ranked.getString("KitRanked"));
+
+                gamePlayer.setCagesRankedList((List<String>) Base64.fromBase64(infoResult_ranked.getString("CagesRanked")));
+                gamePlayer.setWinEffectsRankedList((List<String>) Base64.fromBase64(infoResult_ranked.getString("WinEffectsRanked")));
+                gamePlayer.setKillEffectsRankedList((List<String>) Base64.fromBase64(infoResult_ranked.getString("KillEffectsRanked")));
+                gamePlayer.setKillSoundsRankedList((List<String>) Base64.fromBase64(infoResult_ranked.getString("KillSoundsRanked")));
+                gamePlayer.setTrailsRankedList((List<String>) Base64.fromBase64(infoResult_ranked.getString("TrailsRanked")));
+                gamePlayer.setKitRankedList((List<String>) Base64.fromBase64(infoResult_ranked.getString("KitsRanked")));
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -396,6 +489,32 @@ public class PlayerDB implements getPlayerDB {
                     "KillSoundsTeam='" + Base64.toBase64(gamePlayer.getKillSoundsTeamList()) + "', " +
                     "TrailsTeam='" + Base64.toBase64(gamePlayer.getTrailsTeamList()) + "', " +
                     "KitsTeam='" + Base64.toBase64(gamePlayer.getKitTeamList()) + "' " +
+
+                    "WHERE UUID='" + p.getUniqueId() + "'"
+            );
+
+            MySQL.update("UPDATE Statistics_Ranked SET " +
+                    "LvlRanked='" + gamePlayer.getLvlRanked() + "', " +
+                    "WinsRanked='" + gamePlayer.getWinsRanked() + "', " +
+                    "KillsRanked='" + gamePlayer.getKillsRanked() + "', " +
+                    "DeathsRanked='" + gamePlayer.getDeathsRanked() + "', " +
+                    "GamesRanked='" + gamePlayer.getGamesRanked() + "', " +
+                    "ShotsRanked='" + gamePlayer.getShotsRanked() + "', " +
+                    "HitsRanked='" + gamePlayer.getHitsRanked() + "', " +
+
+                    "CageRanked='" + gamePlayer.getCageRanked() + "', " +
+                    "WinEffectRanked='" + gamePlayer.getWinEffectRanked() + "', " +
+                    "KillEffectRanked='" + gamePlayer.getKillEffectRanked() + "', " +
+                    "KillSoundRanked='" + gamePlayer.getKillSoundRanked() + "', " +
+                    "TrailRanked='" + gamePlayer.getTrailRanked() + "', " +
+                    "KitRanked='" + gamePlayer.getKitRanked() + "', " +
+
+                    "CagesRanked='" + Base64.toBase64(gamePlayer.getCagesRankedList()) + "', " +
+                    "WinEffectsRanked='" + Base64.toBase64(gamePlayer.getWinEffectsRankedList()) + "', " +
+                    "KillEffectsRanked='" + Base64.toBase64(gamePlayer.getKillEffectsRankedList()) + "', " +
+                    "KillSoundsRanked='" + Base64.toBase64(gamePlayer.getKillSoundsRankedList()) + "', " +
+                    "TrailsRanked='" + Base64.toBase64(gamePlayer.getTrailsRankedList()) + "', " +
+                    "KitsRanked='" + Base64.toBase64(gamePlayer.getKitRankedList()) + "' " +
 
                     "WHERE UUID='" + p.getUniqueId() + "'"
             );
@@ -482,6 +601,34 @@ public class PlayerDB implements getPlayerDB {
                 "`TrailsTeam` TEXT, " +
                 "`KitsTeam` TEXT" +
             ")");
+
+            MySQL.update("CREATE TABLE IF NOT EXISTS Statistics_Ranked (`ID` INT PRIMARY KEY AUTO_INCREMENT, " +
+                "`UUID` VARCHAR(100), " +
+                "`Name` VARCHAR(100), " +
+
+                "`LvlRanked` Integer, " +
+                "`WinsRanked` Integer, " +
+                "`KillsRanked` Integer, " +
+                "`DeathsRanked` Integer, " +
+                "`GamesRanked` Integer, " +
+                "`ShotsRanked` Integer, " +
+                "`HitsRanked` Integer, " +
+
+                "`CageRanked` TEXT, " +
+                "`WinEffectRanked` TEXT, " +
+                "`KillEffectRanked` TEXT, " +
+                "`KillSoundRanked` TEXT, " +
+                "`TrailRanked` TEXT, " +
+                "`KitRanked` TEXT, " +
+
+                "`CagesRanked` TEXT, " +
+                "`WinEffectsRanked` TEXT, " +
+                "`KillEffectsRanked` TEXT, " +
+                "`KillSoundsRanked` TEXT, " +
+                "`TrailsRanked` TEXT, " +
+                "`KitsRanked` TEXT" +
+            ")");
+
         } else {
             MySQL.update("CREATE TABLE IF NOT EXISTS Statistics (" +
                 "`UUID` VARCHAR(100), " +
@@ -551,6 +698,33 @@ public class PlayerDB implements getPlayerDB {
                 "`TrailsTeam` TEXT, " +
                 "`KitsTeam` TEXT" +
             ")");
+
+            MySQL.update("CREATE TABLE IF NOT EXISTS Statistics_Ranked (" +
+                "`UUID` VARCHAR(100), " +
+                "`Name` VARCHAR(100), " +
+
+                "`LvlRanked` Integer, " +
+                "`WinsRanked` Integer, " +
+                "`KillsRanked` Integer, " +
+                "`DeathsRanked` Integer, " +
+                "`GamesRanked` Integer, " +
+                "`ShotsRanked` Integer, " +
+                "`HitsRanked` Integer, " +
+
+                "`CageRanked` TEXT, " +
+                "`WinEffectRanked` TEXT, " +
+                "`KillEffectRanked` TEXT, " +
+                "`KillSoundRanked` TEXT, " +
+                "`TrailRanked` TEXT, " +
+                "`KitRanked` TEXT, " +
+
+                "`CagesRanked` TEXT, " +
+                "`WinEffectsRanked` TEXT, " +
+                "`KillEffectsRanked` TEXT, " +
+                "`KillSoundsRanked` TEXT, " +
+                "`TrailsRanked` TEXT, " +
+                "`KitsRanked` TEXT" +
+            ")");
         }
     }
 
@@ -585,6 +759,27 @@ public class PlayerDB implements getPlayerDB {
             for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {
                     result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("KillsTeam");
+                } else {
+                    result[i] = "error";
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public String[] TopKillsRanked(int top) {
+        String[] result = new String[top];
+        try {
+
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `KillsRanked` FROM `Statistics_Ranked` ORDER BY `KillsRanked` DESC LIMIT "+top);
+            assert infoResult != null;
+            for (int i = 0; i < top; ++i) {
+                if (infoResult.next()) {
+                    result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("KillsRanked");
                 } else {
                     result[i] = "error";
                 }
@@ -639,6 +834,27 @@ public class PlayerDB implements getPlayerDB {
     }
 
     @Override
+    public String[] TopDeathsRanked(int top) {
+        String[] result = new String[top];
+        try {
+
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `DeathsRanked` FROM `Statistics_Ranked` ORDER BY `DeathsRanked` DESC LIMIT "+top);
+            assert infoResult != null;
+            for (int i = 0; i < top; ++i) {
+                if (infoResult.next()) {
+                    result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("DeathsRanked");
+                } else {
+                    result[i] = "error";
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
     public String[] TopWinsSolo(int top) {
         String[] result = new String[top];
         try {
@@ -669,6 +885,48 @@ public class PlayerDB implements getPlayerDB {
             for (int i = 0; i < top; ++i) {
                 if (infoResult.next()) {
                     result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("WinsTeam");
+                } else {
+                    result[i] = "error";
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public String[] TopWinsRanked(int top) {
+        String[] result = new String[top];
+        try {
+
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `WinsRanked` FROM `Statistics_Ranked` ORDER BY `WinsRanked` DESC LIMIT "+top);
+            assert infoResult != null;
+            for (int i = 0; i < top; ++i) {
+                if (infoResult.next()) {
+                    result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("WinsRanked");
+                } else {
+                    result[i] = "error";
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public String[] TopLvlRanked(int top) {
+        String[] result = new String[top];
+        try {
+
+            ResultSet infoResult = MySQL.query("SELECT `Name`, `LvlRanked` FROM `Statistics_Ranked` ORDER BY `LvlRanked` DESC LIMIT "+top);
+            assert infoResult != null;
+            for (int i = 0; i < top; ++i) {
+                if (infoResult.next()) {
+                    result[i] = infoResult.getString("Name") + ":" + infoResult.getInt("LvlRanked");
                 } else {
                     result[i] = "error";
                 }

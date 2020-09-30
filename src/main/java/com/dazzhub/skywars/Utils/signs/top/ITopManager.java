@@ -62,7 +62,7 @@ public class ITopManager {
             } else if (lines[2].equalsIgnoreCase("%deaths%")){
                 owner = main.getPlayerDB().TopDeathsSolo(10);
             } else if (lines[2].equalsIgnoreCase("%wins%")){
-                owner = main.getPlayerDB().TopDeathsSolo(10);
+                owner = main.getPlayerDB().TopWinsSolo(10);
             }
         } else if (lines[3].equalsIgnoreCase("team")){
             if (lines[2].equalsIgnoreCase("%kills%")){
@@ -70,7 +70,17 @@ public class ITopManager {
             } else if (lines[2].equalsIgnoreCase("%deaths%")){
                 owner = main.getPlayerDB().TopDeathsTeam(10);
             } else if (lines[2].equalsIgnoreCase("%wins%")){
-                owner = main.getPlayerDB().TopDeathsTeam(10);
+                owner = main.getPlayerDB().TopWinsTeam(10);
+            }
+        } else if (lines[3].equalsIgnoreCase("ranked")){
+            if (lines[2].equalsIgnoreCase("%kills%")){
+                owner = main.getPlayerDB().TopKillsRanked(10);
+            } else if (lines[2].equalsIgnoreCase("%deaths%")){
+                owner = main.getPlayerDB().TopDeathsRanked(10);
+            } else if (lines[2].equalsIgnoreCase("%wins%")){
+                owner = main.getPlayerDB().TopWinsRanked(10);
+            } else if (lines[2].equalsIgnoreCase("%lvl%")){
+                owner = main.getPlayerDB().TopLvlRanked(10);
             }
         }
 

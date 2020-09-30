@@ -83,7 +83,17 @@ public class ScoreBoardAPI {
     }
 
     public enum ScoreboardType {
-        LOBBY, STARTING, STARTINGTEAM, INGAME, INGAMETEAM, SPECTATOR;
+        LOBBY,
+
+        STARTING,
+        STARTINGTEAM,
+        STARTINGRANKED,
+
+        INGAME,
+        INGAMETEAM,
+        INGAMERANKED,
+
+        SPECTATOR;
     }
 
 }

@@ -12,10 +12,15 @@ public interface getPlayerDB {
 
     String[] TopKillsSolo(int top);
     String[] TopKillsTeam(int top);
+    String[] TopKillsRanked(int top);
 
     String[] TopDeathsSolo(int top);
     String[] TopDeathsTeam(int top);
+    String[] TopDeathsRanked(int top);
 
     String[] TopWinsSolo(int top);
     String[] TopWinsTeam(int top);
+    String[] TopWinsRanked(int top);
+
+    String[] TopLvlRanked(int top);
 }

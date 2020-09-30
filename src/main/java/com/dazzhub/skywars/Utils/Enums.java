@@ -65,7 +65,8 @@ public class Enums {
 
     public enum Mode {
         SOLO("SOLO", 1),
-        TEAM("TEAM", 2);
+        TEAM("TEAM", 2),
+        RANKED("RANKED", 1);
 
         private String name;
         private int size;

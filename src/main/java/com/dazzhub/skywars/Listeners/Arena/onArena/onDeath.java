@@ -40,6 +40,11 @@ public class onDeath implements Listener {
                     dead.addDeathsTeam();
                     dead.removeCoins(main.getSettings().getInt("Coins.DeathTeam"));
                     break;
+                case RANKED:
+                    dead.addDeathsRanked();
+                    dead.removeLvlRanked(main.getSettings().getInt("Coins.lvlRankedLosed"));
+                    dead.removeCoins(main.getSettings().getInt("Coins.DeathRanked"));
+                    break;
             }
 
             p.setFallDistance(0);
@@ -76,6 +81,12 @@ public class onDeath implements Listener {
                 case TEAM: {
                     killer.addKillsTeam();
                     getTypeKills effect = killer.getTypeKill(killer.getKillEffectTeam());
+                    if (effect != null) effect.playKillEffect();
+                    break;
+                }
+                case RANKED: {
+                    killer.addKillsRanked();
+                    getTypeKills effect = killer.getTypeKill(killer.getKillEffectRanked());
                     if (effect != null) effect.playKillEffect();
                     break;
                 }

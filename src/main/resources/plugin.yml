@@ -9,3 +9,5 @@ commands:
   join:
   leave:
     aliases: ['quit', 'salir']
+  party:
+    aliases: ['p']

@@ -30,8 +30,8 @@ public class addKit implements subCommand {
 
         Player p = (Player) sender;
 
-        if (args.length == 4) {
-            main.getiKitManager().createKit(p, args[1], Integer.parseInt(args[2]), args[3].toLowerCase());
+        if (args.length == 3) {
+            main.getiKitManager().createKit(p, args[1], args[2].toLowerCase());
         } else {
             p.sendMessage(help(sender));
         }
@@ -39,7 +39,7 @@ public class addKit implements subCommand {
 
     @Override
     public String help(CommandSender sender) {
-        return c("&e/Sw addkit <name> <price> <solo/team> &8>&f add kit");
+        return c("&e/Sw addkit <name> <solo/team> &8>&f add kit");
     }
 
     private String c(String c) {

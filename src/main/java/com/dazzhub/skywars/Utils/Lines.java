@@ -286,6 +286,37 @@ public class Lines {
                 addDefaultLang("Messages.MenuSpectator.Close.POSITION-X", 5, lang);
                 addDefaultLang("Messages.MenuSpectator.Close.POSITION-Y", 3, lang);
 
+                addDefaultLang("Messages.Party.InvalidArgument", "&d&lPARTY &f➠ &cError", lang);
+                addDefaultLang("Messages.Party.TargetNoExist", "&d&lPARTY &f➠ &9%target%&f invalid player", lang);
+                addDefaultLang("Messages.Party.Create", "&d&lPARTY &f➠ You successfully created the party", lang);
+                addDefaultLang("Messages.Party.AlreadyCreate", "&d&lPARTY &f➠ You have already created a party", lang);
+                addDefaultLang("Messages.Party.AlreadySent", "&d&lPARTY &f➠ You''ve already sent an invitation", lang);
+                addDefaultLang("Messages.Party.AlreadyHasParty", "&d&lPARTY &f➠ You''re already at a party with: &9%owner%", lang);
+                addDefaultLang("Messages.Party.NotifyInvite", "&d&lPARTY &f➠ &9%owner%&f a guest to &a%target%", lang);
+                addDefaultLang("Messages.Party.NotifyJoin", "&d&lPARTY &f➠ &9%target%&f has joined", lang);
+                addDefaultLang("Messages.Party.NotifyLeave", "&d&lPARTY &f➠ &9%target%&f came out of the party.", lang);
+                addDefaultLang("Messages.Party.NotifyKick", "&d&lPARTY &f➠ &9%owner%&f has removed &c%target%&f from the party.", lang);
+                addDefaultLang("Messages.Party.NotifyRemove", "&d&lPARTY &f➠ &9%owner%&f removed the party", lang);
+                addDefaultLang("Messages.Party.NoHaveInvitation", "&d&lPARTY &f➠ You don''t have any invitations.", lang);
+                addDefaultLang("Messages.Party.NoOwnerLeave", "&d&lPARTY &f➠ You can''t leave your own party, try: /party disband", lang);
+                addDefaultLang("Messages.Party.NoParty", "&d&lPARTY &f➠ You''re not at a party.", lang);
+                addDefaultLang("Messages.Party.IsNotOwner", "&d&lPARTY &f➠ You''re not the owner of this party.", lang);
+                addDefaultLang("Messages.Party.InviteMe", "&d&lPARTY &f➠ You can''t invite yourself, :V", lang);
+                addDefaultLang("Messages.Party.SendInvitation", "&d&lPARTY &f➠ You just invited player &9%target%", lang);
+                addDefaultLang("Messages.Party.JoinTarget", "&d&lPARTY &f➠ You''ve joined correctly.", lang);
+                addDefaultLang("Messages.Party.Join", "&d&lPARTY &f➠ &9%target%&f accept your application to join", lang);
+                addDefaultLang("Messages.Party.JoinArenaNoOwner", "&d&lPARTY &f➠ You don''t owner the party", lang);
+                addDefaultLang("Messages.Party.JoinArenaFull", "&d&lPARTY &f➠ Your party is too big for the arena", lang);
+                addDefaultLang("Messages.Party.Leave", "&d&lPARTY &f➠ You came out of the party.", lang);
+                addDefaultLang("Messages.Party.TargetNoMember", "&d&lPARTY &f➠ &9%target%&f is not a member of the party", lang);
+                addDefaultLang("Messages.Party.TargetHasParty", "&d&lPARTY &f➠ &9%target%''s&f already at a party", lang);
+                addDefaultLang("Messages.Party.KickOwner", "&d&lPARTY &f➠ You removed &9%target%&f from the party.", lang);
+                addDefaultLang("Messages.Party.KickTarget", "&d&lPARTY &f➠ You were kicketed by &9%owner%&f.", lang);
+                addDefaultLang("Messages.Party.Remove", "&d&lPARTY &f➠ You successfully eliminated the party.", lang);
+                addDefaultLang("Messages.Party.ReceiveInvitation", "&d&lPARTY &f➠ &9%owner%&f has invited you to his party; &d&l• &fTo join use the command &a/party join %owner%", lang);
+                addDefaultLang("Messages.Party.MemberDisconnect", "&d&lPARTY &f➠ &9%target%''s&f was disconnected", lang);
+                addDefaultLang("Messages.Party.OwnerDisconnect", "&d&lPARTY &f➠ &9%owner%''s&f was disconnected, so the party was eliminated.", lang);
+
                 List<String> sw = new ArrayList<>();
                 sw.add("%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-");
                 sw.add("");
@@ -344,26 +375,44 @@ public class Lines {
 
             addDefaultSettings("Default.Kit.Solo", "Default");
             addDefaultSettings("Default.Kit.Team", "Default");
+            addDefaultSettings("Default.Kit.Ranked", "Default");
             addDefaultSettings("Default.Cage.Solo", "Default");
             addDefaultSettings("Default.Cage.Team", "Default");
+            addDefaultSettings("Default.Cage.Ranked", "Default");
             addDefaultSettings("Default.WinEffect.Solo", "fireworks");
             addDefaultSettings("Default.WinEffect.Team", "fireworks");
+            addDefaultSettings("Default.WinEffect.Ranked", "fireworks");
             addDefaultSettings("Default.KillEffect.Solo", "none");
             addDefaultSettings("Default.KillEffect.Team", "none");
+            addDefaultSettings("Default.KillEffect.Ranked", "none");
             addDefaultSettings("Default.Trail.Solo", "none");
             addDefaultSettings("Default.Trail.Team", "none");
+            addDefaultSettings("Default.Trail.Ranked", "none");
             addDefaultSettings("Default.KillSound.Solo", "BLOCK_NOTE_BLOCK_PLING");
             addDefaultSettings("Default.KillSound.Team", "BLOCK_NOTE_BLOCK_PLING");
+            addDefaultSettings("Default.KillSound.Ranked", "BLOCK_NOTE_BLOCK_PLING");
             addDefaultSettings("Default.Lang", "en-EN");
 
             addDefaultSettings("Coins.DeathSolo", 8);
             addDefaultSettings("Coins.DeathTeam", 8);
+            addDefaultSettings("Coins.DeathRanked", 8);
             addDefaultSettings("Coins.FirstKillSolo", 30);
             addDefaultSettings("Coins.FirstKillTeam", 30);
+            addDefaultSettings("Coins.FirstKillRanked", 30);
             addDefaultSettings("Coins.KillSolo", 16);
             addDefaultSettings("Coins.KillTeam", 16);
+            addDefaultSettings("Coins.KillRanked", 16);
             addDefaultSettings("Coins.WinSolo", 50);
             addDefaultSettings("Coins.WinTeam", 50);
+            addDefaultSettings("Coins.WinRanked", 50);
+            addDefaultSettings("Coins.lvlRanked", 50);
+            addDefaultSettings("Coins.lvlRankedLosed", 50);
+
+            addDefaultSettings("Inventory.Lobby", "lobby");
+            addDefaultSettings("Inventory.Arena.Solo", "arenasolo");
+            addDefaultSettings("Inventory.Arena.Team", "arenateam");
+            addDefaultSettings("Inventory.Arena.Ranked", "arenaranked");
+            addDefaultSettings("Inventory.Arena.Spectator", "spectator");
 
             addDefaultSettings("ReTeleportCage", 2);
             addDefaultSettings("TopUpdate", 600);
@@ -384,11 +433,6 @@ public class Lines {
             addDefaultSettings("lobbies.onFeed", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onHealth", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onResetGameMode", Collections.singletonList("world"));
-
-            addDefaultSettings("Inventory.Lobby", "lobby");
-            addDefaultSettings("Inventory.Arena.Solo", "arenasolo");
-            addDefaultSettings("Inventory.Arena.Team", "arenateam");
-            addDefaultSettings("Inventory.Arena.Spectator", "spectator");
 
         });
     }

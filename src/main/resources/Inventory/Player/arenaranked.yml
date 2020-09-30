@@ -1,0 +1,25 @@
+#AtEntity - Clicks - ByDamage
+kits:
+  ACTION: 'open: kit-ranked.yml'
+  NAME: '&5&lKITS &7(Right-Click)'
+  DESCRIPTION:
+    - ''
+    - '&7Right-click to open menu'
+    - '&7Mode ranked'
+    - ''
+  INTERACT: 'Clicks'
+  ICON-ITEM: 261
+  DATA-VALUE: 0
+  SLOT: 0
+leave:
+  ACTION: 'leave'
+  NAME: '&c&lReturn to Spawn &7(Right-Click)'
+  DESCRIPTION:
+    - ''
+    - '&7Right-click to open menu'
+    - '&7leave mode ranked'
+    - ''
+  INTERACT: 'Clicks'
+  ICON-ITEM: 'BED'
+  DATA-VALUE: 0
+  SLOT: 8

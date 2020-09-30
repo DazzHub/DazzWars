@@ -5,6 +5,7 @@ import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
 import com.dazzhub.skywars.Listeners.Custom.LeftEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Party.Party;
 import com.dazzhub.skywars.Utils.Enums;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,10 +25,22 @@ public class onLeft implements Listener {
         Arena arena = e.getArena();
 
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+        Party party = gamePlayer.getParty();
 
         switch (e.getLeftCause()){
             case SPECTATOR:{
-                arena.removeSpectator(gamePlayer, false);
+                if (party == null) {
+                    arena.removeSpectator(gamePlayer,false);
+                } else {
+                    if (party.getOwner().equals(gamePlayer)) {
+
+                        //arena.removeSpectator(gamePlayer,false);
+                        party.getMembers().forEach(gamePlayer1 -> arena.removeSpectator(gamePlayer1, false));
+
+                    } else {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+                    }
+                }
                 break;
             }
 
@@ -38,7 +51,15 @@ public class onLeft implements Listener {
             }
 
             default:{
-                arena.removePlayer(gamePlayer);
+                if (party == null) {
+                    arena.removePlayer(gamePlayer);
+                } else {
+                    if (party.getOwner().equals(gamePlayer)) {
+                        party.getMembers().forEach(arena::removePlayer);
+                    } else {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+                    }
+                }
                 break;
             }
         }

@@ -81,8 +81,8 @@ public class startingGame extends BukkitRunnable {
                     p.resetPlayer(false);
 
                     switch (arena.getMode()) {
-                        case SOLO:
-                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAME,true,false,true,true);
+                        case SOLO: {
+                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAME, true, false, true, true);
 
                             if (!p.getKitSolo().equals("none")) {
                                 main.getiKitManager().giveKit(p.getKitSolo().toLowerCase(), arena.getMode().getName(), p.getPlayer(), p);
@@ -90,8 +90,9 @@ public class startingGame extends BukkitRunnable {
 
                             p.addGamesSolo();
                             break;
-                        case TEAM:
-                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAMETEAM,true,false,true,true);
+                        }
+                        case TEAM: {
+                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAMETEAM, true, false, true, true);
 
                             if (!p.getKitTeam().equals("none")) {
                                 main.getiKitManager().giveKit(p.getKitTeam().toLowerCase(), arena.getMode().getName(), p.getPlayer(), p);
@@ -99,6 +100,17 @@ public class startingGame extends BukkitRunnable {
 
                             p.addGamesTeam();
                             break;
+                        }
+                        case RANKED: {
+                            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.INGAMERANKED, true, false, true, true);
+
+                            if (!p.getKitTeam().equals("none")) {
+                                main.getiKitManager().giveKit(p.getKitRanked().toLowerCase(), arena.getMode().getName(), p.getPlayer(), p);
+                            }
+
+                            p.addGamesRanked();
+                            break;
+                        }
                     }
 
                 });

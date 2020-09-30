@@ -102,14 +102,28 @@ public class Holograms {
 
             if (!transformed.startsWith("%topkillssolo%")) {
                 if (!transformed.startsWith("%topkillsteam%")) {
-                    if (!transformed.startsWith("%topdeathssolo%")) {
-                        if (!transformed.startsWith("%topdeathsteam%")) {
-                            if (!transformed.startsWith("%topwinssolo%")) {
-                                if (!transformed.startsWith("%topwinsteam%")) {
-                                    holo.appendTextLine(transformed);
+                    if (!transformed.startsWith("%topkillsranked%")) {
+
+                        if (!transformed.startsWith("%topdeathssolo%")) {
+                            if (!transformed.startsWith("%topdeathsteam%")) {
+                                if (!transformed.startsWith("%topdeathsranked%")) {
+
+                                    if (!transformed.startsWith("%topwinssolo%")) {
+                                        if (!transformed.startsWith("%topwinsteam%")) {
+                                            if (!transformed.startsWith("%topwinsranked%")) {
+
+                                                if (!transformed.startsWith("%toplvlranked%")) {
+                                                    holo.appendTextLine(transformed);
+                                                }
+
+                                            }
+                                        }
+                                    }
+
                                 }
                             }
                         }
+
                     }
                 }
             }
@@ -130,6 +144,18 @@ public class Holograms {
             }
         } else if (transformed.equalsIgnoreCase("%topkillsteam%")) {
             String[] top = main.getPlayerDB().TopKillsTeam(10);
+            for (String topPlayers : top) {
+
+                if (topPlayers.startsWith("error")){
+                    holo.appendTextLine(c(config.getString("format.error")));
+                    continue;
+                }
+
+                String[] TOPSpli = topPlayers.split(":");
+                holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
+            }
+        } else if (transformed.equalsIgnoreCase("%topkillsranked%")) {
+            String[] top = main.getPlayerDB().TopKillsRanked(10);
             for (String topPlayers : top) {
 
                 if (topPlayers.startsWith("error")){
@@ -164,6 +190,18 @@ public class Holograms {
                 String[] TOPSpli = topPlayers.split(":");
                 holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
             }
+        } else if (transformed.equalsIgnoreCase("%topdeathsranked%")) {
+            String[] top = main.getPlayerDB().TopDeathsRanked(10);
+            for (String topPlayers : top) {
+
+                if (topPlayers.startsWith("error")){
+                    holo.appendTextLine(c(config.getString("format.error")));
+                    continue;
+                }
+
+                String[] TOPSpli = topPlayers.split(":");
+                holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
+            }
         } else if (transformed.equalsIgnoreCase("%topwinssolo%")) {
             String[] top = main.getPlayerDB().TopWinsSolo(10);
             for (String topPlayers : top) {
@@ -178,6 +216,30 @@ public class Holograms {
             }
         } else if (transformed.equalsIgnoreCase("%topwinsteam%")) {
             String[] top = main.getPlayerDB().TopWinsTeam(10);
+            for (String topPlayers : top) {
+
+                if (topPlayers.startsWith("error")){
+                    holo.appendTextLine(c(config.getString("format.error")));
+                    continue;
+                }
+
+                String[] TOPSpli = topPlayers.split(":");
+                holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
+            }
+        } else if (transformed.equalsIgnoreCase("%topwinsranked%")) {
+            String[] top = main.getPlayerDB().TopWinsRanked(10);
+            for (String topPlayers : top) {
+
+                if (topPlayers.startsWith("error")){
+                    holo.appendTextLine(c(config.getString("format.error")));
+                    continue;
+                }
+
+                String[] TOPSpli = topPlayers.split(":");
+                holo.appendTextLine(c(config.getString("format.top")).replace("{0}", TOPSpli[0]).replace("{1}", TOPSpli[1]));
+            }
+        } else if (transformed.equalsIgnoreCase("%toplvlranked%")) {
+            String[] top = main.getPlayerDB().TopLvlRanked(10);
             for (String topPlayers : top) {
 
                 if (topPlayers.startsWith("error")){

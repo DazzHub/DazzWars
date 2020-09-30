@@ -12,39 +12,53 @@ Default:
   Kit:
     Solo: 'Default'
     Team: 'Default'
+    Ranked: 'Default'
   Cage:
     Solo: 'Default'
     Team: 'Default'
+    Ranked: 'Default'
   WinEffect:
     Solo: 'fireworks'
     Team: 'fireworks'
+    Ranked: 'fireworks'
   KillEffect:
     Solo: 'none'
     Team: 'none'
+    Ranked: 'none'
   Trail:
     Solo: 'none'
     Team: 'none'
+    Ranked: 'none'
   KillSound:
     Solo: 'BLOCK_NOTE_BLOCK_PLING' #use sounds 1.16
     Team: 'BLOCK_NOTE_BLOCK_PLING'
+    Ranked: 'BLOCK_NOTE_BLOCK_PLING'
   Lang: 'en-EN' #Default language en-EN, es-ES
 Coins:
   DeathSolo: 8
   DeathTeam: 8
+  DeathRanked: 8
 
   FirstKillSolo: 30
   FirstKillTeam: 30
+  FirstKillRanked: 30
 
   KillSolo: 16
   KillTeam: 16
+  KillRanked: 16
 
   WinSolo: 50
   WinTeam: 50
+  WinRanked: 50
+
+  lvlRanked: 50
+  lvlRankedLosed: 50
 Inventory:
   Lobby: 'lobby'
   Arena:
     Solo: 'arenasolo'
     Team: 'arenateam'
+    Ranked: 'arenaranked'
     Spectator: 'spectator'
 ReTeleportCage: 2
 #update time in seconds

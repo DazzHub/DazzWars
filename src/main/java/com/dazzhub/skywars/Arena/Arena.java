@@ -7,6 +7,7 @@ import com.dazzhub.skywars.Listeners.Custom.typeJoin.removePlayerEvent;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.removeSpectatorEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Party.Party;
 import com.dazzhub.skywars.Runnables.RefillGame;
 import com.dazzhub.skywars.Runnables.endGame;
 import com.dazzhub.skywars.Runnables.inGame;
@@ -246,6 +247,12 @@ public class Arena {
         this.damageFallStarting = true;
 
         this.main.getResetWorld().importWorld(this, false);
+    }
+
+    public void joinParty(Party party) {
+        for (GamePlayer gamePlayer : party.getMembers()) {
+            this.addPlayer(gamePlayer);
+        }
     }
 
     public void addPlayer(GamePlayer gamePlayer) {

@@ -169,6 +169,8 @@ public class Icon {
                     replaceLorePurchased(p, kitName);
                 } else if (mode.equalsIgnoreCase("team") && p.getKitTeamList().contains(kitName)) {
                     replaceLorePurchased(p, kitName);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getKitRankedList().contains(kitName)) {
+                    replaceLorePurchased(p, kitName);
                 }
             } else if (type.startsWith("cage:")) {
                 String action = type.substring(5);
@@ -182,6 +184,8 @@ public class Icon {
                 if (mode.equalsIgnoreCase("solo") && p.getCagesSoloList().contains(cageName)) {
                     replaceLorePurchased(p, cageName);
                 } else if (mode.equalsIgnoreCase("team") && p.getCagesTeamList().contains(cageName)) {
+                    replaceLorePurchased(p, cageName);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getCagesRankedList().contains(cageName)) {
                     replaceLorePurchased(p, cageName);
                 }
             } else if (type.startsWith("wineffect:")) {
@@ -197,6 +201,8 @@ public class Icon {
                     replaceLorePurchased(p, winName);
                 } else if (mode.equalsIgnoreCase("team") && p.getWinEffectsTeamList().contains(winName)) {
                     replaceLorePurchased(p, winName);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getWinEffectsRankedList().contains(winName)) {
+                    replaceLorePurchased(p, winName);
                 }
             } else if (type.startsWith("killeffect:")) {
                 String action = type.substring(11);
@@ -210,6 +216,8 @@ public class Icon {
                 if (mode.equalsIgnoreCase("solo") && p.getKillEffectsSoloList().contains(killName)) {
                     replaceLorePurchased(p, killName);
                 } else if (mode.equalsIgnoreCase("team") && p.getKillEffectsTeamList().contains(killName)) {
+                    replaceLorePurchased(p, killName);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getKillEffectsRankedList().contains(killName)) {
                     replaceLorePurchased(p, killName);
                 }
             }
@@ -226,6 +234,8 @@ public class Icon {
                 if (mode.equalsIgnoreCase("solo") && p.getTrailsSoloList().contains(trailName)) {
                     replaceLorePurchased(p, trailName);
                 } else if (mode.equalsIgnoreCase("team") && p.getTrailsTeamList().contains(trailName)) {
+                    replaceLorePurchased(p, trailName);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getTrailsRankedList().contains(trailName)) {
                     replaceLorePurchased(p, trailName);
                 }
             }
@@ -247,6 +257,9 @@ public class Icon {
                 } else if (mode.equalsIgnoreCase("team") && p.getKitSolo().equals(kitName)) {
                     replaceLoreSelected(p, kitName);
                     this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getKitRanked().equals(kitName)) {
+                    replaceLoreSelected(p, kitName);
+                    this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
                 }
             } else if (type.startsWith("cage:")) {
                 String action = type.substring(5);
@@ -261,6 +274,9 @@ public class Icon {
                     replaceLoreSelected(p, cageName);
                     this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
                 } else if (mode.equalsIgnoreCase("team") && p.getCageTeam().equals(cageName)) {
+                    replaceLoreSelected(p, cageName);
+                    this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getCageRanked().equals(cageName)) {
                     replaceLoreSelected(p, cageName);
                     this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
                 }
@@ -279,6 +295,9 @@ public class Icon {
                 } else if (mode.equalsIgnoreCase("team") && p.getWinEffectTeam().equals(winName)) {
                     replaceLoreSelected(p, winName);
                     this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getWinEffectRanked().equals(winName)) {
+                    replaceLoreSelected(p, winName);
+                    this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
                 }
             } else if (type.startsWith("killeffect:")) {
                 String action = type.substring(11);
@@ -295,6 +314,9 @@ public class Icon {
                 } else if (mode.equalsIgnoreCase("team") && p.getKillEffectTeam().equals(killName)) {
                     replaceLoreSelected(p, killName);
                     this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getKillEffectRanked().equals(killName)) {
+                    replaceLoreSelected(p, killName);
+                    this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
                 }
             } else if (type.startsWith("traileffect:")) {
                 String action = type.substring(12);
@@ -309,6 +331,9 @@ public class Icon {
                     replaceLoreSelected(p, trailName);
                     this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
                 } else if (mode.equalsIgnoreCase("team") && p.getTrailTeam().equals(trailName)) {
+                    replaceLoreSelected(p, trailName);
+                    this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                } else if (mode.equalsIgnoreCase("ranked") && p.getTrailRanked().equals(trailName)) {
                     replaceLoreSelected(p, trailName);
                     this.item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
                 }

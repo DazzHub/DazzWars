@@ -34,26 +34,32 @@ public class IKitManager {
 
     private HashMap<String, IKit> kitSoloHashMap;
     private HashMap<String, IKit> kitTeamHashMap;
+    private HashMap<String, IKit> kitRankedHashMap;
 
     public IKitManager(Main main) {
         this.main = main;
         this.kitSoloHashMap = new HashMap<>();
         this.kitTeamHashMap = new HashMap<>();
+        this.kitRankedHashMap = new HashMap<>();
     }
 
     public void loadKits(){
         configCreate.get().setup(main, "Kits/kits");
         configCreate.get().setup(main, "Kits/solo/Default");
         configCreate.get().setup(main, "Kits/team/Default");
+        configCreate.get().setup(main, "Kits/ranked/Default");
 
         List<String> kitsololist = main.getConfigUtils().getConfig(this.main, "Kits/kits").getStringList("kitsolo");
         List<String> kitteamlist = main.getConfigUtils().getConfig(this.main, "Kits/kits").getStringList("kitteam");
+        List<String> kitrankedlist = main.getConfigUtils().getConfig(this.main, "Kits/kits").getStringList("kitranked");
 
         kitsololist.forEach(this::importKitSolo);
         kitteamlist.forEach(this::importKitTeam);
+        kitrankedlist.forEach(this::importKitRanked);
 
         Console.info("&eLoaded kits solo: &a" + kitSoloHashMap.size());
         Console.info("&eLoaded kits team: &a" + kitTeamHashMap.size());
+        Console.info("&eLoaded kits ranked: &a" + kitRankedHashMap.size());
     }
 
     public void giveKit(String namekit, String mode, Player p, GamePlayer gamePlayer){
@@ -73,10 +79,18 @@ public class IKitManager {
 
                 gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Received").replace("%kit%", namekit));
             }
+        } else if (mode.equalsIgnoreCase("RANKED")){
+            if (getKitRankedHashMap().containsKey(namekit)){
+                IKit iKit = getKitRankedHashMap().get(namekit);
+
+                iKit.giveKit(p, mode.toLowerCase());
+
+                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Received").replace("%kit%", namekit));
+            }
         }
     }
 
-    public void createKit(Player p, String namekit, int price, String mode){
+    public void createKit(Player p, String namekit, String mode){
         if (mode.equals("solo") && kitSoloHashMap.containsKey(namekit)){
             p.sendMessage(c("&a&l\u2714 &fKit &e" + namekit + "&f already exists"));
             XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
@@ -84,6 +98,12 @@ public class IKitManager {
         }
 
         if (mode.equals("team") && kitTeamHashMap.containsKey(namekit)){
+            p.sendMessage(c("&a&l\u2714 &fKit &e" + namekit + "&f already exists"));
+            XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
+            return;
+        }
+
+        if (mode.equals("ranked") && kitRankedHashMap.containsKey(namekit)){
             p.sendMessage(c("&a&l\u2714 &fKit &e" + namekit + "&f already exists"));
             XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
             return;
@@ -117,6 +137,12 @@ public class IKitManager {
                 importKitTeam(namekit);
                 break;
             }
+            case "ranked":{
+                saveInventory(p, file, config);
+
+                importKitRanked(namekit);
+                break;
+            }
             default:{
                 break;
             }
@@ -138,13 +164,10 @@ public class IKitManager {
     }
 
     private void saveInventory(Player p, File file, FileConfiguration config) {
-        List<String> tempInfo = new ArrayList<>();
-
         for (int i = 0; i < p.getInventory().getContents().length; ++i) {
             if (p.getInventory().getContents() != null) {
                 ItemStack item = p.getInventory().getItem(i);
                 if (item != null) {
-                    tempInfo.add(item.getAmount() + " " + item.getType().name().replaceAll("_", ""));
                     config.set("KIT.Inventory." + i, item);
                 }
             }
@@ -155,17 +178,10 @@ public class IKitManager {
 
         for (ItemStack armors : contents) {
             if (armors != null) {
-                tempInfo.add(armors.getType().name().replaceAll("_", "").replaceAll("AIR", ""));
                 armor.add(armors);
             }
         }
-
         config.set("KIT.Armor", armor);
-
-        List<String> items = config.getStringList("ITEM.DESCRIPTION");
-        tempInfo.stream().map(info -> "&7➲ &e" + info).forEach(items::add);
-
-        config.set("ITEM.DESCRIPTION", items);
 
         try {
             config.save(file);
@@ -198,6 +214,19 @@ public class IKitManager {
         FileConfiguration sc = YamlConfiguration.loadConfiguration(sf);
 
         kitTeamHashMap.put(sf.getName().toLowerCase().replace(".yml", ""), new IKit(sf.getName().replace(".yml", "")));
+    }
+
+    private void importKitRanked(String name) {
+        File sf = main.getConfigUtils().getFile(this.main, "Kits/ranked/" + name);
+
+        if (!sf.exists()) {
+            Console.warning("&cKit File does not exist " + name);
+            return;
+        }
+
+        FileConfiguration sc = YamlConfiguration.loadConfiguration(sf);
+
+        kitRankedHashMap.put(sf.getName().toLowerCase().replace(".yml", ""), new IKit(sf.getName().replace(".yml", "")));
     }
 
     private String c(String c) {

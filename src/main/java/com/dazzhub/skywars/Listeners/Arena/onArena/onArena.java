@@ -277,6 +277,10 @@ public class onArena implements Listener {
                             gamePlayer.addShotsTeam();
                             break;
                         }
+                        case RANKED:{
+                            gamePlayer.addShotsRanked();
+                            break;
+                        }
                     }
                 }
             }
@@ -307,6 +311,10 @@ public class onArena implements Listener {
                             }
                             case TEAM: {
                                 gamePlayer.addHitsTeam();
+                                break;
+                            }
+                            case RANKED: {
+                                gamePlayer.addHitsRanked();
                                 break;
                             }
                         }

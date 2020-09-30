@@ -51,7 +51,7 @@ public class Placeholders extends PlaceholderExpansion {
 
         switch (identifier) {
             case "wins": {
-                return Integer.toString(gamePlayer.getWinsSolo() + gamePlayer.getWinsTeam());
+                return Integer.toString(gamePlayer.getWinsSolo() + gamePlayer.getWinsTeam() + gamePlayer.getWinsRanked());
             }
 
             case "wins_solo": {
@@ -60,6 +60,10 @@ public class Placeholders extends PlaceholderExpansion {
 
             case "wins_team": {
                 return Integer.toString(gamePlayer.getWinsTeam());
+            }
+
+            case "wins_ranked": {
+                return Integer.toString(gamePlayer.getWinsRanked());
             }
 
             case "kills": {
@@ -74,8 +78,12 @@ public class Placeholders extends PlaceholderExpansion {
                 return Integer.toString(gamePlayer.getKillsTeam());
             }
 
+            case "kills_ranked": {
+                return Integer.toString(gamePlayer.getKillsRanked());
+            }
+
             case "deaths": {
-                return Integer.toString(gamePlayer.getDeathsSolo() + gamePlayer.getDeathsTeam());
+                return Integer.toString(gamePlayer.getDeathsSolo() + gamePlayer.getDeathsTeam() + gamePlayer.getDeathsRanked());
             }
 
             case "deaths_solo": {
@@ -86,8 +94,12 @@ public class Placeholders extends PlaceholderExpansion {
                 return Integer.toString(gamePlayer.getDeathsTeam());
             }
 
+            case "deaths_ranked": {
+                return Integer.toString(gamePlayer.getDeathsRanked());
+            }
+
             case "games": {
-                return Integer.toString(gamePlayer.getGamesSolo() + gamePlayer.getGamesTeam());
+                return Integer.toString(gamePlayer.getGamesSolo() + gamePlayer.getGamesTeam() + gamePlayer.getGamesRanked());
             }
 
             case "games_solo": {
@@ -98,8 +110,12 @@ public class Placeholders extends PlaceholderExpansion {
                 return Integer.toString(gamePlayer.getGamesTeam());
             }
 
+            case "games_ranked": {
+                return Integer.toString(gamePlayer.getGamesRanked());
+            }
+
             case "shots": {
-                return Integer.toString(gamePlayer.getShotsSolo() + gamePlayer.getShotsTeam());
+                return Integer.toString(gamePlayer.getShotsSolo() + gamePlayer.getShotsTeam() + gamePlayer.getShotsRanked());
             }
 
             case "shots_solo": {
@@ -110,8 +126,12 @@ public class Placeholders extends PlaceholderExpansion {
                 return Integer.toString(gamePlayer.getShotsTeam());
             }
 
+            case "shots_ranked": {
+                return Integer.toString(gamePlayer.getShotsRanked());
+            }
+
             case "hits": {
-                return Integer.toString(gamePlayer.getHitsSolo() + gamePlayer.getHitsTeam());
+                return Integer.toString(gamePlayer.getHitsSolo() + gamePlayer.getHitsTeam() + gamePlayer.getHitsRanked());
             }
 
             case "hits_solo": {
@@ -120,6 +140,10 @@ public class Placeholders extends PlaceholderExpansion {
 
             case "hits_team": {
                 return Integer.toString(gamePlayer.getHitsTeam());
+            }
+
+            case "hits_ranked": {
+                return Integer.toString(gamePlayer.getHitsRanked());
             }
 
             case "blocksplaced": {
@@ -150,8 +174,16 @@ public class Placeholders extends PlaceholderExpansion {
                 return gamePlayer.getKitTeam();
             }
 
+            case "kit_ranked": {
+                return gamePlayer.getKitRanked();
+            }
+
             case "coins": {
                 return Integer.toString(gamePlayer.getCoins());
+            }
+
+            case "lvlranked": {
+                return Integer.toString(gamePlayer.getLvlRanked());
             }
 
             case "player": {
@@ -166,12 +198,20 @@ public class Placeholders extends PlaceholderExpansion {
                 return gamePlayer.getCageTeam();
             }
 
+            case "cageranked": {
+                return gamePlayer.getCageRanked();
+            }
+
             case "wineffect_solo": {
                 return gamePlayer.getWinEffectSolo();
             }
 
             case "wineffect_team": {
                 return gamePlayer.getWinEffectTeam();
+            }
+
+            case "wineffect_ranked": {
+                return gamePlayer.getWinEffectRanked();
             }
 
             case "arena_start": {
@@ -222,105 +262,105 @@ public class Placeholders extends PlaceholderExpansion {
             /* VOTE CHESTS */
             case "arena_vote_chest_basic": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getBasicChests());
+                return String.valueOf(arena.getVotesSystem().getBasicChests().size());
             }
             case "arena_vote_chest_normal": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getNormalChests());
+                return String.valueOf(arena.getVotesSystem().getNormalChests().size());
             }
             case "arena_vote_chest_op": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getOpChests());
+                return String.valueOf(arena.getVotesSystem().getOpChests().size());
             }
             case "arena_vote_chest_custom": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getCustomChests());
+                return String.valueOf(arena.getVotesSystem().getCustomChests().size());
             }
 
             /* VOTE TIME */
             case "arena_vote_time_day": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getDayTime());
+                return String.valueOf(arena.getVotesSystem().getDayTime().size());
             }
             case "arena_vote_time_sunset": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getSunsetTime());
+                return String.valueOf(arena.getVotesSystem().getSunsetTime().size());
             }
             case "arena_vote_time_night": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getNightTime());
+                return String.valueOf(arena.getVotesSystem().getNightTime().size());
             }
 
             /* VOTE HEART */
             case "arena_vote_heart_normal": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getNormalLife());
+                return String.valueOf(arena.getVotesSystem().getNormalLife().size());
             }
             case "arena_vote_heart_double": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getDoubleLife());
+                return String.valueOf(arena.getVotesSystem().getDoubleLife().size());
             }
             case "arena_vote_heart_triple": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getTripleLife());
+                return String.valueOf(arena.getVotesSystem().getTripleLife().size());
             }
 
             /* VOTE SCENARIOS */
             case "arena_vote_scenario_noclean": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getNoclean());
+                return String.valueOf(arena.getVotesSystem().getNoclean().size());
             }
             case "arena_vote_scenario_nofall": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getNofall());
+                return String.valueOf(arena.getVotesSystem().getNofall().size());
             }
             case "arena_vote_scenario_noprojectil": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getNoprojectil());
+                return String.valueOf(arena.getVotesSystem().getNoprojectil().size());
             }
 
             /* VOTE EVENTS */
             case "arena_vote_event_dragon": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getDragon());
+                return String.valueOf(arena.getVotesSystem().getDragon().size());
             }
             case "arena_vote_event_border": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getBorder());
+                return String.valueOf(arena.getVotesSystem().getBorder().size());
             }
             case "arena_vote_event_dropParty": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getDropParty());
+                return String.valueOf(arena.getVotesSystem().getDropParty().size());
             }
             case "arena_vote_event_tntfall": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getTntfall());
+                return String.valueOf(arena.getVotesSystem().getTntfall().size());
             }
             case "arena_vote_event_storm": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getStorm());
+                return String.valueOf(arena.getVotesSystem().getStorm().size());
             }
 
             /* TOTAL */
             case "arena_vote_chest_total": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getCheckChest());
+                return String.valueOf(arena.getVotesSystem().getCheckChest().size());
             }
             case "arena_vote_time_total": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getCheckTime());
+                return String.valueOf(arena.getVotesSystem().getCheckTime().size());
             }
             case "arena_vote_heart_total": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getCheckLife());
+                return String.valueOf(arena.getVotesSystem().getCheckLife().size());
             }
             case "arena_vote_scenarios_total": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getCheckScenarios());
+                return String.valueOf(arena.getVotesSystem().getCheckScenarios().size());
             }
             case "arena_vote_event_total": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getVotesSystem().getCheckEvent());
+                return String.valueOf(arena.getVotesSystem().getCheckEvent().size());
             }
 
             default: {

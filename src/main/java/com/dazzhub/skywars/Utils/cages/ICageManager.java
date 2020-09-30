@@ -36,30 +36,53 @@ public class ICageManager {
 
     private HashMap<String, ICage> cagesSolo;
     private HashMap<String, ICage> cagesTeam;
+    private HashMap<String, ICage> cagesRanked;
 
     public ICageManager(Main main) {
         this.main = main;
         this.cagesSolo = new HashMap<>();
         this.cagesTeam = new HashMap<>();
+        this.cagesRanked = new HashMap<>();
     }
 
     public void loadCages(){
         List<String> cagesolo = main.getConfigUtils().getConfig(this.main, "Cages/cages").getStringList("cagesolo");
         List<String> cageteam = main.getConfigUtils().getConfig(this.main, "Cages/cages").getStringList("cageteam");
+        List<String> cageranked = main.getConfigUtils().getConfig(this.main, "Cages/cages").getStringList("cageranked");
 
         configCreate.get().setup(main, "Cages/solo/Default");
         configCreate.get().setup(main, "Cages/team/Default");
+        configCreate.get().setup(main, "Cages/ranked/Default");
 
         cagesolo.forEach(this::importSchematicSolo);
         cageteam.forEach(this::importSchematicTeam);
+        cageranked.forEach(this::importSchematicRanked);
 
         Console.info("&eLoaded cages solo: &a"+getCagesSolo().size());
         Console.info("&eLoaded cages team: &a"+getCagesTeam().size());
+        Console.info("&eLoaded cages ranked: &a"+getCagesRanked().size());
     }
 
-    public void createCage(Player p, Integer price, String nameCage, String mode, Cuboid cuboid){
-
+    public void createCage(Player p, String nameCage, String mode, Cuboid cuboid){
         mode = mode.toLowerCase();
+
+        if (mode.equals("solo") && cagesSolo.containsKey(nameCage)){
+            p.sendMessage(c("&a&l\u2714 &fKit &e" + nameCage + "&f already exists"));
+            XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
+            return;
+        }
+
+        if (mode.equals("team") && cagesTeam.containsKey(nameCage)){
+            p.sendMessage(c("&a&l\u2714 &fKit &e" + nameCage + "&f already exists"));
+            XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
+            return;
+        }
+
+        if (mode.equals("ranked") && cagesRanked.containsKey(nameCage)){
+            p.sendMessage(c("&a&l\u2714 &fKit &e" + nameCage + "&f already exists"));
+            XSound.play(p, String.valueOf(XSound.ENTITY_VILLAGER_NO.parseSound()));
+            return;
+        }
 
         int xDiff = Math.abs(cuboid.getXmax() - cuboid.getXmin());
         int yDiff = Math.abs(cuboid.getYmax() - cuboid.getYmin());
@@ -110,8 +133,10 @@ public class ICageManager {
             cagesSolo.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
         } else if (mode.equals("team")){
             cagesTeam.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
+        } else if (mode.equals("ranked")){
+            cagesRanked.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
         } else {
-            Console.info("&cCage error create: " + nameCage);
+            Console.warning("&cCage error create: " + nameCage);
         }
 
         p.sendMessage(c("&a&l\u2714 &fCage &e" + nameCage + "&f created successfully"));
@@ -134,6 +159,19 @@ public class ICageManager {
 
     private void importSchematicTeam(String name) {
         File sf = new File(this.main.getDataFolder() + "/Cages/team", name + ".yml");
+
+        if (!sf.exists()) {
+            Console.warning("&cCage File does not exist " + name);
+            return;
+        }
+
+        FileConfiguration sc = YamlConfiguration.loadConfiguration(sf);
+
+        cagesTeam.put(sc.getString("Name"), new ICage(sc.getString("Name"), sc.getInt("Diff.x"), sc.getInt("Diff.y"), sc.getInt("Diff.z"), sc.getStringList("Blocks")));
+    }
+
+    private void importSchematicRanked(String name) {
+        File sf = new File(this.main.getDataFolder() + "/Cages/ranked", name + ".yml");
 
         if (!sf.exists()) {
             Console.warning("&cCage File does not exist " + name);
