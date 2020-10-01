@@ -14,6 +14,8 @@ import com.dazzhub.skywars.MySQL.utils.PlayerManager;
 import com.dazzhub.skywars.Party.PartyManager;
 import com.dazzhub.skywars.Utils.CenterMessage;
 import com.dazzhub.skywars.Utils.Lines;
+import com.dazzhub.skywars.Utils.NoteBlockAPI.SongPlayer;
+import com.dazzhub.skywars.Utils.NoteBlockAPI.lSong;
 import com.dazzhub.skywars.Utils.cages.ICageManager;
 import com.dazzhub.skywars.Utils.chests.IChestManager;
 import com.dazzhub.skywars.Utils.configuration.configCreate;
@@ -36,6 +38,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main extends JavaPlugin {
 
@@ -90,6 +95,9 @@ public class Main extends JavaPlugin {
 
     private String version;
 
+    /* NOTE BLOCK API*/
+    public HashMap<String, ArrayList<SongPlayer>> playingSongs;
+
     public Main(){
         this.configUtils = new configUtils();
 
@@ -124,6 +132,8 @@ public class Main extends JavaPlugin {
         this.soulManager = new SoulManager(this);
 
         this.lobbyManager = new lobbyManager(this);
+
+        this.playingSongs = new HashMap<>();
     }
 
     @Override
@@ -149,6 +159,8 @@ public class Main extends JavaPlugin {
         configCreate.get().setup(this, "Chests/ChestType");
 
         configCreate.get().setup(this, "Signs");
+
+        configCreate.get().setupCustom(this, "Scrolling.nbs");
 
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         this.version = version.substring(0, version.lastIndexOf("_"));
@@ -303,6 +315,19 @@ public class Main extends JavaPlugin {
 
     public String getVersion() {
         return version;
+    }
+
+    public void play(Player player, lSong song) {
+        song.play(player);
+    }
+
+    public void stopPlaying(Player p) {
+        if (plugin.playingSongs.get(p.getName()) == null) {
+            return;
+        }
+        for (SongPlayer s : plugin.playingSongs.get(p.getName())) {
+            s.removePlayer(p);
+        }
     }
 
     public static Main getPlugin() {

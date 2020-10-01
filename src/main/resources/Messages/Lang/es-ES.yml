@@ -201,21 +201,28 @@ Messages:
       Game: '&c:&f'
       TeamsFriends: '&a:&f'
   SoulWell:
+    SoulsToOpen: 1
+    InsufficientSouls: '&c&l✘ &fNecesitas %soul% souls, para poder userlo'
+    NeedSouls: "&c&l✘ &fNo tienes suficientes Souls."
+    NoPermission: '&c&l✘ &fYou don''t have permission'
+    inUsing: '&c&l✘ &fLa SoulWell esta en uso, espera un momento'
+    Added: "+ %amount% Souls"
+    NameMenu: '&8&l&nDesbloqueando...'
     StartScroll:
       Sound:
-        use: false
+        enable: false
         type: 'UI_BUTTON_CLICK' #Sounds 1.16
       Music:
-        use: true
-        namefile: 'MysterySound.nbs'
+        enable: true
+        namefile: 'Scrolling.nbs'
     EndScroll:
       Sound:
         enable: false
-        type:
+        type: 'UI_BUTTON_CLICK'
       FireWorks:
-        enable: false
-      Effects:
         enable: true
+      Effects:
+        enable: false
         type: FLAME
       Announcement:
         enable: true
@@ -381,8 +388,10 @@ Messages:
       - '%center%&7/sw setmax &8| &eMaximo de jugadores'
       - '%center%&7/sw setspectator &8| &eSpawn del spectador'
       - '%center%&7/sw enable &8| &eActivar arena'
-      - '%center%&7/sw coins <arena> &8| &eManejar coins'
+      - '%center%&7/sw coins <player> &8| &eManejar coins'
+      - '%center%&7/sw souls <player> &8| &eManejar souls'
       - '%center%&7/sw wandc &8| &eMarcar cornes para las cajas'
+      - '%center%&7/sw wands &8| &eMarcar cajas para las soulwells'
       - '%center%&7/sw addcage &8| &eAgregar cajas'
       - '%center%&7/sw addkit &8| &eCrear kits desde el inventario'
       - '%center%&7/sw addhologram &8| &eAgregar hologramas'

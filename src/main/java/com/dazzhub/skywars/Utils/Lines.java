@@ -214,6 +214,26 @@ public class Lines {
                 addDefaultLang("Messages.ScoreBoard.Team.Game", "&c:&f", lang);
                 addDefaultLang("Messages.ScoreBoard.Team.TeamsFriends", "&a:&f", lang);
 
+                addDefaultLang("SoulWell.SoulsToOpen", 1, lang);
+                addDefaultLang("SoulWell.InsufficientSouls", "&c&l✘ &fYou need %soul% souls, to use it", lang);
+                addDefaultLang("SoulWell.NeedSouls", "&c&l✘ &fYou don't have enough Souls", lang);
+                addDefaultLang("SoulWell.NoPermission", "&c&l✘ &fYou don''t have permission", lang);
+                addDefaultLang("SoulWell.inUsing", "&c&l✘ &fSoulWell is in use, wait a minute", lang);
+                addDefaultLang("SoulWell.Added", "+ %amount% Souls", lang);
+                addDefaultLang("SoulWell.NameMenu", "&8&l&nUnlocking...", lang);
+                addDefaultLang("SoulWell.StartScroll.Sound.enable", false, lang);
+                addDefaultLang("SoulWell.StartScroll.Sound.type", "UI_BUTTON_CLICK", lang);
+                addDefaultLang("SoulWell.StartScroll.Music.enable", true, lang);
+                addDefaultLang("SoulWell.StartScroll.Music.namefile", "Scrolling.nbs", lang);
+
+                addDefaultLang("SoulWell.EndScroll.Sound.enable", false, lang);
+                addDefaultLang("SoulWell.EndScroll.Sound.type", "UI_BUTTON_CLICK", lang);
+                addDefaultLang("SoulWell.EndScroll.FireWorks.enable", false, lang);
+                addDefaultLang("SoulWell.EndScroll.Effects.enable", true, lang);
+                addDefaultLang("SoulWell.EndScroll.Effects.type", "FLAME", lang);
+                addDefaultLang("SoulWell.EndScroll.Announcement.enable", true, lang);
+                addDefaultLang("SoulWell.EndScroll.Announcement.lines", Arrays.asList("%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬","","%center%&eCongratulations, you have just won: &9%name%","%center%&eWith a rarity: &9%rarity%","","%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), lang);
+
                 List<String> arenadesc = new ArrayList<>();
                 arenadesc.add("&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                 arenadesc.add("");
@@ -337,8 +357,10 @@ public class Lines {
                 swadmin.add("%center%&7/sw setmax &8| &eSet max player in arena");
                 swadmin.add("%center%&7/sw setspectator &8| &eSet spectator spawn");
                 swadmin.add("%center%&7/sw enable &8| &eActive arena");
-                swadmin.add("%center%&7/sw coins <arena> &8| &eManager coins");
+                swadmin.add("%center%&7/sw coins <player> &8| &eManager coins");
+                swadmin.add("%center%&7/sw souls <player> &8| &eManager souls");
                 swadmin.add("%center%&7/sw wandc &8| &eMark corners for create cages");
+                swadmin.add("%center%&7/sw wands &8| &eMark Locations for SoulWell");
                 swadmin.add("%center%&7/sw addcage &8| &eAdd cages");
                 swadmin.add("%center%&7/sw addkit &8| &eAdd kits from inventory");
                 swadmin.add("%center%&7/sw addhologram &8| &eAdd holograms");

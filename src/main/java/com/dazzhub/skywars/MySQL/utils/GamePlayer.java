@@ -1,20 +1,25 @@
 package com.dazzhub.skywars.MySQL.utils;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Arena.ArenaTeam;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Party.Party;
 import com.dazzhub.skywars.Utils.CenterMessage;
 import com.dazzhub.skywars.Utils.Console;
+import com.dazzhub.skywars.Utils.Tools;
 import com.dazzhub.skywars.Utils.effects.getTypeKills;
 import com.dazzhub.skywars.Utils.effects.getTypeWins;
 import com.dazzhub.skywars.Utils.effects.kills.*;
 import com.dazzhub.skywars.Utils.effects.wins.*;
 import com.dazzhub.skywars.Utils.hologram.Holograms;
 import com.cryptomorin.xseries.XSound;
+import com.google.common.base.Strings;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.bukkit.*;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -25,9 +30,10 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.xenondevs.particle.ParticleEffect;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Getter
 @Setter
@@ -409,6 +415,9 @@ public class GamePlayer {
     public void addCoins(int amount) {
         this.setCoins(this.getCoins() + amount);
     }
+    public void addSouls(int amount) {
+        this.setSouls(this.getSouls() + amount);
+    }
     public void addRanked(int amount) {
         this.setLvlRanked(this.getLvlRanked() + amount);
     }
@@ -482,7 +491,7 @@ public class GamePlayer {
     }
 
     public void playSound(String sound) {
-        XSound.play(getPlayer(), XSound.valueOf(sound).toString());
+        XSound.play(getPlayer(), String.valueOf(XSound.valueOf(sound).parseSound()));
     }
 
     public getTypeKills getTypeKill(String mode) {

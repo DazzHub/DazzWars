@@ -1,16 +1,16 @@
 package com.dazzhub.skywars.Utils.soulWell;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.dazzhub.skywars.Listeners.Lobby.onSoulWell;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.inventory.Icon;
+import com.dazzhub.skywars.Utils.locUtils;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -23,15 +23,30 @@ public class SoulManager {
 
     private List<SoulWell> soulWellList;
     private List<ItemStack> itemStacks;
+    private ArrayList<Location> locations;
 
     public SoulManager(Main main) {
         this.main = main;
         this.soulWellList = new ArrayList<>();
         this.itemStacks = new ArrayList<>();
+        this.locations = new ArrayList<>();
     }
 
     public void loadSoulWells(){
         Configuration config = main.getConfigUtils().getConfig(main,"SoulWell");
+
+        for (String locations : config.getStringList("Locations")) {
+            Location loc = locUtils.stringToLoc(locations);
+            this.locations.add(loc);
+        }
+
+        if (config.getConfigurationSection("Locations") != null) {
+            if (config.getConfigurationSection("Locations").getKeys(false) != null) {
+                for (String key : config.getConfigurationSection("Locations").getKeys(false)) {
+                    locations.add(locUtils.stringToLoc(config.getString("Locations." + key)));
+                }
+            }
+        }
 
         config.getConfigurationSection("Soul").getKeys(false).forEach(types -> config.getConfigurationSection("Soul." + types).getKeys(false).forEach(key -> {
             this.soulWellList.add(new SoulWell(Integer.parseInt(key), types));
@@ -40,24 +55,21 @@ public class SoulManager {
             this.itemStacks.add(new Icon(XMaterial.matchXMaterial(material), 1, (short) config.getInt(path + ".ICON.DATA-VALUE")).setName(config.getString(path + ".NAME")).setLore(config.getStringList(path + ".ICON.DESCRIPTION")).build());
         }));
 
-        Console.info("&eLoaded SoulWell: &a: " + soulWellList.size());
+        Console.info("&eLoaded SoulWell: &a: " + locations.size());
     }
 
     public void preOpen(GamePlayer gamePlayer, String type, int chance) {
         SoulWell well = getMysteryBox(type, chance);
+
         if (well != null){
             well.openSoulWell(gamePlayer);
         } else {
-            System.out.println("Upss");
+            Console.warning("SoulWell error open");
         }
     }
 
     public SoulWell getMysteryBox(String type, int i) {
-        for (SoulWell mysteryBox : this.soulWellList) {
-            if (mysteryBox.getChance() == i && mysteryBox.getType().equals(type)) {
-                return mysteryBox;
-            }
-        }
-        return null;
+        return this.soulWellList.stream().filter(mysteryBox -> mysteryBox.getChance() == i && mysteryBox.getType().equals(type)).findFirst().orElse(null);
     }
+
 }

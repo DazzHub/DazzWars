@@ -20,6 +20,7 @@ public class itemsCustom {
     private ItemStack addChestCenter;
 
     private ItemStack cageWand;
+    private ItemStack soulWand;
 
     public itemsCustom(Main main) {
         this.main = main;
@@ -30,6 +31,15 @@ public class itemsCustom {
                         c(""),
                         c("&8» &eLeft click to select the first corner"),
                         c("&8» &eRight click to select the second corner"),
+                        c(""),
+                        c("&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"))
+                .build();
+
+        soulWand = new Icon(XMaterial.BLAZE_ROD)
+                .setName(c("&6&l&nSOUL WAND"))
+                .setLore(c("&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"),
+                        c(""),
+                        c("&8» &eLeft click to block for set location soulwell"),
                         c(""),
                         c("&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"))
                 .build();

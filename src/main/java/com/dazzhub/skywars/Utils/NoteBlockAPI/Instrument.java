@@ -1,60 +1,60 @@
 package com.dazzhub.skywars.Utils.NoteBlockAPI;
 
-import org.bukkit.Sound;
+import com.cryptomorin.xseries.XSound;
 
-public class Instrument {
-
-    public static Sound getInstrument(byte instrument) {
+public class Instrument
+{
+    public static XSound getInstrument(int instrument) {
         switch (instrument) {
-            case 0:
-                return Sound.BLOCK_NOTE_HARP;
-            case 1:
-                return Sound.BLOCK_NOTE_BASS;
-            case 2:
-                return Sound.BLOCK_NOTE_BASEDRUM;
-            case 3:
-                return Sound.BLOCK_NOTE_SNARE;
-            case 4:
-                return Sound.BLOCK_NOTE_HAT;
-            case 5:
-                return Sound.BLOCK_NOTE_GUITAR;
-            case 6:
-                return Sound.BLOCK_NOTE_FLUTE;
-            case 7:
-                return Sound.BLOCK_NOTE_BELL;
-            case 8:
-                return Sound.BLOCK_NOTE_CHIME;
-            case 9:
-                return Sound.BLOCK_NOTE_XYLOPHONE;
-            default:
-                return Sound.BLOCK_NOTE_HARP;
+            case 1: {
+                return XSound.BLOCK_NOTE_BLOCK_BASS;
+            }
+            case 2: {
+                return XSound.BLOCK_NOTE_BLOCK_BASEDRUM;
+            }
+            case 3: {
+                return XSound.BLOCK_NOTE_BLOCK_SNARE;
+            }
+            case 4: {
+                return XSound.BLOCK_NOTE_BLOCK_HAT;
+            }
+            case 5: {
+                return XSound.BLOCK_NOTE_BLOCK_GUITAR;
+            }
+            case 6: {
+                return XSound.BLOCK_NOTE_BLOCK_FLUTE;
+            }
+            case 7: {
+                return XSound.BLOCK_NOTE_BLOCK_BELL;
+            }
+            case 8: {
+                return XSound.BLOCK_NOTE_BLOCK_CHIME;
+            }
+            case 9: {
+                return XSound.BLOCK_NOTE_BLOCK_XYLOPHONE;
+            }
+            case 10: {
+                return XSound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE;
+            }
+            case 11: {
+                return XSound.BLOCK_NOTE_BLOCK_COW_BELL;
+            }
+            case 12: {
+                return XSound.BLOCK_NOTE_BLOCK_DIDGERIDOO;
+            }
+            case 13: {
+                return XSound.BLOCK_NOTE_BLOCK_BIT;
+            }
+            case 14: {
+                return XSound.BLOCK_NOTE_BLOCK_BANJO;
+            }
+            case 15: {
+                return XSound.BLOCK_NOTE_BLOCK_PLING;
+            }
+            default: {
+                return XSound.BLOCK_NOTE_BLOCK_HARP;
+            }
         }
     }
 
-    public static org.bukkit.Instrument getBukkitInstrument(byte instrument) {
-        switch (instrument) {
-            case 0:
-                return org.bukkit.Instrument.PIANO;
-            case 1:
-                return org.bukkit.Instrument.BASS_GUITAR;
-            case 2:
-                return org.bukkit.Instrument.BASS_DRUM;
-            case 3:
-                return org.bukkit.Instrument.SNARE_DRUM;
-            case 4:
-                return org.bukkit.Instrument.STICKS;
-            case 5:
-                return org.bukkit.Instrument.GUITAR;
-            case 6:
-                return org.bukkit.Instrument.FLUTE;
-            case 7:
-                return org.bukkit.Instrument.BELL;
-            case 8:
-                return org.bukkit.Instrument.CHIME;
-            case 9:
-                return org.bukkit.Instrument.XYLOPHONE;
-            default:
-                return org.bukkit.Instrument.PIANO;
-        }
-    }
 }

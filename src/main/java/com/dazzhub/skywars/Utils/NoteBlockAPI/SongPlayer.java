@@ -1,5 +1,6 @@
 package com.dazzhub.skywars.Utils.NoteBlockAPI;
 
+import com.dazzhub.skywars.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -136,13 +137,13 @@ public abstract class SongPlayer {
         synchronized (this) {
             if (!playerList.contains(p.getName())) {
                 playerList.add(p.getName());
-                ArrayList<SongPlayer> songs = NoteBlockPlayerMain.plugin.playingSongs
+                ArrayList<SongPlayer> songs = Main.getPlugin().playingSongs
                         .get(p.getName());
                 if (songs == null) {
                     songs = new ArrayList<SongPlayer>();
                 }
                 songs.add(this);
-                NoteBlockPlayerMain.plugin.playingSongs.put(p.getName(), songs);
+                Main.getPlugin().playingSongs.put(p.getName(), songs);
             }
         }
     }
@@ -210,13 +211,13 @@ public abstract class SongPlayer {
     public void removePlayer(Player p) {
         synchronized (this) {
             playerList.remove(p.getName());
-            if (NoteBlockPlayerMain.plugin.playingSongs.get(p.getName()) == null) {
+            if (Main.getPlugin().playingSongs.get(p.getName()) == null) {
                 return;
             }
             ArrayList<SongPlayer> songs = new ArrayList<SongPlayer>(
-                    NoteBlockPlayerMain.plugin.playingSongs.get(p.getName()));
+                    Main.getPlugin().playingSongs.get(p.getName()));
             songs.remove(this);
-            NoteBlockPlayerMain.plugin.playingSongs.put(p.getName(), songs);
+            Main.getPlugin().playingSongs.put(p.getName(), songs);
             if (playerList.isEmpty() && autoDestroy) {
                 SongEndEvent event = new SongEndEvent(this);
                 Bukkit.getPluginManager().callEvent(event);

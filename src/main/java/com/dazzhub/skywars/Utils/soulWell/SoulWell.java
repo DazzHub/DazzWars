@@ -1,29 +1,30 @@
 package com.dazzhub.skywars.Utils.soulWell;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.dazzhub.skywars.Listeners.Lobby.onSoulWell;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.NoteBlockAPI.NBSDecoder;
+import com.dazzhub.skywars.Utils.NoteBlockAPI.lSong;
 import com.dazzhub.skywars.Utils.inventory.Icon;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.xenondevs.particle.ParticleEffect;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Data
 public class SoulWell {
@@ -79,13 +80,13 @@ public class SoulWell {
         IntStream.range(0, 45).filter(i -> !this.slots.contains(i) && i != 21 && i != 23).forEach(i -> this.backgroundSlots.add(i));
 
         this.pane_itemstack = new Icon(XMaterial.matchXMaterial(Material.STAINED_GLASS_PANE), 1, (short) 7).setName("&r");
-        this.duration = 40;
+        this.duration = 30;
     }
 
     public void openSoulWell(GamePlayer gamePlayer) {
         Player p = gamePlayer.getPlayer();
 
-        Inventory inv = Bukkit.createInventory(p, 45, "Soul Well");
+        Inventory inv = Bukkit.createInventory(p, 45, c(gamePlayer.getLangMessage().getString("Messages.SoulWell.NameMenu")));
 
         ItemStack build = new Icon(XMaterial.matchXMaterial(Material.STAINED_GLASS), 1, (short) 15).setName("&r").build();
 
@@ -100,6 +101,12 @@ public class SoulWell {
         slots.forEach(slot -> inv.setItem(slot, icon));
 
         p.openInventory(inv);
+        onSoulWell.using = true;
+
+        if (gamePlayer.getLangMessage().getBoolean("Messages.SoulWell.StartScroll.Music.enable")) {
+            File f = new File(Main.getPlugin().getDataFolder(), gamePlayer.getLangMessage().getString("Messages.SoulWell.StartScroll.Music.namefile"));
+            main.play(p, new lSong(NBSDecoder.parse(f)));
+        }
 
         new BukkitRunnable() {
             public void run() {
@@ -114,6 +121,10 @@ public class SoulWell {
         new BukkitRunnable() {
             public void run() {
 
+                if (gamePlayer.getLangMessage().getBoolean("Messages.SoulWell.StartScroll.Sound.enable")) {
+                    gamePlayer.playSound(gamePlayer.getLangMessage().getString("Messages.SoulWell.StartScroll.Sound.type"));
+                }
+
                 for (int i = slots.size() - 1; i > 0; --i) {
                     inv.setItem(slots.get(i), inv.getItem(slots.get(i - 1)));
                 }
@@ -122,6 +133,7 @@ public class SoulWell {
 
                 if (duration <= 1) {
                     this.cancel();
+                    Main.getPlugin().stopPlaying(p);
 
                     IntStream.range(0, 45).filter(i1 -> !slots.contains(i1) && i1 != 21 && i1 != 23).forEach(i1 -> inv.setItem(i1, icon));
 
@@ -137,12 +149,13 @@ public class SoulWell {
                     message(gamePlayer);
                     reward(gamePlayer);
 
-                    duration = 40;
+                    onSoulWell.using = false;
+                    duration = 30;
                 }
 
                 duration--;
             }
-        }.runTaskTimerAsynchronously(main, 0, 4);
+        }.runTaskTimerAsynchronously(main, 0, 3);
     }
 
     private void reward(GamePlayer gamePlayer) {
@@ -281,7 +294,7 @@ public class SoulWell {
         }
 
         if (gamePlayer.getLangMessage().getBoolean("Messages.SoulWell.EndScroll.FireWorks.enable")) {
-            gamePlayer.getTypeWin("fireworks");
+            Bukkit.getScheduler().runTask(main, () -> gamePlayer.getTypeWin("fireworks"));
         }
 
         if (gamePlayer.getLangMessage().getBoolean("Messages.SoulWell.EndScroll.Effects.enable")) {

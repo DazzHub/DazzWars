@@ -1,7 +1,9 @@
 package com.dazzhub.skywars.Listeners.Inventory;
 
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.inventory.menu.IMenu;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,6 +37,19 @@ public class onMenu implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
+    public void onInventoryClick2(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) return;
+        Player p = (Player) event.getWhoClicked();
+
+        String invName = event.getView().getTitle();
+
+        if (invName.equals(c(main.getPlayerManager().getPlayer(p.getUniqueId()).getLangMessage().getString("Messages.SoulWell.NameMenu")))){
+            if(event.getView().getTopInventory().equals(event.getInventory())) event.setCancelled(true);
+            if(event.getView().getBottomInventory().equals(event.getInventory())) event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onInventoryClose(InventoryCloseEvent event) {
         String invName = event.getView().getTitle();
 
@@ -63,5 +78,9 @@ public class onMenu implements Listener {
             Player p = e.getPlayer();
             this.main.getMenuManager().openInventory(file, p, null);
         }
+    }
+
+    private String c(String c) {
+        return ChatColor.translateAlternateColorCodes('&', c);
     }
 }

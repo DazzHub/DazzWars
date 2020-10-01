@@ -38,6 +38,7 @@ public class adminCmd implements CommandExecutor {
         new setMax(main);
         new setMin(main);
         new Coins(main);
+        new Souls(main);
         new Join(main);
         new Enable(main);
 
@@ -54,8 +55,7 @@ public class adminCmd implements CommandExecutor {
         new addHologram(main);
         new reload(main);
         new changeLanguage(main);
-
-        new Test(main);
+        new wandSoul(main);
     }
 
     @Override

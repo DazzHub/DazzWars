@@ -60,6 +60,7 @@ public class regListeners {
         this.onLoad(new onPlace(main));
         this.onLoad(new onPlayer(main));
         this.onLoad(new onTime(main));
+        this.onLoad(new onSoulWell(main));
     }
 
     private void onLoad(Listener listener){
