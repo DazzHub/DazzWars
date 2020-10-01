@@ -31,6 +31,7 @@ import com.dazzhub.skywars.Utils.scoreboard.Placeholders;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
 import com.dazzhub.skywars.Utils.signs.arena.ISignManager;
 import com.dazzhub.skywars.Utils.signs.top.ITopManager;
+import com.dazzhub.skywars.Utils.soulWell.SoulManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -84,6 +85,9 @@ public class Main extends JavaPlugin {
     /* TOP SIGNS */
     private ITopManager iTopManager;
 
+    /* SOUL MANAGER */
+    private SoulManager soulManager;
+
     private String version;
 
     public Main(){
@@ -117,6 +121,8 @@ public class Main extends JavaPlugin {
 
         this.iTopManager = new ITopManager(this);
 
+        this.soulManager = new SoulManager(this);
+
         this.lobbyManager = new lobbyManager(this);
     }
 
@@ -125,6 +131,7 @@ public class Main extends JavaPlugin {
         plugin = this;
 
         configCreate.get().setup(this, "Settings");
+        configCreate.get().setup(this, "SoulWell");
 
         configCreate.get().setup(this, "Arenas/Arenas");
 
@@ -156,6 +163,7 @@ public class Main extends JavaPlugin {
         this.iItemManager.loadFiles();
         this.iMenuManager.loadFiles();
         this.iKitManager.loadKits();
+        this.soulManager.loadSoulWells();
 
         this.getPlayerDB.loadMySQL();
 
@@ -287,6 +295,10 @@ public class Main extends JavaPlugin {
 
     public ISignManager getiSignManager() {
         return iSignManager;
+    }
+
+    public SoulManager getSoulManager() {
+        return soulManager;
     }
 
     public String getVersion() {

@@ -52,8 +52,16 @@ public class Icon {
     }
 
     public Icon(XMaterial m){
-        item = new ItemStack(m.parseMaterial(), 1);
-        im = item.getItemMeta();
+        this.item = new ItemStack(m.parseMaterial(), 1);
+        this.im = this.item.getItemMeta();
+
+        this.permissionViewItem = null;
+
+        this.price = 0;
+        this.type = "";
+
+        this.lorePurchased = null;
+        this.loreSelected = null;
     }
 
     public Icon setName(String name){
@@ -383,12 +391,27 @@ public class Icon {
 
     public ItemStack build() {
 
+        if (im == null) return item;
+
         if (im.getDisplayName() != null) {
             this.replaceName();
         }
 
         if (im.getLore() != null) {
             this.replaceLore();
+        }
+
+        if (this.skullOwner != null && im instanceof SkullMeta) {
+            item.setType(Material.SKULL_ITEM);
+            SkullMeta skullMeta = (SkullMeta) im;
+
+            if (skullOwner.length() <= 16) {
+                skullMeta.setOwner(this.skullOwner);
+            } else {
+                SkullUtils.applySkin(skullMeta, this.skullOwner);
+            }
+
+            item.setItemMeta(im);
         }
 
         return item;

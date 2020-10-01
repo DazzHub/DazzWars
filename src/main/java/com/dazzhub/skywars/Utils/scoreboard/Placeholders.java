@@ -3,6 +3,7 @@ package com.dazzhub.skywars.Utils.scoreboard;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Party.Party;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -47,6 +48,7 @@ public class Placeholders extends PlaceholderExpansion {
             return "";
         }
 
+        Party party = gamePlayer.getParty();
         Arena arena = gamePlayer.getArena();
 
         switch (identifier) {
@@ -212,6 +214,16 @@ public class Placeholders extends PlaceholderExpansion {
 
             case "wineffect_ranked": {
                 return gamePlayer.getWinEffectRanked();
+            }
+
+            case "party_owner": {
+                if (party == null) return "";
+                return party.getOwner().getName();
+            }
+
+            case "party_members": {
+                if (party == null) return "";
+                return party.getMembers().toString().replace("[","").replace("]", "");
             }
 
             case "arena_start": {

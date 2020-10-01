@@ -39,7 +39,7 @@ Messages:
   Sounds:
     Cancelled: 'BLOCK_NOTE_BLOCK_PLING'
     Starting:
-      5: 'UI_BUTTON_CLICK'#SOUNDS 1.15
+      5: 'UI_BUTTON_CLICK'#SOUNDS 1.16
       4: 'UI_BUTTON_CLICK'
       3: 'UI_BUTTON_CLICK'
       2: 'UI_BUTTON_CLICK'

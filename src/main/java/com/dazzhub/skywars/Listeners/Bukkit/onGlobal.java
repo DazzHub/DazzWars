@@ -68,6 +68,15 @@ public class onGlobal implements Listener {
 
             for (int i = 0; i < main.getArenaManager().getArenas().size(); i++) {
                 if (e.getSlot() == i) {
+
+                    if (gamePlayer.getParty() != null) {
+                        if (!gamePlayer.getParty().getOwner().equals(gamePlayer)) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+                            p.closeInventory();
+                            return;
+                        }
+                    }
+
                     Arena arena = main.getArenaManager().getArenas().get(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
                     if (arena == null) return;
 

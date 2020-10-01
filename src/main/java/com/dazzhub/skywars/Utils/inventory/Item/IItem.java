@@ -6,6 +6,7 @@ import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
 import com.dazzhub.skywars.Listeners.Custom.LeftEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Party.Party;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.inventory.actions.OptionClickEvent;
 import com.dazzhub.skywars.Utils.inventory.actions.OptionClickEventHandler;
@@ -132,6 +133,8 @@ public class IItem {
             }
 
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+            Party party = gamePlayer.getParty();
+
             Arena arenaPlayer = gamePlayer.getArena();
 
             if (cmd.startsWith("console:")) {
@@ -161,6 +164,13 @@ public class IItem {
                 if (gamePlayer.isInArena()) arenaPlayer.getSpectatorMenu().menuPlayers(p);
             } else if (cmd.startsWith("autojoin")) {
                 if (!gamePlayer.isInArena()) {
+                    if (party != null) {
+                        if (!party.getOwner().equals(gamePlayer)) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+                            return;
+                        }
+                    }
+
                     comparator.checkArenaPlayer(Main.getPlugin().getArenaManager().getArenaList());
                     Arena arenaTo = Main.getPlugin().getArenaManager().getArenaList().stream().filter(Arena::checkUsable).findAny().orElse(null);
 
@@ -175,6 +185,14 @@ public class IItem {
                 }
             } else if (cmd.startsWith("auto")) {
                 if (gamePlayer.isInArena()) {
+
+                    if (party != null) {
+                        if (!party.getOwner().equals(gamePlayer)) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+                            return;
+                        }
+                    }
+
                     Bukkit.getPluginManager().callEvent(new LeftEvent(p, arenaPlayer, Enums.LeftCause.SPECTATOR));
 
                     comparator.checkArenaPlayer(Main.getPlugin().getArenaManager().getArenaList());

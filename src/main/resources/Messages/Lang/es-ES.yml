@@ -39,7 +39,7 @@ Messages:
   Sounds:
     Cancelled: 'BLOCK_NOTE_BLOCK_PLING'
     Starting:
-      5: 'BLOCK_LEVER_CLICK'#SOUNDS 1.15
+      5: 'BLOCK_LEVER_CLICK'#SOUNDS 1.16
       4: 'BLOCK_LEVER_CLICK'
       3: 'BLOCK_LEVER_CLICK'
       2: 'BLOCK_LEVER_CLICK'
@@ -200,7 +200,32 @@ Messages:
       Spectator: '&7:&f' #Prefix : Suffix
       Game: '&c:&f'
       TeamsFriends: '&a:&f'
-      test: '&a:&f'
+  SoulWell:
+    StartScroll:
+      Sound:
+        use: false
+        type: 'UI_BUTTON_CLICK' #Sounds 1.16
+      Music:
+        use: true
+        namefile: 'MysterySound.nbs'
+    EndScroll:
+      Sound:
+        enable: false
+        type:
+      FireWorks:
+        enable: false
+      Effects:
+        enable: true
+        type: FLAME
+      Announcement:
+        enable: true
+        lines:
+          - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+          - ''
+          - '%center%&eFelicitacioness, acabas de ganar: &9%name%'
+          - '%center%&eCon una rareza: &9%rarity%' #%name%, %rarity%, %chance%, %commands%, %type%
+          - ''
+          - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
   MenuArena:
     TITLE: '&8&l&nArenas'
     ROWS: 6

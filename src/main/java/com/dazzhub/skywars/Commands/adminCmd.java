@@ -1,11 +1,8 @@
 package com.dazzhub.skywars.Commands;
 
 import com.dazzhub.skywars.Commands.sub.*;
-import com.dazzhub.skywars.Commands.sub.arena.Coins;
-import com.dazzhub.skywars.Commands.sub.arena.Enable;
-import com.dazzhub.skywars.Commands.sub.arena.Join;
+import com.dazzhub.skywars.Commands.sub.arena.*;
 import com.dazzhub.skywars.Commands.sub.arena.config.addSpawn;
-import com.dazzhub.skywars.Commands.sub.arena.Create;
 import com.dazzhub.skywars.Commands.sub.arena.config.setMax;
 import com.dazzhub.skywars.Commands.sub.arena.config.setMin;
 import com.dazzhub.skywars.Commands.sub.arena.config.setSpectator;
@@ -58,6 +55,7 @@ public class adminCmd implements CommandExecutor {
         new reload(main);
         new changeLanguage(main);
 
+        new Test(main);
     }
 
     @Override

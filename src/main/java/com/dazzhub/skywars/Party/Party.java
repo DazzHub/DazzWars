@@ -72,6 +72,7 @@ public class Party {
         if (!this.members.contains(target)) {
 
             tempCheck.remove(target);
+            cooldown.getCooldowns().remove(target);
 
             this.members.add(target);
 

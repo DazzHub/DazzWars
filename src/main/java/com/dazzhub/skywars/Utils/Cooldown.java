@@ -38,4 +38,7 @@ public class Cooldown {
         return false;
     }
 
+    public HashMap<GamePlayer, Long> getCooldowns() {
+        return cooldowns;
+    }
 }

@@ -1,0 +1,75 @@
+TypesSoul:
+  - 'COMMON:70'
+  - 'RARE:20'
+  - 'LEGENDARY:10'
+Soul:
+  COMMON:
+    '1':
+      NAME: Coins
+      CHANCE: 50
+      RARITY: "&bCommon"
+      ICON:
+        ICON-ITEM: 175
+        DATA-VALUE: 0
+        DESCRIPTION:
+          - '&ctest'
+      ACTION:
+        - "coin: 200"
+    '2':
+      NAME: Kit Archer
+      CHANCE: 40
+      RARITY: "&bCommon"
+      ICON:
+        ICON-ITEM: 261
+        DATA-VALUE: 0
+        DESCRIPTION:
+          - '&ctest'
+      ACTION:
+        - ""
+  RARE:
+    '1':
+      NAME: Trail Flame
+      CHANCE: 50
+      RARITY: "&9Rare"
+      ICON:
+        ICON-ITEM: 318
+        DATA-VALUE: 0
+        DESCRIPTION:
+          - '&ctest'
+      ACTION:
+        - ""
+    '2':
+      NAME: Trail LavaPop
+      CHANCE: 40
+      RARITY: "&9Rare"
+      ICON:
+        ICON-ITEM: 351
+        DATA-VALUE: 1
+        DESCRIPTION:
+          - '&ctest'
+      ACTION:
+        - ""
+  LEGENDARY:
+    '1':
+      NAME: Cage solo green
+      CHANCE: 50
+      RARITY: "&6Legendary"
+      ICON:
+        ICON-ITEM: 95
+        DATA-VALUE: 5
+        DESCRIPTION:
+          - '&ctest'
+      ACTION:
+        - ""
+    '2':
+      NAME: Cage team yellow
+      CHANCE: 40
+      RARITY: "&6Legendary"
+      ICON:
+        ICON-ITEM: 95
+        DATA-VALUE: 4
+        DESCRIPTION:
+          - '&ctest'
+      ACTION:
+        - ""
+Locations:
