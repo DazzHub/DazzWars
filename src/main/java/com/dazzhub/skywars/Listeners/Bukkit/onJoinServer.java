@@ -43,7 +43,7 @@ public class onJoinServer implements Listener {
         });
 
 
-        if (p.hasPermission("dazzwars.admin") && main.getSettings().getBoolean("checkVersion")) main.checkVersionPlayer(p);
+        if (p.hasPermission("skywars.admin") && main.getSettings().getBoolean("checkVersion")) main.checkVersionPlayer(p);
         if (p.getName().equals("DazzHub")) p.sendMessage(c("&d&l➠ &fDazzWars use"));
     }
 

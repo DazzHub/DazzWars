@@ -44,7 +44,7 @@ public class IChest {
 
                     List<?> items = config.getList("chestItems." + key + ".items");
 
-                    chestItemList.put(percent, Bukkit.createInventory(null, 54, nameChest + " " + percent));
+                    chestItemList.put(percent, Bukkit.createInventory(null, 54, "editChest/" + nameChest + "/" + percent));
 
                     items.forEach(iStack -> chestItemList.get(percent).addItem((ItemStack) iStack));
                 }
@@ -107,6 +107,14 @@ public class IChest {
         return null;
     }
 
+    public String getNameChest() {
+        return nameChest;
+    }
+
+    public HashMap<Integer, Inventory> getChestItemList() {
+        return chestItemList;
+    }
+
     private boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -115,4 +123,5 @@ public class IChest {
             return false;
         }
     }
+
 }

@@ -41,6 +41,7 @@ public class adminCmd implements CommandExecutor {
         new Souls(main);
         new Join(main);
         new Enable(main);
+        new editChest(main);
 
         /* CAGES */
         new addCage(main);

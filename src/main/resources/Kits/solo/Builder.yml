@@ -1,0 +1,33 @@
+KIT:
+  Inventory:
+    '0':
+      ==: org.bukkit.inventory.ItemStack
+      type: BRICK
+      amount: 32
+    '1':
+      ==: org.bukkit.inventory.ItemStack
+      type: GRILLED_PORK
+      amount: 2
+  Armor:
+  - ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  - ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0
+  - ==: org.bukkit.inventory.ItemStack
+    type: LEATHER_CHESTPLATE
+    meta:
+      ==: ItemMeta
+      meta-type: LEATHER_ARMOR
+      color:
+        ==: Color
+        RED: 127
+        BLUE: 25
+        GREEN: 204
+  - ==: org.bukkit.inventory.ItemStack
+    type: AIR
+    damage: -1
+    amount: 0

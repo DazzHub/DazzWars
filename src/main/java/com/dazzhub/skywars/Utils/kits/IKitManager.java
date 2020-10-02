@@ -45,7 +45,11 @@ public class IKitManager {
 
     public void loadKits(){
         configCreate.get().setup(main, "Kits/kits");
+
         configCreate.get().setup(main, "Kits/solo/Default");
+        configCreate.get().setup(main, "Kits/solo/Vip");
+        configCreate.get().setup(main, "Kits/solo/Builder");
+
         configCreate.get().setup(main, "Kits/team/Default");
         configCreate.get().setup(main, "Kits/ranked/Default");
 

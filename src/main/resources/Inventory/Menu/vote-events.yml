@@ -10,7 +10,7 @@ menu-settings:
   name: '&8➣ Vote Events'
 
   # rows - the number of rows of the chest - REQUIRED
-  rows: 4
+  rows: 5
 
   # command - OPTIONAL (you can remove this or set it to '')
   command: ''
@@ -77,7 +77,7 @@ dropparty:
   POSITION-Y: 2
 STORM:
   ACTION: 'vote:%STORM%'
-  NAME: '&Storm'
+  NAME: '&9Storm'
   DESCRIPTION:
     - '&7During the game they will fall'
     - '&7rays all over the map'
@@ -113,4 +113,4 @@ back:
   ICON-ITEM: 368
   DATA-VALUE: 0
   POSITION-X: 5
-  POSITION-Y: 4
+  POSITION-Y: 5

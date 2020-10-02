@@ -54,6 +54,30 @@ public class onGlobal implements Listener {
     }
 
     @EventHandler
+    public void onInventoryClickSave(InventoryClickEvent e) {
+        String nameinv = e.getView().getTitle();
+        if (!nameinv.contains("/")) return;
+
+        String[] inv = nameinv.split("/");
+        if (inv[0].startsWith(c("editChest"))) {
+            Player p = (Player) e.getWhoClicked();
+
+            if (e.getSlot() == 53) {
+                main.getChestManager().save(inv[1], p);
+
+                p.closeInventory();
+                e.setCancelled(true);
+            }
+
+            if (e.getSlot() == 52) {
+                p.closeInventory();
+                e.setCancelled(true);
+            }
+
+        }
+    }
+
+    @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if (!(e.getWhoClicked() instanceof Player)) return;
 

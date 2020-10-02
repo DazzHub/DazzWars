@@ -3,6 +3,14 @@ TypeHolograms:
   STATS:
   - '&8» &f%player%'
   - ''
+  - '&8&l➠ &fWins: &a%sw_wins%'
+  - '&8&l➠ &fKills: &a%sw_kills%'
+  - '&8&l➠ &fDeaths: &a%sw_deaths%'
+  - '&8&l➠ &fGames: &a%sw_games%'
+  - '&8&l➠ &fShots: &a%sw_shots%'
+  - '&8&l➠ &fHits: &a%sw_hits%'
+  - '&8&l➠ &fBlocks Placed: &a%sw_blocksplaced%'
+  - '&8&l➠ &fBlocks Broken: &a%sw_blocksbroken%' #etc
   TOPKILLSSOLO:
   - 'Top Kills:'
   - '%topkillssolo%'

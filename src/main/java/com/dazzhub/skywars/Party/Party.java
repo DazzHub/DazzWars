@@ -164,7 +164,7 @@ public class Party {
     }
 
     public void sendParty(GamePlayer from, String message){
-        if (from.getPlayer().hasPermission("dazzwars.chatcolor")){
+        if (from.getPlayer().hasPermission("skywars.party.color")){
             for (GamePlayer gamePlayer : getMembers()) {
                 gamePlayer.sendMessage(c(chat(from, c(gamePlayer.getLangMessage().getString("Messages.Chat.Party")), message)));
             }

@@ -1,0 +1,23 @@
+chestItems:
+  '50':
+    items:
+      - ==: org.bukkit.inventory.ItemStack
+        type: DIAMOND_AXE
+      - ==: org.bukkit.inventory.ItemStack
+        type: DIAMOND_CHESTPLATE
+      - ==: org.bukkit.inventory.ItemStack
+        type: DIAMOND_BOOTS
+      - ==: org.bukkit.inventory.ItemStack
+        type: DIAMOND_LEGGINGS
+      - ==: org.bukkit.inventory.ItemStack
+        type: ENDER_PEARL
+        amount: 2
+  '35':
+    items:
+      - ==: org.bukkit.inventory.ItemStack
+        type: DIAMOND_SWORD
+      - ==: org.bukkit.inventory.ItemStack
+        type: DIAMOND_HELMET
+      - ==: org.bukkit.inventory.ItemStack
+        type: ENDER_PEARL
+        amount: 2
