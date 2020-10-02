@@ -46,20 +46,35 @@ public class IMenuManager {
             configCreate.get().setup(main, "Inventory/Menu/vote-chest");
             configCreate.get().setup(main, "Inventory/Menu/vote-heart");
             configCreate.get().setup(main, "Inventory/Menu/vote-time");
-            configCreate.get().setup(main, "Inventory/Menu/shop");
-            configCreate.get().setup(main, "Inventory/Menu/cage-solo");
-            configCreate.get().setup(main, "Inventory/Menu/cage-team");
-            configCreate.get().setup(main, "Inventory/Menu/killeffect-solo");
-            configCreate.get().setup(main, "Inventory/Menu/killeffect-team");
-            configCreate.get().setup(main, "Inventory/Menu/kit-solo");
-            configCreate.get().setup(main, "Inventory/Menu/kit-team");
-            configCreate.get().setup(main, "Inventory/Menu/wineffect-solo");
-            configCreate.get().setup(main, "Inventory/Menu/wineffect-team");
-            configCreate.get().setup(main, "Inventory/Menu/traileffect-solo");
-            configCreate.get().setup(main, "Inventory/Menu/traileffect-team");
-            configCreate.get().setup(main, "Inventory/Menu/lang-change");
             configCreate.get().setup(main, "Inventory/Menu/vote-events");
             configCreate.get().setup(main, "Inventory/Menu/vote-scenarios");
+
+            configCreate.get().setup(main, "Inventory/Menu/shop");
+            configCreate.get().setup(main, "Inventory/Menu/shop-solo");
+            configCreate.get().setup(main, "Inventory/Menu/shop-team");
+            configCreate.get().setup(main, "Inventory/Menu/shop-ranked");
+
+            configCreate.get().setup(main, "Inventory/Menu/cage-solo");
+            configCreate.get().setup(main, "Inventory/Menu/cage-team");
+            configCreate.get().setup(main, "Inventory/Menu/cage-ranked");
+
+            configCreate.get().setup(main, "Inventory/Menu/killeffect-solo");
+            configCreate.get().setup(main, "Inventory/Menu/killeffect-team");
+            configCreate.get().setup(main, "Inventory/Menu/killeffect-ranked");
+
+            configCreate.get().setup(main, "Inventory/Menu/kit-solo");
+            configCreate.get().setup(main, "Inventory/Menu/kit-team");
+            configCreate.get().setup(main, "Inventory/Menu/kit-ranked");
+
+            configCreate.get().setup(main, "Inventory/Menu/wineffect-solo");
+            configCreate.get().setup(main, "Inventory/Menu/wineffect-team");
+            configCreate.get().setup(main, "Inventory/Menu/wineffect-ranked");
+
+            configCreate.get().setup(main, "Inventory/Menu/traileffect-solo");
+            configCreate.get().setup(main, "Inventory/Menu/traileffect-team");
+            configCreate.get().setup(main, "Inventory/Menu/traileffect-ranked");
+
+            configCreate.get().setup(main, "Inventory/Menu/lang-change");
         }
 
         File file = new File(main.getDataFolder(), "Inventory/Menu");
@@ -101,11 +116,13 @@ public class IMenuManager {
         Material materialview = null;
         short dataView = 0;
         List<String> loreView = null;
+        boolean enableIcon = false;
 
         if (config.getString("menu-settings.permissionView.ICON-ITEM") != null) {
             materialview = config.isInt("menu-settings.permissionView.ICON-ITEM") ? Material.getMaterial(config.getInt("menu-settings.permissionView.ICON-ITEM")) : Material.getMaterial(config.getString("menu-settings.permissionView.ICON-ITEM"));
             dataView = Short.parseShort(config.getString("menu-settings.permissionView.DATA-VALUE"));
             loreView = config.getStringList("menu-settings.permissionView.DESCRIPTION");
+            enableIcon = config.getBoolean("menu-settings.permissionView.ICON-VIEW");
         }
 
         if (menuName == null || menuName.length() == 0) {
@@ -126,6 +143,7 @@ public class IMenuManager {
         Material finalMaterialview = materialview;
         short finalDataView = dataView;
         List<String> finalLoreView = loreView;
+        boolean finalEnableIcon = enableIcon;
 
         HashMap<Integer, ordItems> items = new HashMap<>();
         menuNodes.forEach(s -> {
@@ -170,7 +188,7 @@ public class IMenuManager {
                         .setSkull(skullplayer)
                         .addEnchantment(enchantments)
                         .addDamage(durability)
-                        .addPermissionView(permission, finalMaterialview, finalDataView, finalLoreView)
+                        .addPermissionView(finalEnableIcon, permission, finalMaterialview, finalDataView, finalLoreView)
                 ;
 
                 items.put(Main.getRelativePosition(slotX, slotY), new ordItems(icon, Main.getRelativePosition(slotX, slotY), command, permission, null, price));

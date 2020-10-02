@@ -184,6 +184,10 @@ public class Placeholders extends PlaceholderExpansion {
                 return Integer.toString(gamePlayer.getCoins());
             }
 
+            case "souls": {
+                return Integer.toString(gamePlayer.getSouls());
+            }
+
             case "lvlranked": {
                 return Integer.toString(gamePlayer.getLvlRanked());
             }

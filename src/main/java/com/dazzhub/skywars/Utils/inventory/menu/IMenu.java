@@ -398,6 +398,13 @@ public class IMenu {
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
                     }
                 }
+            } else if (cmd.startsWith("soul:")) {
+                String souls = cmd.substring(5);
+                if (souls.startsWith(" ")) {
+                    souls = souls.substring(1);
+                }
+
+                gamePlayer.addSouls(Integer.parseInt(souls));
             } else if (cmd.startsWith("lang:")) {
                 String action = cmd.substring(5);
                 if (action.startsWith(" ")) {

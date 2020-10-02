@@ -7,7 +7,7 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&8➣ Kit solo #1'
+  name: '&0Kits solo'
 
   # rows - the number of rows of the chest - REQUIRED
   rows: 5
@@ -17,31 +17,123 @@ menu-settings:
   
   # permissionView - MATERIAL NAME - DATA
   permissionView:
-    ICON-ITEM: 'SIGN'
-    DATA-VALUE: 0
+    ICON-VIEW: true
+    ICON-ITEM: 'STAINED_GLASS_PANE'
+    DATA-VALUE: 14
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
 default:
   PRICE: 0
   ACTION: 'kit: Default/SOLO'
-  NAME: '&e&lDefault'
+  NAME: '&bDefault'
   DESCRIPTION:
+    - '&aContent:'
+    - '&a▸ &7Wooden sword &ax1'
+    - '&a▸ &7Bow &ax1'
+    - '&a▸ &7Leather helmet &ax1'
+    - '&a▸ &7Boots &ax1'
+    - '&a▸ &7Arrows &ax5'
     - ''
-    - '&7➲ &e&l%name%'
-    - '&7➲ &2&lCLICK&f to buy kit %price%'
+    - '&a▸ &7Price: &a%price%'
     - ''
+    - '&a▸ &aClick to buy'
   DESCRIPTION-PURCHASED:
+    - '&aContent:'
+    - '&a▸ &7Wooden sword &ax1'
+    - '&a▸ &7Bow &ax1'
+    - '&a▸ &7Leather helmet &ax1'
+    - '&a▸ &7Boots &ax1'
+    - '&a▸ &7Arrows &ax5'
     - ''
-    - '&7➲ &eOBTAINED'
+    - '&a▸ &aBought'
     - ''
+    - '&a▸ &aClick to select'
   DESCRIPTION-SELECTED:
+    - '&aContent:'
+    - '&a▸ &7Wooden sword &ax1'
+    - '&a▸ &7Bow &ax1'
+    - '&a▸ &7Leather helmet &ax1'
+    - '&a▸ &7Boots &ax1'
+    - '&a▸ &7Arrows &ax5'
     - ''
-    - '&7➲ &eSELECTED'
-    - ''
+    - '&a▸ &aSelected'
   ICON-ITEM: 298
   DATA-VALUE: 0
   POSITION-X: 2
+  POSITION-Y: 2
+builder:
+  PRICE: 50
+  ACTION: 'kit: Builder/SOLO'
+  NAME: '&eBuilder'
+  DESCRIPTION:
+    - '&aContent:'
+    - '&a▸ &7Brick blocks &ax1'
+    - '&a▸ &7Pork chop &ax2'
+    - '&a▸ &7Leather bib &agreen &ax1'
+    - ''
+    - '&a▸ &7Price: &a%price%'
+    - ''
+    - '&a▸ &aClick to buy'
+  DESCRIPTION-PURCHASED:
+    - '&aContent:'
+    - '&a▸ &7Brick blocks &ax1'
+    - '&a▸ &7Pork chop &ax2'
+    - '&a▸ &7Leather bib &agreen &ax1'
+    - ''
+    - '&a▸ &aBought'
+    - ''
+    - '&a▸ &aClick to select'
+  DESCRIPTION-SELECTED:
+    - '&aContent:'
+    - '&a▸ &7Brick blocks &ax1'
+    - '&a▸ &7Pork chop &ax2'
+    - '&a▸ &7Leather bib &agreen &ax1'
+    - ''
+    - '&a▸ &aSelected'
+  ICON-ITEM: 45
+  DATA-VALUE: 0
+  POSITION-X: 3
+  POSITION-Y: 2
+Vip:
+  PRICE: 100
+  ACTION: 'kit: Vip/SOLO'
+  NAME: '&dVip'
+  DESCRIPTION:
+    - '&aContenido:'
+    - '&a▸ &7Iron sword &ax1'
+    - '&a▸ &7Golden Apple &ax2'
+    - '&a▸ &7Diamond Chestpiece &ax1'
+    - '&a▸ &7Mesh helmet &ax1'
+    - '&a▸ &7Iron boots &ax1'
+    - ''
+    - '&a▸ &7Price: &a%price%'
+    - ''
+    - '&a▸ &aClick to buy'
+  DESCRIPTION-PURCHASED:
+    - '&aContenido:'
+    - '&a▸ &7Espada de hierro &ax1'
+    - '&a▸ &7Manzana dorada &ax2'
+    - '&a▸ &7Pechera de diamante &ax1'
+    - '&a▸ &7Casco de mallas &ax1'
+    - '&a▸ &7Botas de hierro &ax1'
+    - ''
+    - '&a▸ &aComprado'
+    - ''
+    - '&a▸ &aClick para selecionar'
+  DESCRIPTION-SELECTED:
+    - '&aContenido:'
+    - '&a▸ &7Espada de hierro &ax1'
+    - '&a▸ &7Manzana dorada &ax2'
+    - '&a▸ &7Pechera de diamante &ax1'
+    - '&a▸ &7Casco de mallas &ax1'
+    - '&a▸ &7Botas de hierro &ax1'
+    - ''
+    - '&a▸ &aSelecionado'
+  ICON-ITEM: 322
+  PERMISSION: Skywars.kit.vip
+  DATA-VALUE: 0
+  POSITION-X: 4
   POSITION-Y: 2

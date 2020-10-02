@@ -7,14 +7,14 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&0Effects kill team'
+  name: '&0Cages ranked'
 
   # rows - the number of rows of the chest - REQUIRED
   rows: 5
-
+  
   # command - OPTIONAL (you can remove this or set it to '')
   command: ''
-
+  
   # permissionView - MATERIAL NAME - DATA
   permissionView:
     ICON-VIEW: true
@@ -27,34 +27,28 @@ menu-settings:
       - ''
 default:
   PRICE: 0
-  ACTION: 'killeffect: heart/TEAM'
-  NAME: '&cHearts'
+  ACTION: 'cage: Default/RANKED'
+  NAME: '&eDefault'
   DESCRIPTION:
     - '&adescription:'
-    - '&a▸ &7Team kill effect'
-    - '&a▸ &7when killing a'
-    - '&a▸ &7player hearts out'
+    - '&a▸ &7Waiting box'
     - ''
     - '&a▸ &7Price: &a%price%'
     - ''
     - '&a▸ &aClick to buy'
   DESCRIPTION-PURCHASED:
     - '&adescription:'
-    - '&a▸ &7Team kill effect'
-    - '&a▸ &7when killing a'
-    - '&a▸ &7player hearts out'
+    - '&a▸ &7Waiting box'
     - ''
     - '&a▸ &aBought'
     - ''
     - '&a▸ &aClick to select'
   DESCRIPTION-SELECTED:
     - '&adescription:'
-    - '&a▸ &7Team kill effect'
-    - '&a▸ &7when killing a'
-    - '&a▸ &7player hearts out'
+    - '&a▸ &7Waiting box'
     - ''
     - '&a▸ &aSelected'
-  ICON-ITEM: 373
-  DATA-VALUE: 8193
+  ICON-ITEM: 20
+  DATA-VALUE: 0
   POSITION-X: 2
   POSITION-Y: 2

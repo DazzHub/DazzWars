@@ -17,12 +17,13 @@ menu-settings:
 
   # permissionView - MATERIAL NAME - DATA
   permissionView:
-    ICON-ITEM: 'SIGN'
-    DATA-VALUE: 0
+    ICON-VIEW: true
+    ICON-ITEM: 'STAINED_GLASS_PANE'
+    DATA-VALUE: 14
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
   ######################
   #+                  +#
@@ -31,52 +32,82 @@ menu-settings:
   ######################
 border:
   ACTION: 'vote:%BORDER%'
-  NAME: '&cBORDER'
+  NAME: '&9Border'
   DESCRIPTION:
-    - '&7➲  &2&lclick to vote'
+    - '&7During the game open an'
+    - '&7edge that will get smaller'
+    - '&7as time passes'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_event_border%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 166
   DATA-VALUE: 0
   POSITION-X: 3
   POSITION-Y: 2
 dragon:
   ACTION: 'vote:%DRAGON%'
-  NAME: '&cDRAGON'
+  NAME: '&5Dragon'
   DESCRIPTION:
-    - '&7➲  &2&lclick to vote'
+    - '&7During the game will appear'
+    - '&7a dragon to kill everyone'
+    - '&7during the game'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_event_dragon%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 122
   DATA-VALUE: 0
   POSITION-X: 5
   POSITION-Y: 2
 dropparty:
   ACTION: 'vote:%DROPPARTY%'
-  NAME: '&DROPPARTY'
+  NAME: '&dDrop party'
   DESCRIPTION:
-    - '&7➲  &2&lclick to vote'
+    - '&7During the game they will fall'
+    - '&7items all over the map'
+    - '&7of game'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_event_dropParty%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 38
   DATA-VALUE: 0
   POSITION-X: 7
   POSITION-Y: 2
 STORM:
   ACTION: 'vote:%STORM%'
-  NAME: '&cSTORM'
+  NAME: '&Storm'
   DESCRIPTION:
-    - '&7➲  &2&lclick to vote'
+    - '&7During the game they will fall'
+    - '&7rays all over the map'
+    - '&7of game'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_event_storm%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 351
   DATA-VALUE: 7
   POSITION-X: 4
   POSITION-Y: 3
 TNTFALL:
   ACTION: 'vote:%TNTFALL%'
-  NAME: '&cTNTFALL'
+  NAME: '&cTnt rain'
   DESCRIPTION:
-    - '&7➲  &2&lclick to vote'
+    - '&7During the game they will fall'
+    - '&7tnt all over the map'
+    - '&7of game'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_event_tntfall%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 46
   DATA-VALUE: 0
   POSITION-X: 6
   POSITION-Y: 3
 back:
   ACTION: 'open:vote.yml'
-  NAME: '&aBack'
+  NAME: '&cBack'
   DESCRIPTION:
     - ''
   ICON-ITEM: 368

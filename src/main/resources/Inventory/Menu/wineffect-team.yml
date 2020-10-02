@@ -7,7 +7,7 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&8➣ Win Effects team #1'
+  name: '&0Effects win Team'
 
   # rows - the number of rows of the chest - REQUIRED
   rows: 5
@@ -17,31 +17,44 @@ menu-settings:
   
   # permissionView - MATERIAL NAME - DATA
   permissionView:
-    ICON-ITEM: 'SIGN'
-    DATA-VALUE: 0
+    ICON-VIEW: true
+    ICON-ITEM: 'STAINED_GLASS_PANE'
+    DATA-VALUE: 14
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
 antigravity:
   PRICE: 0
   ACTION: 'wineffect: antigravity/TEAM'
-  NAME: '&eantigravity'
+  NAME: '&bAnti gravity'
   DESCRIPTION:
+    - '&adescription:'
+    - '&a▸ &7Victory effect on'
+    - '&a▸ &7win an open game'
+    - '&a▸ &7Anti gravity'
     - ''
-    - '&7➲ &e&l%name%'
-    - '&7➲ &2&lCLICK&f to buy effect %price%'
+    - '&a▸ &7Price: &a%price%'
     - ''
+    - '&a▸ &aClick to buy'
   DESCRIPTION-PURCHASED:
+    - '&adescription:'
+    - '&a▸ &7Victory effect on'
+    - '&a▸ &7win an open game'
+    - '&a▸ &7Anti gravity'
     - ''
-    - '&7➲ &eOBTAINED'
+    - '&a▸ &aBought'
     - ''
+    - '&a▸ &aClick to select'
   DESCRIPTION-SELECTED:
+    - '&adescription:'
+    - '&a▸ &7Victory effect on'
+    - '&a▸ &7win an open game'
+    - '&a▸ &7Anti gravity'
     - ''
-    - '&7➲ &eSELECTED'
-    - ''
-  ICON-ITEM: 298
+    - '&a▸ &aSelected'
+  ICON-ITEM: 138
   DATA-VALUE: 0
   POSITION-X: 2
   POSITION-Y: 2

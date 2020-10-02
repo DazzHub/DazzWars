@@ -32,6 +32,7 @@ public class Icon {
     private int price;
     private String type;
 
+    private boolean iconView;
     private String permissionView;
     private ItemStack permissionViewItem;
 
@@ -47,6 +48,7 @@ public class Icon {
         this.price = 0;
         this.type = "";
 
+        this.iconView = false;
         this.lorePurchased = null;
         this.loreSelected = null;
     }
@@ -116,7 +118,7 @@ public class Icon {
         return this;
     }
 
-    public Icon addPermissionView(String permissionView, Material material, short type, List<String> lore) {
+    public Icon addPermissionView(boolean iconView, String permissionView, Material material, short type, List<String> lore) {
         ItemStack itemPerms = new ItemStack(XMaterial.matchXMaterial(material).parseMaterial(), 1, type);
         ItemMeta meta = itemPerms.getItemMeta();
 
@@ -126,6 +128,7 @@ public class Icon {
 
         this.permissionViewItem = itemPerms;
         this.permissionView = permissionView;
+        this.iconView = iconView;
         return this;
     }
 
@@ -424,7 +427,7 @@ public class Icon {
             this.replaceName(p);
         }
 
-        if (permissionViewItem != null && !hasPerm(p)){
+        if (iconView && permissionViewItem != null && !hasPerm(p)){
             return replace(p, permissionViewItem);
         }
 

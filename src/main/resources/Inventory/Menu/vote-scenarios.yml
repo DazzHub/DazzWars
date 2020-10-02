@@ -17,37 +17,53 @@ menu-settings:
 
   # permissionView - MATERIAL NAME - DATA
   permissionView:
-    ICON-ITEM: 'SIGN'
-    DATA-VALUE: 0
+    ICON-VIEW: true
+    ICON-ITEM: 'STAINED_GLASS_PANE'
+    DATA-VALUE: 14
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
-
 noclean:
   ACTION: 'vote:%NOCLEAN%'
-  NAME: '&cNOCLEAN'
+  NAME: '&cNo clean'
   DESCRIPTION:
-    - '&8» &e&lNoClean'
+    - '&7During the game to'
+    - '&7kill a player you'
+    - '&7regenerates all life'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_scenario_noclean%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 322
   DATA-VALUE: 0
   POSITION-X: 3
   POSITION-Y: 2
 nofall:
   ACTION: 'vote:%NOFALL%'
-  NAME: '&bNO-FALL'
+  NAME: '&bNo fall damage'
   DESCRIPTION:
-    - '&8» &c&lNoFall'
+    - '&7During the game no'
+    - '&7ay damage from falling'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_scenario_nofall%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 288
   DATA-VALUE: 0
   POSITION-X: 5
   POSITION-Y: 2
 noprojectile:
   ACTION: 'vote:%NOPROJECTILE%'
-  NAME: '&6NO-PROJECTILE'
+  NAME: '&6No Projectile'
   DESCRIPTION:
-    - '&8» &6&lNoProjectile'
+    - '&7During the game there is no'
+    - '&7no type of projectile'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_scenario_noprojectil%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 262
   DATA-VALUE: 0
   POSITION-X: 7

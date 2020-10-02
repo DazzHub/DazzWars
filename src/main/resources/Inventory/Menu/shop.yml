@@ -7,7 +7,7 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&8➣ Shop menu'
+  name: '&0Shop'
 
   # rows - the number of rows of the chest - REQUIRED
   rows: 6
@@ -17,110 +17,59 @@ menu-settings:
 
   # permissionView - MATERIAL NAME - DATA
   permissionView:
+    ICON-VIEW: true
     ICON-ITEM: 'SIGN'
     DATA-VALUE: 0
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
-cagesolo:
-  ACTION: 'open: cage-solo.yml'
-  NAME: '&e&lcagesolo'
+shopsolo:
+  ACTION: 'open: shop-solo.yml'
+  NAME: '&eShop solo'
   DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 20
-  DATA-VALUE: 0
-  POSITION-X: 1
-  POSITION-Y: 2
-cageteam:
-  ACTION: 'open: cage-team.yml'
-  NAME: '&e&lcageteam'
-  DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 20
+    - '&7Open the kit shop, cages'
+    - '&7and other things for games'
+    - '&7solo'
+    - ''
+    - '&aClick to open'
+  ICON-ITEM: 322
   DATA-VALUE: 0
   POSITION-X: 2
-  POSITION-Y: 2
-kitsolo:
-  ACTION: 'open: kit-solo.yml'
-  NAME: '&e&lkitsolo'
+  POSITION-Y: 3
+shopteam:
+  ACTION: 'open: shop-team.yml'
+  NAME: '&dShop team'
   DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 261
-  DATA-VALUE: 0
-  POSITION-X: 4
-  POSITION-Y: 2
-kitteam:
-  ACTION: 'open: kit-team.yml'
-  NAME: '&e&lkitteam'
-  DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 261
+    - '&7Open the kit shop, cages'
+    - '&7and other things for games'
+    - '&7team'
+    - ''
+    - '&aClick to open'
+  ICON-ITEM: 354
   DATA-VALUE: 0
   POSITION-X: 5
-  POSITION-Y: 2
-killeffectsolo:
-  ACTION: 'open: killeffect-solo.yml'
-  NAME: '&e&lkilleffectsolo'
+  POSITION-Y: 3
+shopranked:
+  ACTION: 'open: shop-ranked.yml'
+  NAME: '&dShop ranked'
   DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 261
+    - '&7Open the kit shop, cages'
+    - '&7and other things for games'
+    - '&7ranked'
+    - ''
+    - '&aClick to open'
+  ICON-ITEM: 'DIAMOND_SWORD'
   DATA-VALUE: 0
   POSITION-X: 7
-  POSITION-Y: 2
-killeffectteam:
-  ACTION: 'open: killeffect-team.yml'
-  NAME: '&e&lkilleffectteam'
-  DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 261
-  DATA-VALUE: 0
-  POSITION-X: 8
-  POSITION-Y: 2
-traileffectsolo:
-  ACTION: 'open: traileffect-solo.yml'
-  NAME: '&e&ltraileffectsolo'
-  DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 261
-  DATA-VALUE: 0
-  POSITION-X: 1
-  POSITION-Y: 3
-trailffectteam:
-  ACTION: 'open: traileffect-team.yml'
-  NAME: '&e&ltrailffectteam'
-  DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 261
-  DATA-VALUE: 0
-  POSITION-X: 2
-  POSITION-Y: 3
-wineffectsolo:
-  ACTION: 'open: wineffect-solo.yml'
-  NAME: '&e&lwineffectsolo'
-  DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 261
-  DATA-VALUE: 0
-  POSITION-X: 4
-  POSITION-Y: 3
-winffectteam:
-  ACTION: 'open: wineffect-team.yml'
-  NAME: '&e&lwinffectteam'
-  DESCRIPTION:
-    - '&7➲ &2&lCLICK&f to buy cages'
-  ICON-ITEM: 261
-  DATA-VALUE: 0
-  POSITION-X: 5
-  POSITION-Y: 3
-close:
+  POSITION-Y: 3  
+Cerrar:
   ACTION: 'close'
-  NAME: '&cClose'
+  NAME: '&cCerrar'
   DESCRIPTION:
     - ''
   ICON-ITEM: 368
   DATA-VALUE: 0
   POSITION-X: 5
   POSITION-Y: 5
-

@@ -7,7 +7,7 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&8➣ Vote Chest'
+  name: '&0Cofres'
 
   # rows - the number of rows of the chest - REQUIRED
   rows: 4
@@ -17,12 +17,13 @@ menu-settings:
   
   # permissionView - MATERIAL NAME - DATA
   permissionView:
-    ICON-ITEM: 'SIGN'
-    DATA-VALUE: 0
+    ICON-VIEW: true
+    ICON-ITEM: 'STAINED_GLASS_PANE'
+    DATA-VALUE: 14
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
   ######################
   #+                  +#
@@ -31,34 +32,52 @@ menu-settings:
   ######################
 basic:
   ACTION: 'vote:%basic%'
-  NAME: '&cBASIC'
+  NAME: '&bChest basic'
   DESCRIPTION:
-    - '&7➲  &2&lItems&f basic'
+    - '&7During the game'
+    - '&7the contents of the chests'
+    - '&7they will be basic'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_chest_basic%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 54
   DATA-VALUE: 0
   POSITION-X: 3
   POSITION-Y: 2
 normal:
   ACTION: 'vote:%normal%'
-  NAME: '&eNORMAL'
+  NAME: '&aChest normal'
   DESCRIPTION:
-    - '&7➲  &2&lItems&f normal'
+    - '&7During the game'
+    - '&7the contents of the chests'
+    - '&7they will be normal'
+    - ''
+    - '&7Votos: &a%sw_arena_vote_chest_normal%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 54
   DATA-VALUE: 0
   POSITION-X: 5
   POSITION-Y: 2
 op:
   ACTION: 'vote:%op%'
-  NAME: '&6OP'
+  NAME: '&cChest Op'
   DESCRIPTION:
-    - '&7➲  &2&lItems&f op'
+    - '&7During the game'
+    - '&7the contents of the chests'
+    - '&7they will be op'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_chest_op%'
+    - ''
+    - '&aClick to vote'
   ICON-ITEM: 54
   DATA-VALUE: 0
   POSITION-X: 7
   POSITION-Y: 2
 back:
   ACTION: 'open:vote.yml'
-  NAME: '&aBack'
+  NAME: '&cBack'
   DESCRIPTION:
     - ''
   ICON-ITEM: 368

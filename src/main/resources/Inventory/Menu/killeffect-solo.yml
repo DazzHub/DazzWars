@@ -7,7 +7,7 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&8➣ Kill Effect solo #1'
+  name: '&0Effects kill solo'
 
   # rows - the number of rows of the chest - REQUIRED
   rows: 5
@@ -17,31 +17,44 @@ menu-settings:
 
   # permissionView - MATERIAL NAME - DATA
   permissionView:
-    ICON-ITEM: 'SIGN'
-    DATA-VALUE: 0
+    ICON-VIEW: true
+    ICON-ITEM: 'STAINED_GLASS_PANE'
+    DATA-VALUE: 14
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
 default:
   PRICE: 0
   ACTION: 'killeffect: heart/SOLO'
-  NAME: '&e&lheart'
+  NAME: '&cHearts'
   DESCRIPTION:
+    - '&adescription:'
+    - '&a▸ &7Team kill effect'
+    - '&a▸ &7when killing a'
+    - '&a▸ &7player hearts out'
     - ''
-    - '&7➲ &e&l%name%'
-    - '&7➲ &2&lCLICK&f to buy cage %price%'
+    - '&a▸ &7Price: &a%price%'
     - ''
+    - '&a▸ &aClick to buy'
   DESCRIPTION-PURCHASED:
+    - '&adescription:'
+    - '&a▸ &7Team kill effect'
+    - '&a▸ &7when killing a'
+    - '&a▸ &7player hearts out'
     - ''
-    - '&7➲ &eOBTAINED'
+    - '&a▸ &aBought'
     - ''
+    - '&a▸ &aClick to select'
   DESCRIPTION-SELECTED:
+    - '&adescription:'
+    - '&a▸ &7Team kill effect'
+    - '&a▸ &7when killing a'
+    - '&a▸ &7player hearts out'
     - ''
-    - '&7➲ &eSELECTED'
-    - ''
-  ICON-ITEM: 298
-  DATA-VALUE: 0
+    - '&a▸ &aSelected'
+  ICON-ITEM: 373
+  DATA-VALUE: 8193
   POSITION-X: 2
   POSITION-Y: 2

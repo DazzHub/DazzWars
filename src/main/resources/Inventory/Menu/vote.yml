@@ -7,7 +7,7 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&8➣ Vote menu'
+  name: '&0Vote'
 
   # rows - the number of rows of the chest - REQUIRED
   rows: 5
@@ -17,59 +17,88 @@ menu-settings:
   
   # permissionView - MATERIAL NAME - DATA
   permissionView:
-    ICON-ITEM: 'SIGN'
-    DATA-VALUE: 0
+    ICON-VIEW: false
+    ICON-ITEM: 'STAINED_GLASS_PANE'
+    DATA-VALUE: 14
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
 chests:
   ACTION: 'open: vote-chest.yml'
-  NAME: '&e&lCHESTS'
+  NAME: '&eChests'
   DESCRIPTION:
-    - '&7➲ &2&lVIPS&f ACCESS ONLY'
+    - '&7Vote for the chest type'
+    - '&7what do you want '
+    - '&7during the game'
+    - ''
+    - '&7You need: &eVip'
+    - ''
+    - '&aClick to vote for chests'
   ICON-ITEM: 130
   DATA-VALUE: 0
-  POSITION-X: 3
+  POSITION-X: 2
   POSITION-Y: 2
 heart:
   ACTION: 'open: vote-heart.yml'
-  NAME: '&4&lHEART'
+  NAME: '&cVida'
   DESCRIPTION:
-    - '&7➲ &2&lVIPS&f ACCESS ONLY'
+    - '&7Vote for the kind of life'
+    - '&7what do you want during'
+    - '&7during the game'
+    - ''
+    - '&7You need: &eVip'
+    - ''
+    - '&aClick to vote for hearts'
   ICON-ITEM: 260
   DATA-VALUE: 0
-  POSITION-X: 5
+  POSITION-X: 3
   POSITION-Y: 2
 time:
   ACTION: 'open: vote-time.yml'
-  NAME: '&6&lTIME'
+  NAME: '&eTiempo'
   DESCRIPTION:
-    - '&7➲ &2&lVIPS&f ACCESS ONLY'
+    - '&7Vote for the type of Time'
+    - '&7what do you want during'
+    - '&7during the game'
+    - ''
+    - '&7You need: &eVip'
+    - ''
+    - '&aClick to vote for time'
   ICON-ITEM: 175
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 2
+scenarios:
+  ACTION: 'open: vote-scenarios.yml'
+  NAME: '&3Scenarios'
+  DESCRIPTION:
+    - '&7Vote for the type of scenario'
+    - '&7what do you want during the game'
+    - ''
+    - '&7You need: &eVip'
+    - ''
+    - '&aClick to vote for scenarios'
+  ICON-ITEM: 379
   DATA-VALUE: 0
   POSITION-X: 7
   POSITION-Y: 2
-scenarios:
-  COMMAND: 'open: vote-scenarios.yml'
-  NAME: '&e&lSCENARIOS'
+events:
+  ACTION: 'open: vote-events.yml'
+  NAME: '&5Events'
   DESCRIPTION:
-    - '&8» &2&lVIPS&f ACCESS ONLY'
-  ICON-ITEM: 389
+    - '&7Vote for the type of event'
+    - '&7what do you want during the game'
+    - ''
+    - '&7You need: &eVip'
+    - ''
+    - '&aClick to vote for events'
+  ICON-ITEM: 425
   DATA-VALUE: 0
-  POSITION-X: 4
-  POSITION-Y: 3
-Events:
-  COMMAND: 'open: vote-events.yml'
-  NAME: '&5&lEVENTS'
-  DESCRIPTION:
-    - '&8» &2&lVIPS&f ACCESS ONLY'
-  ICON-ITEM: 50
-  DATA-VALUE: 0
-  POSITION-X: 6
-  POSITION-Y: 3
-close:
+  POSITION-X: 8
+  POSITION-Y: 2
+Cerrar:
   ACTION: 'close'
   NAME: '&cClose'
   DESCRIPTION:

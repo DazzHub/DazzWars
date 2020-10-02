@@ -7,7 +7,7 @@
 menu-settings:
 
   # name - appears as the title - REQUIRED
-  name: '&8➣ Vote Time'
+  name: '&0Tiempo'
 
   # rows - the number of rows of the chest - REQUIRED
   rows: 4
@@ -17,12 +17,13 @@ menu-settings:
 
   # permissionView - MATERIAL NAME - DATA
   permissionView:
-    ICON-ITEM: 'SIGN'
-    DATA-VALUE: 0
+    ICON-VIEW: true
+    ICON-ITEM: 'STAINED_GLASS_PANE'
+    DATA-VALUE: 14
     DESCRIPTION:
       - ''
-      - '&8» &eYou currently don''t have'
-      - '&8» &6permission to do this'
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
       - ''
   ######################
   #+                  +#
@@ -31,34 +32,52 @@ menu-settings:
   ######################
 day:
   ACTION: 'vote:%day%'
-  NAME: '&eDAY'
+  NAME: '&eDay'
   DESCRIPTION:
-    - '&7➲ &e&lDay'
-  ICON-ITEM: 54
-  DATA-VALUE: 0
+    - '&7During the game the'
+    - '&7Time will be day'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_time_day%'
+    - ''
+    - '&aClick to vote'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjg5MDQyMDgyYmI3YTc2MThiNzg0ZWU3NjA1YTEzNGM1ODgzNGUyMWUzNzRjODg4OTM3MTYxMDU3ZjZjNyJ9fX0='
   POSITION-X: 3
   POSITION-Y: 2
 sunset:
   ACTION: 'vote:%sunset%'
-  NAME: '&6SUNSET'
+  NAME: '&6Sunset'
   DESCRIPTION:
-    - '&7➲ &6&lSunset'
-  ICON-ITEM: 54
-  DATA-VALUE: 0
+    - '&7During the game the'
+    - '&7Time will sunset'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_time_sunset%'
+    - ''
+    - '&aClick to vote'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzExMjM0ODIwYTFlN2JmYjkxMmI1MjJhZWNmMzRiZmNiNTY5ZjAyYmY1ODM2ZTY2OWEyOWJhZTk5NzM3ZTUyMiJ9fX0='
   POSITION-X: 5
   POSITION-Y: 2
 night:
   ACTION: 'vote:%night%'
-  NAME: '&9NIGHT'
+  NAME: '&9Night'
   DESCRIPTION:
-    - '&7➲ &9&lNight'
-  ICON-ITEM: 54
-  DATA-VALUE: 0
+    - '&7During the game the'
+    - '&7Time will night'
+    - ''
+    - '&7Votes: &a%sw_arena_vote_time_night%'
+    - ''
+    - '&aClick to vote'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODAzM2ZlMmY4ZGYwMWE2YjE1NzFkODU1YWQ1MjhiYzk3YzdjYTEyMDFmNzIxMzE0NjBlZTI1YmI2NjhhMjhjMSJ9fX0='
   POSITION-X: 7
   POSITION-Y: 2
 back:
   ACTION: 'open:vote.yml'
-  NAME: '&aBack'
+  NAME: '&cBack'
   DESCRIPTION:
     - ''
   ICON-ITEM: 368

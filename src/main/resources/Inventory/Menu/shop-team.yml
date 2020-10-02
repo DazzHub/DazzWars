@@ -1,0 +1,102 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Shop team'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 6
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: 'Shopsolo'
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
+      - ''
+cage:
+  ACTION: 'open: cage-team.yml'
+  NAME: '&dEquipment'
+  DESCRIPTION:
+    - '&7Here you can buy your'
+    - '&7gear cages to use the'
+    - '&7while waiting for a game'
+    - ''
+    - '&aClick to open'
+  ICON-ITEM: 95
+  DATA-VALUE: 10
+  POSITION-X: 5
+  POSITION-Y: 1
+kit:
+  ACTION: 'open: kit-team.yml'
+  NAME: '&2Kits'
+  DESCRIPTION:
+    - '&7Here you can buy your kits'
+    - '&7to use during the game'
+    - '&7and get advantage'
+    - ''
+    - '&aClick to open'
+  ICON-ITEM: 276
+  DATA-VALUE: 0
+  POSITION-X: 4
+  POSITION-Y: 2
+killeffect:
+  ACTION: 'open: killeffect-team.yml'
+  NAME: '&4Effects kill'
+  DESCRIPTION:
+    - '&7Here you can buy your effects'
+    - '&7kills team by killing a player in'
+    - '&7in game, the selected effect will be used'
+    - ''
+    - '&aClick to open'
+  ICON-ITEM: 331
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 2
+trailffect:
+  ACTION: 'open: traileffect-team.yml'
+  NAME: '&9Effects trail'
+  DESCRIPTION:
+    - '&7Here you can buy your'
+    - '&7equipment trails to give'
+    - '&7effects to your projectiles for a'
+    - '&7game will use the selected effect'
+    - ''
+    - '&aClick to open'
+  ICON-ITEM: 262
+  DATA-VALUE: 0
+  POSITION-X: 6
+  POSITION-Y: 2
+winffect:
+  ACTION: 'open: wineffect-team.yml'
+  NAME: '&6Effects win'
+  DESCRIPTION:
+    - '&7Here you can buy your effects'
+    - '&7of victory these will be used when'
+    - '&7you win a game'
+    - ''
+    - '&aClick to open'
+  ICON-ITEM: 261
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 3
+Back:
+  ACTION: 'open: shop'
+  NAME: '&cBack'
+  DESCRIPTION:
+    - ''
+  ICON-ITEM: 368
+  DATA-VALUE: 0
+  POSITION-X: 5
+  POSITION-Y: 5
