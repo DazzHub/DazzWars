@@ -2,8 +2,10 @@ package com.dazzhub.skywars.Utils.events.strom;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.Tools;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Set;
@@ -22,8 +24,8 @@ public class Storm implements eventStorm {
         this.main = Main.getPlugin();
 
         this.arena = arena;
-        this.timer = arena.getArenac().getInt("Arena.storm.TimeSpawn");
-        this.duration = arena.getArenac().getInt("Arena.storm.TimeDuration");
+        this.timer = arena.getArenaConfig().getInt("Arena.storm.TimeSpawn");
+        this.duration = arena.getArenaConfig().getInt("Arena.storm.TimeDuration");
     }
 
     @Override
@@ -48,15 +50,23 @@ public class Storm implements eventStorm {
     }
 
     private void startStorm() {
-        Bukkit.getWorld(arena.getNameWorld()).setTime(13000L);
+        World world;
+
+        if (arena.getResetArena() == Enums.ResetArena.SLIMEWORLDMANAGER) {
+            world = Bukkit.getWorld(this.arena.getUuid());
+        } else {
+            world = Bukkit.getWorld(this.arena.getNameWorld());
+        }
+
+        world.setTime(13000L);
         task = new BukkitRunnable() {
             @Override
             public void run() {
 
-                Tools.spawnEntities(arena.getSpawnSpectator(), null, null, arena.getArenac().getInt("Arena.storm.AmountLight"), arena.getArenac().getInt("Arena.storm.Radio"), false, true);
+                Tools.spawnEntities(arena.getSpawnSpectator(), null, null, arena.getArenaConfig().getInt("Arena.storm.AmountLight"), arena.getArenaConfig().getInt("Arena.storm.Radio"), false, true);
 
                 if (duration <= 1){
-                    Bukkit.getWorld(arena.getNameWorld()).setTime(1000L);
+                    world.setTime(1000L);
                     this.cancel();
                 }
 

@@ -50,6 +50,9 @@ public class onArena implements Listener {
         if (gamePlayer.isInArena()) {
             Arena arena = gamePlayer.getArena();
             if (arena.getGameStatus().equals(Enums.GameStatus.INGAME)) {
+
+                if (gamePlayer.isSpectating()) return;
+
                 if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || e.getAction().equals(Action.LEFT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.CHEST) && !arena.getIslandChest().contains(e.getClickedBlock().getLocation())) {
                     if (e.getClickedBlock().getType() != null && e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
                         BlockState block = e.getClickedBlock().getState();

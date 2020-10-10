@@ -1,6 +1,7 @@
 package com.dazzhub.skywars.Listeners.Lobby;
 
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,20 +23,21 @@ public class onPlayer implements Listener {
     }
 
     @EventHandler
-    public void onFoodLevel(FoodLevelChangeEvent e) {
-        if(main.getSettings().getStringList("lobbies.onFeed").contains(e.getEntity().getWorld().getName())) {
+    public void onFoodLevelLobby(FoodLevelChangeEvent e) {
+        if (!(e.getEntity() instanceof Player)) return;
+        if (main.getSettings().getStringList("lobbies.onFeed").contains(e.getEntity().getWorld().getName())) {
             e.setFoodLevel(20);
             e.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onPlayerClickTab(PlayerChatTabCompleteEvent e) {
+    public void onPlayerClickTabLobby(PlayerChatTabCompleteEvent e) {
         e.getTabCompletions().clear();
     }
 
     @EventHandler
-    public void onDropItem(PlayerDropItemEvent e) {
+    public void onDropItemLobby(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
         if (main.getSettings().getStringList("lobbies.onDrop").contains(p.getWorld().getName())) {
             e.setCancelled(true);
@@ -43,24 +45,26 @@ public class onPlayer implements Listener {
     }
 
     @EventHandler
-    public void noUproot(PlayerInteractEvent e) {
+    public void noUprootLobby(PlayerInteractEvent e) {
         if (e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType() == Material.SOIL) {
             if (main.getSettings().getStringList("lobbies.onBreak").contains(e.getPlayer().getWorld().getName())) {
                 e.setCancelled(true);
             }
         }
+
     }
 
     @EventHandler
-    public void onChangedWorld(PlayerChangedWorldEvent e) {
+    public void onChangedWorldLobby(PlayerChangedWorldEvent e) {
         Player p = e.getPlayer();
+
         if (main.getSettings().getStringList("lobbies.onResetGameMode").contains(p.getWorld().getName())) {
             p.setGameMode(GameMode.ADVENTURE);
         }
     }
 
     @EventHandler
-    public void onPortal(PortalCreateEvent e) {
+    public void onPortalLobby(PortalCreateEvent e) {
         String world = e.getWorld().getName();
         if (main.getSettings().getStringList("lobbies.onPortal").contains(world)) {
             e.setCancelled(true);
@@ -68,7 +72,7 @@ public class onPlayer implements Listener {
     }
 
     @EventHandler
-    public void onExplode(EntityExplodeEvent e) {
+    public void onExplodeLobby(EntityExplodeEvent e) {
         String world = e.getLocation().getWorld().getName();
         if (main.getSettings().getStringList("lobbies.onExplosion").contains(world)) {
             e.setCancelled(true);
@@ -76,7 +80,7 @@ public class onPlayer implements Listener {
     }
 
     @EventHandler
-    public void onBlockSpread(BlockSpreadEvent e) {
+    public void onBlockSpreadLobby(BlockSpreadEvent e) {
         String world = e.getSource().getLocation().getWorld().getName();
         if (main.getSettings().getStringList("lobbies.onFlow").contains(world)) {
             e.setCancelled(true);
@@ -84,7 +88,7 @@ public class onPlayer implements Listener {
     }
 
     @EventHandler
-    public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
+    public void onPlayerBucketEmptyLobby(PlayerBucketEmptyEvent event) {
         String world = event.getPlayer().getWorld().getName();
         if (main.getSettings().getStringList("lobbies.onFlow").contains(world)) {
             event.setCancelled(true);

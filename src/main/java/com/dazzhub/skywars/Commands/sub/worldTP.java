@@ -22,7 +22,7 @@ public class worldTP implements subCommand {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String[] args) {
 
-        if (!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             return;
         }
 
@@ -30,30 +30,53 @@ public class worldTP implements subCommand {
             return;
         }
 
-        if (args.length < 2){
+        Player p = (Player) sender;
+
+        if (args.length < 2) {
+            p.sendMessage(help(sender));
             return;
         }
 
-        Player p = (Player) sender;
-
         String sub = args[1];
-        if (new File(main.getServer().getWorldContainer(), sub).exists()) {
-            createWorld(sub);
 
-            Location loc = Bukkit.getWorld(sub).getSpawnLocation();
+        if (args.length == 3) {
+            if (sub.equalsIgnoreCase("tp")) {
+                String world = args[2];
+                if (new File(main.getServer().getWorldContainer(), world).exists()) {
+                    createWorld(world);
 
-            Bukkit.getScheduler().scheduleSyncDelayedTask(main, () ->
-                    p.teleport(loc)
-            , 5);
+                    Location loc = Bukkit.getWorld(world).getSpawnLocation();
 
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                        p.setGameMode(GameMode.CREATIVE);
+                        p.teleport(loc);
+                    }, 5);
+
+                } else {
+                    p.sendMessage(help(sender));
+                }
+            } else if (sub.equalsIgnoreCase("create")) {
+                String world = args[2];
+
+                createWorld(world);
+
+                Location loc = Bukkit.getWorld(world).getSpawnLocation();
+
+                Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                    p.setGameMode(GameMode.CREATIVE);
+                    p.teleport(loc);
+                }, 5);
+            }
         } else {
-            p.sendMessage(help(sender));
+            if (sub.equalsIgnoreCase("info")) {
+                p.sendMessage(c("&eWorld &8> &c" + p.getWorld().getName()));
+            }
         }
     }
 
     @Override
     public String help(CommandSender sender) {
-        return c("&e/sw world <name> &8>&f Teleport to world");
+        return c("&e/sw world tp/create/info <name> &8>&f Manager world");
     }
 
     /* CREATE WORLD */

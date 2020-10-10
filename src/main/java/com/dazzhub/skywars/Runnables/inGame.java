@@ -32,37 +32,11 @@ public class inGame extends BukkitRunnable {
 
         if (this.arena.getAliveTeams().size() <= 1) {
             this.cancel();
-
-            if (arena.getRefillGame() != null) {
-                arena.getRefillGame().cancel();
-                arena.setRefillGame(null);
-                arena.getRefillTime().clear();
-            }
-
-            if (arena.getEventBorder() != null) arena.getEventBorder().stopTimer();
-            if (arena.getEventDragon() != null) arena.getEventDragon().killDragon();
-            if (arena.getEventParty() != null) arena.getEventParty().stopTimer();
-            if (arena.getEventStorm() != null) arena.getEventStorm().stopTimer();
-            if (arena.getEventTNT() != null) arena.getEventTNT().stopEvent();
-
             Bukkit.getPluginManager().callEvent(new WinEvent(this.arena));
         }
 
         if (this.arena.getPlayers().isEmpty()) {
             this.cancel();
-
-            if (arena.getRefillGame() != null) {
-                arena.getRefillGame().cancel();
-                arena.setRefillGame(null);
-                arena.getRefillTime().clear();
-            }
-
-            if (arena.getEventBorder() != null) arena.getEventBorder().stopTimer();
-            if (arena.getEventDragon() != null) arena.getEventDragon().killDragon();
-            if (arena.getEventParty() != null) arena.getEventParty().stopTimer();
-            if (arena.getEventStorm() != null) arena.getEventStorm().stopTimer();
-            if (arena.getEventTNT() != null) arena.getEventTNT().stopEvent();
-
             Bukkit.getPluginManager().callEvent(new WinEvent(this.arena));
         }
 
@@ -76,19 +50,6 @@ public class inGame extends BukkitRunnable {
 
         if (timer <= 1) {
             this.cancel();
-
-            if (arena.getRefillGame() != null) {
-                arena.getRefillGame().cancel();
-                arena.setRefillGame(null);
-                arena.getRefillTime().clear();
-            }
-
-            if (arena.getEventBorder() != null) arena.getEventBorder().stopTimer();
-            if (arena.getEventDragon() != null) arena.getEventDragon().killDragon();
-            if (arena.getEventParty() != null) arena.getEventParty().stopTimer();
-            if (arena.getEventStorm() != null) arena.getEventStorm().stopTimer();
-            if (arena.getEventTNT() != null) arena.getEventTNT().stopEvent();
-
             Bukkit.getPluginManager().callEvent(new WinEvent(this.arena));
 
             arena.getPlayers().forEach(p -> p.sendMessage(p.getLangMessage().getString("Messages.EndTime")));

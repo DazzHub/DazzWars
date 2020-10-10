@@ -11,6 +11,7 @@ Messages:
   EndTime: '&e&l⚠&e Game time over'
   item-deny: '&e&l⚠&e You do not have permission'
   menu-deny: '&e&l⚠&e You do not have permission'
+  GiveCoins: '&d&l➠ &f+%coins% coins'
   InsufficientCoins: '&c&l✘ &fYou need %coins% coins, to be able to buy it'
   Language:
     change: '&a&l✔ &fYour language was translated into English'
@@ -18,7 +19,7 @@ Messages:
   Kit:
     Received: '&8» &fThe kit %kit% was received'
     Selected: '&a&l✔&f You choose the kit: &9%kit%'
-    Buy: '&a&l✔&f You bought the kit: &9%cage%'
+    Buy: '&a&l✔&f You bought the kit: &9%kit%'
   Cage:
     Selected: '&a&l✔&f You choose the cage: &9%cage%'
     Buy: '&a&l✔&f You bought the cage: &9%cage%'
@@ -233,86 +234,6 @@ Messages:
           - '%center%&eWith a rarity: &9%rarity%' #%name%, %rarity%, %chance%, %commands%, %type%
           - ''
           - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-  MenuArena:
-    TITLE: '&8&l&nArenas'
-    ROWS: 6
-    FIREWORK:
-      NAME: '&e%arena%'
-      DESCRIPTION:
-        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-        - ''
-        - '&fClick to join &e%arena%'
-        - '&fState &8» &6%state%'
-        - '&fMode &8» &a%mode%'
-        - '&fPlayers &8» &a%online%/%maxPlayers%'
-        - ''
-        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-    CustomItem:
-      Use: false
-      WAITTING:
-        ICON-ITEM: 95
-        DATA-VALUE: 5
-        NAME: '&l&n%arena%'
-        DESCRIPTION:
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - ''
-          - '&fClick to join &e%arena%'
-          - '&fState &8» &6%state%'
-          - '&fMode &8» &a%mode%'
-          - '&fPlayers &8» &a%online%/%maxPlayers%'
-          - ''
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      STARTING:
-        ICON-ITEM: 95
-        DATA-VALUE: 4
-        NAME: '&l&n%arena%'
-        DESCRIPTION:
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - ''
-          - '&fClick to join &e%arena%'
-          - '&fState &8» &6%state%'
-          - '&fMode &8» &a%mode%'
-          - '&fPlayers &8» &a%online%/%maxPlayers%'
-          - ''
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      INGAME:
-        ICON-ITEM: 95
-        DATA-VALUE: 14
-        NAME: '&l&n%arena%'
-        DESCRIPTION:
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - ''
-          - '&fClick to join &e%arena%'
-          - '&fState &8» &6%state%'
-          - '&fMode &8» &a%mode%'
-          - '&fPlayers &8» &a%online%/%maxPlayers%'
-          - ''
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      RESTARTING:
-        ICON-ITEM: 95
-        DATA-VALUE: 11
-        NAME: '&l&n%arena%'
-        DESCRIPTION:
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - ''
-          - '&fClick to join &e%arena%'
-          - '&fState &8» &6%state%'
-          - '&fMode &8» &a%mode%'
-          - '&fPlayers &8» &a%online%/%maxPlayers%'
-          - ''
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-    Close:
-      ICON-ITEM: 'ENDER_PEARL'
-      DATA-VALUE: 0
-      NAME: '&eCerrar'
-      DESCRIPTION:
-        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-        - ''
-        - '&fClick to &eclose'
-        - ''
-        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      POSITION-X: 5
-      POSITION-Y: 6
   MenuSpectator:
     TITLE: '&8&l&nRestantes'
     ROWS: 4
@@ -336,6 +257,19 @@ Messages:
         - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
       POSITION-X: 5
       POSITION-Y: 3
+  DeathMessages:
+    Player: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 &7was slain by &c%killer%&7[&f%k_kill_count%&7]'
+    Void: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fell into void'
+    Fall: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fell from the sky'
+    Burned: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 was burned!'
+    UnknownCause: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 did by unknown cause'
+    Explosion: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 exploded in battle'
+    Lava: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 tried to swim in the lava'
+    Water: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 drowned slowly'
+    Suffocation: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 it suffocated and died slowly'
+    Arrow: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 was shot by &c%killer%&7[&f%k_kill_count%&7]&7 from &9%blocks%&7 blocks.'
+    EnderPearl: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 was shot (using EnderPearl) by &c%killer%&7[&f%k_kill_count%&7] from &9%blocks%&7 blocks.'
+    Lightning: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 was slain by the storm'
   Party:
     InvalidArgument: '&d&lPARTY &f➠ &cError'
     TargetNoExist: '&d&lPARTY &f➠ &9%target%&f invalid player'

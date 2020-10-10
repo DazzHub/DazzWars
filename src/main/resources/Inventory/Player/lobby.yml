@@ -1,6 +1,6 @@
 #AtEntity - Clicks - ByDamage
 play:
-  ACTION: 'arenas'
+  ACTION: 'open:arenas.yml'
   NAME: '&6&lPLAY &7(Right-Click)'
   DESCRIPTION:
     - ''

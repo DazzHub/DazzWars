@@ -5,6 +5,7 @@ import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.Tools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -27,33 +28,6 @@ public class onGlobal implements Listener {
     }
 
     @EventHandler
-    public void onInventoryOpen(InventoryOpenEvent e) {
-        Player p = (Player) e.getPlayer();
-
-        GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-        Configuration config = gamePlayer.getLangMessage();
-
-        if (e.getView().getTitle().equalsIgnoreCase(c(config.getString("Messages.MenuArena.TITLE")))) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    int i = 0;
-                    for (Arena arena : main.getArenaManager().getArenas().values()) {
-                        e.getInventory().setItem(i, main.getArenasMenu().setItem(p, arena.getGameStatus(), arena));
-                        if (i < config.getInt("Messages.MenuArena.ROWS") * 9 - 9) {
-                            i++;
-                        }
-                    }
-
-                    if (!e.getView().getTitle().equalsIgnoreCase(c(config.getString("Messages.MenuArena.TITLE")))) {
-                        this.cancel();
-                    }
-                }
-            }.runTaskTimerAsynchronously(main, 0, 20);
-        }
-    }
-
-    @EventHandler
     public void onInventoryClickSave(InventoryClickEvent e) {
         String nameinv = e.getView().getTitle();
         if (!nameinv.contains("/")) return;
@@ -72,47 +46,6 @@ public class onGlobal implements Listener {
             if (e.getSlot() == 52) {
                 p.closeInventory();
                 e.setCancelled(true);
-            }
-
-        }
-    }
-
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) {
-        if (!(e.getWhoClicked() instanceof Player)) return;
-
-        Player p = (Player) e.getWhoClicked();
-
-        GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-        Configuration config = gamePlayer.getLangMessage();
-
-        if (e.getView().getTitle().startsWith(c(config.getString("Messages.MenuArena.TITLE")))) {
-
-            e.setCancelled(true);
-
-            for (int i = 0; i < main.getArenaManager().getArenas().size(); i++) {
-                if (e.getSlot() == i) {
-
-                    if (gamePlayer.getParty() != null) {
-                        if (!gamePlayer.getParty().getOwner().equals(gamePlayer)) {
-                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
-                            p.closeInventory();
-                            return;
-                        }
-                    }
-
-                    Arena arena = main.getArenaManager().getArenas().get(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
-                    if (arena == null) return;
-
-                    if (arena.checkUsable()) {
-                        JoinEvent joinEvent = new JoinEvent(p, arena, Enums.JoinCause.MENU);
-                        Bukkit.getPluginManager().callEvent(joinEvent);
-                    }
-                }
-            }
-
-            if (e.getSlot() == Main.getRelativePosition(config.getInt("Messages.MenuArena.Close.POSITION-X"), config.getInt("Messages.MenuArena.Close.POSITION-Y"))) {
-                p.closeInventory();
             }
 
         }
@@ -143,13 +76,13 @@ public class onGlobal implements Listener {
         World worldfrom = event.getFrom();
 
         world.getPlayers().forEach(p -> {
-            p.showPlayer(player);
-            player.showPlayer(p);
+            Tools.ShowPlayer(p, player);
+            Tools.ShowPlayer(player, p);
         });
 
         worldfrom.getPlayers().forEach(p -> {
-            p.hidePlayer(player);
-            player.hidePlayer(p);
+            Tools.HidePlayer(p, player);
+            Tools.HidePlayer(player, p);
         });
     }
 

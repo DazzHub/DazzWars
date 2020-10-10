@@ -13,13 +13,14 @@ import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Holograms {
 
-    private Main main;
-    private GamePlayer gamePlayer;
+    private final Main main;
+    private final GamePlayer gamePlayer;
 
     private HashMap<String, Hologram> listHolograms;
 
@@ -58,16 +59,20 @@ public class Holograms {
         listHolograms.put(typeHologram, hologram);
 
         gamePlayer.setHolograms(this);
+
     }
 
     public void reloadHologram() {
-
         if (gamePlayer == null) {
             return;
         }
 
-        for (String typeHologram : listHolograms.keySet()) {
-            createHologram(typeHologram);
+        if (listHolograms.isEmpty()) return;
+
+        List<String> holos = new ArrayList<>(listHolograms.keySet());
+
+        for (String s : holos) {
+            createHologram(s);
         }
     }
 
@@ -77,7 +82,9 @@ public class Holograms {
             return;
         }
 
-        for (Hologram hologram : listHolograms.values()) {
+        List<Hologram> holos = new ArrayList<>(listHolograms.values());
+
+        for (Hologram hologram : holos) {
             hologram.delete();
         }
 

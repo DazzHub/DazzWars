@@ -1,0 +1,43 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Arenas'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 4
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: 'arenas'
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 'SIGN'
+    DATA-VALUE: 0
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fYou currently do not have'
+      - ' &a▸ &fpermission to do this'
+      - ''
+map1:
+  ACTION: 'join: Map1'
+  NAME: '&eJOIN ARENA MAP1'
+  DESCRIPTION:    
+    - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - ''
+    - '&fClick to join &e%arena%'
+    - '&fState &8» &6%state%'
+    - '&fMode &8» &a%mode%'
+    - '&fPlayers &8» &a%online%/%maxPlayers%'
+    - ''
+    - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+  ICON-ITEM: 'FIREWORK_CHARGE'
+  DATA-VALUE: 0
+  POSITION-X: 2
+  POSITION-Y: 2

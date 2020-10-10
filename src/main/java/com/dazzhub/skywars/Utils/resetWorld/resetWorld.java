@@ -39,7 +39,7 @@ public class resetWorld {
                 arena.setGameStatus(Enums.GameStatus.WAITING);
                 arena.setUsable(false);
 
-                arena.loadSpawns();
+                arena.loadSpawns(arena.getNameWorld());
 
                 if (arena.getISign() != null) arena.getISign().updateSign();
             }, 5);
@@ -67,14 +67,14 @@ public class resetWorld {
                 arena.setGameStatus(Enums.GameStatus.WAITING);
                 arena.setUsable(false);
 
-                arena.loadSpawns();
+                arena.loadSpawns(arena.getNameWorld());
 
                 if (arena.getISign() != null) arena.getISign().updateSign();
             }, 5);
         }
     }
 
-    public void unLoadWorld(String worldName) {
+    private void unLoadWorld(String worldName) {
         File target = new File(this.main.getServer().getWorldContainer(), worldName);
         World world = Bukkit.getWorld(worldName);
 

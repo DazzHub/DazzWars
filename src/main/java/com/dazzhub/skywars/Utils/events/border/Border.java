@@ -2,6 +2,8 @@ package com.dazzhub.skywars.Utils.events.border;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.locUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
@@ -11,9 +13,9 @@ import java.util.Set;
 
 public class Border implements eventBorder {
 
-    private Main main;
+    private final Main main;
 
-    private Arena arena;
+    private final Arena arena;
     private WorldBorder wb;
 
     private int task;
@@ -23,17 +25,25 @@ public class Border implements eventBorder {
         this.main = Main.getPlugin();
 
         this.arena = arena;
-        this.timer = arena.getArenac().getInt("Arena.border.TimeSpawn");
+        this.timer = arena.getArenaConfig().getInt("Arena.border.TimeSpawn");
     }
 
     @Override
     public void spawnBorder() {
-        if (this.arena.getArenac().getBoolean("Arena.border.SpawnDefault")) {
-            World world = Bukkit.getWorld(this.arena.getNameWorld());
+        if (this.arena.getArenaConfig().getBoolean("Arena.border.SpawnDefault")) {
+
+            World world;
+
+            if (arena.getResetArena() == Enums.ResetArena.SLIMEWORLDMANAGER) {
+                world = Bukkit.getWorld(this.arena.getUuid());
+            } else {
+                world = Bukkit.getWorld(this.arena.getNameWorld());
+            }
+
             WorldBorder wb = world.getWorldBorder();
 
             wb.setCenter(this.arena.getSpawnSpectator());
-            wb.setSize(this.arena.getArenac().getInt("Arena.border.Settings.Size"));
+            wb.setSize(this.arena.getArenaConfig().getInt("Arena.border.Settings.Size"));
             wb.setWarningDistance(0);
 
             this.wb = wb;
@@ -43,13 +53,20 @@ public class Border implements eventBorder {
     @Override
     public void startEvent() {
         if (this.wb == null){
-            World world = Bukkit.getWorld(this.arena.getNameWorld());
+            World world;
+
+            if (arena.getResetArena() == Enums.ResetArena.SLIMEWORLDMANAGER) {
+                world = Bukkit.getWorld(this.arena.getUuid());
+            } else {
+                world = Bukkit.getWorld(this.arena.getNameWorld());
+            }
+
             WorldBorder wb = world.getWorldBorder();
 
             wb.setCenter(this.arena.getSpawnSpectator());
-            wb.setSize(this.arena.getArenac().getInt("Arena.border.Settings.Size"));
-            wb.setDamageBuffer(this.arena.getArenac().getInt("Arena.border.Settings.Damage.inborder"));
-            wb.setDamageAmount(this.arena.getArenac().getInt("Arena.border.Settings.Damage.borde"));
+            wb.setSize(this.arena.getArenaConfig().getInt("Arena.border.Settings.Size"));
+            wb.setDamageBuffer(this.arena.getArenaConfig().getInt("Arena.border.Settings.Damage.inborder"));
+            wb.setDamageAmount(this.arena.getArenaConfig().getInt("Arena.border.Settings.Damage.borde"));
             wb.setWarningDistance(0);
 
             this.wb = wb;
@@ -73,7 +90,7 @@ public class Border implements eventBorder {
                 timer--;
             }
 
-        }.runTaskTimerAsynchronously(main,0,20).getTaskId();
+        }.runTaskTimer(main,0,20).getTaskId();
 
 
     }

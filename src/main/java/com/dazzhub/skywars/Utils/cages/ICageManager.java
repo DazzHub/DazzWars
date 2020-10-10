@@ -54,13 +54,21 @@ public class ICageManager {
         configCreate.get().setup(main, "Cages/team/Default");
         configCreate.get().setup(main, "Cages/ranked/Default");
 
-        cagesolo.forEach(this::importSchematicSolo);
-        cageteam.forEach(this::importSchematicTeam);
-        cageranked.forEach(this::importSchematicRanked);
+        for (String s : cagesolo) {
+            importSchematicSolo(s);
+        }
 
-        Console.info("&eLoaded cages solo: &a"+getCagesSolo().size());
-        Console.info("&eLoaded cages team: &a"+getCagesTeam().size());
-        Console.info("&eLoaded cages ranked: &a"+getCagesRanked().size());
+        for (String s : cageteam) {
+            importSchematicTeam(s);
+        }
+
+        for (String s : cageranked) {
+            importSchematicRanked(s);
+        }
+
+        Console.info("&eLoaded cages solo: &a"+this.cagesSolo.size());
+        Console.info("&eLoaded cages team: &a"+this.cagesTeam.size());
+        Console.info("&eLoaded cages ranked: &a"+this.cagesRanked.size());
     }
 
     public void createCage(Player p, String nameCage, String mode, Cuboid cuboid){
@@ -106,9 +114,7 @@ public class ICageManager {
         cuboid.iterator().forEachRemaining(block -> {
 
             if (main.checkVersion()) {
-                ItemStack item = new ItemStack(block.getType(), 1, block.getData());
-                XMaterial material = XMaterial.matchXMaterial(item);
-                blockList.add(material.name());
+                blockList.add(block.getType().name() + ":" + block.getData());
             } else {
                 blockList.add(XMaterial.getMajorVersion(block.getType().name()));
             }
@@ -129,14 +135,19 @@ public class ICageManager {
             Console.error(e.getMessage());
         }
 
-        if (mode.equals("solo")){
-            cagesSolo.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
-        } else if (mode.equals("team")){
-            cagesTeam.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
-        } else if (mode.equals("ranked")){
-            cagesRanked.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
-        } else {
-            Console.warning("&cCage error create: " + nameCage);
+        switch (mode) {
+            case "solo":
+                cagesSolo.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
+                break;
+            case "team":
+                cagesTeam.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
+                break;
+            case "ranked":
+                cagesRanked.put(nameCage, new ICage(nameCage, xDiff, yDiff, zDiff, blockList));
+                break;
+            default:
+                Console.warning("&cCage error create: " + nameCage);
+                break;
         }
 
         p.sendMessage(c("&a&l\u2714 &fCage &e" + nameCage + "&f created successfully"));
@@ -145,7 +156,7 @@ public class ICageManager {
 
 
     private void importSchematicSolo(String name) {
-        File sf = new File(this.main.getDataFolder() + "/Cages/solo", name + ".yml");
+        File sf = new File(this.main.getDataFolder(), "/Cages/solo/" + name + ".yml");
 
         if (!sf.exists()) {
             Console.warning("&cCage File does not exist " + name);
@@ -158,7 +169,7 @@ public class ICageManager {
     }
 
     private void importSchematicTeam(String name) {
-        File sf = new File(this.main.getDataFolder() + "/Cages/team", name + ".yml");
+        File sf = new File(this.main.getDataFolder(), "/Cages/team/" + name + ".yml");
 
         if (!sf.exists()) {
             Console.warning("&cCage File does not exist " + name);
@@ -171,7 +182,7 @@ public class ICageManager {
     }
 
     private void importSchematicRanked(String name) {
-        File sf = new File(this.main.getDataFolder() + "/Cages/ranked", name + ".yml");
+        File sf = new File(this.main.getDataFolder(), "/Cages/ranked/" + name + ".yml");
 
         if (!sf.exists()) {
             Console.warning("&cCage File does not exist " + name);
@@ -180,7 +191,7 @@ public class ICageManager {
 
         FileConfiguration sc = YamlConfiguration.loadConfiguration(sf);
 
-        cagesTeam.put(sc.getString("Name"), new ICage(sc.getString("Name"), sc.getInt("Diff.x"), sc.getInt("Diff.y"), sc.getInt("Diff.z"), sc.getStringList("Blocks")));
+        cagesRanked.put(sc.getString("Name"), new ICage(sc.getString("Name"), sc.getInt("Diff.x"), sc.getInt("Diff.y"), sc.getInt("Diff.z"), sc.getStringList("Blocks")));
     }
 
     public String c(String msg){ return ChatColor.translateAlternateColorCodes('&', msg); }

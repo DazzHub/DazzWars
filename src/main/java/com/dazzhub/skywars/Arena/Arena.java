@@ -53,6 +53,7 @@ public class Arena {
     /* Arena */
     private String nameArena;
     private String nameWorld;
+    private String uuid;
 
     private Enums.GameStatus gameStatus;
     private Enums.Mode mode;
@@ -119,7 +120,10 @@ public class Arena {
     /* TOP KILLERS */
     private HashMap<String, Integer> killers;
 
-    private Configuration arenac;
+    /* RESET MODE */
+    private Enums.ResetArena resetArena;
+
+    private Configuration arenaConfig;
 
     private boolean damageFallStarting;
 
@@ -128,6 +132,7 @@ public class Arena {
 
         /* Arena */
         this.nameArena = nameArena;
+        this.uuid = UUID.randomUUID().toString();
 
         /* Player */
         this.players = new ArrayList<>();
@@ -168,22 +173,26 @@ public class Arena {
         /* TOP KILLERS */
         this.killers = new HashMap<>();
 
-        this.arenac = main.getConfigUtils().getConfig(main, "Arenas/" + nameArena + "/Settings");
-        if (arenac != null) {
-            this.nameWorld = arenac.getString("Arena.world");
+        /* RESET MODE*/
 
-            this.minPlayers = arenac.getInt("Arena.minPlayer");
-            this.maxPlayers = arenac.getInt("Arena.maxPlayer");
+        this.resetArena = Enums.ResetArena.valueOf(main.getSettings().getString("ResetArena"));
 
-            this.DurationGame = arenac.getInt("Arena.durationGame");
-            this.StartingGame = arenac.getInt("Arena.startingGame");
-            this.FinishedGame = arenac.getInt("Arena.finishedGame");
+        this.arenaConfig = main.getConfigUtils().getConfig(main, "Arenas/" + nameArena + "/Settings");
+        if (arenaConfig != null) {
+            this.nameWorld = arenaConfig.getString("Arena.world");
 
-            this.iSign = main.getiSignManager().loadSign(this);
+            this.minPlayers = arenaConfig.getInt("Arena.minPlayer");
+            this.maxPlayers = arenaConfig.getInt("Arena.maxPlayer");
 
-            this.refillTime.addAll(arenac.getIntegerList("Arena.refill"));
+            this.DurationGame = arenaConfig.getInt("Arena.durationGame");
+            this.StartingGame = arenaConfig.getInt("Arena.startingGame");
+            this.FinishedGame = arenaConfig.getInt("Arena.finishedGame");
 
-            this.mode = Enums.Mode.valueOf(arenac.getString("Arena.mode"));
+            this.iSign = main.getSignManager().loadSign(this);
+
+            this.refillTime.addAll(arenaConfig.getIntegerList("Arena.refill"));
+
+            this.mode = Enums.Mode.valueOf(arenaConfig.getString("Arena.mode"));
         }
 
         /* RUNNABLE */
@@ -193,13 +202,25 @@ public class Arena {
 
         this.damageFallStarting = true;
 
-        this.main.getResetWorld().importWorld(this, true);
+        switch (resetArena){
+            case RESETWORLD:
+            case RESETCHUNK:{
+                this.main.getResetWorld().importWorld(this, true);
+                break;
+            }
+
+            case SLIMEWORLDMANAGER:{
+                main.getResetWorldSlime().createworld(this);
+                break;
+            }
+        }
     }
 
     public void resetArena(){
         /* Player */
         this.players = new ArrayList<>();
         this.spectators = new ArrayList<>();
+        this.spawns = new ArrayList<>();
 
         /* Checks */
         this.gameStatus = Enums.GameStatus.DISABLED;
@@ -237,16 +258,33 @@ public class Arena {
         this.refillGame = null;
         this.refillTime = new ArrayList<>();
 
-        if (arenac != null) {
-            this.refillTime.addAll(arenac.getIntegerList("Arena.refill"));
+        if (arenaConfig != null) {
+            this.refillTime.addAll(arenaConfig.getIntegerList("Arena.refill"));
         }
 
         /* TOP KILLERS */
         this.killers = new HashMap<>();
-
         this.damageFallStarting = true;
 
-        this.main.getResetWorld().importWorld(this, false);
+        switch (resetArena){
+            case RESETCHUNK:{
+                this.main.getResetWorld().importWorld(this, false);
+                break;
+            }
+
+            case RESETWORLD:{
+                this.main.getResetWorld().importWorld(this, true);
+                break;
+            }
+
+            case SLIMEWORLDMANAGER:{
+                main.getResetWorldSlime().unloadworld(uuid);
+
+                this.uuid = UUID.randomUUID().toString();
+                Main.getPlugin().getResetWorldSlime().createworld(this);
+                break;
+            }
+        }
     }
 
     public void joinParty(Party party) {
@@ -256,24 +294,24 @@ public class Arena {
     }
 
     public void addPlayer(GamePlayer gamePlayer) {
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> Bukkit.getPluginManager().callEvent(new addPlayerEvent(gamePlayer, this)));
+        Bukkit.getPluginManager().callEvent(new addPlayerEvent(gamePlayer, this));
         if (iSign != null) iSign.updateSign();
     }
 
     public void removePlayer(GamePlayer gamePlayer) {
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> Bukkit.getPluginManager().callEvent(new removePlayerEvent(gamePlayer, this)));
+        Bukkit.getPluginManager().callEvent(new removePlayerEvent(gamePlayer, this));
         if (iSign != null) iSign.updateSign();
     }
 
     public void addSpectator(GamePlayer gamePlayer) {
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> Bukkit.getPluginManager().callEvent(new addSpectatorEvent(gamePlayer, this)));
+        Bukkit.getPluginManager().callEvent(new addSpectatorEvent(gamePlayer, this));
     }
 
     public void removeSpectator(GamePlayer gamePlayer, boolean goLobby) {
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> Bukkit.getPluginManager().callEvent(new removeSpectatorEvent(gamePlayer, goLobby, this)));
+        Bukkit.getPluginManager().callEvent(new removeSpectatorEvent(gamePlayer, goLobby, this));
     }
 
-    public ArenaTeam getAvaibleTeam(int n) {
+    public ArenaTeam getAvailableTeam(int n) {
         return this.spawns.stream().filter(arenaTeam -> arenaTeam.getMembers().size() + n <= this.mode.getSize()).findFirst().orElse(null);
     }
 
@@ -289,7 +327,7 @@ public class Arena {
                     teams.add(gameTeam);
                     break;
                 } else {
-                    return getAvaibleTeam(getMode().getSize());
+                    return getAvailableTeam(getMode().getSize());
                 }
             }
         }
@@ -307,7 +345,14 @@ public class Arena {
     }
 
     public void checkVotes() {
-        World world = Bukkit.getWorld(this.nameWorld);
+        World world;
+
+        if (getResetArena() == Enums.ResetArena.SLIMEWORLDMANAGER) {
+            world = Bukkit.getWorld(uuid);
+        } else {
+            world = Bukkit.getWorld(nameWorld);
+        }
+
         this.votesSystem.setTypes();
 
         switch (this.timeType) {
@@ -576,21 +621,61 @@ public class Arena {
     }
 
 
-    public void loadSpawns() {
-        if (!arenac.getString("Arena.spawns", "").isEmpty()) {
-            arenac.getConfigurationSection("Arena.spawns").getKeys(false).forEach(key ->
-                    spawns.add(new ArenaTeam(this, locUtils.stringToLoc(arenac.getString("Arena.spawns." + key))))
-            );
+    public void loadSpawns(String uuidmap) {
+        if (!arenaConfig.getString("Arena.spawns", "").isEmpty()) {
+            switch (resetArena){
+                case RESETWORLD:
+                case RESETCHUNK:{
+                    arenaConfig.getConfigurationSection("Arena.spawns").getKeys(false).forEach(key ->
+                            spawns.add(new ArenaTeam(this, locUtils.stringToLoc(arenaConfig.getString("Arena.spawns." + key), nameWorld)))
+                    );
+                    break;
+                }
+
+                case SLIMEWORLDMANAGER:{
+                    arenaConfig.getConfigurationSection("Arena.spawns").getKeys(false).forEach(key ->
+                            spawns.add(new ArenaTeam(this, locUtils.stringToLoc(arenaConfig.getString("Arena.spawns." + key), uuidmap)))
+                    );
+                    break;
+                }
+            }
         }
 
-        if (!arenac.getString("Arena.spawnSpectator", "").isEmpty()) {
-            this.spawnSpectator = locUtils.stringToLoc(arenac.getString("Arena.spawnSpectator"));
+        if (!arenaConfig.getString("Arena.spawnSpectator", "").isEmpty()) {
+
+            switch (resetArena){
+                case RESETWORLD:
+                case RESETCHUNK:{
+                    this.spawnSpectator = locUtils.stringToLoc(arenaConfig.getString("Arena.spawnSpectator"), nameWorld);
+                    break;
+                }
+
+                case SLIMEWORLDMANAGER:{
+                    this.spawnSpectator = locUtils.stringToLoc(arenaConfig.getString("Arena.spawnSpectator"), uuidmap);
+                    break;
+                }
+            }
         }
 
-        if (!arenac.getString("Arena.centerChest", "").isEmpty()) {
-            arenac.getStringList("Arena.centerChest").forEach(loc ->
-                    this.centerChest.add(locUtils.stringToLoc(loc))
-            );
+        if (!arenaConfig.getString("Arena.centerChest", "").isEmpty()) {
+
+            switch (resetArena){
+                case RESETWORLD:
+                case RESETCHUNK:{
+                    arenaConfig.getStringList("Arena.centerChest").forEach(loc ->
+                            this.centerChest.add(locUtils.stringToLoc(loc, nameWorld))
+                    );
+                    break;
+                }
+
+                case SLIMEWORLDMANAGER:{
+                    arenaConfig.getStringList("Arena.centerChest").forEach(loc ->
+                            this.centerChest.add(locUtils.stringToLoc(loc, uuidmap))
+                    );
+                    break;
+                }
+            }
+
         }
     }
 

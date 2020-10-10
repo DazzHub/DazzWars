@@ -26,7 +26,7 @@ public class removeSpectator implements Listener {
         Player p = gamePlayer.getPlayer();
         Arena arena = e.getArena();
 
-        Bukkit.getScheduler().runTask(main, () -> {
+        //Bukkit.getScheduler().runTask(main, () -> {
             gamePlayer.resetPlayer(true);
 
             if (e.isGoLobby()) {
@@ -37,7 +37,7 @@ public class removeSpectator implements Listener {
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.LeaveSpectator"));
                 }
 
-                main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY,false,false,false, false);
+                main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.LOBBY,false,false,false, false);
 
                 if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
                     main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), false);
@@ -47,7 +47,7 @@ public class removeSpectator implements Listener {
             } else {
                 gamePlayer.setLobby(false);
             }
-        });
+        //});
 
         gamePlayer.setArena(null);
         gamePlayer.setSpectating(false);

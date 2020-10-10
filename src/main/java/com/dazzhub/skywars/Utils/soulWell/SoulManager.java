@@ -1,7 +1,6 @@
 package com.dazzhub.skywars.Utils.soulWell;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.dazzhub.skywars.Listeners.Lobby.onSoulWell;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Console;
@@ -19,11 +18,11 @@ import java.util.List;
 @Getter
 public class SoulManager {
 
-    private Main main;
+    private final Main main;
 
-    private List<SoulWell> soulWellList;
-    private List<ItemStack> itemStacks;
-    private ArrayList<Location> locations;
+    private final List<SoulWell> soulWellList;
+    private final List<ItemStack> itemStacks;
+    private final ArrayList<Location> locations;
 
     public SoulManager(Main main) {
         this.main = main;
@@ -34,11 +33,6 @@ public class SoulManager {
 
     public void loadSoulWells(){
         Configuration config = main.getConfigUtils().getConfig(main,"SoulWell");
-
-        for (String locations : config.getStringList("Locations")) {
-            Location loc = locUtils.stringToLoc(locations);
-            this.locations.add(loc);
-        }
 
         if (config.getConfigurationSection("Locations") != null) {
             if (config.getConfigurationSection("Locations").getKeys(false) != null) {
@@ -55,7 +49,7 @@ public class SoulManager {
             this.itemStacks.add(new Icon(XMaterial.matchXMaterial(material), 1, (short) config.getInt(path + ".ICON.DATA-VALUE")).setName(config.getString(path + ".NAME")).setLore(config.getStringList(path + ".ICON.DESCRIPTION")).build());
         }));
 
-        Console.info("&eLoaded SoulWell: &a: " + locations.size());
+        Console.info("&eLoaded SoulWell:&a " + locations.size());
     }
 
     public void preOpen(GamePlayer gamePlayer, String type, int chance) {

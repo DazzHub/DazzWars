@@ -4,7 +4,6 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.Utils.Tools;
 import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Set;
@@ -23,8 +22,8 @@ public class dropParty implements eventParty {
         this.main = Main.getPlugin();
 
         this.arena = arena;
-        this.timer = arena.getArenac().getInt("Arena.dropparty.TimeStarting");
-        this.drops = arena.getArenac().getInt("Arena.dropparty.TimeDrop");
+        this.timer = arena.getArenaConfig().getInt("Arena.dropparty.TimeStarting");
+        this.drops = arena.getArenaConfig().getInt("Arena.dropparty.TimeDrop");
     }
 
     @Override
@@ -54,7 +53,7 @@ public class dropParty implements eventParty {
             @Override
             public void run() {
 
-                Tools.spawnEntities(arena.getSpawnSpectator(), null, main.getChestManager().getChestHashMap().get(arena.getArenac().getString("Arena.dropparty.Chest")).getRandomItems(), arena.getArenac().getInt("Arena.dropparty.AmountDrop"), arena.getArenac().getInt("Arena.dropparty.Radio"), false, false);
+                Tools.spawnEntities(arena.getSpawnSpectator(), null, main.getChestManager().getChestHashMap().get(arena.getArenaConfig().getString("Arena.dropparty.Chest")).getRandomItems(), arena.getArenaConfig().getInt("Arena.dropparty.AmountDrop"), arena.getArenaConfig().getInt("Arena.dropparty.Radio"), false, false);
 
                 if (drops <= 1){
                     this.cancel();

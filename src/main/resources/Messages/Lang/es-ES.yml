@@ -11,6 +11,7 @@ Messages:
   EndTime: '&e&l⚠&e Tiempo de juego terminado'
   item-deny: '&e&l⚠&e No tienes permiso'
   menu-deny: '&e&l⚠&e No tienes permiso'
+  GiveCoins: '&d&l➠ &f+%coins% coins'
   InsufficientCoins: '&c&l✘ &fNecesitas %coins% monedas, para poder comprarlo'
   Language:
     change: '&a&l✔ &fTu idioma fue traducido al Español'
@@ -233,86 +234,6 @@ Messages:
           - '%center%&eCon una rareza: &9%rarity%' #%name%, %rarity%, %chance%, %commands%, %type%
           - ''
           - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-  MenuArena:
-    TITLE: '&8&l&nArenas'
-    ROWS: 6
-    FIREWORK:
-      NAME: '&e%arena%'
-      DESCRIPTION:
-        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-        - ''
-        - '&fHaz clic para unirte &e%arena%'
-        - '&fEstado &8» &6%state%'
-        - '&fModo &8» &a%mode%'
-        - '&fJugadores&8» &a%online%/%maxPlayers%'
-        - ''
-        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-    CustomItem:
-      Use: false
-      WAITTING:
-        ICON-ITEM: 95
-        DATA-VALUE: 5
-        NAME: '&l&n%arena%'
-        DESCRIPTION:
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - ''
-          - '&fHaz clic para unirte &e%arena%'
-          - '&fEstado &8» &6%state%'
-          - '&fModo &8» &a%mode%'
-          - '&fJugadores&8» &a%online%/%maxPlayers%'
-          - ''
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      STARTING:
-        ICON-ITEM: 95
-        DATA-VALUE: 4
-        NAME: '&l&n%arena%'
-        DESCRIPTION:
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - ''
-          - '&fHaz clic para unirte &e%arena%'
-          - '&fEstado &8» &6%state%'
-          - '&fModo &8» &a%mode%'
-          - '&fJugadores&8» &a%online%/%maxPlayers%'
-          - ''
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      INGAME:
-        ICON-ITEM: 95
-        DATA-VALUE: 14
-        NAME: '&l&n%arena%'
-        DESCRIPTION:
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - ''
-          - '&fHaz clic para unirte &e%arena%'
-          - '&fEstado &8» &6%state%'
-          - '&fModo &8» &a%mode%'
-          - '&fJugadores&8» &a%online%/%maxPlayers%'
-          - ''
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      RESTARTING:
-        ICON-ITEM: 95
-        DATA-VALUE: 11
-        NAME: '&l&n%arena%'
-        DESCRIPTION:
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - ''
-          - '&fHaz clic para unirte &e%arena%'
-          - '&fEstado &8» &6%state%'
-          - '&fModo &8» &a%mode%'
-          - '&fJugadores&8» &a%online%/%maxPlayers%'
-          - ''
-          - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-    Close:
-      ICON-ITEM: 'ENDER_PEARL'
-      DATA-VALUE: 0
-      NAME: '&eCerrar'
-      DESCRIPTION:
-        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-        - ''
-        - '&fClick para &ecerrar'
-        - ''
-        - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      POSITION-X: 5
-      POSITION-Y: 6
   MenuSpectator:
     TITLE: '&8&l&nRestantes'
     ROWS: 4
@@ -336,6 +257,19 @@ Messages:
         - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
       POSITION-X: 5
       POSITION-Y: 3
+  DeathMessages:
+    Player: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fue asesinado por &c%killer%&7[&f%k_kill_count%&7]'
+    Void: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 cayo en el vacio'
+    Fall: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 cayo del cielo'
+    Burned: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 se quemo!'
+    UnknownCause: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 murio por causa desconocidas'
+    Explosion: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 exploto en la batalla'
+    Lava: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 trato de nadar en la lava'
+    Water: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 se ahogó lentamente'
+    Suffocation: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 se asfixio y murio lentamente'
+    Arrow: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fue disparado por &c%killer%&7[&f%k_kill_count%&7] a &9%blocks%&7 bloques.'
+    EnderPearl: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fue disparado (usando EnderPearl) por &c%killer%&7[&f%k_kill_count%&7] a &9%blocks%&7 bloques.'
+    Lightning: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fue asesinado por la tormenta'
   Party:
     InvalidArgument: '&d&lPARTY &f➠ &cError'
     TargetNoExist: '&a&lParty &e➠&e Jugador no válido.'

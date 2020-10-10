@@ -4,6 +4,7 @@ import com.dazzhub.skywars.Commands.adminCmd;
 import com.dazzhub.skywars.Commands.subCommand;
 import com.dazzhub.skywars.Main;
 import com.cryptomorin.xseries.XSound;
+import com.dazzhub.skywars.Utils.Tools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -35,6 +36,10 @@ public class Coins implements subCommand {
         if (args.length > 3) {
             Player target = Bukkit.getPlayer(args[2]);
             if (target != null) {
+                if (!Tools.isInteger(args[3])) {
+                    p.sendMessage(help(sender));
+                    return;
+                }
                 if (args[1].equalsIgnoreCase("add")) {
                     main.getPlayerManager().getPlayer(target.getUniqueId()).addCoins(Integer.parseInt(args[3]));
                     sender.sendMessage(c("&a&l\u2714 &fCoins added to: &9" + target.getName()));

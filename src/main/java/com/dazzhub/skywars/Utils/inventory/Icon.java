@@ -2,17 +2,18 @@ package com.dazzhub.skywars.Utils.inventory;
 
 import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XMaterial;
+import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Console;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkEffectMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -381,6 +382,44 @@ public class Icon {
         item.setItemMeta(im);
     }
 
+    private ItemStack replaceItemArena(GamePlayer p, String name) {
+        Arena arena = Main.getPlugin().getArenaManager().getArenas().get(name);
+
+        if (arena == null) {
+            item.setType(XMaterial.BEDROCK.parseMaterial());
+            return item;
+        }
+
+        switch (arena.getGameStatus()){
+            case WAITING:{
+                return replace(p.getPlayer(), itemCharge(arena, Color.GREEN));
+            }
+            case STARTING:{
+                return replace(p.getPlayer(), itemCharge(arena, Color.YELLOW));
+            }
+            case INGAME:{
+                return replace(p.getPlayer(), itemCharge(arena, Color.RED));
+            }
+            case RESTARTING:{
+                return replace(p.getPlayer(), itemCharge(arena, Color.BLUE));
+            }
+            default:{
+                return replace(p.getPlayer(), itemCharge(arena, Color.WHITE));
+            }
+        }
+    }
+
+    private ItemStack replaceItemArena2(GamePlayer p, String name) {
+        Arena arena = Main.getPlugin().getArenaManager().getArenas().get(name);
+
+        if (arena == null) {
+            item.setType(XMaterial.BEDROCK.parseMaterial());
+            return item;
+        }
+
+        return replace(p.getPlayer(), item);
+    }
+
     private void replaceLore() {
         List<String> list = new ArrayList<>();
 
@@ -422,6 +461,24 @@ public class Icon {
 
     public ItemStack build(Player p) {
         GamePlayer gamePlayer = Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId());
+
+        if (type != null && type.length() != 0){
+            if (type.startsWith("join:")) {
+                String action = type.substring(5);
+                if (action.startsWith(" ")) {
+                    action = action.substring(1);
+                }
+
+                return replaceItemArena(gamePlayer, action);
+            } else if (type.startsWith("join2:")) {
+                String action = type.substring(6);
+                if (action.startsWith(" ")) {
+                    action = action.substring(1);
+                }
+
+                return replaceItemArena2(gamePlayer, action);
+            }
+        }
 
         if (im.getDisplayName() != null){
             this.replaceName(p);
@@ -470,9 +527,11 @@ public class Icon {
         if (item == null) {
             return null;
         }
+
         if (!item.hasItemMeta()) {
             return item;
         }
+
         ItemStack newItem = item.clone();
         ItemMeta itemMeta = newItem.getItemMeta();
 
@@ -490,6 +549,30 @@ public class Icon {
         }
 
         return newItem;
+    }
+
+    private ItemStack itemCharge(Arena arena, Color color){
+        ItemStack item = new ItemStack(XMaterial.FIREWORK_STAR.parseMaterial());
+        ItemMeta im = this.im.clone();
+
+        List<String> list = new ArrayList<>();
+        for (String s :im.getLore()) {
+            list.add(c(s)
+                    .replaceAll("%state%", String.valueOf(arena.getGameStatus()))
+                    .replaceAll("%arena%", arena.getNameArena())
+                    .replaceAll("%mode%", arena.getMode().toString())
+                    .replaceAll("%maxPlayers%", String.valueOf(arena.getMaxPlayers()))
+                    .replaceAll("%online%", String.valueOf(arena.getPlayers().size())));
+        }
+
+        FireworkEffectMeta meta = (FireworkEffectMeta) im;
+        FireworkEffect effect2 = FireworkEffect.builder().withColor(color).build();
+        meta.setEffect(effect2);
+
+        im.setLore(list);
+        item.setItemMeta(im);
+
+        return item;
     }
 
     private String c(String c) {

@@ -23,6 +23,18 @@ public class onWin implements Listener {
         Arena arena = e.getArena();
         arena.setGameStatus(Enums.GameStatus.RESTARTING);
 
+        if (arena.getRefillGame() != null) {
+            arena.getRefillGame().cancel();
+            arena.setRefillGame(null);
+            arena.getRefillTime().clear();
+        }
+
+        if (arena.getEventBorder() != null) arena.getEventBorder().stopTimer();
+        if (arena.getEventDragon() != null) arena.getEventDragon().killDragon();
+        if (arena.getEventParty() != null) arena.getEventParty().stopTimer();
+        if (arena.getEventStorm() != null) arena.getEventStorm().stopTimer();
+        if (arena.getEventTNT() != null) arena.getEventTNT().stopEvent();
+
         arena.getPlayers().stream().filter(gamePlayer -> !arena.getPlayers().isEmpty() && gamePlayer.getPlayer() != null).forEach(gamePlayer -> {
             Titles.sendTitle(gamePlayer.getPlayer(),
                     gamePlayer.getLangMessage().getInt("Messages.WinnerTitle.Fade"),
@@ -36,17 +48,24 @@ public class onWin implements Listener {
 
             if (arena.getMode().equals(Enums.Mode.SOLO)) {
                 gamePlayer.addWinsSolo();
+                gamePlayer.addCoins(main.getSettings().getInt("Coins.WinSolo"));
+                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.WinSolo"))));
             } else if (arena.getMode().equals(Enums.Mode.TEAM)) {
                 gamePlayer.addWinsTeam();
+                gamePlayer.addCoins(main.getSettings().getInt("Coins.WinTeam"));
+                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.WinTeam"))));
             } else if (arena.getMode().equals(Enums.Mode.RANKED)) {
                 gamePlayer.addWinsRanked();
+                gamePlayer.addCoins(main.getSettings().getInt("Coins.WinRanked"));
                 gamePlayer.addRanked(main.getSettings().getInt("Coins.lvlRanked"));
+                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.lvlRanked"))));
             }
+
         });
 
         arena.getSpectators().forEach(arena::getWinners);
 
-        arena.getEndGameTask().runTaskTimerAsynchronously(main, 0, 20L);
+        arena.getEndGameTask().runTaskTimer(main, 0, 20L);
     }
 
     private String c(String c) {

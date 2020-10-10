@@ -31,6 +31,8 @@ public class SpectatorMenu {
 
         Inventory inv = Bukkit.createInventory(null, config.getInt("Messages.MenuSpectator.ROWS") * 9, c(config.getString("Messages.MenuSpectator.TITLE")));
 
+        if (inv == null) return;
+
         List<String> lore = config.getStringList("Messages.MenuSpectator.Close.DESCRIPTION");
 
         Bukkit.getScheduler().runTaskAsynchronously(main, ()-> {

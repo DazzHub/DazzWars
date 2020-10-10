@@ -20,7 +20,7 @@ import org.bukkit.event.Listener;
 
 public class regListeners {
 
-    private Main main;
+    private final Main main;
 
     public regListeners(Main main) {
         this.main = main;
@@ -57,6 +57,7 @@ public class regListeners {
         /* LOBBIES */
         this.onLoad(new onBreak(main));
         this.onLoad(new onDamage(main));
+        this.onLoad(new onMobs(main));
         this.onLoad(new onPlace(main));
         this.onLoad(new onPlayer(main));
         this.onLoad(new onTime(main));

@@ -9,14 +9,14 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class onBreak implements Listener {
 
-    private Main main;
+    private final Main main;
 
     public onBreak(Main main) {
         this.main = main;
     }
 
     @EventHandler
-    public void PlayerBreak(BlockBreakEvent e) {
+    public void PlayerBreakLobby(BlockBreakEvent e) {
         Player p = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 

@@ -5,6 +5,7 @@ import com.dazzhub.skywars.Commands.adminCmd;
 import com.dazzhub.skywars.Commands.subCommand;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Tools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -37,7 +38,7 @@ public class editChest implements subCommand {
             String file = args[1];
             String chance = args[2];
 
-            if (!isInteger(chance)) {
+            if (!Tools.isInteger(chance)) {
                 p.sendMessage(help(sender));
                 return;
             }
@@ -45,15 +46,6 @@ public class editChest implements subCommand {
             main.getChestManager().editChest(file, Integer.parseInt(chance), p);
         } else {
             p.sendMessage(help(sender));
-        }
-    }
-
-    private boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException | NullPointerException ex2) {
-            return false;
         }
     }
 

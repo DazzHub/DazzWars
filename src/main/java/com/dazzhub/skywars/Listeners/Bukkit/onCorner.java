@@ -51,7 +51,7 @@ public class onCorner implements Listener {
             e.setCancelled(true);
         }
 
-        if (e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST  && compareItem(p.getItemInHand(), main.getItemsCustom().getAddChestCenter())) {
+        if (compareItem(p.getItemInHand(), main.getItemsCustom().getAddChestCenter())) {
             if (e.getAction().equals(Action.LEFT_CLICK_BLOCK)){
                 Main.getPlugin().getArenaManager().addChestCenter(p, e.getClickedBlock().getLocation(), namearena);
             }

@@ -234,66 +234,6 @@ public class Lines {
                 addDefaultLang("SoulWell.EndScroll.Announcement.enable", true, lang);
                 addDefaultLang("SoulWell.EndScroll.Announcement.lines", Arrays.asList("%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬","","%center%&eCongratulations, you have just won: &9%name%","%center%&eWith a rarity: &9%rarity%","","%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), lang);
 
-                List<String> arenadesc = new ArrayList<>();
-                arenadesc.add("&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                arenadesc.add("");
-                arenadesc.add("&fClick to join &e%arena%");
-                arenadesc.add("&fState &8» &6%state%");
-                arenadesc.add("&fMode &8» &a%mode%");
-                arenadesc.add("&fPlayers &8» &a%online%/%maxPlayers%");
-                arenadesc.add("");
-                arenadesc.add("&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                addDefaultLang("Messages.MenuArena.TITLE", "&8&l&nArenas", lang);
-                addDefaultLang("Messages.MenuArena.ROWS", 6, lang);
-                addDefaultLang("Messages.MenuArena.FIREWORK.NAME", "&e%arena%", lang);
-                addDefaultLang("Messages.MenuArena.FIREWORK.DESCRIPTION", arenadesc, lang);
-
-                List<String> customdesc = new ArrayList<>();
-                customdesc.add("&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                customdesc.add("");
-                customdesc.add("&fClick to join &e%arena%");
-                customdesc.add("&fState &8» &6%state%");
-                customdesc.add("&fMode &8» &a%mode%");
-                customdesc.add("&fPlayers &8» &a%online%/%maxPlayers%");
-                customdesc.add("");
-                customdesc.add("&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-
-                addDefaultLang("Messages.MenuArena.CustomItem.Use", false, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.WAITTING.ICON-ITEM", 95, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.WAITTING.DATA-VALUE", 5, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.WAITTING.NAME", "&l&n%arena%", lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.WAITTING.DESCRIPTION", customdesc, lang);
-
-                addDefaultLang("Messages.MenuArena.CustomItem.STARTING.ICON-ITEM", 95, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.STARTING.DATA-VALUE", 4, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.STARTING.NAME", "&l&n%arena%", lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.STARTING.DESCRIPTION", customdesc, lang);
-
-                addDefaultLang("Messages.MenuArena.CustomItem.INGAME.ICON-ITEM", 95, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.INGAME.DATA-VALUE", 14, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.INGAME.NAME", "&l&n%arena%", lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.INGAME.DESCRIPTION", customdesc, lang);
-
-                addDefaultLang("Messages.MenuArena.CustomItem.RESTARTING.ICON-ITEM", 95, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.RESTARTING.DATA-VALUE", 11, lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.RESTARTING.NAME", "&l&n%arena%", lang);
-                addDefaultLang("Messages.MenuArena.CustomItem.RESTARTING.DESCRIPTION", customdesc, lang);
-
-                List<String> closedesc = new ArrayList<>();
-                closedesc.add("&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                closedesc.add("");
-                closedesc.add("&fClick to &eclose");
-                closedesc.add("");
-                closedesc.add("&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-
-                addDefaultLang("Messages.MenuArena.Close.ICON-ITEM", "ENDER_PEARL", lang);
-                addDefaultLang("Messages.MenuArena.Close.DATA-VALUE", 0, lang);
-                addDefaultLang("Messages.MenuArena.Close.NAME", "&eCerrar", lang);
-                addDefaultLang("Messages.MenuArena.Close.DESCRIPTION", closedesc, lang);
-                addDefaultLang("Messages.MenuArena.Close.POSITION-X", 5, lang);
-                addDefaultLang("Messages.MenuArena.Close.POSITION-Y", 6, lang);
-
-
                 addDefaultLang("Messages.MenuSpectator.TITLE", "&8&l&nIn Game", lang);
                 addDefaultLang("Messages.MenuSpectator.ROWS", 4, lang);
                 addDefaultLang("Messages.MenuSpectator.Player.NAME", "&6&n%player%", lang);
@@ -302,9 +242,22 @@ public class Lines {
                 addDefaultLang("Messages.MenuSpectator.Close.NAME", "&eClose", lang);
                 addDefaultLang("Messages.MenuSpectator.Close.ICON-ITEM", "ENDER_PEARL", lang);
                 addDefaultLang("Messages.MenuSpectator.Close.DATA-VALUE", 0, lang);
-                addDefaultLang("Messages.MenuSpectator.Close.DESCRIPTION", closedesc, lang);
+                addDefaultLang("Messages.MenuSpectator.Close.DESCRIPTION", Arrays.asList("&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "", "&fClick to &eclose", "", "&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), lang);
                 addDefaultLang("Messages.MenuSpectator.Close.POSITION-X", 5, lang);
                 addDefaultLang("Messages.MenuSpectator.Close.POSITION-Y", 3, lang);
+
+                addDefaultLang("Messages.DeathMessages.Player", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 &7was slain by &c%killer%&7[&f%k_kill_count%&7]", lang);
+                addDefaultLang("Messages.DeathMessages.Void", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fell into void", lang);
+                addDefaultLang("Messages.DeathMessages.Fall", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fell from the sky", lang);
+                addDefaultLang("Messages.DeathMessages.Burned", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 was burned!", lang);
+                addDefaultLang("Messages.DeathMessages.Explosion", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 exploded in battle", lang);
+                addDefaultLang("Messages.DeathMessages.Lava", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 tried to swim in the lava", lang);
+                addDefaultLang("Messages.DeathMessages.Water", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 drowned slowly", lang);
+                addDefaultLang("Messages.DeathMessages.Suffocation", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 it suffocated and died slowly", lang);
+                addDefaultLang("Messages.DeathMessages.Arrow", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 was shot by &c%killer%&7[&f%k_kill_count%&7]&7 from &9%blocks%&7 blocks.", lang);
+                addDefaultLang("Messages.DeathMessages.EnderPearl", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 was shot (using EnderPearl) by &c%killer%&7[&f%k_kill_count%&7] from &9%blocks%&7 blocks.", lang);
+                addDefaultLang("Messages.DeathMessages.Lightning", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 was slain by the storm", lang);
+                addDefaultLang("Messages.DeathMessages.UnknownCause", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 did by unknown cause", lang);
 
                 addDefaultLang("Messages.Party.InvalidArgument", "&d&lPARTY &f➠ &cError", lang);
                 addDefaultLang("Messages.Party.TargetNoExist", "&d&lPARTY &f➠ &9%target%&f invalid player", lang);
@@ -378,9 +331,6 @@ public class Lines {
 
                 infogame.clear();
                 winnerGame.clear();
-                arenadesc.clear();
-                customdesc.clear();
-                closedesc.clear();
                 sw.clear();
                 swadmin.clear();
             }
@@ -436,6 +386,9 @@ public class Lines {
             addDefaultSettings("Inventory.Arena.Ranked", "arenaranked");
             addDefaultSettings("Inventory.Arena.Spectator", "spectator");
 
+            addDefaultSettings("ResetArena", "RESETCHUNK");
+            addDefaultSettings("SWM-TYPE", "file");
+
             addDefaultSettings("ReTeleportCage", 2);
             addDefaultSettings("TopUpdate", 600);
             addDefaultSettings("ListLanguage", Arrays.asList("en-EN", "es-ES"));
@@ -455,6 +408,8 @@ public class Lines {
             addDefaultSettings("lobbies.onFeed", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onHealth", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onResetGameMode", Collections.singletonList("world"));
+            addDefaultSettings("lobbies.onMonsters", Collections.singletonList("world"));
+            addDefaultSettings("lobbies.onAnimals", Collections.singletonList("world"));
 
         });
     }

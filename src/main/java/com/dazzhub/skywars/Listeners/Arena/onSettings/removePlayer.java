@@ -37,7 +37,7 @@ public class removePlayer implements Listener {
         arena.getPlayers().remove(gamePlayer);
         arena.getSpectators().remove(gamePlayer);
 
-        Bukkit.getScheduler().runTask(main, () -> {
+        //Bukkit.getScheduler().runTask(main, () -> {
             gamePlayer.resetPlayer(true);
 
             gamePlayer.getPlayer().teleport(main.getLobbyManager().getLobby());
@@ -52,8 +52,8 @@ public class removePlayer implements Listener {
                 main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), false);
             }
 
-            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), ScoreBoardAPI.ScoreboardType.LOBBY,false,false,false,false);
-        });
+            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.LOBBY,false,false,false,false);
+        //});
 
         gamePlayer.setLobby(true);
         if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().reloadHologram();

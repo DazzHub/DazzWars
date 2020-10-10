@@ -2,34 +2,35 @@ package com.dazzhub.skywars.Utils.events.dragon;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Enums;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Monster;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Set;
 
 public class Dragon implements eventDragon {
 
-    private Main main;
-    private Arena arena;
+    private final Main main;
+    private final Arena arena;
 
     private EnderDragon dragon;
+    private int task;
     private int timer;
 
     public Dragon(Arena arena) {
         this.main = Main.getPlugin();
         this.arena = arena;
-        this.timer = arena.getArenac().getInt("Arena.dragon.TimeSpawn");
+        this.timer = arena.getArenaConfig().getInt("Arena.dragon.TimeSpawn");
     }
 
     @Override
     public void startEvent() {
-        new BukkitRunnable() {
+        this.task = new BukkitRunnable() {
             @Override
             public void run() {
 
@@ -42,12 +43,19 @@ public class Dragon implements eventDragon {
                     this.cancel();
 
                     Bukkit.getScheduler().runTask(main, () -> {
-                        World world = Bukkit.getWorld(arena.getNameWorld());
+                        World world;
+
+                        if (arena.getResetArena() == Enums.ResetArena.SLIMEWORLDMANAGER) {
+                            world = Bukkit.getWorld(arena.getUuid());
+                        } else {
+                            world = Bukkit.getWorld(arena.getNameWorld());
+                        }
+
                         Location loc = arena.getSpawnSpectator().add(0,5,0);
 
                         dragon = (EnderDragon) world.spawnEntity(loc, EntityType.ENDER_DRAGON);
 
-                        dragon.setCustomName(c(arena.getArenac().getString("Arena.dragon.Name")));
+                        dragon.setCustomName(c(arena.getArenaConfig().getString("Arena.dragon.Name")));
                         dragon.setCustomNameVisible(true);
                     });
 
@@ -55,11 +63,16 @@ public class Dragon implements eventDragon {
 
                 timer--;
             }
-        }.runTaskTimerAsynchronously(main,0,20);
+        }.runTaskTimer(main,0,20).getTaskId();
     }
 
     @Override
     public void killDragon() {
+        if (Bukkit.getScheduler().isCurrentlyRunning(task)) {
+            Bukkit.getScheduler().cancelTask(task);
+            task = 0;
+        }
+
         if (dragon == null) return;
 
         dragon.remove();

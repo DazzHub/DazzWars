@@ -16,7 +16,7 @@ public class onPlace implements Listener {
     }
 
     @EventHandler
-    public void PlayerBuild(BlockPlaceEvent e) {
+    public void PlayerBuildLobby(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 

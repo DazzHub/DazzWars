@@ -32,7 +32,7 @@ public class Enable implements subCommand {
             Player p = (Player) sender;
             String nameArena = args[1];
 
-            main.getArenaManager().resetArena(nameArena);
+            main.getArenaManager().enableArena(nameArena);
             p.sendMessage(c("&a&l\u2714 &fArena &e" + nameArena + "&f was activated"));
 
         } else {

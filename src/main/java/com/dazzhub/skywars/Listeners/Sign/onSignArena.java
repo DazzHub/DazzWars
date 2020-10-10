@@ -54,7 +54,7 @@ public class onSignArena implements Listener {
                 return;
             }
 
-            main.getiSignManager().createSigns(player, sign, arena);
+            main.getSignManager().createSigns(player, sign, arena);
         }
     }
 
@@ -67,7 +67,7 @@ public class onSignArena implements Listener {
             return;
         }
 
-        Arena arena = main.getiSignManager().getSigns().get(state.getLocation());
+        Arena arena = main.getSignManager().getSigns().get(state.getLocation());
         if (arena == null) return;
 
         if (!player.hasPermission("skywars.admin")) {
@@ -76,7 +76,7 @@ public class onSignArena implements Listener {
             return;
         }
 
-        main.getiSignManager().removeSign(player, arena, state.getLocation());
+        main.getSignManager().removeSign(player, arena, state.getLocation());
     }
 
     @EventHandler
@@ -88,7 +88,7 @@ public class onSignArena implements Listener {
                 return;
             }
 
-            Arena arena = main.getiSignManager().getSigns().get(state.getLocation());
+            Arena arena = main.getSignManager().getSigns().get(state.getLocation());
             if (arena == null) return;
 
             Bukkit.getPluginManager().callEvent(new JoinEvent(e.getPlayer(), arena, Enums.JoinCause.SIGN));

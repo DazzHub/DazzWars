@@ -2,6 +2,8 @@ package com.dazzhub.skywars.Listeners.Bukkit;
 
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.Tools;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,7 +38,7 @@ public class onJoinServer implements Listener {
                     main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), true);
                 }
 
-                main.getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY,false,false, false,false);
+                main.getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY,false,false, false,false);
                 main.getHologramsManager().loadHologram(p);
 
             });
@@ -51,13 +53,14 @@ public class onJoinServer implements Listener {
     public void Join2(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         World world = player.getWorld();
+
         Bukkit.getServer().getOnlinePlayers().forEach(p -> {
             if (p.getWorld() == world) {
-                p.showPlayer(player);
-                player.showPlayer(p);
+                Tools.ShowPlayer(p, player);
+                Tools.ShowPlayer(player, p);
             } else {
-                p.hidePlayer(player);
-                player.hidePlayer(p);
+                Tools.HidePlayer(p, player);
+                Tools.HidePlayer(player, p);
             }
         });
     }

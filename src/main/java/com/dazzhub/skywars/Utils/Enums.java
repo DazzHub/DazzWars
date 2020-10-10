@@ -5,8 +5,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class Enums {
 
-    private static FileConfiguration config = Main.getPlugin().getConfigUtils().getConfig(Main.getPlugin(), Main.getPlugin().getSettings().getString("Default.Lang"));
-
     public enum GameStatus
     {
         WAITING,
@@ -96,4 +94,23 @@ public class Enums {
         }
     }
 
+    public enum ScoreboardType {
+        LOBBY,
+
+        STARTING,
+        STARTINGTEAM,
+        STARTINGRANKED,
+
+        INGAME,
+        INGAMETEAM,
+        INGAMERANKED,
+
+        SPECTATOR;
+    }
+
+    public enum ResetArena {
+        RESETWORLD,
+        RESETCHUNK,
+        SLIMEWORLDMANAGER
+    }
 }

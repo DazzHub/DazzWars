@@ -8,9 +8,13 @@ import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.effects.getTypeKills;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.EnderPearl;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class onDeath implements Listener {
 
@@ -18,6 +22,129 @@ public class onDeath implements Listener {
 
     public onDeath(Main main) {
         this.main = main;
+    }
+
+    @EventHandler
+    public void messageDeathPlayer(DeathEvent e) {
+        GamePlayer killerg = e.getKiller();
+        GamePlayer dead = e.getDead();
+        PlayerDeathEvent event = e.getEvent();
+
+        dead.getArena().getPlayers().forEach(gamePlayer -> {
+            if (killerg != null) {
+                switch (event.getEntity().getLastDamageCause().getCause()) {
+                    case ENTITY_ATTACK: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Player")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replace("%killer%", killerg.getPlayer().getName())
+                                .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                                .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case PROJECTILE: {
+                        if ((event.getEntity().getLastDamageCause()) instanceof Arrow) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Arrow")
+                                    .replace("%player%", dead.getPlayer().getName())
+                                    .replace("%killer%", killerg.getPlayer().getName())
+                                    .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
+                                    .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                                    .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
+                            );
+                        } else if ((event.getEntity().getLastDamageCause()) instanceof EnderPearl) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.EnderPearl")
+                                    .replace("%player%", dead.getPlayer().getName())
+                                    .replace("%killer%", killerg.getPlayer().getName())
+                                    .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
+                                    .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                                    .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
+                            );
+                        }
+                        break;
+                    }
+                }
+            } else {
+                switch (event.getEntity().getLastDamageCause().getCause()) {
+                    case VOID: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Void")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case FIRE_TICK: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Burned")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case FALL: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Fall")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case ENTITY_EXPLOSION: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Explosion")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case LAVA: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Lava")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case DROWNING: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Water")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case SUFFOCATION: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Suffocation")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case LIGHTNING: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Lightning")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    default: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.UnknownCause")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                }
+            }
+        });
+
+    }
+
+    private int checkDistance(Player player, Entity entity) {
+        if (entity != null) {
+            if (player.getWorld() == entity.getWorld()) {
+                return (int) player.getLocation().distance(entity.getLocation());
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
     }
 
     @EventHandler
@@ -62,10 +189,12 @@ public class onDeath implements Listener {
             Bukkit.getScheduler().runTaskLater(Main.getPlugin(), () -> p.teleport(arena.getSpawnSpectator()), 5);
         }
 
+        if (!arena.getKillers().containsKey(dead.getName())){
+            arena.getKillers().put(dead.getName(), 0);
+        }
 
         if (killer != null) {
             killer.addKillsArena();
-            arena.getKillers().put(killer.getName(), arena.getKillers().containsKey(killer.getName()) ? (arena.getKillers().get(killer.getName()) + 1) : 1);
 
             if (arena.isNoClean()){
                 killer.getPlayer().setHealth(killer.getPlayer().getKiller().getMaxHealth());
@@ -74,23 +203,52 @@ public class onDeath implements Listener {
             switch (arena.getMode()) {
                 case SOLO: {
                     killer.addKillsSolo();
+
+                    if (arena.getKillers().isEmpty()){
+                        killer.addCoins(main.getSettings().getInt("Coins.FirstKillSolo"));
+                        killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.FirstKillSolo"))));
+                    } else {
+                        killer.addCoins(main.getSettings().getInt("Coins.KillSolo"));
+                        killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.KillSolo"))));
+                    }
+
                     getTypeKills effect = killer.getTypeKill(killer.getKillEffectSolo());
                     if (effect != null) effect.playKillEffect();
                     break;
                 }
                 case TEAM: {
                     killer.addKillsTeam();
+
+                    if (arena.getKillers().isEmpty()){
+                        killer.addCoins(main.getSettings().getInt("Coins.FirstKillTeam"));
+                        killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.FirstKillTeam"))));
+                    } else {
+                        killer.addCoins(main.getSettings().getInt("Coins.KillTeam"));
+                        killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.KillTeam"))));
+                    }
+
                     getTypeKills effect = killer.getTypeKill(killer.getKillEffectTeam());
                     if (effect != null) effect.playKillEffect();
                     break;
                 }
                 case RANKED: {
                     killer.addKillsRanked();
+
+                    if (arena.getKillers().isEmpty()){
+                        killer.addCoins(main.getSettings().getInt("Coins.FirstKillRanked"));
+                        killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.FirstKillRanked"))));
+                    } else {
+                        killer.addCoins(main.getSettings().getInt("Coins.KillRanked"));
+                        killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.KillRanked"))));
+                    }
+
                     getTypeKills effect = killer.getTypeKill(killer.getKillEffectRanked());
                     if (effect != null) effect.playKillEffect();
                     break;
                 }
             }
+
+            arena.getKillers().put(killer.getName(), arena.getKillers().containsKey(killer.getName()) ? (arena.getKillers().get(killer.getName()) + 1) : 1);
         }
     }
 }

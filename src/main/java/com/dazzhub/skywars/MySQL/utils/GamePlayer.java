@@ -14,6 +14,7 @@ import com.dazzhub.skywars.Utils.effects.kills.*;
 import com.dazzhub.skywars.Utils.effects.wins.*;
 import com.dazzhub.skywars.Utils.hologram.Holograms;
 import com.cryptomorin.xseries.XSound;
+import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardBuilder;
 import com.google.common.base.Strings;
 import lombok.Getter;
 import lombok.Setter;
@@ -137,6 +138,8 @@ public class GamePlayer {
     private Location cage2;
 
     private List<Projectile> projectilesList;
+
+    private ScoreBoardBuilder scoreBoardBuilder;
 
     public GamePlayer(
             UUID uuid,
@@ -422,10 +425,10 @@ public class GamePlayer {
         this.setLvlRanked(this.getLvlRanked() + amount);
     }
     public void removeCoins(int amount) {
-        this.setCoins(this.getCoins() - amount);
+        this.setCoins(Math.max((this.getCoins() - amount), 0));
     }
     public void removeLvlRanked(int amount) {
-        this.setLvlRanked(this.getLvlRanked() - amount);
+        this.setLvlRanked(Math.max((this.getLvlRanked() - amount), 0));
     }
 
     public boolean isInArena() {
@@ -448,6 +451,8 @@ public class GamePlayer {
         p.setFoodLevel(20);
 
         p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0));
+
         p.spigot().setCollidesWithEntities(false);
 
         p.setAllowFlight(true);
@@ -463,7 +468,8 @@ public class GamePlayer {
         p.spigot().setCollidesWithEntities(true);
 
         p.setGameMode(GameMode.SURVIVAL);
-        Bukkit.getOnlinePlayers().forEach(online -> online.getPlayer().showPlayer(p));
+
+        Bukkit.getOnlinePlayers().forEach(online -> Tools.ShowPlayer(online, p));
 
         if (setMaxHealth) {
             p.setHealthScale(20.0D);
@@ -607,11 +613,14 @@ public class GamePlayer {
                             this.cancel();
                         }
                     }
+                    
                 }
-            }.runTaskTimerAsynchronously(Main.getPlugin(), 0, 1);
+            }.runTaskTimer(Main.getPlugin(), 0, 1);
         }
 
     }
+
+
 
     protected String c(String cmd) {
         return ChatColor.translateAlternateColorCodes('&', cmd);

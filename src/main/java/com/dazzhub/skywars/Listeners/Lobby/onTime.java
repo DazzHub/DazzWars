@@ -22,7 +22,7 @@ public class onTime implements Listener {
     }
 
     @EventHandler
-    public void onChangeWeather(WeatherChangeEvent e) {
+    public void onChangeWeatherLobby(WeatherChangeEvent e) {
         if (main.getSettings().getStringList("lobbies.onTime").contains(e.getWorld().getName())) {
             if (e.toWeatherState()) {
                 e.setCancelled(true);

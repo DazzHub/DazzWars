@@ -1,14 +1,15 @@
 package com.dazzhub.skywars.Commands.sub;
 
+import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Commands.adminCmd;
 import com.dazzhub.skywars.Commands.subCommand;
 import com.dazzhub.skywars.Main;
-import org.bukkit.*;
+import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Enums;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.io.File;
 
 public class reload implements subCommand {
 
@@ -27,8 +28,24 @@ public class reload implements subCommand {
         }
 
         main.getMenuManager().reloadMenu();
-
         sender.sendMessage(c("&a&l\u2714 &fMenus reloaded"));
+
+        main.getArenaManager().getArenas().values().forEach(arena -> {
+            arena.getPlayers().forEach(arena::removePlayer);
+            arena.setGameStatus(Enums.GameStatus.DISABLED);
+        });
+
+        Bukkit.getOnlinePlayers().forEach(on -> {
+            if (main.getLobbyManager().getLobby() != null) {
+                on.teleport(main.getLobbyManager().getLobby());
+            }
+
+            main.getItemManager().giveItems(on, main.getSettings().getString("Inventory.Lobby"), true);
+        });
+
+        main.getArenaManager().loadArenas();
+
+        sender.sendMessage(c("&a&l\u2714 &fArenas reloaded"));
     }
 
     @Override

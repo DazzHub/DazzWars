@@ -1,7 +1,7 @@
 package com.dazzhub.skywars;
 
+import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Arena.ArenaManager;
-import com.dazzhub.skywars.Arena.Menu.ArenasMenu;
 import com.dazzhub.skywars.Commands.adminCmd;
 import com.dazzhub.skywars.Commands.others.JoinArena;
 import com.dazzhub.skywars.Commands.others.LeftArena;
@@ -12,8 +12,7 @@ import com.dazzhub.skywars.MySQL.getPlayerDB;
 import com.dazzhub.skywars.MySQL.utils.PlayerDB;
 import com.dazzhub.skywars.MySQL.utils.PlayerManager;
 import com.dazzhub.skywars.Party.PartyManager;
-import com.dazzhub.skywars.Utils.CenterMessage;
-import com.dazzhub.skywars.Utils.Lines;
+import com.dazzhub.skywars.Utils.*;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.SongPlayer;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.lSong;
 import com.dazzhub.skywars.Utils.cages.ICageManager;
@@ -23,12 +22,11 @@ import com.dazzhub.skywars.Utils.configuration.configUtils;
 import com.dazzhub.skywars.Utils.hologram.HologramsManager;
 import com.dazzhub.skywars.Utils.inventory.Item.IItemManager;
 import com.dazzhub.skywars.Utils.inventory.menu.IMenuManager;
-import com.dazzhub.skywars.Utils.itemsCustom;
 import com.dazzhub.skywars.Utils.kits.IKitManager;
-import com.dazzhub.skywars.Utils.lobbyManager;
 import com.dazzhub.skywars.Utils.pluginutils.Metrics;
 import com.dazzhub.skywars.Utils.pluginutils.SpigotUpdater;
 import com.dazzhub.skywars.Utils.resetWorld.resetWorld;
+import com.dazzhub.skywars.Utils.resetWorld.resetWorldSlime;
 import com.dazzhub.skywars.Utils.scoreboard.Placeholders;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
 import com.dazzhub.skywars.Utils.signs.arena.ISignManager;
@@ -47,51 +45,50 @@ public class Main extends JavaPlugin {
     private static Main plugin;
 
     /* CONFIG */
-    private configUtils configUtils;
+    private final configUtils configUtils;
 
     /* EVENTS */
-    private regListeners regListeners;
+    private final regListeners regListeners;
 
     /* ARENA */
-    private ArenaManager arenaManager;
-    private resetWorld resetWorld;
-    private itemsCustom itemsCustom;
-
-    private ArenasMenu arenasMenu;
+    private final ArenaManager arenaManager;
+    private final resetWorld resetWorld;
+    private final itemsCustom itemsCustom;
+    private com.dazzhub.skywars.Utils.resetWorld.resetWorldSlime resetWorldSlime;
 
     /* PARTY */
-    private PartyManager partyManager;
+    private final PartyManager partyManager;
 
     /* SIGNS */
-    private ISignManager iSignManager;
-    private HologramsManager hologramsManager;
+    private final ISignManager iSignManager;
+    private final HologramsManager hologramsManager;
 
     /* CAGE MANAGER */
-    private ICageManager cageManager;
+    private final ICageManager cageManager;
 
     /* CHEST MANAGER */
-    private IChestManager chestManager;
+    private final IChestManager chestManager;
 
     /* INVENTORY MANAGER */
-    private IItemManager iItemManager;
-    private IMenuManager iMenuManager;
+    private final IItemManager iItemManager;
+    private final IMenuManager iMenuManager;
 
     /* KIT MANAGER */
-    private IKitManager iKitManager;
+    private final IKitManager iKitManager;
 
     /* MYSQL */
-    private getPlayerDB getPlayerDB;
-    private PlayerManager playerManager;
+    private final getPlayerDB getPlayerDB;
+    private final PlayerManager playerManager;
 
     /* LOBBY MANAGER */
-    private lobbyManager lobbyManager;
-    private ScoreBoardAPI scoreBoardAPI;
+    private final lobbyManager lobbyManager;
+    private final ScoreBoardAPI scoreBoardAPI;
 
     /* TOP SIGNS */
-    private ITopManager iTopManager;
+    private final ITopManager iTopManager;
 
     /* SOUL MANAGER */
-    private SoulManager soulManager;
+    private final SoulManager soulManager;
 
     private String version;
 
@@ -106,13 +103,13 @@ public class Main extends JavaPlugin {
         this.arenaManager = new ArenaManager(this);
         this.resetWorld = new resetWorld(this);
         this.itemsCustom = new itemsCustom(this);
+        this.resetWorldSlime = new resetWorldSlime(this);
 
         this.partyManager = new PartyManager();
 
         this.cageManager = new ICageManager(this);
 
         this.chestManager = new IChestManager(this);
-        this.arenasMenu = new ArenasMenu(this);
 
         this.iSignManager = new ISignManager(this);
         this.hologramsManager = new HologramsManager(this);
@@ -186,7 +183,7 @@ public class Main extends JavaPlugin {
                 getPlayerDB().loadPlayer(p.getUniqueId());
             }
 
-            Bukkit.getScheduler().runTask(this, () -> Bukkit.getOnlinePlayers().forEach(p -> getScoreBoardAPI().setScoreBoard(p, ScoreBoardAPI.ScoreboardType.LOBBY,false,false,false,false)));
+            Bukkit.getScheduler().runTask(this, () -> Bukkit.getOnlinePlayers().forEach(p -> getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY,false,false,false,false)));
         });
 
         new Placeholders(this).register();
@@ -203,7 +200,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         Bukkit.getOnlinePlayers().forEach(p -> getPlayerDB().savePlayer(p.getUniqueId()));
 
-        arenaManager.getArenas().values().forEach(arena -> Bukkit.getServer().unloadWorld(arena.getNameWorld(), false));
+        arenaManager.getArenas().values().stream().filter(arena -> arena.getResetArena().equals(Enums.ResetArena.SLIMEWORLDMANAGER)).forEach(arena -> getResetWorldSlime().unloadworld(arena.getUuid()));
 
         Bukkit.getScheduler().cancelTasks(this);
         MySQL.disconnect();
@@ -239,10 +236,6 @@ public class Main extends JavaPlugin {
 
     public ArenaManager getArenaManager() {
         return arenaManager;
-    }
-
-    public ArenasMenu getArenasMenu() {
-        return arenasMenu;
     }
 
     public PartyManager getPartyManager() {
@@ -281,6 +274,10 @@ public class Main extends JavaPlugin {
         return lobbyManager;
     }
 
+    public resetWorldSlime getResetWorldSlime() {
+        return resetWorldSlime;
+    }
+
     public ICageManager getCageManager() {
         return cageManager;
     }
@@ -297,7 +294,7 @@ public class Main extends JavaPlugin {
         return iMenuManager;
     }
 
-    public IKitManager getiKitManager() {
+    public IKitManager getKitManager() {
         return iKitManager;
     }
 
@@ -305,7 +302,7 @@ public class Main extends JavaPlugin {
         return scoreBoardAPI;
     }
 
-    public ISignManager getiSignManager() {
+    public ISignManager getSignManager() {
         return iSignManager;
     }
 

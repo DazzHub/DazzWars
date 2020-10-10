@@ -31,7 +31,7 @@ public class addKit implements subCommand {
         Player p = (Player) sender;
 
         if (args.length == 3) {
-            main.getiKitManager().createKit(p, args[1], args[2].toLowerCase());
+            main.getKitManager().createKit(p, args[1], args[2].toLowerCase());
         } else {
             p.sendMessage(help(sender));
         }

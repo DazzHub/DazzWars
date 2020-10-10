@@ -17,7 +17,7 @@ public class onDamage implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDamage(EntityDamageEvent e) {
+    public void onPlayerDamageLobby(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player))  return;
 
         Player p = (Player) e.getEntity();
@@ -28,7 +28,7 @@ public class onDamage implements Listener {
     }
 
     @EventHandler
-    public void PlayerDamage(EntityDamageEvent e) {
+    public void PlayerDamageLobby(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player)) {
             return;
         }

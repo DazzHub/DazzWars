@@ -24,8 +24,8 @@ public class TNTFall implements eventTNT{
 
         this.arena = arena;
 
-        this.timer = arena.getArenac().getInt("Arena.tntfall.TimeSpawn");
-        this.duration = arena.getArenac().getInt("Arena.tntfall.TimeDuration");
+        this.timer = arena.getArenaConfig().getInt("Arena.tntfall.TimeSpawn");
+        this.duration = arena.getArenaConfig().getInt("Arena.tntfall.TimeDuration");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TNTFall implements eventTNT{
 
                 timer--;
             }
-        }.runTaskTimerAsynchronously(main,0,20).getTaskId();
+        }.runTaskTimer(main,0,20).getTaskId();
     }
 
     private void startDrop(){
@@ -54,7 +54,7 @@ public class TNTFall implements eventTNT{
             @Override
             public void run() {
 
-                Tools.spawnEntities(arena.getSpawnSpectator(), EntityType.PRIMED_TNT, null, arena.getArenac().getInt("Arena.tntfall.AmountFallTnT"), arena.getArenac().getInt("Arena.tntfall.Radio"), false, false);
+                Tools.spawnEntities(arena.getSpawnSpectator(), EntityType.PRIMED_TNT, null, arena.getArenaConfig().getInt("Arena.tntfall.AmountFallTnT"), arena.getArenaConfig().getInt("Arena.tntfall.Radio"), false, false);
 
                 if (duration <= 1){
                     this.cancel();

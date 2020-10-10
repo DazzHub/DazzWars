@@ -2,6 +2,7 @@ package com.dazzhub.skywars.Utils;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
+import com.dazzhub.skywars.Main;
 import com.google.common.base.Strings;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -65,5 +66,22 @@ public class Tools {
             return false;
         }
         return true;
+    }
+
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException | NullPointerException ex2) {
+            return false;
+        }
+    }
+
+    public static void HidePlayer(Player player, Player player2) {
+        player.hidePlayer(player2);
+    }
+
+    public static void ShowPlayer(Player player, Player player2) {
+        player.showPlayer(player2);
     }
 }

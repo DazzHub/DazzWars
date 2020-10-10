@@ -1,6 +1,7 @@
 package com.dazzhub.skywars.Utils.inventory.menu;
 
 import com.dazzhub.skywars.Arena.Arena;
+import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
 import com.dazzhub.skywars.Listeners.Custom.LeftEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
@@ -59,22 +60,21 @@ public class IMenu {
             if (cmd == null || cmd.equals("")) {
                 return;
             }
-            scheduler.runTaskLater(main, () -> {
-                if (cmd.contains(";")) {
-                    String[] array = cmd.split(";");
-                    String[] array2;
-                    for (int length = (array2 = array).length, i = 0; i < length; ++i) {
-                        String sub = array2[i];
-                        if (sub.startsWith(" ")) {
-                            sub = sub.substring(1);
-                        }
-                        parseCommand(player, target, sub, price);
+
+            if (cmd.contains(";")) {
+                String[] array = cmd.split(";");
+                String[] array2;
+                for (int length = (array2 = array).length, i = 0; i < length; ++i) {
+                    String sub = array2[i];
+                    if (sub.startsWith(" ")) {
+                        sub = sub.substring(1);
                     }
+                    parseCommand(player, target, sub, price);
                 }
-                else {
-                    parseCommand(player, target, cmd, price);
-                }
-            }, 2L);
+            } else {
+                parseCommand(player, target, cmd, price);
+            }
+
         });
 
     }
@@ -91,7 +91,7 @@ public class IMenu {
             public void run() {
                 itemsList.values().forEach(item -> inv.setItem(item.getSlot(), hideAttributes(item.getIcon().build(p))));
             }
-        }.runTaskTimerAsynchronously(main, 0,10).getTaskId());
+        }.runTaskTimer(main, 0,10).getTaskId());
 
         p.openInventory(inv);
     }
@@ -165,8 +165,6 @@ public class IMenu {
             if (price != 0 && gamePlayer.getCoins() < price) {
                 gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
                 return;
-            } else {
-                gamePlayer.removeCoins(price);
             }
 
             if (cmd.startsWith("console:")) {
@@ -190,7 +188,7 @@ public class IMenu {
                 IMenu menu = main.getMenuManager().getMenuFileName().get(openCommand);
                 if (menu == null) return;
 
-                menu.open(p, target);
+                Bukkit.getScheduler().runTaskLater(main,() -> menu.open(p, target),2);
             } else if (cmd.startsWith("cage:")) {
                 String action = cmd.substring(5);
                 if (action.startsWith(" ")) {
@@ -207,8 +205,18 @@ public class IMenu {
                             gamePlayer.getCagesSoloList().add(cage[0]);
                             gamePlayer.setCageSolo(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
+                            gamePlayer.removeCoins(price);
+
+                            if (gamePlayer.isInArena()){
+                                main.getCageManager().getCagesSolo().get(gamePlayer.getCageSolo()).loadCage(gamePlayer.getArenaTeam().getSpawn());
+                            }
 
                         } else {
+                            if (!gamePlayer.getCageSolo().equals(cage[0])){
+                                if (gamePlayer.isInArena()){
+                                    main.getCageManager().getCagesSolo().get(cage[0]).loadCage(gamePlayer.getArenaTeam().getSpawn());
+                                }
+                            }
                             gamePlayer.setCageSolo(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
                         }
@@ -221,8 +229,20 @@ public class IMenu {
                             gamePlayer.getCagesTeamList().add(cage[0]);
                             gamePlayer.setCageTeam(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
+                            gamePlayer.removeCoins(price);
+
+                            if (gamePlayer.isInArena()){
+                                main.getCageManager().getCagesTeam().get(gamePlayer.getCageTeam()).loadCage(gamePlayer.getArenaTeam().getSpawn());
+                            }
 
                         } else {
+
+                            if (!gamePlayer.getCageTeam().equals(cage[0])){
+                                if (gamePlayer.isInArena()){
+                                    main.getCageManager().getCagesTeam().get(cage[0]).loadCage(gamePlayer.getArenaTeam().getSpawn());
+                                }
+                            }
+
                             gamePlayer.setCageTeam(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
                         }
@@ -234,8 +254,19 @@ public class IMenu {
                             gamePlayer.getCagesRankedList().add(cage[0]);
                             gamePlayer.setCageRanked(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
+                            gamePlayer.removeCoins(price);
+
+                            if (gamePlayer.isInArena()){
+                                main.getCageManager().getCagesRanked().get(gamePlayer.getCageRanked()).loadCage(gamePlayer.getArenaTeam().getSpawn());
+                            }
 
                         } else {
+                            if (!gamePlayer.getCageTeam().equals(cage[0])){
+                                if (gamePlayer.isInArena()){
+                                    main.getCageManager().getCagesRanked().get(cage[0]).loadCage(gamePlayer.getArenaTeam().getSpawn());
+                                }
+                            }
+
                             gamePlayer.setCageRanked(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Selected").replace("%cage%", cage[0]));
                         }
@@ -251,12 +282,13 @@ public class IMenu {
                 String[] kit = action.split("/");
 
                 if (kit[1].equalsIgnoreCase("SOLO")) {
-                    if (main.getiKitManager().getKitSoloHashMap().containsKey(kit[0].toLowerCase())) {
+                    if (main.getKitManager().getKitSoloHashMap().containsKey(kit[0].toLowerCase())) {
 
                         if (!gamePlayer.getKitSoloList().contains(kit[0])) {
                             gamePlayer.getKitSoloList().add(kit[0]);
                             gamePlayer.setKitSolo(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
+                            gamePlayer.removeCoins(price);
                         } else {
                             gamePlayer.setKitSolo(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Selected").replace("%kit%", kit[0]));
@@ -264,12 +296,13 @@ public class IMenu {
 
                     }
                 } else if (kit[1].equalsIgnoreCase("TEAM")) {
-                    if (main.getiKitManager().getKitTeamHashMap().containsKey(kit[0].toLowerCase())) {
+                    if (main.getKitManager().getKitTeamHashMap().containsKey(kit[0].toLowerCase())) {
 
                         if (!gamePlayer.getKitTeamList().contains(kit[0])) {
                             gamePlayer.getKitTeamList().add(kit[0]);
                             gamePlayer.setKitTeam(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
+                            gamePlayer.removeCoins(price);
                         } else {
                             gamePlayer.setKitTeam(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Selected").replace("%kit%", kit[0]));
@@ -277,12 +310,13 @@ public class IMenu {
 
                     }
                 } else if (kit[1].equalsIgnoreCase("RANKED")) {
-                    if (main.getiKitManager().getKitRankedHashMap().containsKey(kit[0].toLowerCase())) {
+                    if (main.getKitManager().getKitRankedHashMap().containsKey(kit[0].toLowerCase())) {
 
                         if (!gamePlayer.getKitRankedList().contains(kit[0])) {
                             gamePlayer.getKitRankedList().add(kit[0]);
                             gamePlayer.setKitRanked(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
+                            gamePlayer.removeCoins(price);
                         } else {
                             gamePlayer.setKitRanked(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Selected").replace("%kit%", kit[0]));
@@ -303,6 +337,7 @@ public class IMenu {
                         gamePlayer.getWinEffectsSoloList().add(wineffect[0]);
                         gamePlayer.setWinEffectSolo(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setWinEffectSolo(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Selected").replace("%win%", wineffect[0]));
@@ -312,6 +347,7 @@ public class IMenu {
                         gamePlayer.getWinEffectsTeamList().add(wineffect[0]);
                         gamePlayer.setWinEffectTeam(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setWinEffectTeam(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Selected").replace("%win%", wineffect[0]));
@@ -321,6 +357,7 @@ public class IMenu {
                         gamePlayer.getWinEffectsRankedList().add(wineffect[0]);
                         gamePlayer.setWinEffectRanked(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setWinEffectRanked(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Selected").replace("%win%", wineffect[0]));
@@ -339,6 +376,7 @@ public class IMenu {
                         gamePlayer.getKillEffectsSoloList().add(killeffect[0]);
                         gamePlayer.setKillEffectSolo(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setKillEffectSolo(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Selected").replace("%kill%", killeffect[0]));
@@ -348,6 +386,7 @@ public class IMenu {
                         gamePlayer.getKillEffectsTeamList().add(killeffect[0]);
                         gamePlayer.setKillEffectTeam(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setKillEffectTeam(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Selected").replace("%kill%", killeffect[0]));
@@ -357,6 +396,7 @@ public class IMenu {
                         gamePlayer.getKillEffectsRankedList().add(killeffect[0]);
                         gamePlayer.setKillEffectRanked(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setKillEffectRanked(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Selected").replace("%kill%", killeffect[0]));
@@ -375,6 +415,7 @@ public class IMenu {
                         gamePlayer.getTrailsSoloList().add(traileffect[0]);
                         gamePlayer.setTrailSolo(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setTrailSolo(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
@@ -384,6 +425,7 @@ public class IMenu {
                         gamePlayer.getTrailsTeamList().add(traileffect[0]);
                         gamePlayer.setTrailTeam(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setTrailTeam(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
@@ -393,6 +435,7 @@ public class IMenu {
                         gamePlayer.getTrailsRankedList().add(traileffect[0]);
                         gamePlayer.setTrailRanked(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
+                        gamePlayer.removeCoins(price);
                     } else {
                         gamePlayer.setTrailRanked(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Selected").replace("%trail%", traileffect[0]));
@@ -405,6 +448,36 @@ public class IMenu {
                 }
 
                 gamePlayer.addSouls(Integer.parseInt(souls));
+            } else if (cmd.startsWith("join:")) {
+                String arenaName = cmd.substring(5);
+                if (arenaName.startsWith(" ")) {
+                    arenaName = arenaName.substring(1);
+                }
+
+                if (!main.getArenaManager().getArenas().containsKey(arenaName)) return;
+
+                Arena arena = Main.getPlugin().getArenaManager().getArenas().get(arenaName);
+                if (arena == null) return;
+
+                if (arena.checkUsable()) {
+                    Bukkit.getPluginManager().callEvent(new JoinEvent(p, arena, Enums.JoinCause.COMMAND));
+                }
+
+            } else if (cmd.startsWith("join2:")) {
+                String arenaName = cmd.substring(6);
+                if (arenaName.startsWith(" ")) {
+                    arenaName = arenaName.substring(1);
+                }
+
+                if (!main.getArenaManager().getArenas().containsKey(arenaName)) return;
+
+                Arena arena = Main.getPlugin().getArenaManager().getArenas().get(arenaName);
+                if (arena == null) return;
+
+                if (arena.checkUsable()) {
+                    Bukkit.getPluginManager().callEvent(new JoinEvent(p, arena, Enums.JoinCause.COMMAND));
+                }
+
             } else if (cmd.startsWith("lang:")) {
                 String action = cmd.substring(5);
                 if (action.startsWith(" ")) {

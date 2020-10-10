@@ -4,6 +4,9 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Console;
+import com.dazzhub.skywars.Utils.Enums;
+import lombok.Getter;
+import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,6 +18,8 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+@Getter
+@Setter
 public class ScoreBoardBuilder {
 
     private Scoreboard scoreboard;
@@ -27,10 +32,19 @@ public class ScoreBoardBuilder {
     private Team gameTeams;
     private Team gameEnemy;
 
-    public ScoreBoardBuilder(Player p, String score_name, boolean health, boolean spectator, boolean gamePlayers, boolean teams) {
+    private boolean health, spectator, gamePlayers, teams;
+    private Enums.ScoreboardType scoreboardType;
+
+    public ScoreBoardBuilder(Player p, String score_name, boolean health, boolean spectator, boolean gamePlayers, boolean teams, Enums.ScoreboardType scoreboardType) {
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.scoreObjective = this.scoreboard.registerNewObjective(score_name, "dummy");
         this.scoreObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        this.scoreboardType = scoreboardType;
+        this.health = health;
+        this.spectator = spectator;
+        this.gamePlayers = gamePlayers;
+        this.teams = teams;
 
         if (health) {
             this.nameHealthObj = this.scoreboard.registerNewObjective("namelifee", "health");
@@ -107,6 +121,8 @@ public class ScoreBoardBuilder {
     }
 
     public void updateEnemy(GamePlayer player, Arena arena) {
+        if (gameEnemy == null) return;
+        if (tabObjective == null) return;
         for (GamePlayer gamePlayer : arena.getPlayers()) {
 
             if (player.getArenaTeam() != null && player.getArenaTeam().getMembers().contains(gamePlayer)) continue;
@@ -122,6 +138,9 @@ public class ScoreBoardBuilder {
     }
 
     public void updateTeams(GamePlayer gamePlayer) {
+        if (gameTeams == null) return;
+        if (tabObjective == null) return;
+
         if (!gamePlayer.isSpectating()) {
             if (gamePlayer.getArenaTeam() != null && !gamePlayer.getArenaTeam().getMembers().isEmpty()) {
                 for (GamePlayer gamePlayer1 : gamePlayer.getArenaTeam().getMembers()) {
@@ -157,7 +176,7 @@ public class ScoreBoardBuilder {
         return 0;
     }
 
-    public String color(String s) {
+    private String color(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 

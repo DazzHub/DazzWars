@@ -158,8 +158,6 @@ public class IItem {
             } else if (cmd.startsWith("leave")) {
                 if (gamePlayer.isInArena())
                     Bukkit.getPluginManager().callEvent(new LeftEvent(p, arenaPlayer, Enums.LeftCause.INTERACT));
-            } else if (cmd.startsWith("arenas")) {
-                main.getArenasMenu().open(p);
             } else if (cmd.startsWith("spectate")) {
                 if (gamePlayer.isInArena()) arenaPlayer.getSpectatorMenu().menuPlayers(p);
             } else if (cmd.startsWith("autojoin")) {

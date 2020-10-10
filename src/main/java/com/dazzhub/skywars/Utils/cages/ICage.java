@@ -1,6 +1,7 @@
 package com.dazzhub.skywars.Utils.cages;
 
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Cuboid;
 import com.dazzhub.skywars.Utils.inventory.Icon;
 import com.cryptomorin.xseries.XMaterial;
@@ -44,12 +45,20 @@ public class ICage {
         int index = 0;
 
         for (Block block : cuboid) {
-            Material material = XMaterial.matchXMaterial(storedBlocks.get(index)).get().parseMaterial();
-
-            block.setType(material);
 
             if (main.checkVersion()) {
-                block.setData(XMaterial.matchXMaterial(storedBlocks.get(index)).get().getData());
+                if (!storedBlocks.get(index).contains(":")) {
+                    Console.error("Did not find the block type");
+                    break;
+                }
+
+                String[] type = storedBlocks.get(index).split(":");
+
+                block.setType(Material.valueOf(type[0]));
+                block.setData((byte) Integer.parseInt(type[1]));
+            } else {
+                Material material = XMaterial.matchXMaterial(storedBlocks.get(index)).get().parseMaterial();
+                block.setType(material);
             }
 
             index++;

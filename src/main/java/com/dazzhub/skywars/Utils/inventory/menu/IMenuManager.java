@@ -42,6 +42,8 @@ public class IMenuManager {
     public void loadFiles() {
         File menuFolder = new File(main.getDataFolder(), "Inventory/Menu");
         if (!menuFolder.exists()) {
+            configCreate.get().setup(main, "Inventory/Menu/arenas");
+
             configCreate.get().setup(main, "Inventory/Menu/vote");
             configCreate.get().setup(main, "Inventory/Menu/vote-chest");
             configCreate.get().setup(main, "Inventory/Menu/vote-heart");
