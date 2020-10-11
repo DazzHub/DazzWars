@@ -435,6 +435,8 @@ public class ArenaManager {
         Bukkit.createWorld(wc);
         WorldBorder wb = Bukkit.getWorld(arena).getWorldBorder();
         wb.reset();
+
+        Bukkit.getWorld(arena).setAutoSave(false);
     }
 
     public String c(String msg){ return ChatColor.translateAlternateColorCodes('&', msg); }

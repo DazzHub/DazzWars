@@ -32,7 +32,7 @@ public class JoinArena implements CommandExecutor {
             if (gamePlayer == null) return true;
 
             if (gamePlayer.isInArena()) {
-                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.alredyInGame"));
+                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.alredyInGame", "Error Messages.alredyInGame"));
                 return true;
             }
 

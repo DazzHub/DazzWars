@@ -43,6 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Getter
 @Setter
@@ -477,9 +478,11 @@ public class Arena {
         List<String> message = new ArrayList<>();
         List<String> winners = new ArrayList<>();
 
-        if (this.killers.size() <= 2) {
+        if (this.killers.size() < 2) {
             this.killers.put("NONE", 0);
         }
+
+        IntStream.range(0, 3).filter(i -> killers.size() < 3).forEachOrdered(i -> this.killers.put("NONE" + i, 0));
 
         for (GamePlayer winnersPlayers : this.players) {
             winners.add(winnersPlayers.getName());
@@ -681,7 +684,7 @@ public class Arena {
 
     public String timeScore(GamePlayer gamePlayer){
         if (getStartingGameTask().getTimer() == getStartingGame()) {
-            return gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Waiting");
+            return gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Waiting", "Error ScoreBoard.Waiting");
         } else {
             return getStartingGameTask().getTimer() + "";
         }
@@ -691,13 +694,13 @@ public class Arena {
         Configuration config = gamePlayer.getLangMessage();
 
         if (refillGame != null && refillGame.getTimer() >= 1) {
-            return config.getString("Messages.ScoreBoard.Refill").replace("%time%", String.valueOf(calculateTime(refillGame.getTimer())));
+            return config.getString("Messages.ScoreBoard.Refill", "Error ScoreBoard.Refill").replace("%time%", String.valueOf(calculateTime(refillGame.getTimer())));
         } else if (refillGame == null && !refillTime.isEmpty()) {
-            return config.getString("Messages.ScoreBoard.Refill").replace("%time%", String.valueOf(calculateTime(0)));
+            return config.getString("Messages.ScoreBoard.Refill", "Error ScoreBoard.Refill").replace("%time%", String.valueOf(calculateTime(0)));
         } else  if (gameStatus.equals(Enums.GameStatus.RESTARTING)) {
-            return config.getString("Messages.ScoreBoard.EndGame");
+            return config.getString("Messages.ScoreBoard.EndGame", "Error ScoreBoard.EndGame");
         } else {
-            return config.getString("Messages.ScoreBoard.None");
+            return config.getString("Messages.ScoreBoard.None", "ScoreBoard.None");
         }
     }
 

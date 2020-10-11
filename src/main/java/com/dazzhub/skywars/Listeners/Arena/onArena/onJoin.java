@@ -33,16 +33,16 @@ public class onJoin implements Listener {
             } else {
                 if (!p.hasPermission("skywars.spectate")) {
                     if (arena.getGameStatus().equals(Enums.GameStatus.INGAME)) {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.inGame"));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.inGame", "Error Messages.inGame"));
                     } else if (arena.getPlayers().size() == arena.getMaxPlayers()) {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Full"));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Full", "Error Messages.Full"));
                     }
                 } else {
                     if (!arena.getGameStatus().equals(Enums.GameStatus.RESTARTING)) {
                         Bukkit.getScheduler().runTask(this.main, () -> arena.addSpectator(gamePlayer));
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.JoinSpectator"));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.JoinSpectator", "Error Messages.JoinSpectator"));
                     } else {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Arena-Not-Available"));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Arena-Not-Available", "Error Messages.Arena-Not-Available"));
                     }
                 }
             }
@@ -51,7 +51,7 @@ public class onJoin implements Listener {
                 if (party.getOwner().equals(gamePlayer)) {
                     party.joinArena(gamePlayer, arena);
                 } else {
-                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner", "Error Party.JoinArenaNoOwner"));
                 }
             }
         }

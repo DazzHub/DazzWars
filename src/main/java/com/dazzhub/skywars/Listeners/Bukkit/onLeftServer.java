@@ -43,7 +43,6 @@ public class onLeftServer implements Listener {
             }
         }
 
-        main.getScoreBoardAPI().removeScoreBoard(p);
         if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().deleteHologram();
         Bukkit.getScheduler().runTaskAsynchronously(main, () -> main.getPlayerDB().savePlayer(p.getUniqueId()));
     }

@@ -26,7 +26,7 @@ public class resetWorldSlime {
         String uuid = arena.getUuid();
 
         SlimePlugin plugin = (SlimePlugin) Bukkit.getPluginManager().getPlugin("SlimeWorldManager");
-        SlimeLoader loader = plugin.getLoader(main.getSettings().getString("SWM-TYPE"));
+        SlimeLoader loader = plugin.getLoader(main.getSettings().getString("SWM-TYPE", "file"));
 
         SlimePropertyMap props = new SlimePropertyMap();
 

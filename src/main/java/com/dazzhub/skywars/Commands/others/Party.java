@@ -47,10 +47,10 @@ public class Party implements CommandExecutor {
                         GamePlayer gamePlayerTarget = main.getPlayerManager().getPlayer(target.getUniqueId());
                         main.getPartyManager().invitePlayer(gamePlayer, gamePlayerTarget);
                     } else {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.TargetNoExist").replace("%target%", args[1]));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.TargetNoExist", "Error Party.TargetNoExist").replace("%target%", args[1]));
                     }
                 } else {
-                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.InvalidArgument"));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.InvalidArgument", "Error Party.InvalidArgument"));
                 }
             } else if (subCmd.equalsIgnoreCase("join")) {
                 if (args.length > 1) {
@@ -60,10 +60,10 @@ public class Party implements CommandExecutor {
                         GamePlayer gamePlayerTarget = main.getPlayerManager().getPlayer(p.getUniqueId());
                         main.getPartyManager().acceptParty(gamePlayerOwner, gamePlayerTarget);
                     } else {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.TargetNoExist").replace("%target%", args[1]));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.TargetNoExist", "Error Party.TargetNoExist").replace("%target%", args[1]));
                     }
                 } else {
-                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.InvalidArgument"));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.InvalidArgument", "Error Party.InvalidArgument"));
                 }
             } else if (subCmd.equalsIgnoreCase("kick")) {
                 if (args.length > 1) {
@@ -72,10 +72,10 @@ public class Party implements CommandExecutor {
                         GamePlayer gamePlayerTarget = main.getPlayerManager().getPlayer(target.getUniqueId());
                         main.getPartyManager().kickParty(gamePlayer, gamePlayerTarget);
                     } else {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.TargetNoExist").replace("%target%", args[1]));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.TargetNoExist", "Error Party.TargetNoExist").replace("%target%", args[1]));
                     }
                 } else {
-                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.InvalidArgument"));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.InvalidArgument", "Error Party.InvalidArgument"));
                 }
             } else if (subCmd.equalsIgnoreCase("leave")) {
                 main.getPartyManager().leaveParty(gamePlayer);

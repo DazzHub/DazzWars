@@ -6,10 +6,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class Lines {
 
@@ -36,6 +34,7 @@ public class Lines {
                 addDefaultLang("Messages.EndTime", "&e&l⚠&e Game time over", lang);
                 addDefaultLang("Messages.item-deny", "&e&l⚠&e You do not have permission", lang);
                 addDefaultLang("Messages.menu-deny", "&e&l⚠&e You do not have permission", lang);
+                addDefaultLang("Messages.GiveCoins", "&d&l➠ &f+%coins% coins", lang);
                 addDefaultLang("Messages.InsufficientCoins", "&c&l✘ &fYou need %coins% coins, to be able to buy it", lang);
                 addDefaultLang("Messages.Language.change", "&a&l✔ &fYour language was translated into English", lang);
                 addDefaultLang("Messages.Language.error", "&c&l✘ &fThe selected language is not in the list", lang);
@@ -88,40 +87,14 @@ public class Lines {
                 addDefaultLang("Messages.Title.Starting.2", "&c%seconds%;&ePrepare to fight!", lang);
                 addDefaultLang("Messages.Title.Starting.1", "&c%seconds%;&ePrepare to fight!", lang);
 
-                List<String> infogame = new ArrayList<>();
-                infogame.add("%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                infogame.add("%center%&9&lSkyWars");
-                infogame.add("");
-                infogame.add("%center%&fChest type &8» &a%chest%");
-                infogame.add("%center%&fType of time &8» &6%time%");
-                infogame.add("%center%&fKind of hearts &8» &e%heart%");
-                infogame.add("%center%&fType of Events &8» &9%event%");
-                infogame.add("%center%&fType of scenario &8» &d%scenario%");
-                infogame.add("");
-                infogame.add("%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                infogame.add("&6Teaming is not allowed on Solo mode!");
-                infogame.add("");
-                addDefaultLang("Messages.InfoGame", infogame, lang);
+                addDefaultLang("Messages.InfoGame", Arrays.asList("%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "%center%&9&lSkyWars", "", "%center%&fChest type &8» &a%chest%", "%center%&fType of time &8» &6%time%", "%center%&fKind of hearts &8» &e%heart%", "%center%&fType of Events &8» &9%event%", "%center%&fType of scenario &8» &d%scenario%", "", "%center%&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "&6Teaming is not allowed on Solo mode!", ""), lang);
 
                 addDefaultLang("Messages.LuckTitle.Fade", 10, lang);
                 addDefaultLang("Messages.LuckTitle.Stay", 40, lang);
                 addDefaultLang("Messages.LuckTitle.Out", 10, lang);
                 addDefaultLang("Messages.LuckTitle.Info", "&cTo fight!;&eLuck ㋡", lang);
 
-                List<String> winnerGame = new ArrayList<>();
-                winnerGame.add("");
-                winnerGame.add("%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                winnerGame.add("%center%&9&lSkyWars");
-                winnerGame.add("");
-                winnerGame.add("%center%&eWinner &7- %winner%");
-                winnerGame.add("");
-                winnerGame.add("%center%&e1st Killer&7 - %player1% &7- %kills1%");
-                winnerGame.add("%center%&62nd Killer&7 - %player2% &7- %kills2%");
-                winnerGame.add("%center%&c3rd Killer&7 - %player3% &7- %kills3%");
-                winnerGame.add("%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                winnerGame.add("&aYou won! &eWant to play again? &b&lCLICK HERE!");
-
-                addDefaultLang("Messages.WinnerGame", winnerGame, lang);
+                addDefaultLang("Messages.WinnerGame", Arrays.asList("", "%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "%center%&9&lSkyWars", "", "%center%&eWinner &7- %winner%", "", "%center%&e1st Killer&7 - %player1% &7- %kills1%", "%center%&62nd Killer&7 - %player2% &7- %kills2%", "%center%&c3rd Killer&7 - %player3% &7- %kills3%", "%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "&aYou won! &eWant to play again? &b&lCLICK HERE!"), lang);
 
                 addDefaultLang("Messages.WinnerTitle.Fade", 10, lang);
                 addDefaultLang("Messages.WinnerTitle.Stay", 40, lang);
@@ -290,49 +263,9 @@ public class Lines {
                 addDefaultLang("Messages.Party.MemberDisconnect", "&d&lPARTY &f➠ &9%target%''s&f was disconnected", lang);
                 addDefaultLang("Messages.Party.OwnerDisconnect", "&d&lPARTY &f➠ &9%owner%''s&f was disconnected, so the party was eliminated.", lang);
 
-                List<String> sw = new ArrayList<>();
-                sw.add("%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-");
-                sw.add("");
-                sw.add("%center%&7/join <arena>/<solo/team> &8| &eJoin to arena");
-                sw.add("%center%&7/leave &8| &eExit to arena");
-                sw.add("%center%&7/sw lang <idioma> &8| &eCambiar idioma");
-                sw.add("");
-                sw.add("%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-");
-
-                List<String> swadmin = new ArrayList<>();
-                swadmin.add("%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-");
-                swadmin.add("");
-                swadmin.add("%center%&7/sw setlobby &8| &eSet lobby");
-                swadmin.add("%center%&7/sw world &8| &eEdit world before create arena");
-                swadmin.add("%center%&7/sw create &8| &eCreate arena");
-                swadmin.add("%center%&7/sw addspawn &8| &eAdd spawn points");
-                swadmin.add("%center%&7/sw setmin &8| &eSet min player to start");
-                swadmin.add("%center%&7/sw setmax &8| &eSet max player in arena");
-                swadmin.add("%center%&7/sw setspectator &8| &eSet spectator spawn");
-                swadmin.add("%center%&7/sw enable &8| &eActive arena");
-                swadmin.add("%center%&7/sw coins <player> &8| &eManager coins");
-                swadmin.add("%center%&7/sw souls <player> &8| &eManager souls");
-                swadmin.add("%center%&7/sw wandc &8| &eMark corners for create cages");
-                swadmin.add("%center%&7/sw wands &8| &eMark Locations for SoulWell");
-                swadmin.add("%center%&7/sw addcage &8| &eAdd cages");
-                swadmin.add("%center%&7/sw addkit &8| &eAdd kits from inventory");
-                swadmin.add("%center%&7/sw addhologram &8| &eAdd holograms");
-                swadmin.add("%center%&7/sw reload &8| &eReload configurations");
-                swadmin.add("");
-                swadmin.add("%center%&7/sw join <arena> &8| &eJoin to arena");
-                swadmin.add("%center%&7/sw leave &8| &eExit to arena");
-                swadmin.add("%center%&7/sw lang <idioma> &8| &eChange language");
-                swadmin.add("");
-                swadmin.add("%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-");
-
                 addDefaultLang("Messages.Cmd.error", "&c&l➥ &cError command", lang);
-                addDefaultLang("Messages.Cmd.sw", sw, lang);
-                addDefaultLang("Messages.Cmd.swadmin", swadmin, lang);
-
-                infogame.clear();
-                winnerGame.clear();
-                sw.clear();
-                swadmin.clear();
+                addDefaultLang("Messages.Cmd.sw", Arrays.asList("%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-", "", "%center%&7/join <arena>/<solo/team> &8| &eJoin to arena", "%center%&7/leave &8| &eExit to arena", "%center%&7/sw lang <idioma> &8| &eCambiar idioma", "", "%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-"), lang);
+                addDefaultLang("Messages.Cmd.swadmin", Arrays.asList("%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-", "", "%center%&7/sw setlobby &8| &eSet lobby", "%center%&7/sw world &8| &eEdit world before create arena", "%center%&7/sw create &8| &eCreate arena", "%center%&7/sw addspawn &8| &eAdd spawn points", "%center%&7/sw setmin &8| &eSet min player to start", "%center%&7/sw setmax &8| &eSet max player in arena", "%center%&7/sw setspectator &8| &eSet spectator spawn", "%center%&7/sw enable &8| &eActive arena", "%center%&7/sw coins <player> &8| &eManager coins", "%center%&7/sw souls <player> &8| &eManager souls", "%center%&7/sw wandc &8| &eMark corners for create cages", "%center%&7/sw wands &8| &eMark Locations for SoulWell", "%center%&7/sw addcage &8| &eAdd cages", "%center%&7/sw addkit &8| &eAdd kits from inventory", "%center%&7/sw addhologram &8| &eAdd holograms", "%center%&7/sw reload &8| &eReload configurations", "", "%center%&7/sw join <arena> &8| &eJoin to arena", "%center%&7/sw leave &8| &eExit to arena", "%center%&7/sw lang <idioma> &8| &eChange language", "", "%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-"), lang);
             }
 
             /* SETTINGS */

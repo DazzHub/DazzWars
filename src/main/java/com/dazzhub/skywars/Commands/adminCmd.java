@@ -74,7 +74,7 @@ public class adminCmd implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player p = (Player) sender;
                     GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cmd.error"));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cmd.error", "Error Cmd.error"));
                 } else {
                     sender.sendMessage(c("&c&l➥ &fError command"));
                 }

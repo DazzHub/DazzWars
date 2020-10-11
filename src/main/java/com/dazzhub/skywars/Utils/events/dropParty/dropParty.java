@@ -22,8 +22,8 @@ public class dropParty implements eventParty {
         this.main = Main.getPlugin();
 
         this.arena = arena;
-        this.timer = arena.getArenaConfig().getInt("Arena.dropparty.TimeStarting");
-        this.drops = arena.getArenaConfig().getInt("Arena.dropparty.TimeDrop");
+        this.timer = arena.getArenaConfig().getInt("Arena.dropparty.TimeStarting",120);
+        this.drops = arena.getArenaConfig().getInt("Arena.dropparty.TimeDrop",20);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class dropParty implements eventParty {
 
                 arena.getPlayers().forEach(gamePlayer -> {
                     Set<String> keys = gamePlayer.getLangMessage().getConfigurationSection("Messages.TypeEvent.DropParty.Starting").getKeys(false);
-                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.DropParty.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
+                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.DropParty.Starting." + time_config, "Error TypeEvent.DropParty.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
                 });
 
                 if (timer <= 1){
@@ -44,7 +44,7 @@ public class dropParty implements eventParty {
 
                 timer--;
             }
-        }.runTaskTimerAsynchronously(main,0,20).getTaskId();
+        }.runTaskTimer(main,0,20).getTaskId();
     }
 
     private void startDrops(){

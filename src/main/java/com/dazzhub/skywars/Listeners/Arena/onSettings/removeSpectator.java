@@ -34,13 +34,13 @@ public class removeSpectator implements Listener {
                 p.teleport(main.getLobbyManager().getLobby());
 
                 if (!arena.getGameStatus().equals(Enums.GameStatus.RESTARTING)) {
-                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.LeaveSpectator"));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.LeaveSpectator", "Error Messages.LeaveSpectator"));
                 }
 
                 main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.LOBBY,false,false,false, false);
 
                 if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
-                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), false);
+                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), false);
                 }
 
                 if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().reloadHologram();

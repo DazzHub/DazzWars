@@ -35,12 +35,12 @@ public class changeLanguage implements subCommand {
 
             String select = args[1];
             if (!main.getSettings().getStringList("ListLanguage").contains(select)) {
-                gamePlayer.sendMessage(lang.getString("Messages.Language.error"));
+                gamePlayer.sendMessage(lang.getString("Messages.Language.error", "Error Language.error"));
                 return;
             }
 
             gamePlayer.setLang(select);
-            gamePlayer.sendMessage(lang.getString("Messages.Language.change"));
+            gamePlayer.sendMessage(lang.getString("Messages.Language.change", "Error Language.change"));
         } else {
             sender.sendMessage(this.help(sender));
         }

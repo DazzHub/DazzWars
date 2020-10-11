@@ -24,8 +24,8 @@ public class Storm implements eventStorm {
         this.main = Main.getPlugin();
 
         this.arena = arena;
-        this.timer = arena.getArenaConfig().getInt("Arena.storm.TimeSpawn");
-        this.duration = arena.getArenaConfig().getInt("Arena.storm.TimeDuration");
+        this.timer = arena.getArenaConfig().getInt("Arena.storm.TimeSpawn",120);
+        this.duration = arena.getArenaConfig().getInt("Arena.storm.TimeDuration",20);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Storm implements eventStorm {
 
                 arena.getPlayers().forEach(gamePlayer -> {
                     Set<String> keys = gamePlayer.getLangMessage().getConfigurationSection("Messages.TypeEvent.Storm.Starting").getKeys(false);
-                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.Storm.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
+                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.Storm.Starting." + time_config, "Error TypeEvent.Storm.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
                 });
 
                 if (timer <= 1){
@@ -46,7 +46,7 @@ public class Storm implements eventStorm {
 
                 timer--;
             }
-        }.runTaskTimerAsynchronously(main,0,20).getTaskId();
+        }.runTaskTimer(main,0,20).getTaskId();
     }
 
     private void startStorm() {

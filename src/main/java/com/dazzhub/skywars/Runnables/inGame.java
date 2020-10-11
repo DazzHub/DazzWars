@@ -52,8 +52,8 @@ public class inGame extends BukkitRunnable {
             this.cancel();
             Bukkit.getPluginManager().callEvent(new WinEvent(this.arena));
 
-            arena.getPlayers().forEach(p -> p.sendMessage(p.getLangMessage().getString("Messages.EndTime")));
-            arena.getSpectators().forEach(p -> p.sendMessage(p.getLangMessage().getString("Messages.EndTime")));
+            arena.getPlayers().forEach(p -> p.sendMessage(p.getLangMessage().getString("Messages.EndTime", "Error Messages.EndTime")));
+            arena.getSpectators().forEach(p -> p.sendMessage(p.getLangMessage().getString("Messages.EndTime", "Error Messages.EndTime")));
         }
 
         if (falldamage <= 1) {

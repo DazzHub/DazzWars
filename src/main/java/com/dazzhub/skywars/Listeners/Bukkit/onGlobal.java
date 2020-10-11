@@ -17,7 +17,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 public class onGlobal implements Listener {
 
@@ -84,6 +87,18 @@ public class onGlobal implements Listener {
             Tools.HidePlayer(p, player);
             Tools.HidePlayer(player, p);
         });
+    }
+
+    @EventHandler
+    public void onSaveWorld(WorldSaveEvent e){
+        List<String> arenaslist = main.getConfigUtils().getConfig(this.main, "Arenas/Arenas").getStringList("Arenas");
+
+        arenaslist.forEach(nameArena -> {
+            if (nameArena.equalsIgnoreCase(e.getWorld().getName())){
+                e.getWorld().setAutoSave(false);
+            }
+        });
+
     }
 
     private String c(String c) {

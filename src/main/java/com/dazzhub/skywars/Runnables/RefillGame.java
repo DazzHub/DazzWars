@@ -29,13 +29,13 @@ public class RefillGame extends BukkitRunnable {
             for (GamePlayer p : arena.getPlayers()) {
 
                 Titles.sendTitle(p.getPlayer(),
-                        p.getLangMessage().getInt("Messages.RefillTitle.Fade"),
-                        p.getLangMessage().getInt("Messages.RefillTitle.Stay"),
-                        p.getLangMessage().getInt("Messages.RefillTitle.Out"),
-                        c(p.getLangMessage().getString("Messages.RefillTitle.Info").split(";")[0]).replace("%player%", p.getPlayer().getName()),
-                        c(p.getLangMessage().getString("Messages.RefillTitle.Info").split(";")[1]).replace("%player%", p.getPlayer().getName()));
+                        p.getLangMessage().getInt("Messages.RefillTitle.Fade",20),
+                        p.getLangMessage().getInt("Messages.RefillTitle.Stay",20),
+                        p.getLangMessage().getInt("Messages.RefillTitle.Out",20),
+                        c(p.getLangMessage().getString("Messages.RefillTitle.Info", "Error title refill").split(";")[0]).replace("%player%", p.getPlayer().getName()),
+                        c(p.getLangMessage().getString("Messages.RefillTitle.Info", "Error subtitle refill").split(";")[1]).replace("%player%", p.getPlayer().getName()));
 
-                p.sendMessage(c(p.getLangMessage().getString("Messages.RefillTitle.ChatAlert")));
+                p.sendMessage(c(p.getLangMessage().getString("Messages.RefillTitle.ChatAlert", "Error RefillTitle.ChatAlert")));
             }
 
             Bukkit.getScheduler().runTask(Main.getPlugin(), () -> arena.fillChests());

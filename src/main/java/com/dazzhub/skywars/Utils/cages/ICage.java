@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -47,9 +48,18 @@ public class ICage {
         for (Block block : cuboid) {
 
             if (main.checkVersion()) {
+
                 if (!storedBlocks.get(index).contains(":")) {
-                    Console.error("Did not find the block type");
-                    break;
+                    XMaterial xMaterial = XMaterial.valueOf(storedBlocks.get(index));
+
+                    if (xMaterial.parseItem() != null){
+                        ItemStack item = new ItemStack(xMaterial.parseItem());
+                        block.setType(item.getType());
+                        block.setData(item.getData().getData());
+                    } else {
+                        Console.error("Did not find the block type");
+                        break;
+                    }
                 }
 
                 String[] type = storedBlocks.get(index).split(":");

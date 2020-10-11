@@ -38,7 +38,7 @@ public class SpectatorMenu {
         Bukkit.getScheduler().runTaskAsynchronously(main, ()-> {
             for (GamePlayer on : arena.getPlayers()) {
                 inv.addItem(new Icon(XMaterial.PLAYER_HEAD)
-                        .setName(config.getString("Messages.MenuSpectator.Player.NAME"))
+                        .setName(config.getString("Messages.MenuSpectator.Player.NAME", "Error: MenuSpectator.Player.NAME"))
                         .setLore(config.getStringList("Messages.MenuSpectator.Player.DESCRIPTION"))
                         .setSkull(on.getPlayer().getName())
                         .build(on.getPlayer())

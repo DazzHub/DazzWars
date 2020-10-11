@@ -13,6 +13,7 @@ import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
@@ -24,130 +25,7 @@ public class onDeath implements Listener {
         this.main = main;
     }
 
-    @EventHandler
-    public void messageDeathPlayer(DeathEvent e) {
-        GamePlayer killerg = e.getKiller();
-        GamePlayer dead = e.getDead();
-        PlayerDeathEvent event = e.getEvent();
-
-        dead.getArena().getPlayers().forEach(gamePlayer -> {
-            if (killerg != null) {
-                switch (event.getEntity().getLastDamageCause().getCause()) {
-                    case ENTITY_ATTACK: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Player")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replace("%killer%", killerg.getPlayer().getName())
-                                .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                                .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    case PROJECTILE: {
-                        if ((event.getEntity().getLastDamageCause()) instanceof Arrow) {
-                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Arrow")
-                                    .replace("%player%", dead.getPlayer().getName())
-                                    .replace("%killer%", killerg.getPlayer().getName())
-                                    .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
-                                    .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                                    .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
-                            );
-                        } else if ((event.getEntity().getLastDamageCause()) instanceof EnderPearl) {
-                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.EnderPearl")
-                                    .replace("%player%", dead.getPlayer().getName())
-                                    .replace("%killer%", killerg.getPlayer().getName())
-                                    .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
-                                    .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                                    .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
-                            );
-                        }
-                        break;
-                    }
-                }
-            } else {
-                switch (event.getEntity().getLastDamageCause().getCause()) {
-                    case VOID: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Void")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    case FIRE_TICK: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Burned")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    case FALL: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Fall")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    case ENTITY_EXPLOSION: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Explosion")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    case LAVA: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Lava")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    case DROWNING: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Water")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    case SUFFOCATION: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Suffocation")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    case LIGHTNING: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Lightning")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                    default: {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.UnknownCause")
-                                .replace("%player%", dead.getPlayer().getName())
-                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
-                        );
-                        break;
-                    }
-                }
-            }
-        });
-
-    }
-
-    private int checkDistance(Player player, Entity entity) {
-        if (entity != null) {
-            if (player.getWorld() == entity.getWorld()) {
-                return (int) player.getLocation().distance(entity.getLocation());
-            } else {
-                return 0;
-            }
-        } else {
-            return 0;
-        }
-    }
-
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeathPlayer(DeathEvent e) {
         Arena arena = e.getArena();
 
@@ -249,6 +127,130 @@ public class onDeath implements Listener {
             }
 
             arena.getKillers().put(killer.getName(), arena.getKillers().containsKey(killer.getName()) ? (arena.getKillers().get(killer.getName()) + 1) : 1);
+        }
+    }
+
+
+    @EventHandler
+    public void messageDeathPlayer(DeathEvent e) {
+        GamePlayer killerg = e.getKiller();
+        GamePlayer dead = e.getDead();
+        PlayerDeathEvent event = e.getEvent();
+
+        dead.getArena().getPlayers().forEach(gamePlayer -> {
+            if (killerg != null) {
+                switch (event.getEntity().getLastDamageCause().getCause()) {
+                    case ENTITY_ATTACK: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Player", "Error DeathMessages.Player")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replace("%killer%", killerg.getPlayer().getName())
+                                .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                                .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case PROJECTILE: {
+                        if ((event.getEntity().getLastDamageCause()) instanceof Arrow) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Arrow", "Error DeathMessages.Arrow")
+                                    .replace("%player%", dead.getPlayer().getName())
+                                    .replace("%killer%", killerg.getPlayer().getName())
+                                    .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
+                                    .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                                    .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
+                            );
+                        } else if ((event.getEntity().getLastDamageCause()) instanceof EnderPearl) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.EnderPearl", "Error DeathMessages.EnderPearl")
+                                    .replace("%player%", dead.getPlayer().getName())
+                                    .replace("%killer%", killerg.getPlayer().getName())
+                                    .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
+                                    .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                                    .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
+                            );
+                        }
+                        break;
+                    }
+                }
+            } else {
+                switch (event.getEntity().getLastDamageCause().getCause()) {
+                    case VOID: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Void", "Error DeathMessages.Void")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case FIRE_TICK: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Burned", "Error DeathMessages.Burned")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case FALL: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Fall", "Error DeathMessages.Fall")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case ENTITY_EXPLOSION: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Explosion", "Error DeathMessages.Explosion")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case LAVA: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Lava", "Error DeathMessages.Lava")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case DROWNING: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Water", "Error DeathMessages.Water")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case SUFFOCATION: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Suffocation", "Error DeathMessages.Suffocation")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    case LIGHTNING: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Lightning", "Error DeathMessages.Lightning")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                    default: {
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.UnknownCause", "Error DeathMessages.UnknownCause")
+                                .replace("%player%", dead.getPlayer().getName())
+                                .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        );
+                        break;
+                    }
+                }
+            }
+        });
+
+    }
+
+    private int checkDistance(Player player, Entity entity) {
+        if (entity != null) {
+            if (player.getWorld() == entity.getWorld()) {
+                return (int) player.getLocation().distance(entity.getLocation());
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
         }
     }
 }

@@ -221,6 +221,10 @@ public class IItem {
     }
 
     public void createItem(Player p) {
-        itemsList.values().forEach(item -> p.getInventory().setItem(item.getSlot(), item.getIcon().build(p)));
+        Bukkit.getScheduler().runTaskLater(main, () -> {
+            for (ordItems item : itemsList.values()) {
+                p.getInventory().setItem(item.getSlot(), item.getIcon().build(p));
+            }
+        },2);
     }
 }

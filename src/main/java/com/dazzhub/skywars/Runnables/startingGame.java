@@ -1,5 +1,6 @@
 package com.dazzhub.skywars.Runnables;
 
+import com.cryptomorin.xseries.XSound;
 import com.cryptomorin.xseries.messages.Titles;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
@@ -37,8 +38,8 @@ public class startingGame extends BukkitRunnable {
             this.cancel();
 
             arena.getPlayers().forEach(p -> {
-                p.sendMessage(p.getLangMessage().getString("Messages.Timer.Cancelled", "error config").replace("%seconds%", String.valueOf(timer)));
-                String sound = p.getLangMessage().getString("Messages.Sounds.Cancelled");
+                p.sendMessage(p.getLangMessage().getString("Messages.Timer.Cancelled", "Error Timer.Cancelled").replace("%seconds%", String.valueOf(timer)));
+                String sound = p.getLangMessage().getString("Messages.Sounds.Cancelled", "AMBIENT_CAVE");
                 p.playSound(sound);
             });
 
@@ -52,9 +53,9 @@ public class startingGame extends BukkitRunnable {
 
         arena.getPlayers().forEach(gamePlayer -> {
             gamePlayer.getPlayer().setLevel(timer);
-            gamePlayer.getLangMessage().getConfigurationSection("Messages.Timer.Starting").getKeys(false).stream().filter(s -> timer == Integer.parseInt(s)).forEach(s -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Timer.Starting." + s).replaceAll("%seconds%", String.valueOf(timer))));
-            gamePlayer.getLangMessage().getConfigurationSection("Messages.Sounds.Starting").getKeys(false).stream().filter(s -> timer == Integer.parseInt(s)).forEach(s -> gamePlayer.playSound(gamePlayer.getLangMessage().getString("Messages.Sounds.Starting." + s)));
-            gamePlayer.getLangMessage().getConfigurationSection("Messages.Title.Starting").getKeys(false).stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> Titles.sendTitle(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getInt("Messages.Title.Fade"), gamePlayer.getLangMessage().getInt("Messages.Title.Stay"), gamePlayer.getLangMessage().getInt("Messages.Title.Out"), c(gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config).split(";")[0]).replaceAll("%seconds%", String.valueOf(timer)), c(gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config).split(";")[1]).replaceAll("%seconds%", String.valueOf(timer))));
+            gamePlayer.getLangMessage().getConfigurationSection("Messages.Timer.Starting").getKeys(false).stream().filter(s -> timer == Integer.parseInt(s)).forEach(s -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Timer.Starting." + s, "Timer.Starting." + s).replaceAll("%seconds%", String.valueOf(timer))));
+            gamePlayer.getLangMessage().getConfigurationSection("Messages.Sounds.Starting").getKeys(false).stream().filter(s -> timer == Integer.parseInt(s)).forEach(s -> gamePlayer.playSound(gamePlayer.getLangMessage().getString("Messages.Sounds.Starting." + s, "AMBIENT_CAVE")));
+            gamePlayer.getLangMessage().getConfigurationSection("Messages.Title.Starting").getKeys(false).stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> Titles.sendTitle(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getInt("Messages.Title.Fade",20), gamePlayer.getLangMessage().getInt("Messages.Title.Stay",20), gamePlayer.getLangMessage().getInt("Messages.Title.Out",20), c(gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config, "Error title starting").split(";")[0]).replaceAll("%seconds%", String.valueOf(timer)), c(gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config, "Error subtitle starting").split(";")[1]).replaceAll("%seconds%", String.valueOf(timer))));
         });
 
 
@@ -63,7 +64,7 @@ public class startingGame extends BukkitRunnable {
             arena.checkVotes();
 
             arena.getPlayers().forEach(p -> {
-                Titles.sendTitle(p.getPlayer(), p.getLangMessage().getInt("Messages.LuckTitle.Fade"), p.getLangMessage().getInt("Messages.LuckTitle.Stay"), p.getLangMessage().getInt("Messages.LuckTitle.Out"), c(p.getLangMessage().getString("Messages.LuckTitle.Info").split(";")[0]).replace("%player%", p.getPlayer().getName()), c(p.getLangMessage().getString("Messages.LuckTitle.Info").split(";")[1]).replace("%player%", p.getPlayer().getName()));
+                Titles.sendTitle(p.getPlayer(), p.getLangMessage().getInt("Messages.LuckTitle.Fade",20), p.getLangMessage().getInt("Messages.LuckTitle.Stay",20), p.getLangMessage().getInt("Messages.LuckTitle.Out",20), c(p.getLangMessage().getString("Messages.LuckTitle.Info", "Error title LuckTitle").split(";")[0]).replace("%player%", p.getPlayer().getName()), c(p.getLangMessage().getString("Messages.LuckTitle.Info", "Error subtitle LuckTitle").split(";")[1]).replace("%player%", p.getPlayer().getName()));
                 announcerVote(p);
 
                 arena.removeCage(p, arena.getMode(), 3);

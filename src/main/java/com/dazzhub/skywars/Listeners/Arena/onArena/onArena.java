@@ -327,7 +327,7 @@ public class onArena implements Listener {
                     if (e.getDamager() instanceof Projectile || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
                         if (arena.isNoProjectile()) {
                             if (gamePlayer.getLangMessage().getBoolean("Messages.notifyVotes.Scenario.Projectile.enabled")) {
-                                gamePlayer.sendMessage(c(gamePlayer.getLangMessage().getString("Messages.notifyVotes.Scenario.Projectile.isProjectile")));
+                                gamePlayer.sendMessage(c(gamePlayer.getLangMessage().getString("Messages.notifyVotes.Scenario.Projectile.isProjectile", "Error notifyVotes.Scenario.Projectile.isProjectile")));
                             }
                             e.setCancelled(true);
                         }

@@ -35,7 +35,7 @@ public class onJoinServer implements Listener {
                 }
 
                 if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
-                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), true);
+                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), true);
                 }
 
                 main.getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY,false,false, false,false);

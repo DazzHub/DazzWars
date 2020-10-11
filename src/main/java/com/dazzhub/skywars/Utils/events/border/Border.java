@@ -25,12 +25,12 @@ public class Border implements eventBorder {
         this.main = Main.getPlugin();
 
         this.arena = arena;
-        this.timer = arena.getArenaConfig().getInt("Arena.border.TimeSpawn");
+        this.timer = arena.getArenaConfig().getInt("Arena.border.TimeSpawn",102);
     }
 
     @Override
     public void spawnBorder() {
-        if (this.arena.getArenaConfig().getBoolean("Arena.border.SpawnDefault")) {
+        if (this.arena.getArenaConfig().getBoolean("Arena.border.SpawnDefault",false)) {
 
             World world;
 
@@ -43,7 +43,7 @@ public class Border implements eventBorder {
             WorldBorder wb = world.getWorldBorder();
 
             wb.setCenter(this.arena.getSpawnSpectator());
-            wb.setSize(this.arena.getArenaConfig().getInt("Arena.border.Settings.Size"));
+            wb.setSize(this.arena.getArenaConfig().getInt("Arena.border.Settings.Size"),100);
             wb.setWarningDistance(0);
 
             this.wb = wb;
@@ -64,9 +64,9 @@ public class Border implements eventBorder {
             WorldBorder wb = world.getWorldBorder();
 
             wb.setCenter(this.arena.getSpawnSpectator());
-            wb.setSize(this.arena.getArenaConfig().getInt("Arena.border.Settings.Size"));
-            wb.setDamageBuffer(this.arena.getArenaConfig().getInt("Arena.border.Settings.Damage.inborder"));
-            wb.setDamageAmount(this.arena.getArenaConfig().getInt("Arena.border.Settings.Damage.borde"));
+            wb.setSize(this.arena.getArenaConfig().getInt("Arena.border.Settings.Size",1));
+            wb.setDamageBuffer(this.arena.getArenaConfig().getInt("Arena.border.Settings.Damage.inborder",1));
+            wb.setDamageAmount(this.arena.getArenaConfig().getInt("Arena.border.Settings.Damage.borde",1));
             wb.setWarningDistance(0);
 
             this.wb = wb;
@@ -79,7 +79,7 @@ public class Border implements eventBorder {
 
                 arena.getPlayers().forEach(gamePlayer -> {
                     Set<String> keys = gamePlayer.getLangMessage().getConfigurationSection("Messages.TypeEvent.Border.Starting").getKeys(false);
-                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.Border.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
+                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.Border.Starting." + time_config, "Error TypeEvent.Border.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
                 });
 
                 if (timer <= 1){

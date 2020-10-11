@@ -24,8 +24,8 @@ public class TNTFall implements eventTNT{
 
         this.arena = arena;
 
-        this.timer = arena.getArenaConfig().getInt("Arena.tntfall.TimeSpawn");
-        this.duration = arena.getArenaConfig().getInt("Arena.tntfall.TimeDuration");
+        this.timer = arena.getArenaConfig().getInt("Arena.tntfall.TimeSpawn", 120);
+        this.duration = arena.getArenaConfig().getInt("Arena.tntfall.TimeDuration",20);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TNTFall implements eventTNT{
 
                 arena.getPlayers().forEach(gamePlayer -> {
                     Set<String> keys = gamePlayer.getLangMessage().getConfigurationSection("Messages.TypeEvent.TntFall.Starting").getKeys(false);
-                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.TntFall.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
+                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.TntFall.Starting." + time_config, "Error TypeEvent.TntFall.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
                 });
 
                 if (timer <= 1){

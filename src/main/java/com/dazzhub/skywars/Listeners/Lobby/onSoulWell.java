@@ -100,7 +100,7 @@ public class onSoulWell implements Listener {
                                 int needc = gamePlayer.getLangMessage().getInt("Messages.SoulWell.SoulsToOpen");
 
                                 if (!(gamePlayer.getSouls() >= needc)) {
-                                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.SoulWell.InsufficientSouls").replace("%soul%", String.valueOf(needc)));
+                                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.SoulWell.InsufficientSouls", "Error SoulWell.InsufficientSouls").replace("%soul%", String.valueOf(needc)));
                                     using = false;
                                 } else {
                                     gamePlayer.setSouls(gamePlayer.getSouls() - 1);
@@ -108,14 +108,14 @@ public class onSoulWell implements Listener {
                                 }
 
                             } else {
-                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.SoulWell.NeedSouls"));
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.SoulWell.NeedSouls", "Error SoulWell.NeedSouls"));
                             }
 
                     } else {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.SoulWell.NoPermission"));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.SoulWell.NoPermission", "Error SoulWell.NoPermission"));
                     }
                 } else {
-                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.SoulWell.Using"));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.SoulWell.Using", "Error SoulWell.Using"));
                 }
             }
         }

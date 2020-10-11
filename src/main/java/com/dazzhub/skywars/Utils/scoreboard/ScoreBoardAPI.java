@@ -15,12 +15,9 @@ import java.util.UUID;
 public class ScoreBoardAPI {
 
     private Main main;
-    //private HashMap<UUID, Integer> scoretask;
 
     public ScoreBoardAPI(Main main) {
         this.main = main;
-        //this.scoretask = new HashMap<>();
-
     }
 
     public void setScoreBoard(Player p, Enums.ScoreboardType scoreboardType, boolean health, boolean spectator, boolean gamePlayers, boolean teams) {
@@ -38,9 +35,6 @@ public class ScoreBoardAPI {
         gamePlayer.setScoreBoardBuilder(scoreboard);
         p.setScoreboard(scoreboard.getScoreboard());
 
-    }
-
-    public void removeScoreBoard(Player p) {
     }
 
     public String charsLobby(Player p, String msg) {

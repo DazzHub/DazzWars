@@ -9,9 +9,9 @@ public class PartyManager {
             Party party = new Party(gamePlayer);
             gamePlayer.setParty(party);
             gamePlayer.setOwnerParty(gamePlayer);
-            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.Create"));
+            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.Create", "Error Party.Create"));
         } else {
-            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.AlreadyCreate"));
+            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.AlreadyCreate", "Error Party.AlreadyCreate"));
         }
     }
 
@@ -26,16 +26,16 @@ public class PartyManager {
                         party.joinPartyPublic(target);
 
                     } else {
-                        owner.sendMessage(owner.getLangMessage().getString("Messages.Party.TargetHasParty"));
+                        owner.sendMessage(owner.getLangMessage().getString("Messages.Party.TargetHasParty", "Error Party.TargetHasParty"));
                     }
                 } else {
-                    owner.sendMessage(owner.getLangMessage().getString("Messages.Party.InviteMe"));
+                    owner.sendMessage(owner.getLangMessage().getString("Messages.Party.InviteMe", "Error Party.InviteMe"));
                 }
             } else {
-                owner.sendMessage(owner.getLangMessage().getString("Messages.Party.IsNotOwner"));
+                owner.sendMessage(owner.getLangMessage().getString("Messages.Party.IsNotOwner", "Error IsNotOwner"));
             }
         } else {
-            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoParty"));
+            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoParty", "Error Party.NoParty"));
         }
     }
 
@@ -45,39 +45,39 @@ public class PartyManager {
         if (party != null) {
             if (owner.getOwnerParty().equals(owner)) {
                 if (party.getTempCheck().contains(target)) {
-                    owner.sendMessage(owner.getLangMessage().getString("Messages.Party.AlreadySent"));
+                    owner.sendMessage(owner.getLangMessage().getString("Messages.Party.AlreadySent", "Error Party.AlreadySent"));
                     return;
                 }
                 if (owner != target) {
                     if (!party.getMembers().contains(target)) {
                         party.invitePlayer(target);
                     } else {
-                        owner.sendMessage(owner.getLangMessage().getString("Messages.Party.TargetHasParty"));
+                        owner.sendMessage(owner.getLangMessage().getString("Messages.Party.TargetHasParty", "Error Party.TargetHasParty"));
                     }
                 } else {
-                    owner.sendMessage(owner.getLangMessage().getString("Messages.Party.InviteMe"));
+                    owner.sendMessage(owner.getLangMessage().getString("Messages.Party.InviteMe", "Error Party.InviteMe"));
                 }
             } else {
-                owner.sendMessage(owner.getLangMessage().getString("Messages.Party.IsNotOwner"));
+                owner.sendMessage(owner.getLangMessage().getString("Messages.Party.IsNotOwner", "Error Party.IsNotOwner"));
             }
         } else {
-            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoParty"));
+            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoParty", "Error Party.NoParty"));
         }
     }
 
     public void acceptParty(GamePlayer owner, GamePlayer target){
         if (owner != null && owner.getParty() != null) {
             if (!owner.getParty().isInvite(target)) {
-                target.sendMessage(target.getLangMessage().getString("Messages.Party.NoHaveInvitation"));
+                target.sendMessage(target.getLangMessage().getString("Messages.Party.NoHaveInvitation", "Error Party.NoHaveInvitation"));
             } else {
                 if (target.getParty() == null) {
                     owner.getParty().acceptInvite(target);
                 } else {
-                    target.sendMessage(target.getLangMessage().getString("Messages.Party.TargetHasParty"));
+                    target.sendMessage(target.getLangMessage().getString("Messages.Party.TargetHasParty", "Party.TargetHasParty"));
                 }
             }
         } else {
-            target.sendMessage(target.getLangMessage().getString("Messages.Party.NoParty"));
+            target.sendMessage(target.getLangMessage().getString("Messages.Party.NoParty", "Error Party.NoParty"));
         }
     }
 
@@ -87,10 +87,10 @@ public class PartyManager {
             if (target.getOwnerParty() != target) {
                 party.leaveParty(target);
             } else {
-                target.sendMessage(target.getLangMessage().getString("Messages.Party.NoOwnerLeave").replace("%target%", target.getName()));
+                target.sendMessage(target.getLangMessage().getString("Messages.Party.NoOwnerLeave", "Error Party.NoOwnerLeave").replace("%target%", target.getName()));
             }
         } else {
-            target.sendMessage(target.getLangMessage().getString("Messages.Party.NoParty").replace("%target%", target.getName()));
+            target.sendMessage(target.getLangMessage().getString("Messages.Party.NoParty", "Error Party.NoParty").replace("%target%", target.getName()));
         }
     }
 
@@ -101,13 +101,13 @@ public class PartyManager {
                 if (owner != target) {
                     party.kickMember(target);
                 } else {
-                    owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoOwnerLeave"));
+                    owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoOwnerLeave", "Error Party.NoOwnerLeave"));
                 }
             } else {
-                owner.sendMessage(owner.getLangMessage().getString("Messages.Party.IsNotOwner"));
+                owner.sendMessage(owner.getLangMessage().getString("Messages.Party.IsNotOwner", "Error Party.IsNotOwner"));
             }
         } else {
-            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoParty"));
+            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoParty", "Error Party.NoParty"));
         }
     }
 
@@ -116,10 +116,10 @@ public class PartyManager {
             if (owner.getOwnerParty() == owner){
                 owner.getParty().disaban();
             } else {
-                owner.sendMessage(owner.getLangMessage().getString("Messages.Party.IsNotOwner"));
+                owner.sendMessage(owner.getLangMessage().getString("Messages.Party.IsNotOwner", "Error Party.IsNotOwner"));
             }
         } else {
-            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoParty"));
+            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.NoParty", "Error Party.NoParty"));
         }
     }
 

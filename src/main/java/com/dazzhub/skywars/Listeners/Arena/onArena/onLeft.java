@@ -38,7 +38,7 @@ public class onLeft implements Listener {
                         party.getMembers().forEach(gamePlayer1 -> arena.removeSpectator(gamePlayer1, false));
 
                     } else {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner", "Error Party.JoinArenaNoOwner"));
                     }
                 }
                 break;
@@ -57,7 +57,7 @@ public class onLeft implements Listener {
                     if (party.getOwner().equals(gamePlayer)) {
                         party.getMembers().forEach(arena::removePlayer);
                     } else {
-                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+                        gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner", "Error Party.JoinArenaNoOwner"));
                     }
                 }
                 break;

@@ -40,7 +40,7 @@ public class Party {
     public void invitePlayer(GamePlayer target){
 
         if (cooldown.checkCooldown(target)){
-            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.AlreadyHasParty").replace("%target%", target.getName()).replace("%owner%", owner.getName()));
+            owner.sendMessage(owner.getLangMessage().getString("Messages.Party.AlreadyHasParty", "Error Party.AlreadyHasParty").replace("%target%", target.getName()).replace("%owner%", owner.getName()));
             return;
         }
 
@@ -48,10 +48,10 @@ public class Party {
         this.tempCheck.remove(target);
         this.tempCheck.add(target);
 
-        target.sendMessage(target.getLangMessage().getString("Messages.Party.ReceiveInvitation").replace("%owner%", owner.getName()).replace("%target%", target.getName()));
+        target.sendMessage(target.getLangMessage().getString("Messages.Party.ReceiveInvitation", "Error Party.ReceiveInvitation").replace("%owner%", owner.getName()).replace("%target%", target.getName()));
         broadcast("Messages.Party.NotifyInvite", owner.getName(), target.getName());
 
-        this.owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.SendInvitation").replace("%target%", target.getPlayer().getName())));
+        this.owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.SendInvitation", "Error Party.SendInvitation").replace("%target%", target.getPlayer().getName())));
     }
 
     /* JOIN PARTY PUBLIC */
@@ -60,7 +60,7 @@ public class Party {
             target.setParty(this);
             target.setOwnerParty(owner);
 
-            target.sendMessage(c(target.getLangMessage().getString("Messages.Party.JoinTarget").replace("%target%", target.getPlayer().getName())));
+            target.sendMessage(c(target.getLangMessage().getString("Messages.Party.JoinTarget", "Error Party.JoinTarget").replace("%target%", target.getPlayer().getName())));
 
             this.members.add(target);
             broadcast("Messages.Party.NotifyJoin", owner.getName(), target.getName());
@@ -79,8 +79,8 @@ public class Party {
             target.setParty(this);
             target.setOwnerParty(owner);
 
-            target.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.JoinTarget").replace("%target%", target.getPlayer().getName())));
-            owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.Join").replace("%target%", target.getPlayer().getName())));
+            target.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.JoinTarget", "Error Party.JoinTarget").replace("%target%", target.getPlayer().getName())));
+            owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.Join", "Error Party.Join").replace("%target%", target.getPlayer().getName())));
             broadcast("Messages.Party.NotifyJoin", owner.getName(), target.getPlayer().getName());
         }
     }
@@ -90,11 +90,11 @@ public class Party {
         if (this.members.contains(gamePlayer)) {
             this.members.remove(gamePlayer);
 
-            owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.KickOwner"))
+            owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.KickOwner", "Error Party.KickOwner"))
                     .replace("%target%", gamePlayer.getPlayer().getName())
             );
 
-            gamePlayer.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.KickTarget"))
+            gamePlayer.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.KickTarget", "Error Party.KickTarget"))
                     .replace("%owner%", owner.getPlayer().getName())
             );
 
@@ -112,35 +112,35 @@ public class Party {
             target.setParty(null);
 
             broadcast("Messages.Party.NotifyLeave",owner.getName(), target.getName());
-            this.owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.NotifyLeave").replace("%target%", target.getPlayer().getName())));
-            target.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.Leave").replace("%target%", target.getPlayer().getName())));
+            this.owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.NotifyLeave", "Party.NotifyLeave").replace("%target%", target.getPlayer().getName())));
+            target.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.Leave", "Error Party.Leave").replace("%target%", target.getPlayer().getName())));
         } else {
-            target.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.TargetNoMember").replace("%target%", target.getPlayer().getName())));
+            target.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.TargetNoMember", "Error Party.TargetNoMember").replace("%target%", target.getPlayer().getName())));
         }
     }
 
     /* DELETE PARTY */
     public void disaban(){
         for (GamePlayer gamePlayer : getMembers()) {
-            gamePlayer.getPlayer().sendMessage(c(gamePlayer.getLangMessage().getString("Messages.Party.NotifyRemove").replace("%owner%", owner.getPlayer().getName())));
+            gamePlayer.getPlayer().sendMessage(c(gamePlayer.getLangMessage().getString("Messages.Party.NotifyRemove", "Error Party.NotifyRemove").replace("%owner%", owner.getPlayer().getName())));
             gamePlayer.setOwnerParty(null);
             gamePlayer.setParty(null);
         }
 
         owner.setParty(null);
         owner.setOwnerParty(null);
-        owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.Remove").replace("%owner%", owner.getPlayer().getName())));
+        owner.getPlayer().sendMessage(c(owner.getLangMessage().getString("Messages.Party.Remove", "Error Party.Remove").replace("%owner%", owner.getPlayer().getName())));
     }
 
     public void joinArena(GamePlayer gamePlayer, Arena arena) {
 
         if (!this.getOwner().getPlayer().getName().equalsIgnoreCase(gamePlayer.getPlayer().getName())) {
-            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner"));
+            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner", "Error Party.JoinArenaNoOwner"));
             return;
         }
 
         if (this.getMembers().size() > arena.getMaxPlayers()) {
-            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaFull"));
+            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaFull", "Error Party.JoinArenaFull"));
             return;
         }
 

@@ -25,7 +25,7 @@ public class Dragon implements eventDragon {
     public Dragon(Arena arena) {
         this.main = Main.getPlugin();
         this.arena = arena;
-        this.timer = arena.getArenaConfig().getInt("Arena.dragon.TimeSpawn");
+        this.timer = arena.getArenaConfig().getInt("Arena.dragon.TimeSpawn",120);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Dragon implements eventDragon {
 
                 arena.getPlayers().forEach(gamePlayer -> {
                     Set<String> keys = gamePlayer.getLangMessage().getConfigurationSection("Messages.TypeEvent.Dragon.Starting").getKeys(false);
-                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.Dragon.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
+                    keys.stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TypeEvent.Dragon.Starting." + time_config, "Error TypeEvent.Dragon.Starting." + time_config).replaceAll("%seconds%", String.valueOf(timer))));
                 });
 
                 if (timer <= 1){
@@ -55,7 +55,7 @@ public class Dragon implements eventDragon {
 
                         dragon = (EnderDragon) world.spawnEntity(loc, EntityType.ENDER_DRAGON);
 
-                        dragon.setCustomName(c(arena.getArenaConfig().getString("Arena.dragon.Name")));
+                        dragon.setCustomName(c(arena.getArenaConfig().getString("Arena.dragon.Name", "&bDragon")));
                         dragon.setCustomNameVisible(true);
                     });
 
