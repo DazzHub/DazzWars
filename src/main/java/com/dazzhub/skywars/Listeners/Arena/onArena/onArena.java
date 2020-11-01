@@ -65,6 +65,7 @@ public class onArena implements Listener {
                                     && !arena.getIslandChest().contains(e.getClickedBlock().getLocation())) {
                                 main.getChestManager().getChestHashMap().get("CENTER").refillChest(chest);
                                 arena.getCenterChestCheck().add(chest.getLocation());
+                                arena.getIHoloChest().addHolo(chest);
                             }
 
                             if (!arena.getIslandChest().contains(e.getClickedBlock().getLocation())
@@ -73,6 +74,7 @@ public class onArena implements Listener {
                                     && !arena.getCenterChestCheck().contains(e.getClickedBlock().getLocation())) {
                                 main.getChestManager().getChestHashMap().get(arena.getChestType()).refillChest(chest);
                                 arena.getIslandChest().add(chest.getLocation());
+                                arena.getIHoloChest().addHolo(chest);
                             }
                         }
                     }

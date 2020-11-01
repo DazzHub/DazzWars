@@ -58,7 +58,9 @@ public class ScoreBoardBuilder {
         if (spectator){
             if (arena == null) return;
 
-            this.GameSpectator = this.scoreboard.registerNewTeam("Spectator");
+            this.GameSpectator = this.scoreboard.registerNewTeam("3-Spectator");
+            this.GameSpectator.setCanSeeFriendlyInvisibles(true);
+
             for (GamePlayer gamePlayer : arena.getSpectators()) {
                 if (gamePlayer != null) {
                     if (!gamePlayer.getPlayer().isOnline()) {
@@ -70,7 +72,7 @@ public class ScoreBoardBuilder {
         }
 
         if (gamePlayers){
-            this.gameEnemy = this.scoreboard.registerNewTeam("PlayerGaming");
+            this.gameEnemy = this.scoreboard.registerNewTeam("2-PlayerGaming");
 
             if (player.getLangMessage().getBoolean("Messages.ScoreBoard.Team.killCount")) {
                 this.tabObjective = this.scoreboard.registerNewObjective("PlayerGaming", "dummy");
@@ -87,7 +89,7 @@ public class ScoreBoardBuilder {
         }
 
         if (teams){
-            this.gameTeams = this.scoreboard.registerNewTeam("TeamsFriends");
+            this.gameTeams = this.scoreboard.registerNewTeam("1-TeamsFriends");
             if (arena == null) return;
             if (!player.isSpectating()) {
                 if (player.getArenaTeam() != null && !player.getArenaTeam().getMembers().isEmpty()) {

@@ -70,6 +70,9 @@ ListLanguage:
   - 'en-EN'
   - 'es-ES'
 Holograms:
+refillHolo:
+  line1: '&a%time%'
+  line2: '&cEmpty'
 lobbies:
   onScoreboard:
     - world

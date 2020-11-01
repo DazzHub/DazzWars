@@ -22,7 +22,7 @@ public class Holograms {
     private final Main main;
     private final GamePlayer gamePlayer;
 
-    private HashMap<String, Hologram> listHolograms;
+    private final HashMap<String, Hologram> listHolograms;
 
     public Holograms(Main main, GamePlayer gamePlayer) {
         this.main = main;
@@ -63,17 +63,35 @@ public class Holograms {
     }
 
     public void reloadHologram() {
+
         if (gamePlayer == null) {
             return;
         }
 
-        if (listHolograms.isEmpty()) return;
+        Player p = gamePlayer.getPlayer();
 
-        List<String> holos = new ArrayList<>(listHolograms.keySet());
+       /* List<String> holos = new ArrayList<>(listHolograms.keySet());
 
         for (String s : holos) {
             createHologram(s);
+        }*/
+
+        for (String type : listHolograms.keySet()){
+
+            Hologram hologram = listHolograms.get(type);
+
+            hologram.clearLines();
+
+            List<String> list = gamePlayer.getHologramMessage().getStringList("TypeHolograms." + type);
+            lines(list, p, hologram);
+
+            VisibilityManager visibilityManager = hologram.getVisibilityManager();
+            visibilityManager.resetVisibility(p);
+            visibilityManager.showTo(p);
+            visibilityManager.setVisibleByDefault(false);
         }
+
+
     }
 
 

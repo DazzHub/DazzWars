@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class ScoreBoardAPI {
 
-    private Main main;
+    private final Main main;
 
     public ScoreBoardAPI(Main main) {
         this.main = main;

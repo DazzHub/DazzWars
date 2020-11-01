@@ -162,11 +162,6 @@ public class IMenu {
 
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
-            if (price != 0 && gamePlayer.getCoins() < price) {
-                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
-                return;
-            }
-
             if (cmd.startsWith("console:")) {
                 String consoleCommand = cmd.substring(8);
                 if (consoleCommand.startsWith(" ")) {
@@ -202,6 +197,11 @@ public class IMenu {
 
                         if (!gamePlayer.getCagesSoloList().contains(cage[0])) {
 
+                            if (price != 0 && gamePlayer.getCoins() < price) {
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                                return;
+                            }
+
                             gamePlayer.getCagesSoloList().add(cage[0]);
                             gamePlayer.setCageSolo(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
@@ -226,6 +226,12 @@ public class IMenu {
                     if (main.getCageManager().getCagesTeam().containsKey(cage[0])) {
 
                         if (!gamePlayer.getCagesTeamList().contains(cage[0])) {
+
+                            if (price != 0 && gamePlayer.getCoins() < price) {
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                                return;
+                            }
+
                             gamePlayer.getCagesTeamList().add(cage[0]);
                             gamePlayer.setCageTeam(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
@@ -251,6 +257,12 @@ public class IMenu {
                     if (main.getCageManager().getCagesRanked().containsKey(cage[0])) {
 
                         if (!gamePlayer.getCagesRankedList().contains(cage[0])) {
+
+                            if (price != 0 && gamePlayer.getCoins() < price) {
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                                return;
+                            }
+
                             gamePlayer.getCagesRankedList().add(cage[0]);
                             gamePlayer.setCageRanked(cage[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Cage.Buy").replace("%cage%", cage[0]));
@@ -285,6 +297,12 @@ public class IMenu {
                     if (main.getKitManager().getKitSoloHashMap().containsKey(kit[0].toLowerCase())) {
 
                         if (!gamePlayer.getKitSoloList().contains(kit[0])) {
+
+                            if (price != 0 && gamePlayer.getCoins() < price) {
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                                return;
+                            }
+
                             gamePlayer.getKitSoloList().add(kit[0]);
                             gamePlayer.setKitSolo(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
@@ -299,6 +317,12 @@ public class IMenu {
                     if (main.getKitManager().getKitTeamHashMap().containsKey(kit[0].toLowerCase())) {
 
                         if (!gamePlayer.getKitTeamList().contains(kit[0])) {
+
+                            if (price != 0 && gamePlayer.getCoins() < price) {
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                                return;
+                            }
+
                             gamePlayer.getKitTeamList().add(kit[0]);
                             gamePlayer.setKitTeam(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
@@ -313,6 +337,12 @@ public class IMenu {
                     if (main.getKitManager().getKitRankedHashMap().containsKey(kit[0].toLowerCase())) {
 
                         if (!gamePlayer.getKitRankedList().contains(kit[0])) {
+
+                            if (price != 0 && gamePlayer.getCoins() < price) {
+                                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                                return;
+                            }
+
                             gamePlayer.getKitRankedList().add(kit[0]);
                             gamePlayer.setKitRanked(kit[0]);
                             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Kit.Buy").replace("%kit%", kit[0]));
@@ -334,6 +364,12 @@ public class IMenu {
 
                 if (wineffect[1].equalsIgnoreCase("SOLO")) {
                     if (!gamePlayer.getWinEffectsSoloList().contains(wineffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getWinEffectsSoloList().add(wineffect[0]);
                         gamePlayer.setWinEffectSolo(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
@@ -344,6 +380,12 @@ public class IMenu {
                     }
                 } else if (wineffect[1].equalsIgnoreCase("TEAM")) {
                     if (!gamePlayer.getWinEffectsTeamList().contains(wineffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getWinEffectsTeamList().add(wineffect[0]);
                         gamePlayer.setWinEffectTeam(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
@@ -354,6 +396,12 @@ public class IMenu {
                     }
                 } else if (wineffect[1].equalsIgnoreCase("RANKED")) {
                     if (!gamePlayer.getWinEffectsRankedList().contains(wineffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getWinEffectsRankedList().add(wineffect[0]);
                         gamePlayer.setWinEffectRanked(wineffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.WinEffect.Buy").replace("%win%", wineffect[0]));
@@ -373,6 +421,12 @@ public class IMenu {
 
                 if (killeffect[1].equalsIgnoreCase("SOLO")) {
                     if (!gamePlayer.getKillEffectsSoloList().contains(killeffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getKillEffectsSoloList().add(killeffect[0]);
                         gamePlayer.setKillEffectSolo(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
@@ -383,6 +437,12 @@ public class IMenu {
                     }
                 } else if (killeffect[1].equalsIgnoreCase("TEAM")) {
                     if (!gamePlayer.getKillEffectsTeamList().contains(killeffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getKillEffectsTeamList().add(killeffect[0]);
                         gamePlayer.setKillEffectTeam(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
@@ -393,6 +453,12 @@ public class IMenu {
                     }
                 } else if (killeffect[1].equalsIgnoreCase("RANKED")) {
                     if (!gamePlayer.getKillEffectsRankedList().contains(killeffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getKillEffectsRankedList().add(killeffect[0]);
                         gamePlayer.setKillEffectRanked(killeffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.KillEffect.Buy").replace("%kill%", killeffect[0]));
@@ -412,6 +478,12 @@ public class IMenu {
 
                 if (traileffect[1].equalsIgnoreCase("SOLO")) {
                     if (!gamePlayer.getTrailsSoloList().contains(traileffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getTrailsSoloList().add(traileffect[0]);
                         gamePlayer.setTrailSolo(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
@@ -422,6 +494,12 @@ public class IMenu {
                     }
                 } else if (traileffect[1].equalsIgnoreCase("TEAM")) {
                     if (!gamePlayer.getTrailsTeamList().contains(traileffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getTrailsTeamList().add(traileffect[0]);
                         gamePlayer.setTrailTeam(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));
@@ -432,6 +510,12 @@ public class IMenu {
                     }
                 } else if (traileffect[1].equalsIgnoreCase("RANKED")) {
                     if (!gamePlayer.getTrailsRankedList().contains(traileffect[0])) {
+
+                        if (price != 0 && gamePlayer.getCoins() < price) {
+                            gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.InsufficientCoins").replace("%coins%", String.valueOf(price)));
+                            return;
+                        }
+
                         gamePlayer.getTrailsRankedList().add(traileffect[0]);
                         gamePlayer.setTrailRanked(traileffect[0]);
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.TrailEffect.Buy").replace("%trail%", traileffect[0]));

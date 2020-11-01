@@ -7,6 +7,7 @@ import com.dazzhub.skywars.Listeners.Custom.LeftEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Party.Party;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.inventory.actions.OptionClickEvent;
 import com.dazzhub.skywars.Utils.inventory.actions.OptionClickEventHandler;
@@ -143,15 +144,6 @@ public class IItem {
                     consoleCommand = consoleCommand.substring(1);
                 }
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), consoleCommand);
-            } else if (cmd.startsWith("open:")) {
-                String openCommand = cmd.substring(5);
-                if (openCommand.startsWith(" ")) {
-                    openCommand = openCommand.substring(1);
-                }
-                IMenu menu = main.getMenuManager().getMenuFileName().get(openCommand);
-                if (menu == null) return;
-
-                menu.open(p, target);
             } else if (cmd.startsWith("leavespect")) {
                 if (gamePlayer.isInArena())
                     Bukkit.getPluginManager().callEvent(new LeftEvent(p, arenaPlayer, Enums.LeftCause.INTERACTSPECTATOR));
@@ -181,6 +173,17 @@ public class IItem {
                 } else {
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.alredyInGame"));
                 }
+            } else if (cmd.startsWith("open:")) {
+                String openCommand = cmd.substring(5);
+                if (openCommand.startsWith(" ")) {
+                    openCommand = openCommand.substring(1);
+                }
+
+                IMenu menu = main.getMenuManager().getMenuFileName().get(openCommand);
+                if (menu == null) return;
+
+                Bukkit.getScheduler().runTaskLater(main, () -> menu.open(p, target),2);
+
             } else if (cmd.startsWith("auto")) {
                 if (gamePlayer.isInArena()) {
 

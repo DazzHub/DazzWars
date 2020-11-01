@@ -95,6 +95,8 @@ public class IMenuManager {
                     }
                 }
             }
+
+            Console.info("&eLoaded menus: &a"+getMenuFileName().size());
         });
     }
 

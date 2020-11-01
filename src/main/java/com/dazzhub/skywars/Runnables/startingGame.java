@@ -64,7 +64,7 @@ public class startingGame extends BukkitRunnable {
             arena.checkVotes();
 
             arena.getPlayers().forEach(p -> {
-                Titles.sendTitle(p.getPlayer(), p.getLangMessage().getInt("Messages.LuckTitle.Fade",20), p.getLangMessage().getInt("Messages.LuckTitle.Stay",20), p.getLangMessage().getInt("Messages.LuckTitle.Out",20), c(p.getLangMessage().getString("Messages.LuckTitle.Info", "Error title LuckTitle").split(";")[0]).replace("%player%", p.getPlayer().getName()), c(p.getLangMessage().getString("Messages.LuckTitle.Info", "Error subtitle LuckTitle").split(";")[1]).replace("%player%", p.getPlayer().getName()));
+                Titles.sendTitle(p.getPlayer(), p.getLangMessage().getInt("Messages.LuckTitle.Fade",20), p.getLangMessage().getInt("Messages.LuckTitle.Stay",20), p.getLangMessage().getInt("Messages.LuckTitle.Out",20), c(p.getLangMessage().getString("Messages.LuckTitle.Info", "Error title LuckTitle;&f").split(";")[0]).replace("%player%", p.getPlayer().getName()), c(p.getLangMessage().getString("Messages.LuckTitle.Info", "&f;Error subtitle LuckTitle").split(";")[1]).replace("%player%", p.getPlayer().getName()));
                 announcerVote(p);
 
                 arena.removeCage(p, arena.getMode(), 3);

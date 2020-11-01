@@ -40,6 +40,8 @@ public class inGame extends BukkitRunnable {
             Bukkit.getPluginManager().callEvent(new WinEvent(this.arena));
         }
 
+        this.arena.getIHoloChest().updateHolo();
+
         nextRefill = arena.getHighest(arena.getRefillTime(), timer);
 
         if (arena.getRefillGame() == null && !arena.getRefillTime().isEmpty()) {

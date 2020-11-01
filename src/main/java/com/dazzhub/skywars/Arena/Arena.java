@@ -25,6 +25,7 @@ import com.dazzhub.skywars.Utils.events.strom.Storm;
 import com.dazzhub.skywars.Utils.events.strom.eventStorm;
 import com.dazzhub.skywars.Utils.events.tntfall.TNTFall;
 import com.dazzhub.skywars.Utils.events.tntfall.eventTNT;
+import com.dazzhub.skywars.Utils.holoChest.IHoloChest;
 import com.dazzhub.skywars.Utils.locUtils;
 import com.dazzhub.skywars.Utils.signs.arena.ISign;
 import com.dazzhub.skywars.Utils.vote.VotesSystem;
@@ -117,6 +118,7 @@ public class Arena {
     /* REFILL */
     private RefillGame refillGame;
     private List<Integer> refillTime;
+    private IHoloChest iHoloChest;
 
     /* TOP KILLERS */
     private HashMap<String, Integer> killers;
@@ -170,6 +172,7 @@ public class Arena {
         /* REFILL*/
         this.refillGame = null;
         this.refillTime = new ArrayList<>();
+        this.iHoloChest = new IHoloChest(this);
 
         /* TOP KILLERS */
         this.killers = new HashMap<>();
@@ -258,6 +261,9 @@ public class Arena {
         /* REFILL */
         this.refillGame = null;
         this.refillTime = new ArrayList<>();
+
+        this.iHoloChest.deleteAll();
+        this.iHoloChest = new IHoloChest(this);
 
         if (arenaConfig != null) {
             this.refillTime.addAll(arenaConfig.getIntegerList("Arena.refill"));
@@ -709,7 +715,7 @@ public class Arena {
         this.gameStatus = gameStatus;
     }
 
-    private String calculateTime(long seconds) {
+    public String calculateTime(long seconds) {
         return String.format("%02d:%02d", TimeUnit.SECONDS.toMinutes(seconds) - TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(seconds)), TimeUnit.SECONDS.toSeconds(seconds) - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(seconds)));
     }
 

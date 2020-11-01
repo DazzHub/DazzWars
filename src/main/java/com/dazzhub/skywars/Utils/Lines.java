@@ -327,6 +327,9 @@ public class Lines {
             addDefaultSettings("ListLanguage", Arrays.asList("en-EN", "es-ES"));
             addDefaultSettings("Holograms", "");
 
+            addDefaultSettings("refillHolo.line1", "&a%time%");
+            addDefaultSettings("refillHolo.line2", "&cEmpty");
+
             addDefaultSettings("lobbies.onScoreboard", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onItemJoin", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onBreak", Collections.singletonList("world"));

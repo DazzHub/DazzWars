@@ -43,7 +43,11 @@ public class onMenu implements Listener {
 
         String invName = event.getView().getTitle();
 
-        if (invName.equals(c(main.getPlayerManager().getPlayer(p.getUniqueId()).getLangMessage().getString("Messages.SoulWell.NameMenu")))){
+        String inv = main.getPlayerManager().getPlayer(p.getUniqueId()).getLangMessage().getString("Messages.SoulWell.NameMenu");
+
+        if (inv == null) return;
+
+        if (invName.equalsIgnoreCase(c(inv))) {
             if(event.getView().getTopInventory().equals(event.getInventory())) event.setCancelled(true);
             if(event.getView().getBottomInventory().equals(event.getInventory())) event.setCancelled(true);
         }
