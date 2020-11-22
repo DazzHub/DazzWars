@@ -287,6 +287,7 @@ public class onArena implements Listener {
                             break;
                         }
                     }
+                    main.getAchievementManager().checkPlayer(p, Enums.AchievementType.PROJECTILES_SHOT, gamePlayer.totalShots());
                 }
             }
         }
@@ -323,6 +324,8 @@ public class onArena implements Listener {
                                 break;
                             }
                         }
+
+                        main.getAchievementManager().checkPlayer(p, Enums.AchievementType.PROJECTILES_HIT, gamePlayer.totalHits());
                     }
 
 
@@ -354,6 +357,7 @@ public class onArena implements Listener {
 
             if (arena.getGameStatus() == Enums.GameStatus.INGAME) {
                 gamePlayer.addBlockPlaced();
+                main.getAchievementManager().checkPlayer(p, Enums.AchievementType.BLOCKS_PLACED, gamePlayer.getBlockPlaced());
             }
         }
     }
@@ -372,6 +376,7 @@ public class onArena implements Listener {
 
             if (arena.getGameStatus() == Enums.GameStatus.INGAME) {
                 gamePlayer.addItemCrafted();
+                main.getAchievementManager().checkPlayer(p, Enums.AchievementType.ITEMS_CRAFTED, gamePlayer.getItemsCrafted());
             }
         }
     }
@@ -390,6 +395,7 @@ public class onArena implements Listener {
 
             if (arena.getGameStatus() == Enums.GameStatus.INGAME) {
                 gamePlayer.addBlockBroken();
+                main.getAchievementManager().checkPlayer(p, Enums.AchievementType.BLOCKS_BROKEN, gamePlayer.getBlockBroken());
             }
         }
     }
@@ -408,6 +414,7 @@ public class onArena implements Listener {
 
             if (arena.getGameStatus() == Enums.GameStatus.INGAME) {
                 gamePlayer.addItemEnchanted();
+                main.getAchievementManager().checkPlayer(p, Enums.AchievementType.ITEMS_ENCHANTED, gamePlayer.getItemsEnchanted());
             }
         }
     }
@@ -442,28 +449,30 @@ public class onArena implements Listener {
 
         Player p = (Player) e.getWhoClicked();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-        Configuration config = gamePlayer.getLangMessage();
 
-        if (e.getView().getTitle().startsWith(c(config.getString("Messages.MenuSpectator.TITLE")))) {
-            e.setCancelled(true);
+        if (gamePlayer.isSpectating()){
 
-            SkullMeta skullMeta = (SkullMeta)e.getCurrentItem().getItemMeta();
+            if (e.getView().getTitle().startsWith(c(gamePlayer.getLangMessage().getString("Messages.MenuSpectator.TITLE")))) {
+                SkullMeta skullMeta = (SkullMeta)e.getCurrentItem().getItemMeta();
 
-            for (int i = 0; i < 29; i++) {
-                if (e.getSlot() == i) {
-                    try {
-                        Player p2 = Bukkit.getPlayer(skullMeta.getOwner());
+                for (int i = 0; i < 29; i++) {
+                    if (e.getSlot() == i) {
+                        try {
+                            Player p2 = Bukkit.getPlayer(skullMeta.getOwner());
 
-                        if (p2 != null){
-                            p.teleport(p2.getLocation().add(0.5,1.5,0.5));
-                        }
-                    } catch (Exception ignored){}
+                            if (p2 != null){
+                                p.teleport(p2.getLocation().add(0.5,1.5,0.5));
+                            }
+                        } catch (Exception ignored){}
+                    }
+                }
+
+                if (e.getSlot() == Main.getRelativePosition(gamePlayer.getLangMessage().getInt("Messages.MenuSpectator.Close.POSITION-X"), gamePlayer.getLangMessage().getInt("Messages.MenuSpectator.Close.POSITION-Y"))) {
+                    p.closeInventory();
                 }
             }
 
-            if (e.getSlot() == Main.getRelativePosition(config.getInt("Messages.MenuSpectator.Close.POSITION-X"),config.getInt("Messages.MenuSpectator.Close.POSITION-Y"))) {
-                p.closeInventory();
-            }
+            e.setCancelled(true);
         }
     }
 

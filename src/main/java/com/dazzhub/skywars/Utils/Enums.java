@@ -60,6 +60,17 @@ public class Enums {
         NONE;
     }
 
+    public enum AchievementType
+    {
+        KILLS,
+        WINS,
+        PROJECTILES_HIT,
+        PROJECTILES_SHOT,
+        BLOCKS_PLACED,
+        BLOCKS_BROKEN,
+        ITEMS_ENCHANTED,
+        ITEMS_CRAFTED
+    }
 
     public enum Mode {
         SOLO("SOLO", 1),

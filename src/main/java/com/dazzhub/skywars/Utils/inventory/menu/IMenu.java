@@ -25,6 +25,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 @Getter
 @Setter
@@ -567,16 +568,16 @@ public class IMenu {
                 if (action.startsWith(" ")) {
                     action = action.substring(1);
                 }
-                Configuration lang = gamePlayer.getLangMessage();
 
                 if (!main.getSettings().getStringList("ListLanguage").contains(action)) {
-                    gamePlayer.sendMessage(lang.getString("Messages.Language.error"));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Language.error"));
                     return;
                 }
 
                 gamePlayer.setLang(action);
 
-                gamePlayer.sendMessage(lang.getString("Messages.Language.change"));
+                Bukkit.getScheduler().runTaskLater(main, () -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Language.change")),2);
+
             } else if (cmd.startsWith("chest:")) {
                 String vote = cmd.substring(6);
                 if (vote.startsWith(" ")) {

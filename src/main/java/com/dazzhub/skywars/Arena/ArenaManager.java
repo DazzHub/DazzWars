@@ -22,15 +22,21 @@ import static com.cryptomorin.xseries.XSound.*;
 
 public class ArenaManager {
 
-    private Main main;
+    private final Main main;
 
-    private HashMap<String, Arena> arenas;
-    private List<Arena> arenaList;
+    private final HashMap<String, Arena> arenas;
+    private final List<Arena> arenaList;
+
+    /* temp arenas */
+    private final HashMap<String, Arena> temp_arenas;
 
     public ArenaManager(Main main) {
         this.main = main;
+
         this.arenas = new HashMap<>();
         this.arenaList = new ArrayList<>();
+
+        this.temp_arenas = new HashMap<>();
     }
 
     public void loadArenas(){
@@ -51,6 +57,10 @@ public class ArenaManager {
             } else {
                 Console.error("&eError in the arena: &4" + nameArena + " &ethe &4Settings.yml&e file is missing");
             }
+        });
+
+        this.arenas.forEach((s, arena) -> {
+            //arena.clone();
         });
 
         Console.info("&eLoaded arenas: &a"+getArenas().size());

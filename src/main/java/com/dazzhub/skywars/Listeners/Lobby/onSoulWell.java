@@ -50,17 +50,20 @@ public class onSoulWell implements Listener {
             File file = this.main.getConfigUtils().getFile(this.main, "SoulWell");
             FileConfiguration config = this.main.getConfigUtils().getConfig(this.main, "SoulWell");
 
-            if (!Main.getPlugin().getSoulManager().getLocations().contains(location)) {
+            if (!Main.getPlugin().getSoulManager().getLocations().contains(locUtils.locToString(location))) {
 
                 if (config.getStringList("Locations") == null) {
                     config.createSection("Locations");
                     config.save(file);
                 }
 
-                config.set("Locations." + UUID.randomUUID(), locUtils.locToString(location));
+                List<String> locs = config.getStringList("Locations");
+                locs.add(locUtils.locToString(location));
+
+                config.set("Locations", locs);
                 config.save(file);
 
-                Main.getPlugin().getSoulManager().getLocations().add(location);
+                Main.getPlugin().getSoulManager().getLocations().add(locUtils.locToString(location));
 
                 XSound.play(player, String.valueOf(XSound.BLOCK_LAVA_POP.parseSound()));
                 player.sendMessage(c("&a&l\u2714 &fYou have set a SoulWell."));
@@ -91,7 +94,8 @@ public class onSoulWell implements Listener {
 
         /* Fixear */
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (main.getSoulManager().getLocations().contains(e.getClickedBlock().getLocation())) {
+            String loc = locUtils.locToString(e.getClickedBlock().getLocation());
+            if (main.getSoulManager().getLocations().contains(loc)) {
                 if (!using) {
                     e.setCancelled(true);
                     if (p.hasPermission("skywars.soulwell")) {

@@ -219,6 +219,22 @@ public class Lines {
                 addDefaultLang("Messages.MenuSpectator.Close.POSITION-X", 5, lang);
                 addDefaultLang("Messages.MenuSpectator.Close.POSITION-Y", 3, lang);
 
+                addDefaultLang("Messages.Achievements.RewardsUse", true, lang);
+                addDefaultLang("Messages.Achievements.UseAdvertising", true, lang);
+                addDefaultLang("Messages.Achievements.FireWorks", false, lang);
+
+                addDefaultLang("Messages.Achievements.Sound.Use", true, lang);
+                addDefaultLang("Messages.Achievements.Sound.Type", "ORB_PICKUP", lang);
+
+                addDefaultLang("Messages.Achievements.Title.Use", false, lang);
+                addDefaultLang("Messages.Achievements.Title.Fade", 10, lang);
+                addDefaultLang("Messages.Achievements.Title.Stay", 40, lang);
+                addDefaultLang("Messages.Achievements.Title.Out", 10, lang);
+                addDefaultLang("Messages.Achievements.Title.Info", "&e&lCONGRATULATIONS!;&7Challenge: %description%", lang);
+
+                addDefaultLang("Messages.Achievements.Message.Use", true, lang);
+                addDefaultLang("Messages.Achievements.Message.Announcement", Arrays.asList("%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "", "%center%&eCongratulations you made the challenge: &9%description%","%center%&eThis is your reward: &9%typereward%","","%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), lang);
+
                 addDefaultLang("Messages.DeathMessages.Player", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 &7was slain by &c%killer%&7[&f%k_kill_count%&7]", lang);
                 addDefaultLang("Messages.DeathMessages.Void", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fell into void", lang);
                 addDefaultLang("Messages.DeathMessages.Fall", "&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fell from the sky", lang);

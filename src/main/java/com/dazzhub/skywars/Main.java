@@ -15,6 +15,8 @@ import com.dazzhub.skywars.Party.PartyManager;
 import com.dazzhub.skywars.Utils.*;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.SongPlayer;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.lSong;
+import com.dazzhub.skywars.Utils.achievements.IAchievement;
+import com.dazzhub.skywars.Utils.achievements.IAchievementManager;
 import com.dazzhub.skywars.Utils.cages.ICageManager;
 import com.dazzhub.skywars.Utils.chests.IChestManager;
 import com.dazzhub.skywars.Utils.configuration.configCreate;
@@ -54,7 +56,7 @@ public class Main extends JavaPlugin {
     private final ArenaManager arenaManager;
     private final resetWorld resetWorld;
     private final itemsCustom itemsCustom;
-    private com.dazzhub.skywars.Utils.resetWorld.resetWorldSlime resetWorldSlime;
+    private final resetWorldSlime resetWorldSlime;
 
     /* PARTY */
     private final PartyManager partyManager;
@@ -68,6 +70,9 @@ public class Main extends JavaPlugin {
 
     /* CHEST MANAGER */
     private final IChestManager chestManager;
+
+    /* ACHIEVEMENTS MANAGER */
+    private final IAchievementManager achievementManager;
 
     /* INVENTORY MANAGER */
     private final IItemManager iItemManager;
@@ -111,6 +116,8 @@ public class Main extends JavaPlugin {
 
         this.chestManager = new IChestManager(this);
 
+        this.achievementManager = new IAchievementManager(this);
+
         this.iSignManager = new ISignManager(this);
         this.hologramsManager = new HologramsManager(this);
 
@@ -140,6 +147,7 @@ public class Main extends JavaPlugin {
         configCreate.get().setup(this, "Settings");
         configCreate.get().setup(this, "SoulWell");
 
+        configCreate.get().setup(this, "Achievements");
         configCreate.get().setup(this, "Arenas/Arenas");
 
         configCreate.get().setup(this, "Messages/Lang/es-ES");
@@ -173,6 +181,7 @@ public class Main extends JavaPlugin {
         this.iMenuManager.loadFiles();
         this.iKitManager.loadKits();
         this.soulManager.loadSoulWells();
+        this.achievementManager.loadAchievements();
 
         this.getPlayerDB.loadMySQL();
 
@@ -308,6 +317,10 @@ public class Main extends JavaPlugin {
 
     public SoulManager getSoulManager() {
         return soulManager;
+    }
+
+    public IAchievementManager getAchievementManager() {
+        return achievementManager;
     }
 
     public String getVersion() {

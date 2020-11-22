@@ -62,6 +62,7 @@ public class onWin implements Listener {
                 gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.lvlRanked",1))));
             }
 
+            main.getAchievementManager().checkPlayer(gamePlayer.getPlayer(), Enums.AchievementType.WINS, gamePlayer.totalWins());
         });
 
         arena.getSpectators().forEach(arena::getWinners);

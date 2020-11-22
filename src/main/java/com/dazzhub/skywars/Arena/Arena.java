@@ -48,7 +48,7 @@ import java.util.stream.IntStream;
 
 @Getter
 @Setter
-public class Arena {
+public class Arena implements Cloneable {
 
     private Main main;
 
@@ -140,6 +140,7 @@ public class Arena {
         /* Player */
         this.players = new ArrayList<>();
         this.spectators = new ArrayList<>();
+
         this.spawns = new ArrayList<>();
 
         /* Checks */
@@ -319,7 +320,12 @@ public class Arena {
     }
 
     public ArenaTeam getAvailableTeam(int n) {
-        return this.spawns.stream().filter(arenaTeam -> arenaTeam.getMembers().size() + n <= this.mode.getSize()).findFirst().orElse(null);
+        for (ArenaTeam arenaTeam : this.spawns) {
+            if (arenaTeam.getMembers().size() + n <= this.mode.getSize()) {
+                return arenaTeam;
+            }
+        }
+        return null;
     }
 
     public List<ArenaTeam> getAliveTeams() {
@@ -721,5 +727,11 @@ public class Arena {
 
     private String c(String c) {
         return ChatColor.translateAlternateColorCodes('&', c);
+    }
+
+    @Override
+    public Arena clone() throws CloneNotSupportedException {
+
+        return (Arena) super.clone();
     }
 }

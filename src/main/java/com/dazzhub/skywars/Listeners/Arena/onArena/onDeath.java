@@ -127,6 +127,7 @@ public class onDeath implements Listener {
             }
 
             arena.getKillers().put(killer.getName(), arena.getKillers().containsKey(killer.getName()) ? (arena.getKillers().get(killer.getName()) + 1) : 1);
+            main.getAchievementManager().checkPlayer(p, Enums.AchievementType.KILLS, main.getPlayerManager().getPlayer(p.getUniqueId()).totalKills());
         }
     }
 

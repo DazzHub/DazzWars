@@ -90,7 +90,17 @@ public class IItemManager {
 
                 short durability = (short) confSection.getInt("DURABILITY");
 
-                Material material = confSection.isInt("ICON-ITEM") ? Material.getMaterial(confSection.getInt("ICON-ITEM")) : Material.getMaterial(confSection.getString("ICON-ITEM"));
+                Material material;
+
+                if (main.checkVersion()) {
+                    material = confSection.isInt("ICON-ITEM") ? Material.getMaterial(confSection.getInt("ICON-ITEM")) : Material.getMaterial(confSection.getString("ICON-ITEM"));
+                } else {
+                    material = Material.getMaterial(confSection.getString("ICON-ITEM"));
+                }
+
+                if (material == null) {
+                    material = Material.BEDROCK;
+                }
 
                 Icon icon = new Icon(XMaterial.matchXMaterial(material), amount, data)
                         .setName(name)

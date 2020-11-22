@@ -1,0 +1,191 @@
+#Types of rewards: KILLS, WINS, PROJECTILES_HIT, PROJECTILES_SHOT, BLOCKS_PLACED, BLOCKS_BROKEN, ITEMS_ENCHANTED, ITEMS_CRAFTED, DISTANCE_WALKED;
+#Give types: console:, coin:, cage: type <mode>, trail:type <mode>, kit:type <mode>, killeffect:type <mode> and wineffect:type <mode> Can use %player%
+#EXAMPLE:
+#Achievements:
+  #Types of prizes:
+      #'amount to be required to complete':
+          #description: ex
+          #type-reward: ex 10 coins
+          #executed-command: multicommand lines
+          #- '#Give types'
+          #- 'coins: 10'
+          #- 'cage: type <mode>'
+Achievements:
+  KILLS:
+    '10':
+      description: Get 10 kills!
+      type-reward: 100 coins!
+      executed-command:
+        - 'coin: 100'
+    '30':
+      description: Get 30 kills!
+      type-reward: 300 coins!
+      executed-command:
+        - 'coin: 300'
+    '50':
+      description: Get 50 kills!
+      type-reward: 500 coins!
+      executed-command:
+        - 'coin: 500'
+    '100':
+      description: Get 100 kills!
+      type-reward: 1000 coins!
+      executed-command:
+        - 'coin: 1000'
+    '150':
+      description: Get 150 kills!
+      type-reward: 1500 coins!
+      executed-command:
+        - 'coin: 1500'
+    '200':
+      description: Get 200 kills!
+      type-reward: 2000 coins!
+      executed-command:
+        - 'coin: 2000'
+    '500':
+      description: Get 500 kills!
+      type-reward: 5000 coins!
+      executed-command:
+        - 'coin: 5000'
+  WINS:
+    '1':
+      description: Win 1 game(s)!
+      type-reward: 100 coins!
+      executed-command:
+        - 'coin: 100'
+    '5':
+      description: Win 5 game(s)!
+      type-reward: 500 coins!
+      executed-command:
+        - 'coin: 500'
+    '10':
+      description: Win 10 game(s)!
+      type-reward: 1000 coins!
+      executed-command:
+        - 'coin: 1000'
+    '20':
+      description: Win 20 game(s)!
+      type-reward: 2000 coins!
+      executed-command:
+        - 'coin: 2000'
+    '50':
+      description: Win 10 game!
+      type-reward: 1 Cage!
+      executed-command:
+        - 'cage: default solo'
+  PROJECTILES_HIT:
+    '50':
+      description: Hit 50 projectile!
+      type-reward: 50 coins!
+      executed-command:
+        - 'coin: 50'
+    '150':
+      description: Hit 50 projectile!
+      type-reward: 150 coins!
+      executed-command:
+        - 'coin: 150'
+    '250':
+      description: Hit 50 projectile!
+      type-reward: 250 coins!
+      executed-command:
+        - 'coin: 250'
+  PROJECTILES_SHOT:
+    '50':
+      description: Launch 50 projectile!
+      type-reward: 50 coins!
+      executed-command:
+        - 'coin: 50'
+    '150':
+      description: Launch 50 projectile!
+      type-reward: 150 coins!
+      executed-command:
+        - 'coin: 150'
+    '250':
+      description: Launch 50 projectile!
+      type-reward: 250 coins!
+      executed-command:
+        - 'coin: 250'
+  BLOCKS_PLACED:
+    '50':
+      description: Place 50 block(s)!
+      type-reward: 50 coins!
+      executed-command:
+        - 'coin: 50'
+    '200':
+      description: Place 200 block(s)!
+      type-reward: 200 coins!
+      executed-command:
+        - 'coin: 200'
+    '400':
+      description: Place 400 block(s)!
+      type-reward: 400 coins!
+      executed-command:
+        - 'coin: 400'
+    '1000':
+      description: Place 1000 block(s)!
+      type-reward: 1000 coins!
+      executed-command:
+        - 'coin: 1000'
+  BLOCKS_BROKEN:
+    '50':
+      description: Break 50 block(s)!
+      type-reward: 50 coins!
+      executed-command:
+        - 'coin: 50'
+    '200':
+      description: Break 200 block(s)!
+      type-reward: 200 coins!
+      executed-command:
+        - 'coin: 200'
+    '400':
+      description: Break 400 block(s)!
+      type-reward: 400 coins!
+      executed-command:
+        - 'coin: 400'
+    '1000':
+      description: Break 1000 block(s)!
+      type-reward: 1000 coins!
+      executed-command:
+        - 'coin: 1000'
+  ITEMS_ENCHANTED:
+    '1':
+      description: Enchant 1 item(s)!
+      type-reward: 100 coins!
+      executed-command:
+        - 'coin: 100'
+    '10':
+      description: Enchant 10 item(s)!
+      type-reward: 300 coins!
+      executed-command:
+        - 'coin: 300'
+    '50':
+      description: Enchant 50 item(s)!
+      type-reward: 1000 coins!
+      executed-command:
+        - 'coin: 1000'
+    '100':
+      description: Enchant 100 item(s)!
+      type-reward: 1500 coins!
+      executed-command:
+        - 'coin: 1500'
+  ITEMS_CRAFTED:
+    '20':
+      description: Craft 1 item(s)!
+      type-reward: 20 coins!
+      executed-command:
+        - 'coin: 20'
+    '50':
+      description: Craft 50 item(s)!
+      type-reward: 200 coins!
+      executed-command:
+        - 'coin: 200'
+    '100':
+      description: Craft 100 item(s)!
+      type-reward: 300 coins!
+      executed-command:
+        - 'coins: 300'
+    '150':
+      description: Craft 150 item(s)!
+      type-reward: 500 coins!
+      executed-command:
+        - 'coin: 500'

@@ -22,7 +22,7 @@ public class SoulManager {
 
     private final List<SoulWell> soulWellList;
     private final List<ItemStack> itemStacks;
-    private final ArrayList<Location> locations;
+    private final List<String> locations;
 
     public SoulManager(Main main) {
         this.main = main;
@@ -34,18 +34,26 @@ public class SoulManager {
     public void loadSoulWells(){
         Configuration config = main.getConfigUtils().getConfig(main,"SoulWell");
 
-        if (config.getConfigurationSection("Locations") != null) {
-            if (config.getConfigurationSection("Locations").getKeys(false) != null) {
-                for (String key : config.getConfigurationSection("Locations").getKeys(false)) {
-                    locations.add(locUtils.stringToLoc(config.getString("Locations." + key)));
-                }
-            }
+        if (!config.getString("Locations","").isEmpty()) {
+            locations.addAll(config.getStringList("Locations"));
         }
 
         config.getConfigurationSection("Soul").getKeys(false).forEach(types -> config.getConfigurationSection("Soul." + types).getKeys(false).forEach(key -> {
             this.soulWellList.add(new SoulWell(Integer.parseInt(key), types));
             String path = "Soul." + types + "." + key;
-            Material material = config.isInt(path + ".ICON.ICON-ITEM") ? Material.getMaterial(config.getInt(path + ".ICON.ICON-ITEM")) : Material.getMaterial(path + ".ICON.ICON-ITEM");
+
+            Material material;
+
+            if (main.checkVersion()) {
+                material = config.isInt(path + ".ICON.ICON-ITEM") ? Material.getMaterial(config.getInt(path + ".ICON.ICON-ITEM")) : Material.getMaterial(path + ".ICON.ICON-ITEM");
+            } else {
+                material = Material.getMaterial(path + ".ICON.ICON-ITEM");
+            }
+
+            if (material == null) {
+                material = Material.BEDROCK;
+            }
+
             this.itemStacks.add(new Icon(XMaterial.matchXMaterial(material), 1, (short) config.getInt(path + ".ICON.DATA-VALUE")).setName(config.getString(path + ".NAME")).setLore(config.getStringList(path + ".ICON.DESCRIPTION")).build());
         }));
 

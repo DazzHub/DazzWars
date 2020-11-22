@@ -438,6 +438,22 @@ public class GamePlayer {
         this.setKillsStreak(this.getKillsStreak() + 1);
     }
 
+    public Integer totalKills(){
+        return (getKillsSolo() + getKillsTeam() + getKillsRanked());
+    }
+
+    public Integer totalWins(){
+        return (getWinsSolo() + getWinsTeam() + getWinsRanked());
+    }
+
+    public Integer totalHits(){
+        return (getHitsSolo() + getHitsTeam() + getKillsRanked());
+    }
+
+    public Integer totalShots(){
+        return (getShotsSolo() + getShotsTeam() + getShotsRanked());
+    }
+
     public void addSpectating() {
         Player p = this.getPlayer();
 
@@ -497,7 +513,7 @@ public class GamePlayer {
     }
 
     public void playSound(String sound) {
-        XSound.play(getPlayer(), String.valueOf(XSound.valueOf(sound).parseSound()));
+        XSound.play(getPlayer(), String.valueOf(sound));
     }
 
     public getTypeKills getTypeKill(String mode) {
@@ -609,7 +625,7 @@ public class GamePlayer {
                         Projectile arrows = projectilesList.get(i);
                         ParticleEffect.valueOf(mode).display(arrows.getLocation(), 0f, 0f, 0f, 0f, 10, null);
 
-                        if (i == projectilesList.size()) {
+                        if (i >= projectilesList.size()) {
                             this.cancel();
                         }
                     }

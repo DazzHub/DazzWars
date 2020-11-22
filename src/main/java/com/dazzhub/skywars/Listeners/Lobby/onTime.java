@@ -16,7 +16,7 @@ public class onTime implements Listener {
 
         new BukkitRunnable() {
             public void run() {
-                Bukkit.getServer().getWorlds().stream().filter(w -> main.getSettings().getStringList("lobbies.onTime").contains(w.getName())).forEach(w -> w.setTime(0L));
+                Bukkit.getScheduler().runTask(main, () -> Bukkit.getServer().getWorlds().stream().filter(w -> main.getSettings().getStringList("lobbies.onTime").contains(w.getName())).forEach(w -> w.setTime(0L)));
             }
         }.runTaskTimerAsynchronously(main, 0L, 3000L);
     }

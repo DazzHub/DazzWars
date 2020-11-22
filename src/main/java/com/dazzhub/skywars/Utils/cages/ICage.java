@@ -60,12 +60,12 @@ public class ICage {
                         Console.error("Did not find the block type");
                         break;
                     }
+                } else {
+                    String[] type = storedBlocks.get(index).split(":");
+
+                    block.setType(Material.valueOf(type[0]));
+                    block.setData((byte) Integer.parseInt(type[1]));
                 }
-
-                String[] type = storedBlocks.get(index).split(":");
-
-                block.setType(Material.valueOf(type[0]));
-                block.setData((byte) Integer.parseInt(type[1]));
             } else {
                 Material material = XMaterial.matchXMaterial(storedBlocks.get(index)).get().parseMaterial();
                 block.setType(material);

@@ -54,8 +54,35 @@ public class Icon {
         this.loreSelected = null;
     }
 
+    public Icon(Material m, int amount, short dataValue){
+        this.item = new ItemStack(m, amount != 0 ? amount : 1, dataValue);
+        this.im = this.item.getItemMeta();
+
+        this.permissionViewItem = null;
+
+        this.price = 0;
+        this.type = "";
+
+        this.iconView = false;
+        this.lorePurchased = null;
+        this.loreSelected = null;
+    }
+
     public Icon(XMaterial m){
         this.item = new ItemStack(m.parseMaterial(), 1);
+        this.im = this.item.getItemMeta();
+
+        this.permissionViewItem = null;
+
+        this.price = 0;
+        this.type = "";
+
+        this.lorePurchased = null;
+        this.loreSelected = null;
+    }
+
+    public Icon(Material m){
+        this.item = new ItemStack(m, 1);
         this.im = this.item.getItemMeta();
 
         this.permissionViewItem = null;
@@ -120,7 +147,18 @@ public class Icon {
     }
 
     public Icon addPermissionView(boolean iconView, String permissionView, Material material, short type, List<String> lore) {
-        ItemStack itemPerms = new ItemStack(XMaterial.matchXMaterial(material).parseMaterial(), 1, type);
+        Material material1;
+        if (Main.getPlugin().checkVersion()){
+            material1 = XMaterial.matchXMaterial(material).parseMaterial();
+        }else {
+            material1 = material;
+        }
+
+        if (material == null) {
+            material1 = Material.BEDROCK;
+        }
+
+        ItemStack itemPerms = new ItemStack(material1, 1, type);
         ItemMeta meta = itemPerms.getItemMeta();
 
         meta.setDisplayName(im.getDisplayName());

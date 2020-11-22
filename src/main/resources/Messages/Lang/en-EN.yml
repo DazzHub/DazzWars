@@ -257,6 +257,28 @@ Messages:
         - '&9▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
       POSITION-X: 5
       POSITION-Y: 3
+  Achievements:
+    RewardsUse: true
+    UseAdvertising: true
+    FireWorks: false
+    Sound:
+      Use: true
+      Type: 'ORB_PICKUP'
+    Title:
+      Use: false
+      Fade: 10
+      Stay: 40
+      Out: 10
+      Info: '&e&lCONGRATULATIONS!;&7Challenge: %description%' #%typereward% and %lvl%
+    Message:
+      Use: true
+      Announcement:
+        - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+        - ''
+        - '%center%&eCongratulations you made the challenge: &9%description%'
+        - '%center%&eThis is your reward: &9%typereward%' #and %lvl%
+        - ''
+        - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
   DeathMessages:
     Player: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 &7was slain by &c%killer%&7[&f%k_kill_count%&7]'
     Void: '&f&l➥ &9%player%&7[&f%p_kill_count%&7]&7 fell into void'

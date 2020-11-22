@@ -67,7 +67,17 @@ public class SoulWell {
         this.rarity = config.getString(path + ".RARITY");
         this.chance = config.getInt(path + ".CHANCE");
 
-        Material material = config.isInt(path + ".ICON.ICON-ITEM") ? Material.getMaterial(config.getInt(path + ".ICON.ICON-ITEM")) : Material.getMaterial(path + ".ICON.ICON-ITEM");
+        Material material;
+
+        if (main.checkVersion()) {
+            material = config.isInt(path + ".ICON.ICON-ITEM") ? Material.getMaterial(config.getInt(path + ".ICON.ICON-ITEM")) : Material.getMaterial(path + ".ICON.ICON-ITEM");
+        } else {
+            material = Material.getMaterial(path + ".ICON.ICON-ITEM");
+        }
+
+        if (material == null) {
+            material = Material.BEDROCK;
+        }
 
         this.item = new Icon(XMaterial.matchXMaterial(material), 1, (short) config.getInt(path + ".ICON.DATA-VALUE")).setName(name).setLore(config.getStringList(path + ".ICON.DESCRIPTION"));
 
@@ -79,7 +89,11 @@ public class SoulWell {
         this.backgroundSlots = new ArrayList<>();
         IntStream.range(0, 45).filter(i -> !this.slots.contains(i) && i != 21 && i != 23).forEach(i -> this.backgroundSlots.add(i));
 
-        this.pane_itemstack = new Icon(XMaterial.matchXMaterial(Material.STAINED_GLASS_PANE), 1, (short) 7).setName("&r");
+        if (main.checkVersion()){
+            this.pane_itemstack = new Icon(XMaterial.matchXMaterial(Material.STAINED_GLASS_PANE), 1, (short) 7).setName("&r");
+        }else {
+            this.pane_itemstack = new Icon(XMaterial.matchXMaterial(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()), 1, (short) 0).setName("&r");
+        }
         this.duration = 30;
     }
 
