@@ -191,6 +191,7 @@ public class Icon {
     }
 
     private void replaceLore(GamePlayer p) {
+        if (p == null) return;
 
         if (im.getLore() != null){
             List<String> list = new ArrayList<>();

@@ -1,6 +1,7 @@
 package com.dazzhub.skywars.Utils.Holo;
 
 import com.dazzhub.skywars.Utils.Console;
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -14,10 +15,10 @@ import java.util.List;
 @Setter
 public class IHolograms {
 
-    private final Location location;
-    private final List<String> lines;
+    private Location location;
+    private List<String> lines;
 
-    private final List<ArmorStand> armorlines;
+    private List<ArmorStand> armorlines;
     private double distance = 0.30;
 
     public IHolograms(Location location, List<String> lines){
@@ -57,12 +58,16 @@ public class IHolograms {
     }
 
     public void remove() {
-        for (ArmorStand line : armorlines) {
-            line.remove();
+
+        List<String> newLines = Lists.newArrayList(lines);
+        List<ArmorStand> newArmorLines = Lists.newArrayList(armorlines);
+
+        for (int i = 0; i < newLines.size(); i++) {
+            newArmorLines.get(i).remove();
         }
 
-        armorlines.clear();
-        lines.clear();
+        armorlines = new ArrayList<>();
+        lines = new ArrayList<>();
     }
 
 

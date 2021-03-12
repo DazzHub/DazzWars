@@ -42,6 +42,8 @@ public class adminCmd implements CommandExecutor {
         new Join(main);
         new Enable(main);
         new editChest(main);
+        new SaveMap(main);
+        new editMode(main);
 
         /* CAGES */
         new addCage(main);

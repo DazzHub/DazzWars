@@ -197,6 +197,7 @@ Messages:
     EndGame: 'End of game'
     None: 'None'
     Team:
+      enabled: true
       killCount: true
       Spectator: '&7:&f' #Prefix : Suffix
       Game: '&c:&f'

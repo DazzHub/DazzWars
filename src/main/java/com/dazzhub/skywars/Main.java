@@ -15,6 +15,7 @@ import com.dazzhub.skywars.Party.PartyManager;
 import com.dazzhub.skywars.Utils.*;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.SongPlayer;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.lSong;
+import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
 import com.dazzhub.skywars.Utils.achievements.IAchievement;
 import com.dazzhub.skywars.Utils.achievements.IAchievementManager;
 import com.dazzhub.skywars.Utils.cages.ICageManager;
@@ -95,6 +96,9 @@ public class Main extends JavaPlugin {
     /* SOUL MANAGER */
     private final SoulManager soulManager;
 
+    /* RUNNABLES */
+    private final RunnableFactory runnableFactories;
+
     private String version;
 
     /* NOTE BLOCK API*/
@@ -137,6 +141,8 @@ public class Main extends JavaPlugin {
 
         this.lobbyManager = new lobbyManager(this);
 
+        this.runnableFactories = new RunnableFactory(this);
+
         this.playingSongs = new HashMap<>();
     }
 
@@ -148,7 +154,6 @@ public class Main extends JavaPlugin {
         configCreate.get().setup(this, "SoulWell");
 
         configCreate.get().setup(this, "Achievements");
-        configCreate.get().setup(this, "Arenas/Arenas");
 
         configCreate.get().setup(this, "Messages/Lang/es-ES");
         configCreate.get().setup(this, "Messages/Lang/en-EN");
@@ -241,6 +246,10 @@ public class Main extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public RunnableFactory getFactory() {
+        return runnableFactories;
     }
 
     public ArenaManager getArenaManager() {

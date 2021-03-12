@@ -116,6 +116,10 @@ public class Enums {
         INGAMETEAM,
         INGAMERANKED,
 
+        FINISHED,
+        FINISHEDTEAM,
+        FINISHEDRANKED,
+
         SPECTATOR;
     }
 

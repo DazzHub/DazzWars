@@ -275,6 +275,11 @@ public class Placeholders extends PlaceholderExpansion {
                 return String.valueOf(gamePlayer.getKillsStreak());
             }
 
+            case "arena_winners": {
+                if (arena == null) return "Error.";
+                return arena.getWinnersScore();
+            }
+
             /* VOTE CHESTS */
             case "arena_vote_chest_basic": {
                 if (arena == null) return "Error.";

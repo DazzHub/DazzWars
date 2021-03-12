@@ -8,6 +8,7 @@ import com.dazzhub.skywars.Utils.Enums;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -19,7 +20,7 @@ public class onLeftServer implements Listener {
         this.main = main;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void PlayerLeftEvent(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
@@ -44,6 +45,8 @@ public class onLeftServer implements Listener {
         }
 
         if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().deleteHologram();
+
+
         Bukkit.getScheduler().runTaskAsynchronously(main, () -> main.getPlayerDB().savePlayer(p.getUniqueId()));
     }
 }

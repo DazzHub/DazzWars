@@ -28,7 +28,7 @@ public class onJoinServer implements Listener {
         main.getServer().getScheduler().runTaskAsynchronously(main, () -> {
             main.getPlayerDB().loadPlayer(p.getUniqueId());
 
-            Bukkit.getScheduler().runTask(main, () -> {
+            Bukkit.getScheduler().runTaskLater(main, () -> {
 
                 if (main.getLobbyManager().getLobby() != null){
                     p.teleport(main.getLobbyManager().getLobby());
@@ -41,7 +41,7 @@ public class onJoinServer implements Listener {
                 main.getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY,false,false, false,false);
                 main.getHologramsManager().loadHologram(p);
 
-            });
+            },5);
         });
 
 

@@ -2,29 +2,26 @@ package com.dazzhub.skywars.Runnables;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.WinEvent;
-import com.dazzhub.skywars.Main;
-import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.cryptomorin.xseries.messages.Titles;
+import com.dazzhub.skywars.Utils.Console;
+import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.List;
 
 @Getter
-public class inGame extends BukkitRunnable {
+public class inGame implements Runnable {
 
+    private RunnableFactory factory;
     private Arena arena;
     private int timer;
 
     private int falldamage;
     private int nextRefill;
 
-    public inGame(Arena arena) {
+    public inGame(RunnableFactory factory, Arena arena) {
         this.arena = arena;
         this.timer = arena.getDurationGame();
         this.falldamage = 5;
+        this.factory = factory;
     }
 
     @Override
@@ -45,8 +42,8 @@ public class inGame extends BukkitRunnable {
         nextRefill = arena.getHighest(arena.getRefillTime(), timer);
 
         if (arena.getRefillGame() == null && !arena.getRefillTime().isEmpty()) {
-            arena.setRefillGame(new RefillGame(arena, nextRefill));
-            arena.getRefillGame().runTaskTimerAsynchronously(Main.getPlugin(),0,20);
+            arena.setRefillGame(arena.RefillGame(nextRefill));
+
             arena.getRefillTime().remove((Integer) nextRefill);
         }
 
@@ -64,6 +61,10 @@ public class inGame extends BukkitRunnable {
 
         falldamage--;
         timer--;
+    }
+
+    private void cancel(){
+        this.factory.getRunnableWorker(this, false).remove(this);
     }
 
 }

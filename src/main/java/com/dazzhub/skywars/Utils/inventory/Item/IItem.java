@@ -134,6 +134,7 @@ public class IItem {
             }
 
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+            if (gamePlayer == null) return;
             Party party = gamePlayer.getParty();
 
             Arena arenaPlayer = gamePlayer.getArena();

@@ -99,6 +99,30 @@ INGAMERANKED:
     - 'Mapa: &a%sw_arena_map%'
     - ''
     - '&eplay.myserver.net'
+FINISHED:
+  title: '&5&lSKYWARS'
+  lines:
+    - '&7%server_time_dd/MM/yyyy HH:mm%'
+    - ''
+    - 'Felicidades %sw_arena_winners%!'
+    - ''
+    - '&eplay.myserver.net'
+FINISHEDTEAM:
+  title: '&5&lSKYWARS'
+  lines:
+    - '&7%server_time_dd/MM/yyyy HH:mm%'
+    - ''
+    - 'Felicidades %sw_arena_winners%!'
+    - ''
+    - '&eplay.myserver.net'
+FINISHEDRANKED:
+  title: '&5&lSKYWARS'
+  lines:
+    - '&7%server_time_dd/MM/yyyy HH:mm%'
+    - ''
+    - 'Felicidades %sw_arena_winners%!'
+    - ''
+    - '&eplay.myserver.net'
 SPECTATOR:
   title: '&5&lSKYWARS'
   lines:

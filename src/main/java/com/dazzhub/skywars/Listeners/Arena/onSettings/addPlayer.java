@@ -5,11 +5,7 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addPlayerEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
-import com.dazzhub.skywars.Utils.locUtils;
-import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -103,10 +99,7 @@ public class addPlayer implements Listener {
         );
 
         if (arena.checkStart() && !arena.isUsable()) {
-            arena.getStartingGameTask().runTaskTimer(main, 0, 20L);
-
-            arena.setUsable(true);
-            arena.setGameStatus(Enums.GameStatus.STARTING);
+            arena.startingGame();
         }
     }
 

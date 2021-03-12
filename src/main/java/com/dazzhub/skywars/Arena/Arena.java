@@ -15,6 +15,9 @@ import com.dazzhub.skywars.Runnables.startingGame;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Cuboid;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
+import com.dazzhub.skywars.Utils.Runnable.RunnableType;
+import com.dazzhub.skywars.Utils.Runnable.RunnableWorkerType;
 import com.dazzhub.skywars.Utils.events.border.Border;
 import com.dazzhub.skywars.Utils.events.border.eventBorder;
 import com.dazzhub.skywars.Utils.events.dragon.Dragon;
@@ -87,11 +90,6 @@ public class Arena implements Cloneable {
 
     private List<Location> chestsAddInGame;
 
-    /* RUNNABLE */
-    private startingGame startingGameTask;
-    private inGame inGameTask;
-    private endGame endGameTask;
-
     /* TYPE VOTES */
     private String chestType;
     private Enums.TypeVotes healthType;
@@ -127,6 +125,8 @@ public class Arena implements Cloneable {
     private Enums.ResetArena resetArena;
 
     private Configuration arenaConfig;
+
+    private int totalTime;
 
     private boolean damageFallStarting;
 
@@ -179,7 +179,7 @@ public class Arena implements Cloneable {
         this.killers = new HashMap<>();
 
         /* RESET MODE*/
-
+        this.totalTime = -1;
         this.resetArena = Enums.ResetArena.valueOf(main.getSettings().getString("ResetArena"));
 
         this.arenaConfig = main.getConfigUtils().getConfig(main, "Arenas/" + nameArena + "/Settings");
@@ -199,11 +199,6 @@ public class Arena implements Cloneable {
 
             this.mode = Enums.Mode.valueOf(arenaConfig.getString("Arena.mode"));
         }
-
-        /* RUNNABLE */
-        this.startingGameTask = new startingGame(this);
-        this.inGameTask = new inGame(this);
-        this.endGameTask = new endGame(this);
 
         this.damageFallStarting = true;
 
@@ -228,6 +223,7 @@ public class Arena implements Cloneable {
         this.spawns = new ArrayList<>();
 
         /* Checks */
+        this.totalTime = -1;
         this.gameStatus = Enums.GameStatus.DISABLED;
         this.isUsable = true;
 
@@ -239,11 +235,6 @@ public class Arena implements Cloneable {
         this.centerChest = new ArrayList<>();
         this.centerChestCheck = new ArrayList<>();
         this.chestsAddInGame = new ArrayList<>();
-
-        /* RUNNABLE */
-        this.startingGameTask = new startingGame(this);
-        this.inGameTask = new inGame(this);
-        this.endGameTask = new endGame(this);
 
         /* TYPE VOTES */
         this.chestType = Enums.TypeVotes.NORMAL.name();
@@ -529,6 +520,9 @@ public class Arena implements Cloneable {
     }
 
     public void removeCage(GamePlayer gamePlayer, Enums.Mode mode, int yp) {
+        if (gamePlayer == null) return;
+        if (gamePlayer.getArenaTeam().getSpawn() == null) return;
+
         Location loc = gamePlayer.getArenaTeam().getSpawn();
 
         Location point1 = null;
@@ -694,12 +688,44 @@ public class Arena implements Cloneable {
         }
     }
 
-    public String timeScore(GamePlayer gamePlayer){
-        if (getStartingGameTask().getTimer() == getStartingGame()) {
-            return gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Waiting", "Error ScoreBoard.Waiting");
-        } else {
-            return getStartingGameTask().getTimer() + "";
-        }
+    /*
+     * ARENA
+     */
+    public void startingGame() {
+        RunnableFactory factory = Main.getPlugin().getFactory();
+
+        factory.registerRunnable(RunnableWorkerType.SYNC, RunnableType.TIMER, 20L, new startingGame(factory, this));
+
+        setUsable(true);
+        setGameStatus(Enums.GameStatus.STARTING);
+    }
+
+    public void inGame() {
+        RunnableFactory factory = Main.getPlugin().getFactory();
+
+        factory.registerRunnable(RunnableWorkerType.SYNC, RunnableType.TIMER, 20L, new inGame(factory, this));
+        this.setGameStatus(Enums.GameStatus.INGAME);
+    }
+
+
+    public void endGame() {
+        RunnableFactory factory = Main.getPlugin().getFactory();
+
+        factory.registerRunnable(RunnableWorkerType.SYNC, RunnableType.TIMER, 20L, new endGame(factory, this));
+    }
+
+    public RefillGame RefillGame(int timer) {
+        RunnableFactory factory = Main.getPlugin().getFactory();
+
+        RefillGame refillGame = new RefillGame(factory, this, timer);
+
+        factory.registerRunnable(RunnableWorkerType.SYNC, RunnableType.TIMER, 20L, refillGame);
+
+        return refillGame;
+    }
+
+    public String timeScore(GamePlayer gamePlayer) {
+        return this.getTotalTime() != this.getStartingGame() && this.getTotalTime() != -1 ? this.getTotalTime() + "" : gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Waiting", "Error ScoreBoard.Waiting");
     }
 
     public String typeEvent(GamePlayer gamePlayer) {
@@ -733,5 +759,14 @@ public class Arena implements Cloneable {
     public Arena clone() throws CloneNotSupportedException {
 
         return (Arena) super.clone();
+    }
+
+    public String getWinnersScore() {
+        List<String> winners = new ArrayList<>();
+        for (GamePlayer winnersPlayers : this.players) {
+            winners.add(winnersPlayers.getName());
+        }
+
+        return winners.toString().replace("[", "").replace("]", "");
     }
 }

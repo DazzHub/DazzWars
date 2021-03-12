@@ -47,27 +47,54 @@ public class onWin implements Listener {
 
             arena.getWinners(gamePlayer);
 
-            if (arena.getMode().equals(Enums.Mode.SOLO)) {
-                gamePlayer.addWinsSolo();
-                gamePlayer.addCoins(main.getSettings().getInt("Coins.WinSolo", 1));
-                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.WinSolo",1))));
-            } else if (arena.getMode().equals(Enums.Mode.TEAM)) {
-                gamePlayer.addWinsTeam();
-                gamePlayer.addCoins(main.getSettings().getInt("Coins.WinTeam",1));
-                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.WinTeam",1))));
-            } else if (arena.getMode().equals(Enums.Mode.RANKED)) {
-                gamePlayer.addWinsRanked();
-                gamePlayer.addCoins(main.getSettings().getInt("Coins.WinRanked",1));
-                gamePlayer.addRanked(main.getSettings().getInt("Coins.lvlRanked",1));
-                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.lvlRanked",1))));
+            switch (arena.getMode()) {
+                case SOLO: {
+                    gamePlayer.addWinsSolo();
+                    gamePlayer.addCoins(main.getSettings().getInt("Coins.WinSolo", 1));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.WinSolo", 1))));
+                    main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHED, true, false, true, true);
+                    break;
+                }
+                case TEAM: {
+                    gamePlayer.addWinsTeam();
+                    gamePlayer.addCoins(main.getSettings().getInt("Coins.WinTeam", 1));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.WinTeam", 1))));
+                    main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHEDTEAM, true, false, true, true);
+                    break;
+                }
+                case RANKED: {
+                    gamePlayer.addWinsRanked();
+                    gamePlayer.addCoins(main.getSettings().getInt("Coins.WinRanked", 1));
+                    gamePlayer.addRanked(main.getSettings().getInt("Coins.lvlRanked", 1));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.lvlRanked", 1))));
+                    main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHEDRANKED, true, false, true, true);
+                    break;
+                }
             }
 
             main.getAchievementManager().checkPlayer(gamePlayer.getPlayer(), Enums.AchievementType.WINS, gamePlayer.totalWins());
         });
 
+        arena.getSpectators().forEach(gamePlayer -> {
+            switch (arena.getMode()) {
+                case SOLO: {
+                    main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHED, true, false, true, true);
+                    break;
+                }
+                case TEAM: {
+                    main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHEDTEAM, true, false, true, true);
+                    break;
+                }
+                case RANKED: {
+                    main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHEDRANKED, true, false, true, true);
+                    break;
+                }
+            }
+        });
+
         arena.getSpectators().forEach(arena::getWinners);
 
-        arena.getEndGameTask().runTaskTimer(main, 0, 20L);
+        arena.endGame();
     }
 
     private String c(String c) {

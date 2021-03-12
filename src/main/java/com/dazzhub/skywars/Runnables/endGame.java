@@ -3,6 +3,7 @@ package com.dazzhub.skywars.Runnables;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
 import com.dazzhub.skywars.Utils.effects.getTypeWins;
 import com.google.common.collect.Lists;
 import lombok.Getter;
@@ -12,19 +13,20 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 
 @Getter
-public class endGame extends BukkitRunnable {
+public class endGame implements Runnable {
 
+    private RunnableFactory factory;
     private Arena arena;
     private int timer;
 
-    public endGame(Arena arena) {
+    public endGame(RunnableFactory factory, Arena arena) {
         this.arena = arena;
         this.timer = arena.getFinishedGame();
+        this.factory = factory;
     }
 
     @Override
     public void run() {
-
         if (timer == arena.getFinishedGame()) {
             Bukkit.getScheduler().runTask(Main.getPlugin(), () -> {
                 for (GamePlayer gamePlayer: arena.getPlayers()) {
@@ -61,4 +63,9 @@ public class endGame extends BukkitRunnable {
 
         timer--;
     }
+
+    private void cancel(){
+        this.factory.getRunnableWorker(this, false).remove(this);
+    }
+
 }

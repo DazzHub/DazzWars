@@ -59,7 +59,7 @@ public class onGlobal implements Listener {
         Player player = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(player.getUniqueId());
 
-        if (gamePlayer.isInArena()){
+        if (gamePlayer != null && gamePlayer.isInArena()){
             if (gamePlayer.getArena().getGameStatus().equals(Enums.GameStatus.WAITING) || gamePlayer.getArena().getGameStatus().equals(Enums.GameStatus.STARTING)){
                 if (!player.hasPermission("skywars.chat")){
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.NoUseChat"));

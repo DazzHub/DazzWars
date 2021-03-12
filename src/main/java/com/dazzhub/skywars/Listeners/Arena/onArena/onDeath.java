@@ -37,19 +37,24 @@ public class onDeath implements Listener {
         if (arena.getGameStatus().equals(Enums.GameStatus.INGAME) && p.getHealth() < 0.4) {
 
             switch (arena.getMode()) {
-                case SOLO:
+                case SOLO: {
                     dead.addDeathsSolo();
                     dead.removeCoins(main.getSettings().getInt("Coins.DeathSolo"));
                     break;
-                case TEAM:
+                }
+
+                case TEAM: {
                     dead.addDeathsTeam();
                     dead.removeCoins(main.getSettings().getInt("Coins.DeathTeam"));
                     break;
-                case RANKED:
+                }
+
+                case RANKED: {
                     dead.addDeathsRanked();
                     dead.removeLvlRanked(main.getSettings().getInt("Coins.lvlRankedLosed"));
                     dead.removeCoins(main.getSettings().getInt("Coins.DeathRanked"));
                     break;
+                }
             }
 
             p.setFallDistance(0);
@@ -77,6 +82,8 @@ public class onDeath implements Listener {
             if (arena.isNoClean()){
                 killer.getPlayer().setHealth(killer.getPlayer().getKiller().getMaxHealth());
             }
+
+            killer.addSouls(1);
 
             switch (arena.getMode()) {
                 case SOLO: {
@@ -129,10 +136,11 @@ public class onDeath implements Listener {
             arena.getKillers().put(killer.getName(), arena.getKillers().containsKey(killer.getName()) ? (arena.getKillers().get(killer.getName()) + 1) : 1);
             main.getAchievementManager().checkPlayer(p, Enums.AchievementType.KILLS, main.getPlayerManager().getPlayer(p.getUniqueId()).totalKills());
         }
+
+        messageDeathPlayer(e);
     }
 
 
-    @EventHandler
     public void messageDeathPlayer(DeathEvent e) {
         GamePlayer killerg = e.getKiller();
         GamePlayer dead = e.getDead();

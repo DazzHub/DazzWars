@@ -43,30 +43,27 @@ public class ArenaManager {
         this.arenas.clear();
         this.arenaList.clear();
 
-        List<String> arenaslist = main.getConfigUtils().getConfig(this.main, "Arenas/Arenas").getStringList("Arenas");
+        File[] files = new File(this.main.getDataFolder(), "Arenas").listFiles();
 
-        arenaslist.forEach(nameArena -> {
-            File file = main.getConfigUtils().getFile(this.main, "Arenas/" + nameArena + "/Settings");
-            if (file.exists()) {
-                if (!arenas.containsKey(nameArena)) {
-                    Arena arena = new Arena(nameArena);
+        if (files == null) return;
 
-                    this.arenas.put(nameArena, arena);
-                    this.arenaList.add(arena);
-                }
-            } else {
-                Console.error("&eError in the arena: &4" + nameArena + " &ethe &4Settings.yml&e file is missing");
+        for (File file : files) {
+            if (file.getName().equalsIgnoreCase("Lobby.yml")) continue;
+
+            String nameArena = file.getName();
+
+            if (!arenas.containsKey(nameArena)) {
+                Arena arena = new Arena(nameArena);
+
+                this.arenas.put(nameArena, arena);
+                this.arenaList.add(arena);
             }
-        });
-
-        this.arenas.forEach((s, arena) -> {
-            //arena.clone();
-        });
+        }
 
         Console.info("&eLoaded arenas: &a"+getArenas().size());
     }
 
-    public void enableArena(String name){
+    public void enableArena(String name){;
         if (arenas.containsKey(name)) {
             Arena arena = arenas.get(name);
 
@@ -96,8 +93,6 @@ public class ArenaManager {
 
         File file = this.main.getConfigUtils().getFile(this.main, "Arenas/" + nameArena + "/Settings");
         FileConfiguration config = this.main.getConfigUtils().getConfig(this.main, "Arenas/" + nameArena + "/Settings");
-        File file2 = this.main.getConfigUtils().getFile(this.main, "Arenas/Arenas");
-        FileConfiguration config2 = this.main.getConfigUtils().getConfig(this.main, "Arenas/Arenas");
 
         List<Integer> refilltimes = new ArrayList<>();
         refilltimes.add(180);
@@ -117,7 +112,6 @@ public class ArenaManager {
         config.set("Arena.startingGame", 15);
         config.set("Arena.finishedGame", 10);
         config.set("Arena.refill", refilltimes);
-
 
         /* EVENT BORDER */
         config.set("Arena.border.SpawnDefault", false);
@@ -156,40 +150,9 @@ public class ArenaManager {
             Console.error(e.getMessage());
         }
 
-        try {
-            List<String> list = this.main.getConfigUtils().getConfig(this.main, "Arenas/Arenas").getStringList("Arenas");
-            list.add(nameArena);
-            config2.set("Arenas", list);
-            config2.save(file2);
-        } catch (IOException e) {
-            Console.error(e.getMessage());
+        if(loadWorld(nameWorld)){
+            p.teleport(Objects.requireNonNull(Bukkit.getWorld(nameWorld)).getSpawnLocation());
         }
-
-
-        switch (Enums.ResetArena.valueOf(main.getSettings().getString("ResetArena"))) {
-            case RESETWORLD:
-            case RESETCHUNK: {
-                File map = new File(main.getServer().getWorldContainer(), nameWorld);
-                File foldermaps = new File(main.getDataFolder(), "Arenas/" + nameArena + "/" + nameWorld);
-
-                main.getResetWorld().copyDir(map, foldermaps);
-
-                Bukkit.getScheduler().runTaskLater(main, () -> {
-                    loadWorld(nameWorld);
-                    p.teleport(Objects.requireNonNull(Bukkit.getWorld(nameWorld)).getSpawnLocation());
-                }, 5);
-                break;
-            }
-
-            case SLIMEWORLDMANAGER: {
-                loadWorld(nameWorld);
-                Bukkit.getScheduler().runTaskLater(main, () -> p.teleport(Bukkit.getWorld(nameWorld).getSpawnLocation()), 5);
-                break;
-            }
-        }
-
-        p.sendMessage(c("&a&l\u2714 &fArena &e" + nameArena + "&f created successfully"));
-        XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
 
         p.getInventory().clear();
 
@@ -199,6 +162,25 @@ public class ArenaManager {
         p.getInventory().addItem(main.getItemsCustom().addSpawn(nameArena));
         p.getInventory().addItem(main.getItemsCustom().addChestCenter(nameArena));
         p.getInventory().addItem(main.getItemsCustom().setSpectator(nameArena));
+
+        p.sendMessage(c("&a&l\u2714 &fArena &e" + nameArena + "&f created successfully"));
+        p.sendMessage(c("&C&LNOW YOU CAN EDIT THE WORLD, TO SAVE /SW SAVE <map>"));
+        XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
+    }
+
+    public void saveArena(Player p, String nameArena, String nameWorld){
+        switch (Enums.ResetArena.valueOf(main.getSettings().getString("ResetArena"))) {
+            case RESETWORLD:
+            case RESETCHUNK: {
+                File map = new File(main.getServer().getWorldContainer(), nameWorld);
+                File foldermaps = new File(main.getDataFolder(), "Arenas/" + nameArena + "/" + nameWorld);
+
+                main.getResetWorld().copyDir(map, foldermaps);
+                break;
+            }
+        }
+        p.sendMessage(c("&a&l\u2714 Map successfully save"));
+        XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
     }
 
     public void addSpawn(Player p, Location location, String name, boolean useitem) {
@@ -427,7 +409,7 @@ public class ArenaManager {
         return arenaList;
     }
 
-    public void loadWorld(String arena)
+    public boolean loadWorld(String arena)
     {
         if(new File(main.getDataFolder(),arena).exists())
         {
@@ -447,6 +429,8 @@ public class ArenaManager {
         wb.reset();
 
         Bukkit.getWorld(arena).setAutoSave(false);
+
+        return true;
     }
 
     public String c(String msg){ return ChatColor.translateAlternateColorCodes('&', msg); }

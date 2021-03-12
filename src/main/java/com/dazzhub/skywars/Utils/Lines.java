@@ -182,6 +182,7 @@ public class Lines {
                 addDefaultLang("Messages.ScoreBoard.Refill", "Refill: %time%", lang);
                 addDefaultLang("Messages.ScoreBoard.EndGame", "End of game", lang);
                 addDefaultLang("Messages.ScoreBoard.None", "None", lang);
+                addDefaultLang("Messages.ScoreBoard.Team.enabled", true, lang);
                 addDefaultLang("Messages.ScoreBoard.Team.killCount", true, lang);
                 addDefaultLang("Messages.ScoreBoard.Team.Spectator", "&7:&f", lang);
                 addDefaultLang("Messages.ScoreBoard.Team.Game", "&c:&f", lang);

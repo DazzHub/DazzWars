@@ -55,6 +55,10 @@ public class ScoreBoardBuilder {
         GamePlayer player = Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId());
         Arena arena = player.getArena();
 
+        if (!player.getLangMessage().getBoolean("Messages.ScoreBoard.Team.enabled", true)){
+            return;
+        }
+
         if (spectator){
             if (arena == null) return;
 
@@ -126,7 +130,7 @@ public class ScoreBoardBuilder {
         if (gameEnemy == null) return;
         if (tabObjective == null) return;
         for (GamePlayer gamePlayer : arena.getPlayers()) {
-
+            if (gamePlayer == null) continue;
             if (player.getArenaTeam() != null && player.getArenaTeam().getMembers().contains(gamePlayer)) continue;
 
             if (!this.gameEnemy.hasEntry(gamePlayer.getName())) {

@@ -4,13 +4,17 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.DeathEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.locUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -65,7 +69,7 @@ public class onArena implements Listener {
                                     && !arena.getIslandChest().contains(e.getClickedBlock().getLocation())) {
                                 main.getChestManager().getChestHashMap().get("CENTER").refillChest(chest);
                                 arena.getCenterChestCheck().add(chest.getLocation());
-                                arena.getIHoloChest().addHolo(chest);
+                                arena.getIHoloChest().addHolo(e.getClickedBlock());
                             }
 
                             if (!arena.getIslandChest().contains(e.getClickedBlock().getLocation())
@@ -74,7 +78,7 @@ public class onArena implements Listener {
                                     && !arena.getCenterChestCheck().contains(e.getClickedBlock().getLocation())) {
                                 main.getChestManager().getChestHashMap().get(arena.getChestType()).refillChest(chest);
                                 arena.getIslandChest().add(chest.getLocation());
-                                arena.getIHoloChest().addHolo(chest);
+                                arena.getIHoloChest().addHolo(e.getClickedBlock());
                             }
                         }
                     }
@@ -112,7 +116,11 @@ public class onArena implements Listener {
             }
 
             if (gamePlayer.isInArena()) {
+
                 Arena arena = gamePlayer.getArena();
+
+                arena.getIHoloChest().delete(e.getBlock().getLocation());
+
                 if (arena.getGameStatus().equals(Enums.GameStatus.WAITING) || arena.getGameStatus().equals(Enums.GameStatus.STARTING)) {
                     e.setCancelled(true);
                 }
@@ -124,6 +132,8 @@ public class onArena implements Listener {
     public void DropItems(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
+        if (gamePlayer == null) return;
 
         if (gamePlayer.isInArena()) {
             Arena arena = gamePlayer.getArena();
@@ -142,6 +152,8 @@ public class onArena implements Listener {
     public void PickupItems(PlayerPickupItemEvent e) {
         Player p = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
+        if (gamePlayer == null) return;
 
         if (gamePlayer.isInArena()) {
             Arena arena = gamePlayer.getArena();
@@ -164,6 +176,8 @@ public class onArena implements Listener {
 
         Player p = (Player) e.getEntity();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
+        if (gamePlayer == null) return;
 
         if (gamePlayer.isInArena()) {
             Arena arena = gamePlayer.getArena();
@@ -382,7 +396,8 @@ public class onArena implements Listener {
     }
 
     @EventHandler
-    public void onBlockBroken(BlockBreakEvent e) {
+    public void onBlockBroken2(BlockBreakEvent e) {
+        Block block = e.getBlock();
         Player p = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
@@ -392,7 +407,6 @@ public class onArena implements Listener {
 
         if (gamePlayer.isInArena()) {
             Arena arena = gamePlayer.getArena();
-
             if (arena.getGameStatus() == Enums.GameStatus.INGAME) {
                 gamePlayer.addBlockBroken();
                 main.getAchievementManager().checkPlayer(p, Enums.AchievementType.BLOCKS_BROKEN, gamePlayer.getBlockBroken());
@@ -425,9 +439,7 @@ public class onArena implements Listener {
 
         GamePlayer target = null;
 
-        if (gamePlayer == null){
-            return;
-        }
+        if (gamePlayer == null) return;
 
         if (!gamePlayer.isInArena()){
             return;
@@ -449,7 +461,7 @@ public class onArena implements Listener {
 
         Player p = (Player) e.getWhoClicked();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-
+        if (gamePlayer == null) return;
         if (gamePlayer.isSpectating()){
 
             if (e.getView().getTitle().startsWith(c(gamePlayer.getLangMessage().getString("Messages.MenuSpectator.TITLE")))) {
@@ -481,7 +493,7 @@ public class onArena implements Listener {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-
+            if (gamePlayer == null) return;
             if (gamePlayer.isInArena()) {
                 Projectile proj = (Projectile) e.getProjectile();
 
@@ -506,6 +518,7 @@ public class onArena implements Listener {
         if (e.getEntity().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+            if (gamePlayer == null) return;
 
             Projectile proj = e.getEntity();
             gamePlayer.getProjectilesList().remove(proj);

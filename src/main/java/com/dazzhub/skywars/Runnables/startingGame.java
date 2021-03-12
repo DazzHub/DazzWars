@@ -1,32 +1,32 @@
 package com.dazzhub.skywars.Runnables;
 
-import com.cryptomorin.xseries.XSound;
 import com.cryptomorin.xseries.messages.Titles;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
-import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
+import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class startingGame extends BukkitRunnable {
+public class startingGame implements Runnable {
 
     private Main main;
 
     private Arena arena;
+    private RunnableFactory factory;
     private int timer;
 
-    public startingGame(Arena arena) {
+    public startingGame(RunnableFactory factory, Arena arena) {
         this.main = Main.getPlugin();
 
+        this.factory = factory;
         this.arena = arena;
         this.timer = arena.getStartingGame();
     }
@@ -46,13 +46,11 @@ public class startingGame extends BukkitRunnable {
             arena.setGameStatus(Enums.GameStatus.WAITING);
             this.timer = arena.getStartingGame();
             this.arena.setUsable(false);
-
-            arena.setStartingGameTask(new startingGame(arena));
         }
 
 
         arena.getPlayers().forEach(gamePlayer -> {
-            gamePlayer.getPlayer().setLevel(timer);
+            gamePlayer.getPlayer().setLevel(getTimer());
             gamePlayer.getLangMessage().getConfigurationSection("Messages.Timer.Starting").getKeys(false).stream().filter(s -> timer == Integer.parseInt(s)).forEach(s -> gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Timer.Starting." + s, "Timer.Starting." + s).replaceAll("%seconds%", String.valueOf(timer))));
             gamePlayer.getLangMessage().getConfigurationSection("Messages.Sounds.Starting").getKeys(false).stream().filter(s -> timer == Integer.parseInt(s)).forEach(s -> gamePlayer.playSound(gamePlayer.getLangMessage().getString("Messages.Sounds.Starting." + s, "AMBIENT_CAVE")));
             gamePlayer.getLangMessage().getConfigurationSection("Messages.Title.Starting").getKeys(false).stream().filter(time_config -> timer == Integer.parseInt(time_config)).forEach(time_config -> Titles.sendTitle(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getInt("Messages.Title.Fade",20), gamePlayer.getLangMessage().getInt("Messages.Title.Stay",20), gamePlayer.getLangMessage().getInt("Messages.Title.Out",20), c(gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config, "Error title starting").split(";")[0]).replaceAll("%seconds%", String.valueOf(timer)), c(gamePlayer.getLangMessage().getString("Messages.Title.Starting." + time_config, "Error subtitle starting").split(";")[1]).replaceAll("%seconds%", String.valueOf(timer))));
@@ -60,7 +58,6 @@ public class startingGame extends BukkitRunnable {
 
 
         if (timer <= 0) {
-
             arena.checkVotes();
 
             arena.getPlayers().forEach(p -> {
@@ -105,11 +102,11 @@ public class startingGame extends BukkitRunnable {
 
             });
 
-            this.arena.setGameStatus(Enums.GameStatus.INGAME);
-            arena.getInGameTask().runTaskTimer(Main.getPlugin(), 0, 20L);
+            arena.inGame();
             this.cancel();
         }
 
+        this.arena.setTotalTime(timer);
         timer--;
     }
 
@@ -155,6 +152,10 @@ public class startingGame extends BukkitRunnable {
         ).collect(Collectors.toList());
 
         message.forEach(gamePlayer::sendMessage);
+    }
+
+    private void cancel(){
+        this.factory.getRunnableWorker(this, false).remove(this);
     }
 
     private String c(String c) {

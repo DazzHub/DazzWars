@@ -3,8 +3,12 @@ package com.dazzhub.skywars.Utils.signs.top;
 import com.cryptomorin.xseries.XSound;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Runnables.inGame;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
+import com.dazzhub.skywars.Utils.Runnable.RunnableType;
+import com.dazzhub.skywars.Utils.Runnable.RunnableWorkerType;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardBuilder;
 import com.dazzhub.skywars.Utils.signs.ISignLocation;
 import org.bukkit.Bukkit;
@@ -141,7 +145,11 @@ public class ITopManager {
     }
 
     private void updateTop(){
-        this.task = new BukkitRunnable() {
+        RunnableFactory factory = Main.getPlugin().getFactory();
+
+        factory.registerRunnable(RunnableWorkerType.ASYNC, RunnableType.TIMER, 20L,
+
+        new Runnable() {
             int timer = main.getSettings().getInt("TopUpdate");
 
             @Override
@@ -192,7 +200,7 @@ public class ITopManager {
 
                 timer--;
             }
-        }.runTaskTimerAsynchronously(main, 0,20).getTaskId();
+        });
     }
 
     private String c(String c) {
