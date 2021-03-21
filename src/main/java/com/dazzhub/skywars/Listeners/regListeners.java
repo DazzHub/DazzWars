@@ -1,15 +1,11 @@
 package com.dazzhub.skywars.Listeners;
 
 import com.dazzhub.skywars.Listeners.Arena.onArena.*;
-import com.dazzhub.skywars.Listeners.Arena.onSettings.addPlayer;
-import com.dazzhub.skywars.Listeners.Arena.onSettings.addSpectator;
-import com.dazzhub.skywars.Listeners.Arena.onSettings.removePlayer;
-import com.dazzhub.skywars.Listeners.Arena.onSettings.removeSpectator;
+import com.dazzhub.skywars.Listeners.Arena.onSettings.*;
 import com.dazzhub.skywars.Listeners.Bukkit.onCorner;
 import com.dazzhub.skywars.Listeners.Bukkit.onGlobal;
 import com.dazzhub.skywars.Listeners.Bukkit.onJoinServer;
 import com.dazzhub.skywars.Listeners.Bukkit.onLeftServer;
-import com.dazzhub.skywars.Listeners.Inventory.onItem;
 import com.dazzhub.skywars.Listeners.Inventory.onMenu;
 import com.dazzhub.skywars.Listeners.Lobby.*;
 import com.dazzhub.skywars.Listeners.Sign.onSignArena;
@@ -51,7 +47,6 @@ public class regListeners {
         this.onLoad(new onSignTop(main));
 
         /* INVENTORY */
-        this.onLoad(new onItem(main));
         this.onLoad(new onMenu(main));
 
         /* LOBBIES */

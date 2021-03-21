@@ -27,21 +27,6 @@ public class onJoinServer implements Listener {
 
         main.getServer().getScheduler().runTaskAsynchronously(main, () -> {
             main.getPlayerDB().loadPlayer(p.getUniqueId());
-
-            Bukkit.getScheduler().runTaskLater(main, () -> {
-
-                if (main.getLobbyManager().getLobby() != null){
-                    p.teleport(main.getLobbyManager().getLobby());
-                }
-
-                if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
-                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), true);
-                }
-
-                main.getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY,false,false, false,false);
-                main.getHologramsManager().loadHologram(p);
-
-            },5);
         });
 
 

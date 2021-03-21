@@ -1,0 +1,93 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Tiempo'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 4
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 397
+    DATA-VALUE: 3
+    SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ=='
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fNo tienes permiso'
+      - ''
+  ######################
+  #+                  +#
+  #       ITEMS        #
+  #+                  +#
+  ######################
+day:
+  ACTION: 'vote:%day%'
+  NAME: '&eDia'
+  DESCRIPTION:
+    - ' &a▸ &7Durante el juego'
+    - ' &a▸ &7sera de dia'
+    - ''
+    - ' &a▸ &fVotos: &a%sw_arena_vote_time_day%'
+    - ''
+    - ' &a▸ &aClick para votar'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjg5MDQyMDgyYmI3YTc2MThiNzg0ZWU3NjA1YTEzNGM1ODgzNGUyMWUzNzRjODg4OTM3MTYxMDU3ZjZjNyJ9fX0='
+  PERMISSION: vote.time.day
+  POSITION-X: 3
+  POSITION-Y: 2
+sunset:
+  ACTION: 'vote:%sunset%'
+  NAME: '&6Atardecer'
+  DESCRIPTION:
+    - ' &a▸ &7Durante el juego'
+    - ' &a▸ &7sera la hora de atardecer'
+    - ''
+    - ' &a▸ &fVotos: &a%sw_arena_vote_time_sunset%'
+    - ''
+    - ' &a▸ &aClick para votar'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzExMjM0ODIwYTFlN2JmYjkxMmI1MjJhZWNmMzRiZmNiNTY5ZjAyYmY1ODM2ZTY2OWEyOWJhZTk5NzM3ZTUyMiJ9fX0='
+  PERMISSION: vote.time.sunset
+  POSITION-X: 5
+  POSITION-Y: 2
+night:
+  ACTION: 'vote:%night%'
+  NAME: '&9Noche'
+  DESCRIPTION:
+    - ' &a▸ &7Durante el juego'
+    - ' &a▸ &7sera de noche'
+    - ''
+    - ' &a▸ &fVotos: &a%sw_arena_vote_time_night%'
+    - ''
+    - ' &a▸ &aClick para votar'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODAzM2ZlMmY4ZGYwMWE2YjE1NzFkODU1YWQ1MjhiYzk3YzdjYTEyMDFmNzIxMzE0NjBlZTI1YmI2NjhhMjhjMSJ9fX0='
+  PERMISSION: vote.time.night
+  POSITION-X: 7
+  POSITION-Y: 2
+Back:
+  ACTION: 'open: vote.yml'
+  NAME: '&cVolver'
+  DESCRIPTION:
+    - ' &a▸ &7Vuelve al menu'
+    - ' &a▸ &7de votacion'
+    - ''
+    - ' &a▸ &aClick para volver'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmUzZjUwYmE2MmNiZGEzZWNmNTQ3OWI2MmZlZGViZDYxZDc2NTg5NzcxY2MxOTI4NmJmMjc0NWNkNzFlNDdjNiJ9fX0='
+  POSITION-X: 5
+  POSITION-Y: 4

@@ -1,7 +1,9 @@
 package com.dazzhub.skywars.Listeners.Arena.onArena;
 
 import com.dazzhub.skywars.Arena.Arena;
+import com.dazzhub.skywars.Arena.comparables.comparator;
 import com.dazzhub.skywars.Listeners.Custom.DeathEvent;
+import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
 import com.dazzhub.skywars.Listeners.Custom.WinEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
@@ -61,7 +63,26 @@ public class onDeath implements Listener {
             p.setHealth(20.0D);
             p.setHealthScale(20);
 
-            Bukkit.getScheduler().runTaskLater(Main.getPlugin(), () -> arena.addSpectator(dead), 5);
+            Bukkit.getScheduler().runTaskLater(Main.getPlugin(), () -> {
+                if (!dead.isAutomatic()){
+                    arena.addSpectator(dead);
+                } else {
+                    if (dead.isInArena()) {
+                        comparator.checkArenaPlayer(main.getArenaManager().getArenaList());
+
+                        Arena arenaTo = Main.getPlugin().getArenaManager().getArenaList().stream()
+                                .filter(Arena::checkUsable)
+                                .findAny().orElse(null);
+
+                        if (arenaTo == null) {
+                            arena.addSpectator(dead);
+                        } else {
+                            dead.getArena().removePlayer(dead, false);
+                            Bukkit.getPluginManager().callEvent(new JoinEvent(p, arenaTo, Enums.JoinCause.COMMAND));
+                        }
+                    }
+                }
+            }, 5);
 
         }
 
@@ -90,10 +111,10 @@ public class onDeath implements Listener {
                     killer.addKillsSolo();
 
                     if (arena.getKillers().isEmpty()){
-                        killer.addCoins(main.getSettings().getInt("Coins.FirstKillSolo"));
+                        killer.addCoins(main.getSettings().getDouble("Coins.FirstKillSolo"));
                         killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.FirstKillSolo"))));
                     } else {
-                        killer.addCoins(main.getSettings().getInt("Coins.KillSolo"));
+                        killer.addCoins(main.getSettings().getDouble("Coins.KillSolo"));
                         killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.KillSolo"))));
                     }
 
@@ -105,10 +126,10 @@ public class onDeath implements Listener {
                     killer.addKillsTeam();
 
                     if (arena.getKillers().isEmpty()){
-                        killer.addCoins(main.getSettings().getInt("Coins.FirstKillTeam"));
+                        killer.addCoins(main.getSettings().getDouble("Coins.FirstKillTeam"));
                         killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.FirstKillTeam"))));
                     } else {
-                        killer.addCoins(main.getSettings().getInt("Coins.KillTeam"));
+                        killer.addCoins(main.getSettings().getDouble("Coins.KillTeam"));
                         killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.KillTeam"))));
                     }
 
@@ -120,10 +141,10 @@ public class onDeath implements Listener {
                     killer.addKillsRanked();
 
                     if (arena.getKillers().isEmpty()){
-                        killer.addCoins(main.getSettings().getInt("Coins.FirstKillRanked"));
+                        killer.addCoins(main.getSettings().getDouble("Coins.FirstKillRanked"));
                         killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.FirstKillRanked"))));
                     } else {
-                        killer.addCoins(main.getSettings().getInt("Coins.KillRanked"));
+                        killer.addCoins(main.getSettings().getDouble("Coins.KillRanked"));
                         killer.sendMessage(killer.getLangMessage().getString("Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.KillRanked"))));
                     }
 

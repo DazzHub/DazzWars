@@ -5,7 +5,11 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addPlayerEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
+import com.dazzhub.skywars.Utils.Runnable.RunnableType;
+import com.dazzhub.skywars.Utils.Runnable.RunnableWorkerType;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -29,6 +33,8 @@ public class addPlayer implements Listener {
 
         if (gamePlayer.isInArena()) return;
 
+        if (arena.checkMax()) return;
+
         if (gamePlayer.getArenaTeam() != null) {
             gamePlayer.getArenaTeam().removeTeam(gamePlayer);
         }
@@ -38,12 +44,11 @@ public class addPlayer implements Listener {
         gamePlayer.setLobby(false);
         arena.getPlayers().add(gamePlayer);
 
-
         gamePlayer.resetPlayer(true);
 
         switch (arena.getMode()) {
             case SOLO: {
-                arena.getAvailableTeam(arena.getMode().getSize()).addPlayer(gamePlayer);
+                arena.getAvailableTeam(arena.getSizeTeam()).addPlayer(gamePlayer);
 
                 Location cageLoc = gamePlayer.getArenaTeam().getSpawn();
                 p.teleport(cageLoc);
@@ -51,7 +56,7 @@ public class addPlayer implements Listener {
                 main.getCageManager().getCagesSolo().get(gamePlayer.getCageSolo()).loadCage(cageLoc);
                 main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.STARTING, false, false, true, true);
 
-                main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Solo"), false);
+                main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Arena.Solo"), false);
                 break;
             }
             case TEAM: {
@@ -63,7 +68,7 @@ public class addPlayer implements Listener {
                 main.getCageManager().getCagesTeam().get(gamePlayer.getCageTeam()).loadCage(cageLoc);
                 main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.STARTINGTEAM, false, false, true, true);
 
-                main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Team"), false);
+                main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Arena.Team"), false);
                 break;
             }
 
@@ -73,20 +78,23 @@ public class addPlayer implements Listener {
                 Location cageLoc = gamePlayer.getArenaTeam().getSpawn();
                 p.teleport(cageLoc);
 
-                main.getCageManager().getCagesRanked().get(gamePlayer.getCageRanked()).loadCage(cageLoc);
+                main.getCageManager().getCagesRanked().get(gamePlayer.getCageRanked()).loadCage(gamePlayer.getArenaTeam().getSpawn());
                 main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.STARTINGRANKED, false, false, true, true);
 
-                main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Ranked"), false);
+                main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Arena.Ranked"), false);
                 break;
             }
         }
 
+        if (gamePlayer.getLangMessage().getBoolean("Messages.Sounds.Join.enable")){
+            gamePlayer.playSound(gamePlayer.getLangMessage().getString("Messages.Sounds.Join.sound"));
+        }
 
         arena.getPlayers().forEach(playerArena ->
                 playerArena.sendMessage(playerArena.getLangMessage().getString("Messages.JoinMessage")
                         .replaceAll("%player%", p.getName())
                         .replaceAll("%playing%", String.valueOf(arena.getPlayers().size()))
-                        .replaceAll("%max%", String.valueOf(arena.getMaxPlayers()))
+                        .replaceAll("%max%", String.valueOf((arena.getSpawns().size() * arena.getSizeTeam())))
                 )
         );
 

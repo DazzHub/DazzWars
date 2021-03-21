@@ -181,7 +181,7 @@ public class Placeholders extends PlaceholderExpansion {
             }
 
             case "coins": {
-                return Integer.toString(gamePlayer.getCoins());
+                return String.valueOf(plugin.getMoneyFormat(gamePlayer.getCoins()));
             }
 
             case "souls": {
@@ -208,16 +208,40 @@ public class Placeholders extends PlaceholderExpansion {
                 return gamePlayer.getCageRanked();
             }
 
-            case "wineffect_solo": {
+            case "effect_win_solo": {
                 return gamePlayer.getWinEffectSolo();
             }
 
-            case "wineffect_team": {
+            case "effect_win_team": {
                 return gamePlayer.getWinEffectTeam();
             }
 
-            case "wineffect_ranked": {
+            case "effect_win_ranked": {
                 return gamePlayer.getWinEffectRanked();
+            }
+
+            case "effect_kill_solo": {
+                return gamePlayer.getKillEffectSolo();
+            }
+
+            case "effect_kill_team": {
+                return gamePlayer.getKillEffectTeam();
+            }
+
+            case "effect_kill_ranked": {
+                return gamePlayer.getKillEffectRanked();
+            }
+
+            case "effect_arrow_solo": {
+                return gamePlayer.getTrailSolo();
+            }
+
+            case "effect_arrow_team": {
+                return gamePlayer.getTrailTeam();
+            }
+
+            case "effect_arrow_ranked": {
+                return gamePlayer.getTrailRanked();
             }
 
             case "party_owner": {
@@ -252,12 +276,12 @@ public class Placeholders extends PlaceholderExpansion {
 
             case "arena_max": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getMaxPlayers());
+                return String.valueOf((arena.getSpawns().size() * arena.getSizeTeam()));
             }
 
             case "arena_teams": {
                 if (arena == null) return "Error.";
-                return String.valueOf(arena.getAliveTeams());
+                return String.valueOf(arena.getAliveTeams().size());
             }
 
             case "arena_map": {

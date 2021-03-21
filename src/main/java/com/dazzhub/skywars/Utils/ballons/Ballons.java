@@ -32,6 +32,7 @@ public class Ballons {
         this.giant.setCustomNameVisible(false);
 
         equipment.setItemInHand(new Icon(XMaterial.PLAYER_HEAD,1, (short) 3).setSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjdjMTRlYjg3ZGM2NDQ0YWU2MjVmMTIyY2YzYWU5NmZjOGEyODZhYmI2OWRjYzc4ZWU5NWNkNDQzMjMyYTA1YyJ9fX0=").build());
+        giant.setLeashHolder(null);
         this.giant.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 10000,1));
         ///////////////////////////////////////////////////////////////////
         this.string1 = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);

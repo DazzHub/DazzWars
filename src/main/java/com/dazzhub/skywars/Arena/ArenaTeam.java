@@ -21,7 +21,7 @@ public class ArenaTeam
     }
 
     public boolean isFull() {
-        return this.members.size() >= arena.getMode().getSize();
+        return this.members.size() >= arena.getSizeTeam();
     }
 
     public boolean hasPlayer(GamePlayer gamePlayer) {

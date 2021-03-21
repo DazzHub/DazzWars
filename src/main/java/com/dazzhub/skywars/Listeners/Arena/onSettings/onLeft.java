@@ -1,4 +1,4 @@
-package com.dazzhub.skywars.Listeners.Arena.onArena;
+package com.dazzhub.skywars.Listeners.Arena.onSettings;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
@@ -52,10 +52,12 @@ public class onLeft implements Listener {
 
             default:{
                 if (party == null) {
-                    arena.removePlayer(gamePlayer);
+                    arena.removePlayer(gamePlayer, true);
                 } else {
                     if (party.getOwner().equals(gamePlayer)) {
-                        party.getMembers().forEach(arena::removePlayer);
+                        for (GamePlayer player : party.getMembers()) {
+                            arena.removePlayer(player, true);
+                        }
                     } else {
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaNoOwner", "Error Party.JoinArenaNoOwner"));
                     }

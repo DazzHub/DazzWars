@@ -1,0 +1,176 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Kits solitario'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+  
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+  
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 397
+    DATA-VALUE: 3
+    SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ=='
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fNo tienes permiso'
+      - ''
+default:
+  PRICE: 0
+  ACTION: 'kit: Default/RANKED'
+  NAME: '&bDefault'
+  DESCRIPTION:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fEspada de madera &ax1'
+    - ' &a▸ &fArco &ax1'
+    - ' &a▸ &fCasco de cuero &ax1'
+    - ' &a▸ &fBotas de cuero &ax1'
+    - ' &a▸ &fFlechas &ax5'
+    - ''
+    - ' &a▸ &2Disponible'
+    - ' &a▸ &fPrecio: &a%price%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para comprar'
+  DESCRIPTION-PURCHASED:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fEspada de madera &ax1'
+    - ' &a▸ &fArco &ax1'
+    - ' &a▸ &fCasco de cuero &ax1'
+    - ' &a▸ &fBotas de cuero &ax1'
+    - ' &a▸ &fFlechas &ax5'
+    - ''
+    - ' &a▸ &aComprado'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para selecionar'
+  DESCRIPTION-SELECTED:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fEspada de madera &ax1'
+    - ' &a▸ &fArco &ax1'
+    - ' &a▸ &fCasco de cuero &ax1'
+    - ' &a▸ &fBotas de cuero &ax1'
+    - ' &a▸ &fFlechas &ax5'
+    - ''
+    - ' &a▸ &bEquipado'
+    - ' &a▸ &fKit: &a%sw_kit_solo%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aKit equipado'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzRlOTVlMWI3ZGM4MmJhNzg0NWE2OGZjNmEzMTJmNGNkOTBlZTJmNmNjZTI2YTY4Yzg4YjA0YjEwNzJkODc5In19fQ=='
+  POSITION-X: 2
+  POSITION-Y: 2
+builder:
+  PRICE: 50
+  ACTION: 'kit: Builder/SOLO'
+  NAME: '&eBuilder'
+  DESCRIPTION:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fBloque de ladrillos &ax32'
+    - ' &a▸ &fChuleta de cerdo &ax2'
+    - ' &a▸ &fPechera de cuero &averde &ax1'
+    - ''
+    - ' &a▸ &2Disponible'
+    - ' &a▸ &fPrecio: &a%price%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para comprar'
+  DESCRIPTION-PURCHASED:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fBloque de ladrillos &ax32'
+    - ' &a▸ &fChuleta de cerdo &ax2'
+    - ' &a▸ &fPechera de cuero &averde &ax1'
+    - ''
+    - ' &a▸ &aComprado'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para selecionar'
+  DESCRIPTION-SELECTED:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fBloque de ladrillos &ax32'
+    - ' &a▸ &fChuleta de cerdo &ax2'
+    - ' &a▸ &fPechera de cuero &averde &ax1'
+    - ''
+    - ' &a▸ &bEquipado'
+    - ' &a▸ &fKit: &a%sw_kit_solo%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aKit equipado'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWM1ZDNmOTA5OTI0MDJlNTY2Y2NkMzI3MGI4ZTU0MzdiMjY5ZjQ1ZDE3MzRiNDA1ODUxN2YyMjFkODE4YzE4YSJ9fX0='
+  POSITION-X: 3
+  POSITION-Y: 2
+Vip:
+  PRICE: 100
+  ACTION: 'kit: Vip/SOLO'
+  NAME: '&dVip'
+  DESCRIPTION:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fEspada de hierro &ax1'
+    - ' &a▸ &fManzana dorada &ax2'
+    - ' &a▸ &fPechera de diamante &ax1'
+    - ' &a▸ &fCasco de malla &ax1'
+    - ' &a▸ &fBotas de hierro &ax1'
+    - ''
+    - ' &a▸ &2Disponible'
+    - ' &a▸ &fPrecio: &a%price%'
+    - ' &a▸ &fRareza: &3Raro'
+    - ''
+    - ' &a▸ &aClick para comprar'
+  DESCRIPTION-PURCHASED:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fEspada de hierro &ax1'
+    - ' &a▸ &fManzana dorada &ax2'
+    - ' &a▸ &fPechera de diamante &ax1'
+    - ' &a▸ &fCasco de malla &ax1'
+    - ' &a▸ &fBotas de hierro &ax1'
+    - ''
+    - ' &a▸ &aComprado'
+    - ' &a▸ &fRareza: &3Raro'
+    - ''
+    - ' &a▸ &aClick para comprar'
+  DESCRIPTION-SELECTED:
+    - ' &a▸ &eContenido:'
+    - ' &a▸ &fEspada de hierro &ax1'
+    - ' &a▸ &fManzana dorada &ax2'
+    - ' &a▸ &fPechera de diamante &ax1'
+    - ' &a▸ &fCasco de malla &ax1'
+    - ' &a▸ &fBotas de hierro &ax1'
+    - ''
+    - ' &a▸ &bEquipado'
+    - ' &a▸ &fKit: &a%sw_kit_solo%'
+    - ' &a▸ &fRareza: &3Raro'
+    - ''
+    - ' &a▸ &aKit equipado'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjI4NjhlYzZkYmRiYjZiZWNmNjk4ZGExMzZlN2E2Y2QyOGUxOTMxNDc5NmNlMjZhM2Y2N2Q2YWI2NTZlYjIxOSJ9fX0='
+  PERMISSION: dazzwars.kit.vip
+  POSITION-X: 4
+  POSITION-Y: 2
+Back:
+  ACTION: 'open: shop-ranked.yml'
+  NAME: '&cVolver'
+  DESCRIPTION:
+    - ' &a▸ &7Vuelve al menu'
+    - ' &a▸ &7de la tienda'
+    - ''
+    - ' &a▸ &aClick para volver'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmUzZjUwYmE2MmNiZGEzZWNmNTQ3OWI2MmZlZGViZDYxZDc2NTg5NzcxY2MxOTI4NmJmMjc0NWNkNzFlNDdjNiJ9fX0='
+  POSITION-X: 5
+  POSITION-Y: 5

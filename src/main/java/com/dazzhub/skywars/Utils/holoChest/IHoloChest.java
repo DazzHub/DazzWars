@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
@@ -37,9 +38,9 @@ public class IHoloChest {
     }
 
     public void addHolo(Block block) {
-        String locString = locUtils.locToString(block.getLocation());
+        String locString = locUtils.locToStringSimple(block.getLocation());
 
-        if (this.armorStandList.containsKey(locUtils.locToString(block.getLocation()))) return;
+        if (this.armorStandList.containsKey(locUtils.locToStringSimple(block.getLocation()))) return;
 
         Location loc = new Location(block.getLocation().getWorld(), block.getLocation().getX() + 0.5, block.getLocation().getY() + 1.0, block.getLocation().getZ() + 0.5);
 
@@ -60,18 +61,29 @@ public class IHoloChest {
         for (String location : this.armorStandList.keySet()) {
 
             IHolograms holo = this.armorStandList.get(location);
-            if (holo == null) continue;
+            if (holo == null) {
+                continue;
+            }
 
             if (armorStandList.containsKey(location)) {
 
-                if (holo.getLines() == null || holo.getLines().isEmpty()) continue;
+                if (holo.getLines() == null || holo.getLines().isEmpty()) {
+                    continue;
+                }
 
                 holo.getLines().set(0, c(main.getSettings().getString("refillHolo.line1")).replace("%time%", refill()));
 
                 Location loc1 = locUtils.stringToLocNoCenter(location);
 
-                if (loc1 == null)continue;
-                if (!(loc1.getBlock() instanceof Chest) || !(loc1.getBlock() instanceof DoubleChest)) continue;
+                if (loc1 == null){
+                    continue;
+                }
+
+                if (loc1.getBlock().isEmpty() || loc1.getBlock().getType() == Material.AIR) {
+                    delete(loc1);
+                    continue;
+                }
+
                 Chest chest = (Chest) loc1.getBlock().getState();
 
                 if (checkInv(chest.getBlockInventory())) {
@@ -95,10 +107,11 @@ public class IHoloChest {
     }
 
     public void delete(Location loc) {
-        String locString = locUtils.locToString(loc);
+        String locString = locUtils.locToStringSimple(loc);
 
         if (armorStandList.containsKey(locString)) {
             armorStandList.get(locString).remove();
+            armorStandList.remove(locString);
         }
     }
 

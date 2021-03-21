@@ -64,15 +64,14 @@ public class startingGame implements Runnable {
                 Titles.sendTitle(p.getPlayer(), p.getLangMessage().getInt("Messages.LuckTitle.Fade",20), p.getLangMessage().getInt("Messages.LuckTitle.Stay",20), p.getLangMessage().getInt("Messages.LuckTitle.Out",20), c(p.getLangMessage().getString("Messages.LuckTitle.Info", "Error title LuckTitle;&f").split(";")[0]).replace("%player%", p.getPlayer().getName()), c(p.getLangMessage().getString("Messages.LuckTitle.Info", "&f;Error subtitle LuckTitle").split(";")[1]).replace("%player%", p.getPlayer().getName()));
                 announcerVote(p);
 
-                arena.removeCage(p, arena.getMode(), 3);
                 p.resetPlayer(false);
 
                 switch (arena.getMode()) {
                     case SOLO: {
                         main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.INGAME, true, false, true, true);
-
+                        main.getCageManager().getCagesSolo().get(p.getCageSolo()).removeCage(p.getArenaTeam().getSpawn());
                         if (!p.getKitSolo().equals("none")) {
-                            main.getKitManager().giveKit(p.getKitSolo().toLowerCase(), arena.getMode().getName(), p.getPlayer(), p);
+                            main.getKitManager().giveKit(p.getKitSolo().toLowerCase(), arena.getMode().name(), p.getPlayer(), p);
                         }
 
                         p.addGamesSolo();
@@ -80,9 +79,9 @@ public class startingGame implements Runnable {
                     }
                     case TEAM: {
                         main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.INGAMETEAM, true, false, true, true);
-
+                        main.getCageManager().getCagesTeam().get(p.getCageTeam()).removeCage(p.getArenaTeam().getSpawn());
                         if (!p.getKitTeam().equals("none")) {
-                            main.getKitManager().giveKit(p.getKitTeam().toLowerCase(), arena.getMode().getName(), p.getPlayer(), p);
+                            main.getKitManager().giveKit(p.getKitTeam().toLowerCase(), arena.getMode().name(), p.getPlayer(), p);
                         }
 
                         p.addGamesTeam();
@@ -90,9 +89,9 @@ public class startingGame implements Runnable {
                     }
                     case RANKED: {
                         main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.INGAMERANKED, true, false, true, true);
-
+                        main.getCageManager().getCagesRanked().get(p.getCageSolo()).removeCage(p.getArenaTeam().getSpawn());
                         if (!p.getKitTeam().equals("none")) {
-                            main.getKitManager().giveKit(p.getKitRanked().toLowerCase(), arena.getMode().getName(), p.getPlayer(), p);
+                            main.getKitManager().giveKit(p.getKitRanked().toLowerCase(), arena.getMode().name(), p.getPlayer(), p);
                         }
 
                         p.addGamesRanked();

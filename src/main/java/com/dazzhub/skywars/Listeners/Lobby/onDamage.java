@@ -35,7 +35,7 @@ public class onDamage implements Listener {
 
         Player p = (Player) e.getEntity();
 
-        if (main.getSettings().getStringList("lobbies.onVoidTP").contains(p.getWorld().getName())) {
+        if ("parcelasoficial".equalsIgnoreCase(p.getWorld().getName())) {
             if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
                 if (main.getLobbyManager().getLobby() != null){
                     p.teleport(main.getLobbyManager().getLobby());

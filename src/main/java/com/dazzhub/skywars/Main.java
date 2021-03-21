@@ -1,6 +1,5 @@
 package com.dazzhub.skywars;
 
-import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Arena.ArenaManager;
 import com.dazzhub.skywars.Commands.adminCmd;
 import com.dazzhub.skywars.Commands.others.JoinArena;
@@ -16,7 +15,6 @@ import com.dazzhub.skywars.Utils.*;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.SongPlayer;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.lSong;
 import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
-import com.dazzhub.skywars.Utils.achievements.IAchievement;
 import com.dazzhub.skywars.Utils.achievements.IAchievementManager;
 import com.dazzhub.skywars.Utils.cages.ICageManager;
 import com.dazzhub.skywars.Utils.chests.IChestManager;
@@ -35,11 +33,15 @@ import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
 import com.dazzhub.skywars.Utils.signs.arena.ISignManager;
 import com.dazzhub.skywars.Utils.signs.top.ITopManager;
 import com.dazzhub.skywars.Utils.soulWell.SoulManager;
+import com.dazzhub.skywars.Utils.vault.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -103,6 +105,8 @@ public class Main extends JavaPlugin {
 
     /* NOTE BLOCK API*/
     public HashMap<String, ArrayList<SongPlayer>> playingSongs;
+
+    private boolean isVaultEnable;
 
     public Main(){
         this.configUtils = new configUtils();
@@ -208,6 +212,12 @@ public class Main extends JavaPlugin {
         this.getCommand("party").setExecutor(new Party(this));
 
         new Metrics(this, 8943);
+
+        this.isVaultEnable = (Bukkit.getPluginManager().getPlugin("Vault") != null);
+
+        if (isVaultEnable){
+            new EconomyAPI(this);
+        }
     }
 
     @Override
@@ -349,6 +359,10 @@ public class Main extends JavaPlugin {
         }
     }
 
+    public boolean isVaultEnable() {
+        return isVaultEnable;
+    }
+
     public static Main getPlugin() {
         return plugin;
     }
@@ -367,5 +381,18 @@ public class Main extends JavaPlugin {
             r = 0;
         }
         return r;
+    }
+
+    public double getMoneyFormat(final double balance) {
+        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+        symbols.setDecimalSeparator('.');
+        DecimalFormat format = new DecimalFormat("#.#####", symbols);
+
+        try {
+            return format.parse(format.format(balance)).doubleValue();
+        } catch (ParseException e) {
+            return 0.0;
+        }
+
     }
 }

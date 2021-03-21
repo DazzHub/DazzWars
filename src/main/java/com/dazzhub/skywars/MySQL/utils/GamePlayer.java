@@ -14,6 +14,7 @@ import com.dazzhub.skywars.Utils.effects.kills.*;
 import com.dazzhub.skywars.Utils.effects.wins.*;
 import com.dazzhub.skywars.Utils.hologram.Holograms;
 import com.cryptomorin.xseries.XSound;
+import com.dazzhub.skywars.Utils.inventory.menu.IMenu;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardBuilder;
 import com.google.common.base.Strings;
 import lombok.Getter;
@@ -67,7 +68,7 @@ public class GamePlayer {
     private int HitsTeam;
     private int HitsRanked;
 
-    private int Coins;
+    private double Coins;
     private int Souls;
     private int LvlRanked;
 
@@ -121,6 +122,7 @@ public class GamePlayer {
 
     private Holograms holograms;
 
+    private boolean isAutomatic;
     private boolean isSpectating;
     private Arena Arena;
     private ArenaTeam arenaTeam;
@@ -140,6 +142,7 @@ public class GamePlayer {
     private List<Projectile> projectilesList;
 
     private ScoreBoardBuilder scoreBoardBuilder;
+    private IMenu menu;
 
     public GamePlayer(
             UUID uuid,
@@ -174,7 +177,7 @@ public class GamePlayer {
             int itemsCrafted,
             double distanceWalked,
 
-            int coins,
+            double coins,
             int souls,
             int lvlRanked,
 
@@ -286,6 +289,7 @@ public class GamePlayer {
         this.kitTeamList = new ArrayList<>();
         this.kitRankedList = new ArrayList<>();
 
+        this.isAutomatic = false;
         this.isSpectating = false;
         this.Arena = null;
         this.arenaTeam = null;
@@ -302,6 +306,7 @@ public class GamePlayer {
         this.cage2 = null;
 
         this.projectilesList = new ArrayList<>();
+        this.menu = null;
     }
 
     public Player getPlayer() {
@@ -415,7 +420,7 @@ public class GamePlayer {
     }
 
     /* POINTS */
-    public void addCoins(int amount) {
+    public void addCoins(double amount) {
         this.setCoins(this.getCoins() + amount);
     }
     public void addSouls(int amount) {

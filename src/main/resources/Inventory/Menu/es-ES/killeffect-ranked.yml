@@ -1,0 +1,90 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Efecto de asesinato'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 397
+    DATA-VALUE: 3
+    SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ=='
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fNo tienes permiso'
+      - ''
+default:
+  PRICE: 0
+  ACTION: 'killeffect: heart/RANKED'
+  NAME: '&cCorazones'
+  DESCRIPTION:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Efecto de muerte'
+    - ' &a▸ &7al matar a un jugador'
+    - ' &a▸ &7saldran corazones'
+    - ''
+    - ' &a▸ &2Disponible'
+    - ' &a▸ &fPrecio: &a%price%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para comprar'
+  DESCRIPTION-PURCHASED:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Efecto de muerte'
+    - ' &a▸ &7al matar a un jugador'
+    - ' &a▸ &7saldran corazones'
+    - ''
+    - ' &a▸ &eComprado'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para selecionar'
+  DESCRIPTION-SELECTED:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Efecto de muerte'
+    - ' &a▸ &7al matar a un jugador'
+    - ' &a▸ &7saldran corazones'
+    - ''
+    - ' &a▸ &bEquipado'
+    - ' &a▸ &fEfecto: &a%sw_effect_kill_ranked%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aEfecto equipado'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTBhMTRhOGNmMDkyZDBjZDE2OTMzYmUyZGM5ZDQ0MGZiMzBiNTE1OTIxZmM2YjY4Y2RjYzE5YWJmODY0NmZjZiJ9fX0='
+  POSITION-X: 2
+  POSITION-Y: 2
+Back:
+  ACTION: 'open: shop-ranked.yml'
+  NAME: '&cVolver'
+  DESCRIPTION:
+    - ' &a▸ &7Vuelve al menu'
+    - ' &a▸ &7de la tienda'
+    - ''
+    - ' &a▸ &aClick para volver'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmUzZjUwYmE2MmNiZGEzZWNmNTQ3OWI2MmZlZGViZDYxZDc2NTg5NzcxY2MxOTI4NmJmMjc0NWNkNzFlNDdjNiJ9fX0='
+  POSITION-X: 5
+  POSITION-Y: 5
+#dropsoup
+#frostflame
+#headexplode
+#heart
+#redstone
+#satan
+#squid
+#twister
+#wave

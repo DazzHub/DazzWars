@@ -36,17 +36,17 @@ public class Coins implements subCommand {
         if (args.length > 3) {
             Player target = Bukkit.getPlayer(args[2]);
             if (target != null) {
-                if (!Tools.isInteger(args[3])) {
+                if (!Tools.isDouble(args[3])) {
                     p.sendMessage(help(sender));
                     return;
                 }
                 if (args[1].equalsIgnoreCase("add")) {
-                    main.getPlayerManager().getPlayer(target.getUniqueId()).addCoins(Integer.parseInt(args[3]));
+                    main.getPlayerManager().getPlayer(target.getUniqueId()).addCoins(Double.parseDouble(args[3]));
                     sender.sendMessage(c("&a&l\u2714 &fCoins added to: &9" + target.getName()));
                     XSound.play(p, String.valueOf(XSound.ENTITY_CHICKEN_EGG.parseSound()));
                 }
                 else if (args[1].equalsIgnoreCase("set")) {
-                    main.getPlayerManager().getPlayer(target.getUniqueId()).setCoins(Integer.parseInt(args[3]));
+                    main.getPlayerManager().getPlayer(target.getUniqueId()).setCoins(Double.parseDouble(args[3]));
                     sender.sendMessage(c("&a&l\u2714 &fCoins established to: &9" + target.getName()));
                     XSound.play(p, String.valueOf(XSound.ENTITY_CHICKEN_EGG.parseSound()));
                 }

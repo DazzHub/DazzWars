@@ -6,6 +6,7 @@ import com.dazzhub.skywars.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -88,6 +89,14 @@ public class worldTP implements subCommand {
         wc.generateStructures(false);
 
         Bukkit.createWorld(wc);
+
+        for (Entity e : Bukkit.getWorld(world).getEntities()){
+            if (!(e instanceof Player)){
+                e.remove();
+            }
+        }
+
+        Bukkit.getWorld(world).setGameRuleValue("doMobSpawning","false");
 
         this.main.getServer().getWorlds().add(Bukkit.getServer().getWorld(world));
     }

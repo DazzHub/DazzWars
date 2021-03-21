@@ -1,0 +1,139 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Tienda clasificatoria'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 4
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: 'Shopranked'
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 397
+    DATA-VALUE: 3
+    SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ=='
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fNo tienes permiso'
+      - ''
+cage:
+  ACTION: 'open: cage-ranked.yml'
+  NAME: '&dTienda de cajas'
+  DESCRIPTION:
+    - ' &a▸ &7Aqui puedes comprar algunas'
+    - ' &a▸ &7cajas, mientras esperas'
+    - ' &a▸ &7que la partida comienze'
+    - ''
+    - ' &a▸ &bEquipado actualmente'
+    - ' &a▸ &fCaja: &a%sw_cageranked%'
+    - ''
+    - ' &a▸ &aClick para abrir'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjNmNWY2OWI5NGI2NGNkNTJhY2MyZTg3ZDg0NmY2MzUyYTRjYjA3MDU2YjE0N2UyNDhhZjZlZjlmMjc4ZWY4ZiJ9fX0='
+  POSITION-X: 1
+  POSITION-Y: 2
+kit:
+  ACTION: 'open: kit-ranked.yml'
+  NAME: '&2Tienda de kits'
+  DESCRIPTION:
+    - ' &a▸ &7Aqui puedes comprar algunos'
+    - ' &a▸ &7kits, para usarlos durante'
+    - ' &a▸ &7la partida'
+    - ''
+    - ' &a▸ &bEquipado actualmente'
+    - ' &a▸ &fKit: &a%sw_kit_ranked%'
+    - ''
+    - ' &a▸ &aClick para abrir'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzg3YjQ0OWM2MGZhNjE5YWZiNzJkYjhhOGUxZmNmMzczMWUyMzRkNTc2ZTEyMDhmYmRlZDQ0MWEzOGJmMmVmZSJ9fX0='
+  POSITION-X: 3
+  POSITION-Y: 2
+killeffect:
+  ACTION: 'open: killeffect-ranked.yml'
+  NAME: '&cTienda de efectos de asesinato'
+  DESCRIPTION:
+    - ' &a▸ &7Aqui puedes comprar algunos'
+    - ' &a▸ &7efectos de asesinato, Perfecto'
+    - ' &a▸ &7para ver a tu oponente morir'
+    - ''
+    - ' &a▸ &bEquipado actualmente'
+    - ' &a▸ &fEfecto: &a%sw_effect_kill_ranked%'
+    - ''
+    - ' &a▸ &aClick para abrir'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTNjZDhlM2FhMTc4NjQ2NWVkN2MzZDVjY2JhOWIxODk5NjVjYjZlM2JmZTQyNjA1ZTk3MzM2ODU0ZDNmYWUifX19'
+  POSITION-X: 5
+  POSITION-Y: 2
+trailffect:
+  ACTION: 'open: traileffect-ranked.yml'
+  NAME: '&9Tienda de senderos de flechas'
+  DESCRIPTION:
+    - ' &a▸ &7Aqui puedes comprar algunos'
+    - ' &a▸ &7senderos de flecha, Perfecto'
+    - ' &a▸ &7para decorar tus flechas'
+    - ''
+    - ' &a▸ &bEquipado actualmente'
+    - ' &a▸ &fEfecto: &a%sw_effect_arrow_ranked%'
+    - ''
+    - ' &a▸ &aClick para abrir'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWY5YmE2N2I0NTE5OTQ3NzhjOGFlNDQ5MWJkMzYxZjE2ZmY1NTVjMTZiMTk5MmMxNjU2M2M5MTE4Y2FjYzJmIn19fQ=='
+  POSITION-X: 7
+  POSITION-Y: 2
+winffect:
+  ACTION: 'open: wineffect-ranked.yml'
+  NAME: '&6Tienda de efecto de victoria'
+  DESCRIPTION:
+    - ' &a▸ &7Aqui puedes comprar algunos'
+    - ' &a▸ &7efectos de victorial, para'
+    - ' &a▸ &7montrar a los demas tu efecto'
+    - ''
+    - ' &a▸ &bEquipado actualmente'
+    - ' &a▸ &fEfecto: &a%sw_effect_win_ranked%'
+    - ''
+    - ' &a▸ &aClick para abrir'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzY0ODYzYmU0YmVlMzQ1M2U3MTZkOGRiMDhjNzk2ZGE4YzM4YTk3OWNmZDNhMjgwZTlkOGQ3YjY3ZjcwIn19fQ=='
+  POSITION-X: 9
+  POSITION-Y: 2
+BagCoins:
+  ACTION: ''
+  NAME: '&eSaco de coins'
+  DESCRIPTION:
+    - ' &a▸ &7Muestra tus coins'
+    - ' &a▸ &7actuales'
+    - ''
+    - ' &a▸ &bCoins obtenidas'
+    - ' &a▸ &fCoins: &a%sw_coins%'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzk2Y2UxM2ZmNjE1NWZkZjMyMzVkOGQyMjE3NGM1ZGU0YmY1NTEyZjFhZGVkYTFhZmEzZmMyODE4MGYzZjcifX19'
+  POSITION-X: 1
+  POSITION-Y: 4
+Back:
+  ACTION: 'open: shop.yml'
+  NAME: '&cVolver'
+  DESCRIPTION:
+    - ' &a▸ &7Vuelve al menu'
+    - ' &a▸ &7de tiendas'
+    - ''
+    - ' &a▸ &aClick para volver'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmUzZjUwYmE2MmNiZGEzZWNmNTQ3OWI2MmZlZGViZDYxZDc2NTg5NzcxY2MxOTI4NmJmMjc0NWNkNzFlNDdjNiJ9fX0='
+  POSITION-X: 5
+  POSITION-Y: 4

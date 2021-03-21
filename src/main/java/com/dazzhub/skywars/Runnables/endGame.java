@@ -51,7 +51,7 @@ public class endGame implements Runnable {
                 List<GamePlayer> playerArena = Lists.newArrayList(arena.getPlayers());
                 List<GamePlayer> playerSpectator = Lists.newArrayList(arena.getSpectators());
 
-                playerArena.forEach(gamePlayer -> arena.removePlayer(gamePlayer));
+                playerArena.forEach(gamePlayer -> arena.removePlayer(gamePlayer, true));
                 playerSpectator.forEach(gamePlayer -> arena.removeSpectator(gamePlayer, true));
             });
         }

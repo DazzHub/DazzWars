@@ -1,4 +1,4 @@
-package com.dazzhub.skywars.Listeners.Arena.onArena;
+package com.dazzhub.skywars.Listeners.Arena.onSettings;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
@@ -25,6 +25,8 @@ public class onJoin implements Listener {
         Arena arena = e.getArena();
 
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+        if (gamePlayer == null) return;
+
         Party party = gamePlayer.getParty();
 
         if (party == null) {
@@ -34,7 +36,7 @@ public class onJoin implements Listener {
                 if (!p.hasPermission("skywars.spectate")) {
                     if (arena.getGameStatus().equals(Enums.GameStatus.INGAME)) {
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.inGame", "Error Messages.inGame"));
-                    } else if (arena.getPlayers().size() == arena.getMaxPlayers()) {
+                    } else if (arena.getPlayers().size() == (arena.getSpawns().size() * arena.getSizeTeam())) {
                         gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Full", "Error Messages.Full"));
                     }
                 } else {

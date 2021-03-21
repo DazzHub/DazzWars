@@ -1,0 +1,103 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Tienda'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 4
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: 'shop'
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 397
+    DATA-VALUE: 3
+    SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ=='
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fNo tienes permiso'
+      - ''
+shopsolo:
+  ACTION: 'open: shop-solo.yml'
+  NAME: '&eTienda solitario'
+  DESCRIPTION:
+    - ' &a▸ &7Aqui puedes comprar cajas,'
+    - ' &a▸ &7kits y efectos para tus'
+    - ' &a▸ &7partidas en modo solitario'
+    - ''
+    - ' &a▸ &eEquipado actualmente'
+    - ' &a▸ &fKits: &a%sw_kit_solo%'
+    - ' &a▸ &fCajas: &a%sw_cagesolo%'
+    - ' &a▸ &fSendero de flecha: &a%sw_effect_arrow_solo%'
+    - ' &a▸ &fEfectos de asesinato: &a%sw_effect_kill_solo%'
+    - ' &a▸ &fEfectos de victorias: &a%sw_effect_win_solo%'
+    - ''
+    - ' &a▸ &aClick para abrir'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmEzYjhmNjgxZGFhZDhiZjQzNmNhZThkYTNmZTgxMzFmNjJhMTYyYWI4MWFmNjM5YzNlMDY0NGFhNmFiYWMyZiJ9fX0='
+  POSITION-X: 3
+  POSITION-Y: 2
+shopteam:
+  ACTION: 'open: shop-team.yml'
+  NAME: '&dTienda de equipo'
+  DESCRIPTION:
+    - ' &a▸ &7Aqui puedes comprar cajas,'
+    - ' &a▸ &7kits y efectos para tus'
+    - ' &a▸ &7partidas en modo equipo'
+    - ''
+    - ' &a▸ &eEquipado actualmente'
+    - ' &a▸ &fKits: &a%sw_kit_team%'
+    - ' &a▸ &fCajas: &a%sw_cageteam%'
+    - ' &a▸ &fSendero de flecha: &a%sw_effect_arrow_team%'
+    - ' &a▸ &fEfectos de asesinato: &a%sw_effect_kill_team%'
+    - ' &a▸ &fEfectos de victorias: &a%sw_effect_win_team%'
+    - ''
+    - ' &a▸ &aClick para abrir'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWMyNjg3NmE0NTQ4ODQ0ZTI4YTZmN2JhMWYzNzdjODBlNTk0OTVmN2QzMjIxNGJjYzQ5MjgwNGIxNjYxOTMzOSJ9fX0='
+  POSITION-X: 5
+  POSITION-Y: 2
+shopranked:
+  ACTION: 'open: shop-ranked.yml'
+  NAME: '&bTienda clasificatoria'
+  DESCRIPTION:
+    - ' &a▸ &7Aqui puedes comprar cajas,'
+    - ' &a▸ &7kits y efectos para tus'
+    - ' &a▸ &7partidas en modo clasificatoria'
+    - ''
+    - ' &a▸ &eEquipado actualmente'
+    - ' &a▸ &fKits: &a%sw_kit_ranked%'
+    - ' &a▸ &fCajas: &a%sw_cageranked%'
+    - ' &a▸ &fSendero de flecha: &a%sw_effect_arrow_ranked%'
+    - ' &a▸ &fEfectos de asesinato: &a%sw_effect_kill_ranked%'
+    - ' &a▸ &fEfectos de victorias: &a%sw_effect_win_ranked%'
+    - ''
+    - ' &a▸ &aClick para abrir'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTFjMWY1ZGNmNTZiMTlkOWY2ZDE4MGU5MjA1ZGE5ZDc2MGMxNGNhNTU4MTdmYjdjZjljZDFkYjE3NzI4NTUxIn19fQ=='
+  POSITION-X: 7
+  POSITION-Y: 2 
+Cerrar:
+  ACTION: 'close'
+  NAME: '&cCerrar'
+  DESCRIPTION:
+    - ' &a▸ &7Cierra el este menu'
+    - ' &a▸ &7de tienda'
+    - ''
+    - ' &a▸ &aClick para cerrar'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmUzZjUwYmE2MmNiZGEzZWNmNTQ3OWI2MmZlZGViZDYxZDc2NTg5NzcxY2MxOTI4NmJmMjc0NWNkNzFlNDdjNiJ9fX0='
+  POSITION-X: 5
+  POSITION-Y: 4

@@ -94,6 +94,8 @@ public class ScoreBoardBuilder {
 
         if (teams){
             this.gameTeams = this.scoreboard.registerNewTeam("1-TeamsFriends");
+            this.gameTeams.setAllowFriendlyFire(false);
+
             if (arena == null) return;
             if (!player.isSpectating()) {
                 if (player.getArenaTeam() != null && !player.getArenaTeam().getMembers().isEmpty()) {
@@ -130,7 +132,7 @@ public class ScoreBoardBuilder {
         if (gameEnemy == null) return;
         if (tabObjective == null) return;
         for (GamePlayer gamePlayer : arena.getPlayers()) {
-            if (gamePlayer == null) continue;
+
             if (player.getArenaTeam() != null && player.getArenaTeam().getMembers().contains(gamePlayer)) continue;
 
             if (!this.gameEnemy.hasEntry(gamePlayer.getName())) {
@@ -140,6 +142,10 @@ public class ScoreBoardBuilder {
             this.gameEnemy.setPrefix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Game").split(":")[0]));
             this.gameEnemy.setSuffix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Game").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer.getKillsStreak())));
             this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak());
+        }
+
+        for (GamePlayer gamePlayer : arena.getSpectators()){
+            this.gameEnemy.removeEntry(gamePlayer.getName());
         }
     }
 
@@ -187,9 +193,12 @@ public class ScoreBoardBuilder {
     }
 
     public void setName(String substring) {
-        if (substring.length() > 42) {
+        if (substring == null || substring.isEmpty()) return;
+
+        if (!(substring.length() < 42)) {
             substring = substring.substring(0, 42);
         }
+
         this.scoreObjective.setDisplayName(this.color(substring));
     }
 

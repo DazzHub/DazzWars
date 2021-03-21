@@ -12,9 +12,7 @@ import com.dazzhub.skywars.Runnables.RefillGame;
 import com.dazzhub.skywars.Runnables.endGame;
 import com.dazzhub.skywars.Runnables.inGame;
 import com.dazzhub.skywars.Runnables.startingGame;
-import com.dazzhub.skywars.Utils.Console;
-import com.dazzhub.skywars.Utils.Cuboid;
-import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.*;
 import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
 import com.dazzhub.skywars.Utils.Runnable.RunnableType;
 import com.dazzhub.skywars.Utils.Runnable.RunnableWorkerType;
@@ -29,7 +27,6 @@ import com.dazzhub.skywars.Utils.events.strom.eventStorm;
 import com.dazzhub.skywars.Utils.events.tntfall.TNTFall;
 import com.dazzhub.skywars.Utils.events.tntfall.eventTNT;
 import com.dazzhub.skywars.Utils.holoChest.IHoloChest;
-import com.dazzhub.skywars.Utils.locUtils;
 import com.dazzhub.skywars.Utils.signs.arena.ISign;
 import com.dazzhub.skywars.Utils.vote.VotesSystem;
 import com.cryptomorin.xseries.XMaterial;
@@ -38,6 +35,11 @@ import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
 import lombok.Getter;
 import lombok.Setter;
+import me.clip.placeholderapi.PlaceholderAPI;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -62,6 +64,7 @@ public class Arena implements Cloneable {
 
     private Enums.GameStatus gameStatus;
     private Enums.Mode mode;
+    private int sizeTeam;
 
     /* Checks */
     private boolean isUsable;
@@ -75,7 +78,6 @@ public class Arena implements Cloneable {
     private List<GamePlayer> spectators;
 
     private int minPlayers;
-    private int maxPlayers;
 
     /* MENU SPECTATOR */
     private SpectatorMenu spectatorMenu;
@@ -187,7 +189,6 @@ public class Arena implements Cloneable {
             this.nameWorld = arenaConfig.getString("Arena.world");
 
             this.minPlayers = arenaConfig.getInt("Arena.minPlayer");
-            this.maxPlayers = arenaConfig.getInt("Arena.maxPlayer");
 
             this.DurationGame = arenaConfig.getInt("Arena.durationGame");
             this.StartingGame = arenaConfig.getInt("Arena.startingGame");
@@ -198,6 +199,7 @@ public class Arena implements Cloneable {
             this.refillTime.addAll(arenaConfig.getIntegerList("Arena.refill"));
 
             this.mode = Enums.Mode.valueOf(arenaConfig.getString("Arena.mode"));
+            this.sizeTeam = arenaConfig.getInt("Arena.size");
         }
 
         this.damageFallStarting = true;
@@ -297,8 +299,8 @@ public class Arena implements Cloneable {
         if (iSign != null) iSign.updateSign();
     }
 
-    public void removePlayer(GamePlayer gamePlayer) {
-        Bukkit.getPluginManager().callEvent(new removePlayerEvent(gamePlayer, this));
+    public void removePlayer(GamePlayer gamePlayer, boolean goLobby) {
+        Bukkit.getPluginManager().callEvent(new removePlayerEvent(gamePlayer, this, goLobby));
         if (iSign != null) iSign.updateSign();
     }
 
@@ -312,7 +314,7 @@ public class Arena implements Cloneable {
 
     public ArenaTeam getAvailableTeam(int n) {
         for (ArenaTeam arenaTeam : this.spawns) {
-            if (arenaTeam.getMembers().size() + n <= this.mode.getSize()) {
+            if (arenaTeam.getMembers().size() + n <= this.getSizeTeam()) {
                 return arenaTeam;
             }
         }
@@ -320,7 +322,15 @@ public class Arena implements Cloneable {
     }
 
     public List<ArenaTeam> getAliveTeams() {
-        return this.spawns.stream().filter(gameTeam -> gameTeam.getAliveTeams().size() > 0).collect(Collectors.toList());
+        List<ArenaTeam> list = new ArrayList<>();
+
+        for (ArenaTeam gameTeam : this.spawns) {
+            if (gameTeam.getAliveTeams().size() > 0) {
+                list.add(gameTeam);
+            }
+        }
+
+        return list;
     }
 
     public ArenaTeam getRandomTeam() {
@@ -331,7 +341,7 @@ public class Arena implements Cloneable {
                     teams.add(gameTeam);
                     break;
                 } else {
-                    return getAvailableTeam(getMode().getSize());
+                    return getAvailableTeam(getSizeTeam());
                 }
             }
         }
@@ -512,43 +522,28 @@ public class Arena implements Cloneable {
                         .replace("%kills3%", kills.split(", ")[2]));
             }
 
-            Bukkit.getScheduler().runTaskLater(main, () -> gamePlayer.sendMessage(message), 5);
+            Bukkit.getScheduler().runTaskLater(main, () -> {
+                gamePlayer.sendMessage(message);
+                toComponent(gamePlayer);
+            }, 5);
 
         } catch (Exception e) {
             Console.warning("Win message no work");
         }
-    }
 
-    public void removeCage(GamePlayer gamePlayer, Enums.Mode mode, int yp) {
-        if (gamePlayer == null) return;
-        if (gamePlayer.getArenaTeam().getSpawn() == null) return;
-
-        Location loc = gamePlayer.getArenaTeam().getSpawn();
-
-        Location point1 = null;
-        Location point2 = null;
-
-        if (mode.equals(Enums.Mode.SOLO)){
-            int radius = 1;
-            point1 = new Location(loc.getWorld(), loc.getX() + radius, loc.getY() + yp, loc.getZ() + radius);
-            point2 = new Location(loc.getWorld(), loc.getX() - radius, loc.getY() - yp, loc.getZ() - radius);
-        } else if (mode.equals(Enums.Mode.TEAM)) {
-            int radius = 5;
-            point1 = new Location(loc.getWorld(), loc.getX() + radius, loc.getY() + yp, loc.getZ() + radius);
-            point2 = new Location(loc.getWorld(), loc.getX() - radius, loc.getY() - yp, loc.getZ() - radius);
-        }
-
-        if (point1 == null) return;
-
-        Cuboid cuboid = new Cuboid(point1, point2);
-
-        for (Block block : cuboid){
-            block.setType(Material.AIR);
-        }
     }
 
     public boolean checkUsable() {
-        return getGameStatus().equals(Enums.GameStatus.WAITING) || getGameStatus().equals(Enums.GameStatus.STARTING) || !getGameStatus().equals(Enums.GameStatus.INGAME) && !getGameStatus().equals(Enums.GameStatus.DISABLED) && !isUsable() && getPlayers().size() < getMaxPlayers();
+        return getGameStatus().equals(Enums.GameStatus.WAITING) ||
+               getGameStatus().equals(Enums.GameStatus.STARTING) ||
+               !getGameStatus().equals(Enums.GameStatus.INGAME) &&
+               !getGameStatus().equals(Enums.GameStatus.DISABLED) &&
+               !isUsable() &&
+               checkMax();
+    }
+
+    public boolean checkMax(){
+        return !(getPlayers().size() < (getSpawns().size() * getSizeTeam()));
     }
 
     public boolean checkStart() {
@@ -569,7 +564,7 @@ public class Arena implements Cloneable {
         if (this.gameStatus.equals(Enums.GameStatus.RESTARTING)) {
             return this.c(config.getString("Status.Restarting.msg"));
         }
-        if (this.players.size() >= this.maxPlayers) {
+        if (this.players.size() >= (getSpawns().size() * getSizeTeam())) {
             return this.c(config.getString("Status.Full.msg"));
         }
 
@@ -610,7 +605,7 @@ public class Arena implements Cloneable {
                 item = new ItemStack(Material.getMaterial(config.getString("Status.Restarting.material")));
             }
             return XMaterial.matchXMaterial(item);
-        } else if (this.players.size() >= this.maxPlayers) {
+        } else if (this.players.size() >= (getSpawns().size() * getSizeTeam())) {
             ItemStack item;
             if (main.checkVersion()){
                 item = new ItemStack(Material.getMaterial(config.getString("Status.Full.material")),1, (short) config.getInt("Status.Full.id"));
@@ -757,16 +752,44 @@ public class Arena implements Cloneable {
 
     @Override
     public Arena clone() throws CloneNotSupportedException {
-
         return (Arena) super.clone();
     }
 
     public String getWinnersScore() {
-        List<String> winners = new ArrayList<>();
-        for (GamePlayer winnersPlayers : this.players) {
-            winners.add(winnersPlayers.getName());
-        }
-
-        return winners.toString().replace("[", "").replace("]", "");
+        return this.players.stream().map(GamePlayer::getName).collect(Collectors.toList()).toString().replace("[", "").replace("]", "");
     }
+
+    public void toComponent(GamePlayer gamePlayer){
+
+
+        String playdisplay = gamePlayer.getLangMessage().getString("Messages.ChatClick.play.display");
+        String playhover = gamePlayer.getLangMessage().getString("Messages.ChatClick.play.hover");
+        String playaction = gamePlayer.getLangMessage().getString("Messages.ChatClick.play.action");
+        String playvalue = gamePlayer.getLangMessage().getString("Messages.ChatClick.play.value");
+
+        String autodisplay = gamePlayer.getLangMessage().getString("Messages.ChatClick.auto.display");
+        String autohover = gamePlayer.getLangMessage().getString("Messages.ChatClick.auto.hover");
+        String autoaction = gamePlayer.getLangMessage().getString("Messages.ChatClick.auto.action");
+        String autovalue = gamePlayer.getLangMessage().getString("Messages.ChatClick.auto.value");
+
+        String leavedisplay = gamePlayer.getLangMessage().getString("Messages.ChatClick.leave.display");
+        String leavehover = gamePlayer.getLangMessage().getString("Messages.ChatClick.leave.hover");
+        String leaveaction = gamePlayer.getLangMessage().getString("Messages.ChatClick.leave.action");
+        String leavevalue = gamePlayer.getLangMessage().getString("Messages.ChatClick.leave.value");
+
+        String v1 = "{" + playaction + "=" + playvalue + "}{hover="+playhover +"}" + playdisplay + " {/}";
+        String v2 = "{" + autoaction + "=" + autovalue + "}{hover="+autohover +"}" + autodisplay + " {/}";
+        String v3 = "{" + leaveaction + "=" + leavevalue + "}{hover="+leavehover +"}" + leavedisplay + " {/}";
+
+        String msg = parseChat(gamePlayer, String.format(gamePlayer.getLangMessage().getString("Messages.WantAgain"), v1, v2,v3));
+
+        Text text = new Text(msg);
+        text.build();
+        text.send(gamePlayer.getPlayer());
+    }
+
+    public String parseChat(GamePlayer gamePlayer, String msg){
+        return PlaceholderAPI.setPlaceholders(gamePlayer.getPlayer(), c(msg.startsWith("%center%") ? CenterMessage.centerMessage(msg.replace("%center%", "")) : c(msg)));
+    }
+
 }

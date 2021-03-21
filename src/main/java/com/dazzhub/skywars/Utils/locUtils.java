@@ -15,6 +15,13 @@ public class locUtils
         return world.getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ() + ":" + l.getYaw() + ":" + l.getPitch();
     }
 
+    public static String locToStringSimple(Location l) {
+        World world = l.getWorld();
+        if (world == null) return null;
+
+        return world.getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+    }
+
     public static String locToStringNoWorld(Location l) {
         return l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ() + ":" + l.getYaw() + ":" + l.getPitch();
     }
@@ -40,9 +47,7 @@ public class locUtils
             double x = Double.parseDouble(s.split(":")[1]);
             double y = Double.parseDouble(s.split(":")[2]);
             double z = Double.parseDouble(s.split(":")[3]);
-            float p = Float.parseFloat(s.split(":")[4]);
-            float y2 = Float.parseFloat(s.split(":")[5]);
-            return new Location(world, x ,y, z, p, y2);
+            return new Location(world, x ,y, z);
         }
         catch (Exception ex) {
             return null;

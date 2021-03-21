@@ -60,6 +60,8 @@ public class Lines {
                 addDefaultLang("Messages.JoinTitle.Stay", 40, lang);
                 addDefaultLang("Messages.JoinTitle.Out", 10, lang);
 
+                addDefaultLang("Messages.Sounds.Join.enable", true, lang);
+                addDefaultLang("Messages.Sounds.Join.sound", "BLOCK_NOTE_BLOCK_PLING", lang);
                 addDefaultLang("Messages.Sounds.Cancelled", "BLOCK_NOTE_BLOCK_PLING", lang);
                 addDefaultLang("Messages.Sounds.Starting.5", "UI_BUTTON_CLICK", lang);
                 addDefaultLang("Messages.Sounds.Starting.4", "UI_BUTTON_CLICK", lang);
@@ -94,7 +96,24 @@ public class Lines {
                 addDefaultLang("Messages.LuckTitle.Out", 10, lang);
                 addDefaultLang("Messages.LuckTitle.Info", "&cTo fight!;&eLuck ㋡", lang);
 
-                addDefaultLang("Messages.WinnerGame", Arrays.asList("", "%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "%center%&9&lSkyWars", "", "%center%&eWinner &7- %winner%", "", "%center%&e1st Killer&7 - %player1% &7- %kills1%", "%center%&62nd Killer&7 - %player2% &7- %kills2%", "%center%&c3rd Killer&7 - %player3% &7- %kills3%", "%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "&aYou won! &eWant to play again? &b&lCLICK HERE!"), lang);
+                addDefaultLang("Messages.WinnerGame", Arrays.asList("", "%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", "%center%&9&lSkyWars", "", "%center%&eWinner &7- %winner%", "", "%center%&e1st Killer&7 - %player1% &7- %kills1%", "%center%&62nd Killer&7 - %player2% &7- %kills2%", "%center%&c3rd Killer&7 - %player3% &7- %kills3%", "%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), lang);
+
+                addDefaultLang("Messages.WantAgain", "%s &7● %s &7● %s", lang);
+
+                addDefaultLang("Messages.ChatClick.play.display", "&6&lJUGAR", lang);
+                addDefaultLang("Messages.ChatClick.play.hover", "&cCLICK HERE", lang);
+                addDefaultLang("Messages.ChatClick.play.action", "cmd", lang);
+                addDefaultLang("Messages.ChatClick.play.value", "/sw join again", lang);
+
+                addDefaultLang("Messages.ChatClick.auto.display", "&6&lJUGAR", lang);
+                addDefaultLang("Messages.ChatClick.auto.hover", "&cCLICK HERE", lang);
+                addDefaultLang("Messages.ChatClick.auto.action", "cmd", lang);
+                addDefaultLang("Messages.ChatClick.auto.value", "/sw join auto", lang);
+
+                addDefaultLang("Messages.ChatClick.leave.display", "&b&lLEAVE", lang);
+                addDefaultLang("Messages.ChatClick.leave.hover", "&cCLICK HERE", lang);
+                addDefaultLang("Messages.ChatClick.leave.action", "cmd", lang);
+                addDefaultLang("Messages.ChatClick.leave.value", "/leave", lang);
 
                 addDefaultLang("Messages.WinnerTitle.Fade", 10, lang);
                 addDefaultLang("Messages.WinnerTitle.Stay", 40, lang);
@@ -282,7 +301,7 @@ public class Lines {
 
                 addDefaultLang("Messages.Cmd.error", "&c&l➥ &cError command", lang);
                 addDefaultLang("Messages.Cmd.sw", Arrays.asList("%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-", "", "%center%&7/join <arena>/<solo/team> &8| &eJoin to arena", "%center%&7/leave &8| &eExit to arena", "%center%&7/sw lang <idioma> &8| &eCambiar idioma", "", "%center%&8-=[&a&l*&8]=- --------   [ &9SkyWars &8]   -------- -=[&a&l*&8]=-"), lang);
-                addDefaultLang("Messages.Cmd.swadmin", Arrays.asList("%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-", "", "%center%&7/sw setlobby &8| &eSet lobby", "%center%&7/sw world &8| &eEdit world before create arena", "%center%&7/sw create &8| &eCreate arena", "%center%&7/sw addspawn &8| &eAdd spawn points", "%center%&7/sw setmin &8| &eSet min player to start", "%center%&7/sw setmax &8| &eSet max player in arena", "%center%&7/sw setspectator &8| &eSet spectator spawn", "%center%&7/sw enable &8| &eActive arena", "%center%&7/sw coins <player> &8| &eManager coins", "%center%&7/sw souls <player> &8| &eManager souls", "%center%&7/sw wandc &8| &eMark corners for create cages", "%center%&7/sw wands &8| &eMark Locations for SoulWell", "%center%&7/sw addcage &8| &eAdd cages", "%center%&7/sw addkit &8| &eAdd kits from inventory", "%center%&7/sw addhologram &8| &eAdd holograms", "%center%&7/sw reload &8| &eReload configurations", "", "%center%&7/sw join <arena> &8| &eJoin to arena", "%center%&7/sw leave &8| &eExit to arena", "%center%&7/sw lang <idioma> &8| &eChange language", "", "%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-"), lang);
+                addDefaultLang("Messages.Cmd.swadmin", Arrays.asList("%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-", "", "%center%&7/sw setlobby &8| &eSet lobby", "%center%&7/sw world &8| &eEdit world before create arena", "%center%&7/sw create &8| &eCreate arena", "%center%&7/Sw setsize &8| &eSet size arena", "%center%&7/sw addspawn &8| &eAdd spawn points", "%center%&7/sw setmin &8| &eSet min player to start", "%center%&7/sw setspectator &8| &eSet spectator spawn", "%center%&7/sw enable &8| &eActive arena", "%center%&7/sw coins <player> &8| &eManager coins", "%center%&7/sw souls <player> &8| &eManager souls", "%center%&7/sw wandc &8| &eMark corners for create cages", "%center%&7/sw wands &8| &eMark Locations for SoulWell", "%center%&7/sw addcage &8| &eAdd cages", "%center%&7/sw addkit &8| &eAdd kits from inventory", "%center%&7/sw addhologram &8| &eAdd holograms", "%center%&7/sw reload &8| &eReload configurations", "", "%center%&7/sw join <arena> &8| &eJoin to arena", "%center%&7/sw leave &8| &eExit to arena", "%center%&7/sw lang <idioma> &8| &eChange language", "", "%center%&8-=[&a&l*&8]=- --------   [ &bSkyWars &8]   -------- -=[&a&l*&8]=-"), lang);
             }
 
             /* SETTINGS */

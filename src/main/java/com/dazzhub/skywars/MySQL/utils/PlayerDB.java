@@ -4,6 +4,8 @@ import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.MySQL;
 import com.dazzhub.skywars.MySQL.getPlayerDB;
 import com.dazzhub.skywars.Utils.Base64;
+import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.vault.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
@@ -66,7 +68,7 @@ public class PlayerDB implements getPlayerDB {
                     0, 0,0,
                     0, 0,0,
                     0, 0, 0, 0, 0,
-                    0, 0,0,
+                    0.0, 0,0,
                     CageSolo, CageTeam, CageRanked,
                     WinEffectSolo, WinEffectTeam, WinEffectRanked,
                     KillEffectSolo, KillEffectTeam, KillEffectRanked,
@@ -103,7 +105,7 @@ public class PlayerDB implements getPlayerDB {
 
                     "'" + p.getUniqueId() + "', " + "'" + p.getName() + "', " +
                     "'0', " + "'0', " + "'0', " + "'0', " + "'0', " +
-                    "'0', " + "'0', " +
+                    "'0.0', " + "'0', " +
 
                     "'" + Lang + "'" +
                     ");");
@@ -115,6 +117,24 @@ public class PlayerDB implements getPlayerDB {
             main.getPlayerManager().addPlayer(p.getUniqueId(), gamePlayer);
         } else {
             alreadyExistPlayer(p);
+        }
+
+        Bukkit.getScheduler().runTask(main, () -> {
+            if (main.getLobbyManager().getLobby() != null){
+                p.teleport(main.getLobbyManager().getLobby());
+            }
+
+            main.getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY,false,false, false,false);
+            main.getHologramsManager().loadHologram(p);
+
+        });
+
+        GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
+        if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
+            if (gamePlayer != null){
+                main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), false);
+            }
         }
     }
 
@@ -308,7 +328,7 @@ public class PlayerDB implements getPlayerDB {
                 0, 0,0,
                 0, 0,0,
                 0, 0, 0, 0, 0,
-                0, 0,0,
+                0.0, 0,0,
                 "", "", "",
                 "", "","",
                 "", "","",
@@ -543,7 +563,7 @@ public class PlayerDB implements getPlayerDB {
                 "`ItemCrafted` Integer, " +
                 "`DistanceWalked` Integer, " +
 
-                "`Coins` Integer, " +
+                "`Coins` Double, " +
                 "`Souls` Integer, " +
 
                 "`Lang` VARCHAR(100)" +
@@ -640,7 +660,7 @@ public class PlayerDB implements getPlayerDB {
                 "`ItemCrafted` Integer, " +
                 "`DistanceWalked` Integer, " +
 
-                "`Coins` Integer, " +
+                "`Coins` Double, " +
                 "`Souls` Integer, " +
 
                 "`Lang` VARCHAR(100)" +

@@ -8,6 +8,7 @@ import com.dazzhub.skywars.Utils.locUtils;
 import com.cryptomorin.xseries.XSound;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.FileUtil;
 
@@ -39,7 +40,7 @@ public class ArenaManager {
         this.temp_arenas = new HashMap<>();
     }
 
-    public void loadArenas(){
+    public void loadArenas() {
         this.arenas.clear();
         this.arenaList.clear();
 
@@ -60,15 +61,16 @@ public class ArenaManager {
             }
         }
 
-        Console.info("&eLoaded arenas: &a"+getArenas().size());
+        Console.info("&eLoaded arenas: &a" + getArenas().size());
     }
 
-    public void enableArena(String name){;
+    public void enableArena(String name) {
+        ;
         if (arenas.containsKey(name)) {
             Arena arena = arenas.get(name);
 
             for (GamePlayer gamePlayer : arena.getPlayers()) {
-                arena.removePlayer(gamePlayer);
+                arena.removePlayer(gamePlayer, true);
             }
 
             main.getArenaManager().getArenas().remove(arena.getNameArena());
@@ -79,7 +81,7 @@ public class ArenaManager {
 
                 this.arenas.put(name, arena2);
                 this.arenaList.add(arena2);
-            },5);
+            }, 5);
         }
     }
 
@@ -103,7 +105,6 @@ public class ArenaManager {
         config.set("Arena.world", nameWorld);
         config.set("Arena.enabled", true);
         config.set("Arena.minPlayer", 2);
-        config.set("Arena.maxPlayer", 12);
         config.set("Arena.spawns", "");
         config.set("Arena.spawnSpectator", "");
         config.set("Arena.centerChest", "");
@@ -111,6 +112,7 @@ public class ArenaManager {
         config.set("Arena.durationGame", 900);
         config.set("Arena.startingGame", 15);
         config.set("Arena.finishedGame", 10);
+        config.set("Arena.size", 1);
         config.set("Arena.refill", refilltimes);
 
         /* EVENT BORDER */
@@ -150,7 +152,7 @@ public class ArenaManager {
             Console.error(e.getMessage());
         }
 
-        if(loadWorld(nameWorld)){
+        if (loadWorld(nameWorld)) {
             p.teleport(Objects.requireNonNull(Bukkit.getWorld(nameWorld)).getSpawnLocation());
         }
 
@@ -168,7 +170,7 @@ public class ArenaManager {
         XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
     }
 
-    public void saveArena(Player p, String nameArena, String nameWorld){
+    public void saveArena(Player p, String nameArena, String nameWorld) {
         switch (Enums.ResetArena.valueOf(main.getSettings().getString("ResetArena"))) {
             case RESETWORLD:
             case RESETCHUNK: {
@@ -190,8 +192,7 @@ public class ArenaManager {
             int spawn;
             try {
                 spawn = arenaConfig.getConfigurationSection("Arena.spawns").getKeys(false).size() + 1;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 spawn = 1;
             }
             if (useitem) {
@@ -202,14 +203,12 @@ public class ArenaManager {
             }
             try {
                 arenaConfig.save(file);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fSpawn has been added &9#" + spawn + "&f in the arena &9" + name + "&f."));
             XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
-        }
-        else {
+        } else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
             XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
@@ -220,7 +219,7 @@ public class ArenaManager {
         if (file.exists()) {
             FileConfiguration arenaConfig = this.main.getConfigUtils().getConfig(this.main, "Arenas/" + name + "/Settings");
 
-            if (arenaConfig.getStringList("Arena.centerChest").contains(locUtils.locToStringNoWorld(location))){
+            if (arenaConfig.getStringList("Arena.centerChest").contains(locUtils.locToStringNoWorld(location))) {
                 p.sendMessage(this.c("&c&l\u2718 &fThis location has already been added."));
                 XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
                 return;
@@ -257,14 +256,12 @@ public class ArenaManager {
             }
             try {
                 arenaConfig.save(file);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fSpectator set for arena &9" + name + "&f."));
             XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
-        }
-        else {
+        } else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
             XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
@@ -277,21 +274,18 @@ public class ArenaManager {
             int spawn;
             try {
                 spawn = arenaConfig.getConfigurationSection("Arena.spawns").getKeys(false).size();
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 spawn = 0;
             }
             arenaConfig.set("Arena.spawns." + spawn, null);
             try {
                 arenaConfig.save(file);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Console.error(e.getMessage());
             }
-            p.sendMessage(this.c("&a&l\u2714 &fPrevious spawn has remove for arena &9" + name + " &f(&9#"+spawn+"&f)."));
+            p.sendMessage(this.c("&a&l\u2714 &fPrevious spawn has remove for arena &9" + name + " &f(&9#" + spawn + "&f)."));
             XSound.play(p, String.valueOf(BLOCK_STONE_BREAK.parseSound()));
-        }
-        else {
+        } else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
             XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
@@ -304,14 +298,12 @@ public class ArenaManager {
             arenaConfig.set("Arena.centerChest." + locUtils.locToStringNoWorld(location), null);
             try {
                 arenaConfig.save(file);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fPrevious chest has remove for arena &9" + name + " &f."));
             XSound.play(p, String.valueOf(BLOCK_STONE_BREAK.parseSound()));
-        }
-        else {
+        } else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
             XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
@@ -324,34 +316,12 @@ public class ArenaManager {
             arenaConfig.set("Arena.spawnSpectator", null);
             try {
                 arenaConfig.save(file);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fSpectator spawn remove for arena &9" + name + "&f."));
             XSound.play(p, String.valueOf(BLOCK_GRASS_BREAK.parseSound()));
-        }
-        else {
-            p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
-            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
-        }
-    }
-
-    public void maxPlayer(Player p, int max, String name) {
-        File file = this.main.getConfigUtils().getFile(this.main, "Arenas/" + name + "/Settings");
-        if (file.exists()) {
-            FileConfiguration arenaConfig = this.main.getConfigUtils().getConfig(this.main, "Arenas/" + name + "/Settings");
-            arenaConfig.set("Arena.maxPlayer", max);
-            try {
-                arenaConfig.save(file);
-            }
-            catch (IOException e) {
-                Console.error(e.getMessage());
-            }
-            p.sendMessage(this.c("&a&l\u2714 &fYou have set the max players in the arena &9" + name + "&f."));
-            XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
-        }
-        else {
+        } else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
             XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
@@ -364,18 +334,38 @@ public class ArenaManager {
             arenaConfig.set("Arena.minPlayer", min);
             try {
                 arenaConfig.save(file);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Console.error(e.getMessage());
             }
             p.sendMessage(this.c("&a&l\u2714 &fYou have set the min players in the arena &9" + name + "&f."));
             XSound.play(p, String.valueOf(ENTITY_CHICKEN_EGG.parseSound()));
-        }
-        else {
+        } else {
             p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
             XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
         }
     }
+
+    public void setSize(Player p, String nameArena, int size) {
+        File file = this.main.getConfigUtils().getFile(this.main, "Arenas/" + nameArena + "/Settings");
+        FileConfiguration config = this.main.getConfigUtils().getConfig(this.main, "Arenas/" + nameArena + "/Settings");
+
+        if (file.exists()) {
+            config.set("Arena.sizeTeam", size);
+
+            try {
+                config.save(file);
+            } catch (IOException e) {
+                Console.error(e.getMessage());
+            }
+
+            p.sendMessage(c("&a&l\u2714 &fArena &e" + nameArena + "&f changed size to " + size));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_YES.parseSound()));
+        } else {
+            p.sendMessage(this.c("&c&l\u2718 &fThe arena does not exist."));
+            XSound.play(p, String.valueOf(ENTITY_VILLAGER_NO.parseSound()));
+        }
+    }
+
 
     public void setMode(Player p, String name) {
         if (getArenas().containsKey(name)) {
@@ -427,6 +417,14 @@ public class ArenaManager {
         Bukkit.createWorld(wc);
         WorldBorder wb = Bukkit.getWorld(arena).getWorldBorder();
         wb.reset();
+
+        for (Entity e : Bukkit.getWorld(arena).getEntities()){
+            if (!(e instanceof Player)){
+                e.remove();
+            }
+        }
+
+        Bukkit.getWorld(arena).setGameRuleValue("doMobSpawning","false");
 
         Bukkit.getWorld(arena).setAutoSave(false);
 

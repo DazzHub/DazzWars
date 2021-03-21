@@ -21,7 +21,7 @@ public class removePlayer implements Listener {
     }
 
     @EventHandler
-    public void onRemovePlayer(removePlayerEvent e){
+    public void onRemovePlayer(removePlayerEvent e) {
         GamePlayer gamePlayer = e.getGamePlayer();
         Player p = gamePlayer.getPlayer();
         Arena arena = e.getArena();
@@ -37,25 +37,27 @@ public class removePlayer implements Listener {
         arena.getPlayers().remove(gamePlayer);
         arena.getSpectators().remove(gamePlayer);
 
-        //Bukkit.getScheduler().runTask(main, () -> {
-            gamePlayer.resetPlayer(true);
 
+        gamePlayer.resetPlayer(true);
+
+        if (e.isGoLobby()) {
             gamePlayer.getPlayer().teleport(main.getLobbyManager().getLobby());
+            gamePlayer.setLobby(true);
+        }
 
-            if (arena.getMode().equals(Enums.Mode.SOLO)) {
-                if (gamePlayer.getArenaTeam() != null) {
-                    arena.removeCage(gamePlayer, arena.getMode(), 3);
-                }
+        if (arena.getMode().equals(Enums.Mode.SOLO)) {
+            if (gamePlayer.getArenaTeam() != null) {
+                main.getCageManager().getCagesSolo().get(gamePlayer.getCageSolo()).removeCage(gamePlayer.getArenaTeam().getSpawn());
             }
+        }
 
-            if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
-                main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby"), false);
-            }
+        if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
+            main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Lobby"), false);
+        }
 
-            main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.LOBBY,false,false,false,false);
-        //});
+        main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.LOBBY, false, false, false, false);
 
-        gamePlayer.setLobby(true);
+
         if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().reloadHologram();
     }
 }

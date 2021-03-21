@@ -38,6 +38,9 @@ Messages:
     Stay: 40
     Out: 10
   Sounds:
+    Join:
+      enable: true
+      sound: 'BLOCK_NOTE_BLOCK_PLING'
     Cancelled: 'BLOCK_NOTE_BLOCK_PLING'
     Starting:
       5: 'BLOCK_LEVER_CLICK'#SOUNDS 1.16
@@ -95,7 +98,23 @@ Messages:
     - '%center%&62nd Killer&7 - %player2% &7- %kills2%'
     - '%center%&c3rd Killer&7 - %player3% &7- %kills3%'
     - '%center%&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-    - '&aGanaste! &eQuieres jugar de nuevo? &b&lCLICK HERE!'
+  WantAgain: '%s &7● %s &7● %s'
+  ChatClick:
+    play:
+      display: '&6&lJUGAR'
+      hover: '&cCLICK AQUI'
+      action: 'CMD'#URL, CMD, FILE, SUGGEST
+      value: '/sw join again'
+    auto:
+      display: '&b&lAUTO JUGAR'
+      hover: '&cCLICK AQUI'
+      action: 'CMD'
+      value: '/sw join auto'
+    leave:
+      display: '&b&lSALIR'
+      hover: '&cCLICK AQUI'
+      action: 'CMD'
+      value: '/leave'
   WinnerTitle:
     Fade: 10
     Stay: 40
@@ -340,9 +359,9 @@ Messages:
       - '%center%&7/sw setlobby &8| &eEstablecer lobby'
       - '%center%&7/sw world &8| &eEditar mundo antes de crear arena'
       - '%center%&7/sw create &8| &eCrear arena'
+      - '%center%&7/Sw setsize &8| &eTamaño de arena'
       - '%center%&7/sw addspawn &8| &eAgregar spawns'
       - '%center%&7/sw setmin &8| &eMinimo de jugadores'
-      - '%center%&7/sw setmax &8| &eMaximo de jugadores'
       - '%center%&7/sw setspectator &8| &eSpawn del spectador'
       - '%center%&7/sw enable &8| &eActivar arena'
       - '%center%&7/sw coins <player> &8| &eManejar coins'

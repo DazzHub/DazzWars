@@ -39,9 +39,9 @@ public class removeSpectator implements Listener {
 
                 main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.LOBBY,false,false,false, false);
 
-                if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
-                    main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), false);
-                }
+                //if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
+                main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), false);
+                //}
 
                 if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().reloadHologram();
             } else {

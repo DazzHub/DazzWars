@@ -2,11 +2,16 @@ package com.dazzhub.skywars.Utils.resetWorld;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
+import com.dazzhub.skywars.Runnables.inGame;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
+import com.dazzhub.skywars.Utils.Runnable.RunnableType;
+import com.dazzhub.skywars.Utils.Runnable.RunnableWorkerType;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.*;
 import java.util.Arrays;
@@ -23,31 +28,39 @@ public class resetWorld {
         String nameArena = arena.getNameArena();
         String nameWorld = arena.getNameWorld();
 
-        File source = new File(this.main.getDataFolder(), "Arenas/" + nameArena + "/" + nameWorld);
+        RunnableFactory factory = Main.getPlugin().getFactory();
 
-        if (source.isDirectory()) {
-            File target = new File(this.main.getServer().getWorldContainer(), source.getName());
-            if (unLoad) {
-                unLoadWorld(nameWorld);
+        factory.registerRunnable(RunnableWorkerType.ASYNC, RunnableType.LATER, 5L,
+            () -> {
+                File source = new File(this.main.getDataFolder(), "Arenas/" + nameArena + "/" + nameWorld);
+
+                if (source.isDirectory()) {
+                    File target = new File(this.main.getServer().getWorldContainer(), source.getName());
+                    if (unLoad) {
+                        unLoadWorld(nameWorld);
+                    }
+
+                    copyDir(source, target);
+
+                    Bukkit.getScheduler().runTask(main, () -> {
+                        main.getArenaManager().loadWorld(nameWorld);
+
+                        arena.setGameStatus(Enums.GameStatus.WAITING);
+                        arena.setUsable(false);
+
+                        arena.loadSpawns(arena.getNameWorld());
+
+                        if (arena.getISign() != null) arena.getISign().updateSign();
+                    });
+                }
             }
+        );
 
-            copyDir(source, target);
-
-            Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
-                main.getArenaManager().loadWorld(nameWorld);
-
-                arena.setGameStatus(Enums.GameStatus.WAITING);
-                arena.setUsable(false);
-
-                arena.loadSpawns(arena.getNameWorld());
-
-                if (arena.getISign() != null) arena.getISign().updateSign();
-            }, 5);
-        }
     }
 
     public void importWorld(Arena arena, boolean importMap) {
-        if (importMap){
+
+        if (importMap) {
             importWorld2(arena, true);
         } else {
             if (!Bukkit.getWorlds().contains(Bukkit.getWorld(arena.getNameWorld()))) {
@@ -56,21 +69,18 @@ public class resetWorld {
 
             World world = Bukkit.getWorld(arena.getNameWorld());
 
-            Bukkit.getScheduler().runTask(main, () -> Arrays.stream(world.getLoadedChunks()).forEach(chunk -> {
+            for (Chunk chunk : world.getLoadedChunks()) {
                 chunk.unload(false);
                 chunk.load();
-            }));
+            }
 
-            Bukkit.getScheduler().runTaskLater(main, () -> {
-                main.getArenaManager().loadWorld(arena.getNameWorld());
 
-                arena.setGameStatus(Enums.GameStatus.WAITING);
-                arena.setUsable(false);
+            main.getArenaManager().loadWorld(arena.getNameWorld());
+            arena.loadSpawns(arena.getNameWorld());
 
-                arena.loadSpawns(arena.getNameWorld());
-
-                if (arena.getISign() != null) arena.getISign().updateSign();
-            }, 5);
+            arena.setGameStatus(Enums.GameStatus.WAITING);
+            arena.setUsable(false);
+            if (arena.getISign() != null) arena.getISign().updateSign();
         }
     }
 

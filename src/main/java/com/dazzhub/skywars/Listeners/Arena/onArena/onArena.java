@@ -28,11 +28,14 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.awt.geom.Area;
 
 public class onArena implements Listener {
 
@@ -191,7 +194,7 @@ public class onArena implements Listener {
             }
 
             if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                if (gamePlayer.isSpectating()) {
+                if (gamePlayer.isSpectating() || arena.getGameStatus() == Enums.GameStatus.RESTARTING) {
                     p.setFallDistance(0);
                     p.teleport(arena.getSpawnSpectator());
                     e.setCancelled(true);
@@ -524,6 +527,41 @@ public class onArena implements Listener {
             gamePlayer.getProjectilesList().remove(proj);
         }
     }
+
+    @EventHandler
+    public void onClickInvArena(InventoryClickEvent e) {
+        if (!(e.getWhoClicked() instanceof Player)) return;
+
+        Player p = (Player) e.getWhoClicked();
+        GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+        if (gamePlayer == null) return;
+
+        if (gamePlayer.isInArena()) {
+            Arena arena = gamePlayer.getArena();
+            if (arena.getGameStatus() == Enums.GameStatus.WAITING || arena.getGameStatus() == Enums.GameStatus.RESTARTING) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDragInvArena(InventoryDragEvent e) {
+        if (!(e.getWhoClicked() instanceof Player)) return;
+
+        Player p = (Player) e.getWhoClicked();
+        GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+        if (gamePlayer == null) return;
+
+        if (gamePlayer.isInArena()) {
+            Arena arena = gamePlayer.getArena();
+            if (arena.getGameStatus() == Enums.GameStatus.WAITING || arena.getGameStatus() == Enums.GameStatus.RESTARTING) {
+                e.setCancelled(true);
+            }
+        }
+
+
+    }
+
 
     private String c(String c) {
         return ChatColor.translateAlternateColorCodes('&', c);

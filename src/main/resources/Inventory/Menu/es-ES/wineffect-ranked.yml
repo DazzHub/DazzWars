@@ -1,0 +1,87 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Efecto de victoria'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+  
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+  
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 397
+    DATA-VALUE: 3
+    SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ=='
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fNo tienes permiso'
+      - ''
+antigravity:
+  PRICE: 0
+  ACTION: 'wineffect: antigravity/RANKED'
+  NAME: '&bAnti gravity'
+  DESCRIPTION:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Efecto de victoria al'
+    - ' &a▸ &7ganar un juego se activara'
+    - ' &a▸ &7el efecto anti gravedad'
+    - ''
+    - ' &a▸ &2Disponible'
+    - ' &a▸ &fPrecio: &a%price%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para comprar'
+  DESCRIPTION-PURCHASED:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Efecto de victoria al'
+    - ' &a▸ &7ganar un juego se activara'
+    - ' &a▸ &7el efecto anti gravedad'
+    - ''
+    - ' &a▸ &aComprado'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para selecionar'
+  DESCRIPTION-SELECTED:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Efecto de victoria al'
+    - ' &a▸ &7ganar un juego se activara'
+    - ' &a▸ &7el efecto anti gravedad'
+    - ''
+    - ' &a▸ &bEquipado'
+    - ' &a▸ &fEfecto: &a%sw_effect_win_ranked%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para comprar'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjg5MWY1YzIzYTU0MzY0MzI0NGJjNjEwMjA0ZTQ3NWFhZjczMWRkYTVjOTZiMjY4ZGM1ZDkyMmVhODMyN2E4YyJ9fX0='
+  POSITION-X: 2
+  POSITION-Y: 2
+Back:
+  ACTION: 'open: shop-ranked.yml'
+  NAME: '&cVolver'
+  DESCRIPTION:
+    - ' &a▸ &7Vuelve al menu'
+    - ' &a▸ &7de la tienda'
+    - ''
+    - ' &a▸ &aClick para volver'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmUzZjUwYmE2MmNiZGEzZWNmNTQ3OWI2MmZlZGViZDYxZDc2NTg5NzcxY2MxOTI4NmJmMjc0NWNkNzFlNDdjNiJ9fX0='
+  POSITION-X: 5
+  POSITION-Y: 5
+#antigravity
+#chickens
+#fallingblocks
+#fallingsheep
+#parachute
+#fireworks / default

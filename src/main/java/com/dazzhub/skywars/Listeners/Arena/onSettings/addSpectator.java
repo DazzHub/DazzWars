@@ -5,6 +5,7 @@ import com.dazzhub.skywars.Listeners.Custom.typeJoin.addPlayerEvent;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addSpectatorEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.Tools;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
@@ -43,9 +44,13 @@ public class addSpectator implements Listener {
         arena.getPlayers().forEach(online -> Tools.HidePlayer(online.getPlayer(), p));
 
         gamePlayer.addSpectating();
-        main.getItemManager().giveItems(p, main.getSettings().getString("Inventory.Arena.Spectator"), false);
+        main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Arena.Spectator"), false);
 
-        gamePlayer.getPlayer().teleport(arena.getSpawnSpectator());
+        if (arena.getSpawnSpectator() != null) {
+            gamePlayer.getPlayer().teleport(arena.getSpawnSpectator());
+        } else {
+            Console.error("Arena -> " + arena.getNameArena() + " -> the spectator spawn failed to be set");
+        }
 
         main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.SPECTATOR, false, true, true, false);
 

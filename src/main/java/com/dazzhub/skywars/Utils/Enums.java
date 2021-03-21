@@ -73,36 +73,9 @@ public class Enums {
     }
 
     public enum Mode {
-        SOLO("SOLO", 1),
-        TEAM("TEAM", 2),
-        RANKED("RANKED", 1);
-
-        private String name;
-        private int size;
-
-        public static Mode get(String s) {
-            Mode[] values;
-            for (int length = (values = values()).length, i = 0; i < length; ++i) {
-                Mode mode = values[i];
-                if (mode.name().toLowerCase().equals(s.toLowerCase())) {
-                    return mode;
-                }
-            }
-            return null;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        public int getSize() {
-            return this.size;
-        }
-
-        Mode(String name, int size) {
-            this.name = name;
-            this.size = size;
-        }
+        SOLO,
+        TEAM,
+        RANKED;
     }
 
     public enum ScoreboardType {

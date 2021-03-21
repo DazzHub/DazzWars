@@ -64,7 +64,7 @@ public class ISign {
         s = s.replace("%status%", arena.getStatusMsg());
         s = s.replace("%map%", format(arena.getNameArena()));
         s = s.replace("%online%", String.valueOf(arena.getPlayers().size()));
-        s = s.replace("%max%", String.valueOf(arena.getMaxPlayers()));
+        s = s.replace("%max%", String.valueOf((arena.getSpawns().size() * arena.getSizeTeam())));
         return s;
     }
 

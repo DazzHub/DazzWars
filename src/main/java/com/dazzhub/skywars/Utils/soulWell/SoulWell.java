@@ -191,7 +191,7 @@ public class SoulWell {
                     coins = coins.substring(1);
                 }
 
-                gamePlayer.addCoins(Integer.parseInt(coins));
+                gamePlayer.addCoins(Double.parseDouble(coins));
             } else if (cmd.startsWith("cage:")) {
                 String cage = cmd.substring(5);
                 if (cage.startsWith(" ")) {

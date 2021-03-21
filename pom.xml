@@ -6,7 +6,7 @@
 
     <groupId>com.dazzhub.skywars</groupId>
     <artifactId>SkyWars</artifactId>
-    <version>4.4-SNAPSHOT</version>
+    <version>4.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>SkyWars</name>
@@ -129,6 +129,14 @@
             <groupId>xyz.xenondevs</groupId>
             <artifactId>particle</artifactId>
             <version>1.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <systemPath>${project.basedir}/api/Vault.jar</systemPath>
+            <scope>system</scope>
         </dependency>
 
     </dependencies>

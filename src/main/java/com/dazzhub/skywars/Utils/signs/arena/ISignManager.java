@@ -19,9 +19,8 @@ import java.util.HashMap;
 
 public class ISignManager {
 
-    private Main main;
-
-    private HashMap<Location, Arena> signs;
+    private final Main main;
+    private final HashMap<Location, Arena> signs;
 
     public ISignManager(Main main){
         this.main = main;
@@ -29,17 +28,29 @@ public class ISignManager {
     }
 
     public ISign loadSign(Arena arena) {
-        Configuration arenac = main.getConfigUtils().getConfig(main, "Arenas/" + arena.getNameArena() + "/Settings");
+        FileConfiguration arenac = main.getConfigUtils().getConfig(main, "Arenas/" + arena.getNameArena() + "/Settings");
 
         if (!arenac.getString("Arena.sign", "").isEmpty()) {
-            Location location = ISignLocation.getLocation(arenac.getString("Arena.sign"));
+            try {
+                Location location = ISignLocation.getLocation(arenac.getString("Arena.sign"));
 
-            Block block = location.getWorld().getBlockAt(location);
+                Block block = location.getWorld().getBlockAt(location);
 
-            ISign iSign = new ISign((Sign) block.getState(), arena);
+                ISign iSign = new ISign((Sign) block.getState(), arena);
 
-            signs.put(location, arena);
-            return iSign;
+                signs.put(location, arena);
+                return iSign;
+            } catch (Exception e){
+                arenac.set("Arena.sign", null);
+
+                try {
+                    arenac.save(main.getConfigUtils().getFile(main, "Arenas/" + arena.getNameArena() + "/Settings"));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+                return null;
+            }
         } else {
             return null;
         }

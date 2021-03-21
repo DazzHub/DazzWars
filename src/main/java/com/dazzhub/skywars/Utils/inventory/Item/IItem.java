@@ -2,6 +2,7 @@ package com.dazzhub.skywars.Utils.inventory.Item;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Arena.comparables.comparator;
+import com.dazzhub.skywars.Listeners.Custom.ClickMenu;
 import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
 import com.dazzhub.skywars.Listeners.Custom.LeftEvent;
 import com.dazzhub.skywars.Main;
@@ -16,6 +17,8 @@ import com.dazzhub.skywars.Utils.inventory.ordItems;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -24,45 +27,21 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.HashMap;
 
-public class IItem {
+public class IItem implements Listener {
 
-    private Main main;
+    private final Main main;
 
-    private HashMap<Integer, ordItems> itemsList;
-    private OptionClickEventHandler handler;
+    private final HashMap<Integer, ordItems> itemsList;
 
     public IItem(HashMap<Integer, ordItems> items) {
-
         this.main = Main.getPlugin();
         this.itemsList = items;
 
-        this.handler = (event -> {
-            Player player = event.getPlayer();
-            String target = event.getTarget();
-            String cmd = event.getCmd();
-
-            if (cmd == null || cmd.equals("")) {
-                return;
-            }
-
-            if (cmd.contains(";")) {
-                String[] array = cmd.split(";");
-                String[] array2;
-                for (int length = (array2 = array).length, i = 0; i < length; ++i) {
-                    String sub = array2[i];
-                    if (sub.startsWith(" ")) {
-                        sub = sub.substring(1);
-                    }
-                    parseCommand(player, target, sub);
-                }
-            } else {
-                parseCommand(player, target, cmd);
-            }
-
-        });
+        main.getServer().getPluginManager().registerEvents(this, main);
     }
 
-    public void onPlayerInteract(PlayerInteractEvent playerInteractEvent, PlayerInteractAtEntityEvent playerInteractAtEntityEvent, EntityDamageByEntityEvent entityDamageByEntityEvent, Player target) {
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent playerInteractEvent) {
         if (playerInteractEvent != null) {
             Player p = playerInteractEvent.getPlayer();
             GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
@@ -70,63 +49,47 @@ public class IItem {
 
             ordItems ordItems = itemsList.get(slot);
             if (ordItems == null) return;
+
             if (slot == ordItems.getSlot()) {
                 if (compareItem(playerInteractEvent.getItem(), ordItems.getIcon().build(p))) return;
-                OptionClickEvent e = new OptionClickEvent(p, null, ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract(), ordItems.getPrice());
-                if (hasPerm(p, e)) {
-                    if (e.getInteract().equalsIgnoreCase("Clicks")) {
-                        this.handler.onOptionClick(e);
-                    }
+
+                if (hasPerm(p, ordItems.getPermission())) {
+                    callCommands(p, ordItems);
                 } else {
-                    gamePlayer.sendMessage(c(gamePlayer.getLangMessage().getString("Messages.item-deny")));
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.item-deny"));
                 }
-            }
-        } else if (playerInteractAtEntityEvent != null && target != null) {
-            Player p = playerInteractAtEntityEvent.getPlayer();
-            GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-            int slot = p.getInventory().getHeldItemSlot();
 
-            ordItems ordItems = itemsList.get(slot);
-            if (ordItems == null) return;
-
-            if (slot == ordItems.getSlot()) {
-                if (compareItem(p.getItemInHand(), ordItems.getIcon().build(p))) return;
-                OptionClickEvent e = new OptionClickEvent(p, target.getName(), ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract(), ordItems.getPrice());
-                if (hasPerm(p, e)) {
-                    if (e.getInteract().equalsIgnoreCase("AtEntity")) {
-                        this.handler.onOptionClick(e);
-                    }
-                } else {
-                    gamePlayer.sendMessage(c(gamePlayer.getLangMessage().getString("Messages.item-deny")));
-                }
-            }
-        } else if (entityDamageByEntityEvent != null && target != null) {
-            Player p = (Player) entityDamageByEntityEvent.getDamager();
-            GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-            int slot = p.getInventory().getHeldItemSlot();
-
-            ordItems ordItems = itemsList.get(slot);
-            if (ordItems == null) return;
-
-            if (slot == ordItems.getSlot()) {
-                if (compareItem(p.getItemInHand(), ordItems.getIcon().build(p))) return;
-                OptionClickEvent e = new OptionClickEvent(p, target.getName(), ordItems.getIcon(), ordItems.getSlot(), ordItems.getCommand(), ordItems.getPermission(), ordItems.getInteract(), ordItems.getPrice());
-                if (hasPerm(p, e)) {
-                    if (e.getInteract().equalsIgnoreCase("ByDamage")) {
-                        this.handler.onOptionClick(e);
-                    }
-                } else {
-                    gamePlayer.sendMessage(c(gamePlayer.getLangMessage().getString("Messages.item-deny")));
-                }
             }
         }
     }
 
-    public boolean hasPerm(Player player, OptionClickEvent e) {
-        return e.getPermission() == null || e.getPermission().length() == 0 || player.hasPermission(e.getPermission());
+    public void callCommands(Player player, ordItems ordItems) {
+        String cmd = ordItems.getCommand();
+
+        if (cmd == null || cmd.equals("")) {
+            return;
+        }
+
+        if (cmd.contains(";")) {
+            String[] array = cmd.split(";");
+            String[] array2;
+            for (int length = (array2 = array).length, i = 0; i < length; ++i) {
+                String sub = array2[i];
+                if (sub.startsWith(" ")) {
+                    sub = sub.substring(1);
+                }
+                parseCommand(player, sub);
+            }
+        } else {
+            parseCommand(player, cmd);
+        }
     }
 
-    private void parseCommand(Player p, String target, String cmd) {
+    public boolean hasPerm(Player player, String perm) {
+        return perm == null || perm.length() == 0 || player.hasPermission(perm);
+    }
+
+    private void parseCommand(Player p, String cmd) {
         if (cmd != null && !cmd.equals("")) {
 
             if (cmd.contains("%player%")) {
@@ -169,10 +132,8 @@ public class IItem {
                         return;
                     }
 
-                    Bukkit.getPluginManager().callEvent(new JoinEvent(p, arenaTo, Enums.JoinCause.COMMAND));
+                    Bukkit.getPluginManager().callEvent(new JoinEvent(p, arenaTo, Enums.JoinCause.INTERACT));
 
-                } else {
-                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.alredyInGame"));
                 }
             } else if (cmd.startsWith("open:")) {
                 String openCommand = cmd.substring(5);
@@ -180,10 +141,10 @@ public class IItem {
                     openCommand = openCommand.substring(1);
                 }
 
-                IMenu menu = main.getMenuManager().getMenuFileName().get(openCommand);
+                IMenu menu = this.main.getMenuManager().getMenuLangs().get(gamePlayer.getLang()).getMenuFileName().get(openCommand);
                 if (menu == null) return;
 
-                Bukkit.getScheduler().runTaskLater(main, () -> menu.open(p, target),2);
+                Bukkit.getScheduler().runTaskLater(main, () -> menu.open(p),2);
 
             } else if (cmd.startsWith("auto")) {
                 if (gamePlayer.isInArena()) {

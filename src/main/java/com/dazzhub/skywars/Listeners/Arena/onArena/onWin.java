@@ -4,8 +4,10 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.WinEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
 import com.cryptomorin.xseries.messages.Titles;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,21 +52,21 @@ public class onWin implements Listener {
             switch (arena.getMode()) {
                 case SOLO: {
                     gamePlayer.addWinsSolo();
-                    gamePlayer.addCoins(main.getSettings().getInt("Coins.WinSolo", 1));
+                    gamePlayer.addCoins(main.getSettings().getDouble("Coins.WinSolo", 1));
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.WinSolo", 1))));
                     main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHED, true, false, true, true);
                     break;
                 }
                 case TEAM: {
                     gamePlayer.addWinsTeam();
-                    gamePlayer.addCoins(main.getSettings().getInt("Coins.WinTeam", 1));
+                    gamePlayer.addCoins(main.getSettings().getDouble("Coins.WinTeam", 1));
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.WinTeam", 1))));
                     main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHEDTEAM, true, false, true, true);
                     break;
                 }
                 case RANKED: {
                     gamePlayer.addWinsRanked();
-                    gamePlayer.addCoins(main.getSettings().getInt("Coins.WinRanked", 1));
+                    gamePlayer.addCoins(main.getSettings().getDouble("Coins.WinRanked", 1));
                     gamePlayer.addRanked(main.getSettings().getInt("Coins.lvlRanked", 1));
                     gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.GiveCoins", "Error Messages.GiveCoins").replace("%coins%", String.valueOf(main.getSettings().getInt("Coins.lvlRanked", 1))));
                     main.getScoreBoardAPI().setScoreBoard(gamePlayer.getPlayer(), Enums.ScoreboardType.FINISHEDRANKED, true, false, true, true);
@@ -91,6 +93,7 @@ public class onWin implements Listener {
                 }
             }
         });
+
 
         arena.getSpectators().forEach(arena::getWinners);
 

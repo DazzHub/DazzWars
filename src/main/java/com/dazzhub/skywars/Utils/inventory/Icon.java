@@ -36,6 +36,7 @@ public class Icon {
     private boolean iconView;
     private String permissionView;
     private ItemStack permissionViewItem;
+    private String skullPermissionItem;
 
     private List<String> lorePurchased;
     private List<String> loreSelected;
@@ -45,6 +46,7 @@ public class Icon {
         this.im = this.item.getItemMeta();
 
         this.permissionViewItem = null;
+        this.skullPermissionItem = null;
 
         this.price = 0;
         this.type = "";
@@ -59,6 +61,7 @@ public class Icon {
         this.im = this.item.getItemMeta();
 
         this.permissionViewItem = null;
+        this.skullPermissionItem = null;
 
         this.price = 0;
         this.type = "";
@@ -73,6 +76,7 @@ public class Icon {
         this.im = this.item.getItemMeta();
 
         this.permissionViewItem = null;
+        this.skullPermissionItem = null;
 
         this.price = 0;
         this.type = "";
@@ -86,6 +90,7 @@ public class Icon {
         this.im = this.item.getItemMeta();
 
         this.permissionViewItem = null;
+        this.skullPermissionItem = null;
 
         this.price = 0;
         this.type = "";
@@ -146,7 +151,7 @@ public class Icon {
         return this;
     }
 
-    public Icon addPermissionView(boolean iconView, String permissionView, Material material, short type, List<String> lore) {
+    public Icon addPermissionView(boolean iconView, String permissionView, Material material, short type, List<String> lore, String skullOwner) {
         Material material1;
         if (Main.getPlugin().checkVersion()){
             material1 = XMaterial.matchXMaterial(material).parseMaterial();
@@ -163,8 +168,10 @@ public class Icon {
 
         meta.setDisplayName(im.getDisplayName());
         meta.setLore(lore);
+
         itemPerms.setItemMeta(meta);
 
+        this.skullPermissionItem = skullOwner;
         this.permissionViewItem = itemPerms;
         this.permissionView = permissionView;
         this.iconView = iconView;
@@ -206,7 +213,7 @@ public class Icon {
             item.setItemMeta(im);
         }
 
-        if (this.lorePurchased != null && type.length() != 0) {
+        if (this.lorePurchased != null && type != null && type.length() != 0) {
             if (type.startsWith("kit:")) {
                 String action = type.substring(4);
                 if (action.startsWith(" ")) {
@@ -523,7 +530,26 @@ public class Icon {
             this.replaceName(p);
         }
 
-        if (iconView && permissionViewItem != null && !hasPerm(p)){
+        if (iconView && permissionViewItem != null && !hasPerm(p)) {
+
+
+            ItemMeta itemMeta = permissionViewItem.getItemMeta();
+            if (skullPermissionItem != null && itemMeta instanceof SkullMeta) {
+                permissionViewItem.setType(Material.SKULL_ITEM);
+                SkullMeta skullMeta = (SkullMeta) itemMeta;
+                if (this.skullPermissionItem.equalsIgnoreCase("%player%")) {
+                    skullMeta.setOwner(p.getName());
+                } else {
+                    if (skullPermissionItem.length() <= 16) {
+                        skullMeta.setOwner(this.skullPermissionItem);
+                    } else {
+                        SkullUtils.applySkin(skullMeta, this.skullPermissionItem);
+                    }
+                }
+                permissionViewItem.setItemMeta(itemMeta);
+            }
+
+
             return replace(p, permissionViewItem);
         }
 
@@ -600,7 +626,7 @@ public class Icon {
                     .replaceAll("%state%", String.valueOf(arena.getGameStatus()))
                     .replaceAll("%arena%", arena.getNameArena())
                     .replaceAll("%mode%", arena.getMode().toString())
-                    .replaceAll("%maxPlayers%", String.valueOf(arena.getMaxPlayers()))
+                    .replaceAll("%maxPlayers%", String.valueOf((arena.getSpawns().size() * arena.getSizeTeam())))
                     .replaceAll("%online%", String.valueOf(arena.getPlayers().size())));
         }
 

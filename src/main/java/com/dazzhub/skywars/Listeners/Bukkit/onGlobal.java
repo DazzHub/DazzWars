@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -24,7 +26,7 @@ import java.util.List;
 
 public class onGlobal implements Listener {
 
-    private Main main;
+    private final Main main;
 
     public onGlobal(Main main) {
         this.main = main;
@@ -99,6 +101,29 @@ public class onGlobal implements Listener {
             }
         });
 
+    }
+
+
+    @EventHandler
+    public void onClickInv(InventoryClickEvent e) {
+        if (!(e.getWhoClicked() instanceof Player)) return;
+
+        Player p = (Player) e.getWhoClicked();
+        if (main.getPlayerManager().getPlayer(p.getUniqueId()).isEditMode()) return;
+        if (!main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) return;
+
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDragInv(InventoryDragEvent e){
+        if (!(e.getWhoClicked() instanceof Player)) return;
+
+        Player p = (Player) e.getWhoClicked();
+        if (main.getPlayerManager().getPlayer(p.getUniqueId()).isEditMode()) return;
+        if (!main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) return;
+
+        e.setCancelled(true);
     }
 
     private String c(String c) {

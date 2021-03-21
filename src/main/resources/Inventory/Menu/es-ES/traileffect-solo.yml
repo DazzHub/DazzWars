@@ -1,0 +1,154 @@
+######################
+#+                  +#
+#   MENU SETTINGS    #
+#+                  +#
+######################
+
+menu-settings:
+
+  # name - appears as the title - REQUIRED
+  name: '&0Sendero de flechas &7'
+
+  # rows - the number of rows of the chest - REQUIRED
+  rows: 5
+
+  # command - OPTIONAL (you can remove this or set it to '')
+  command: ''
+
+  # permissionView - MATERIAL NAME - DATA
+  permissionView:
+    ICON-VIEW: true
+    ICON-ITEM: 397
+    DATA-VALUE: 3
+    SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ=='
+    DESCRIPTION:
+      - ''
+      - ' &a▸ &fNo tienes permiso'
+      - ''
+default:
+  PRICE: 0
+  ACTION: 'traileffect: FLAME/SOLO'
+  NAME: '&6Flame'
+  DESCRIPTION:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Camino de fuego'
+    - ' &a▸ &7para los proyectiles'
+    - ' &a▸ &7que uses durante un juego'
+    - ''
+    - ' &a▸ &2Disponible'
+    - ' &a▸ &fPrecio: &a%price%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para comprar'
+  DESCRIPTION-PURCHASED:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Camino de fuego'
+    - ' &a▸ &7para los proyectiles'
+    - ' &a▸ &7que uses durante un juego'
+    - ''
+    - ' &a▸ &aComprado'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aClick para selecionar'
+  DESCRIPTION-SELECTED:
+    - ' &a▸ &aDescripcion:'
+    - ' &a▸ &7Camino de fuego'
+    - ' &a▸ &7para los proyectiles'
+    - ' &a▸ &7que uses durante un juego'
+    - ''
+    - ' &a▸ &bEquipado'
+    - ' &a▸ &fSendero: &a%sw_effect_kill_solo%'
+    - ' &a▸ &fRareza: &7Muy comun'
+    - ''
+    - ' &a▸ &aSendero equipado'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzM2ODdlMjVjNjMyYmNlOGFhNjFlMGQ2NGMyNGU2OTRjM2VlYTYyOWVhOTQ0ZjRjZjMwZGNmYjRmYmNlMDcxIn19fQ=='
+  POSITION-X: 2
+  POSITION-Y: 2
+Back:
+  ACTION: 'open: shop-solo.yml'
+  NAME: '&cVolver'
+  DESCRIPTION:
+    - ' &a▸ &7Vuelve al menu'
+    - ' &a▸ &7de la tienda'
+    - ''
+    - ' &a▸ &aClick para volver'
+  ICON-ITEM: 397
+  DATA-VALUE: 3
+  SKULL-OWNER: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmUzZjUwYmE2MmNiZGEzZWNmNTQ3OWI2MmZlZGViZDYxZDc2NTg5NzcxY2MxOTI4NmJmMjc0NWNkNzFlNDdjNiJ9fX0='
+  POSITION-X: 5
+  POSITION-Y: 5
+# ASH
+# BARRIER
+# BLOCK_CRACK
+# BLOCK_DUST
+# BUBBLE_COLUMN_UP
+# BUBBLE_POP
+# CAMPFIRE_COSY_SMOKE
+# CAMPFIRE_SIGNAL_SMOKE
+# CLOUD
+# COMPOSTER
+# CRIMSON_SPORE
+# CRIT
+# CRIT_MAGIC
+# CURRENT_DOWN
+# DAMAGE_INDICATOR
+# DOLPHIN
+# DRAGON_BREATH
+# DRIP_LAVA
+# DRIP_WATER
+# DRIPPING_HONEY
+# DRIPPING_OBSIDIAN_TEAR
+# ENCHANTMENT_TABLE
+# END_ROD
+# EXPLOSION_HUGE
+# EXPLOSION_LARGE
+# EXPLOSION_NORMAL
+# FALLING_DUST
+# FALLING_HONEY
+# FALLING_NECTAR
+# FALLING_OBSIDIAN_TEAR
+# FIREWORKS_SPARK
+# FLAME
+# FLASH
+# FOOTSTEP
+# HEART
+# ITEM_CRACK
+# LANDING_HONEY
+# LANDING_OBSIDIAN_TEAR
+# LAVA
+# MOB_APPEARANCE
+# NAUTILUS
+# NOTE
+# PORTAL
+# REDSTONE
+# REVERSE_PORTAL
+# SLIME
+# SMOKE_LARGE
+# SMOKE_NORMAL
+# SNEEZE
+# SNOWBALL
+# SNOW_SHOVEL
+# SOUL
+# SOUL_FIRE_FLAME
+# SPELL
+# SPELL_INSTANT
+# SPELL_MOB
+# SPELL_MOB_AMBIENT
+# SPELL_WITCH
+# SPIT
+# SQUID_INK
+# SUSPENDED
+# SUSPENDED_DEPTH
+# SWEEP_ATTACK
+# TOTEM
+# TOWN_AURA
+# VILLAGER_ANGRY
+# VILLAGER_HAPPY
+# WARPED_SPORE
+# WATER_BUBBLE
+# WATER_DROP
+# WATER_SPLASH
+# WATER_WAKE
+# WHITE_ASH

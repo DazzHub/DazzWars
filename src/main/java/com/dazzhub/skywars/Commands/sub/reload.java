@@ -6,6 +6,7 @@ import com.dazzhub.skywars.Commands.subCommand;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Enums;
+import com.dazzhub.skywars.Utils.inventory.menu.IMenuLang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -27,20 +28,28 @@ public class reload implements subCommand {
             return;
         }
 
-        main.getMenuManager().reloadMenu();
+        for (IMenuLang lang : main.getMenuManager().getMenuLangs().values()){
+            lang.reloadMenu();
+        }
+
         sender.sendMessage(c("&a&l\u2714 &fMenus reloaded"));
 
         main.getArenaManager().getArenas().values().forEach(arena -> {
-            arena.getPlayers().forEach(arena::removePlayer);
+            for (GamePlayer gamePlayer : arena.getPlayers()) {
+                arena.removePlayer(gamePlayer, true);
+            }
             arena.setGameStatus(Enums.GameStatus.DISABLED);
         });
 
         Bukkit.getOnlinePlayers().forEach(on -> {
+            GamePlayer gamePlayer = main.getPlayerManager().getPlayer(on.getUniqueId());
             if (main.getLobbyManager().getLobby() != null) {
                 on.teleport(main.getLobbyManager().getLobby());
             }
 
-            main.getItemManager().giveItems(on, main.getSettings().getString("Inventory.Lobby"), true);
+            if (gamePlayer != null){
+                main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(on, main.getSettings().getString("Inventory.Lobby"), true);
+            }
         });
 
         main.getArenaManager().loadArenas();

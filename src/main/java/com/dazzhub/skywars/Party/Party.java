@@ -139,7 +139,7 @@ public class Party {
             return;
         }
 
-        if (this.getMembers().size() > arena.getMaxPlayers()) {
+        if (this.getMembers().size() > (arena.getSpawns().size() * arena.getSizeTeam())) {
             gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.Party.JoinArenaFull", "Error Party.JoinArenaFull"));
             return;
         }

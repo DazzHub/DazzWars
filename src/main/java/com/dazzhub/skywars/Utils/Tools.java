@@ -77,6 +77,15 @@ public class Tools {
         }
     }
 
+    public static boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException | NullPointerException ex2) {
+            return false;
+        }
+    }
+
     public static void HidePlayer(Player player, Player player2) {
         player.hidePlayer(player2);
     }

@@ -20,10 +20,12 @@ public class onLeftServer implements Listener {
         this.main = main;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler
     public void PlayerLeftEvent(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
+
+        if (gamePlayer == null) return;
 
         if (gamePlayer.isInArena()) {
             Arena arena = gamePlayer.getArena();

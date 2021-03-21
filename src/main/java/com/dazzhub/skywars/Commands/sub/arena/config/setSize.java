@@ -9,13 +9,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class setMax implements subCommand {
+public class setSize implements subCommand {
 
     private Main main;
 
-    public setMax(Main main) {
+    public setSize(Main main) {
         this.main = main;
-        adminCmd.subCommandHashMap.put("setmax", this);
+        adminCmd.subCommandHashMap.put("setsize", this);
     }
 
     @Override
@@ -32,11 +32,15 @@ public class setMax implements subCommand {
         Player p = (Player) sender;
 
         if (args.length == 3) {
-            if (!Tools.isInteger(args[1])) {
+
+            if (!Tools.isInteger(args[2])){
                 p.sendMessage(help(sender));
                 return;
             }
-            main.getArenaManager().maxPlayer(p, Integer.parseInt(args[1]), args[2]);
+
+            int size = Integer.parseInt(args[2]);
+
+            main.getArenaManager().setSize(p,args[1], size);
         } else {
             p.sendMessage(help(sender));
         }
@@ -45,7 +49,7 @@ public class setMax implements subCommand {
 
     @Override
     public String help(CommandSender sender) {
-        return c("&e/Sw setmax <amount> <arena> &8>&f set max players");
+        return c("&e/Sw setsize <arena> <amount> &8>&f set size");
     }
 
     private String c(String c) {

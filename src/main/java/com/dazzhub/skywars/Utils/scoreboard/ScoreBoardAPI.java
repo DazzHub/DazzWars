@@ -38,6 +38,8 @@ public class ScoreBoardAPI {
     }
 
     public String charsLobby(Player p, String msg) {
+        if (p == null || msg == null || msg.isEmpty()) return "";
+
         return PlaceholderAPI.setPlaceholders(p, msg);
     }
 

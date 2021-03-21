@@ -1,0 +1,30 @@
+vote:
+  ACTION: 'spectate'
+  NAME: '&a&lTELEPORT &7(Right-Click)'
+  DESCRIPTION:
+    - ''
+    - '&7Right-click to open menu'
+    - ''
+  ICON-ITEM: 345
+  DATA-VALUE: 0
+  SLOT: 0
+autojoin:
+  ACTION: 'auto'
+  NAME: '&6&lAUTOJOIN &7(Right-Click)'
+  DESCRIPTION:
+    - ''
+    - '&7Right-Click to join random arena.'
+    - ''
+  ICON-ITEM: 339
+  DATA-VALUE: 0
+  SLOT: 1
+leave:
+  ACTION: 'leave'
+  NAME: '&c&lReturn to Spawn &7(Right-Click)'
+  DESCRIPTION:
+    - ''
+    - '&7Right-click to open menu'
+    - ''
+  ICON-ITEM: 'BED'
+  DATA-VALUE: 0
+  SLOT: 8

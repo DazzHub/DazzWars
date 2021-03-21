@@ -2,20 +2,21 @@ package com.dazzhub.skywars.Listeners.Custom.typeJoin;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class removePlayerEvent extends Event
 {
     private static HandlerList handlerList;
+
     private GamePlayer gamePlayer;
     private Arena arena;
+    private boolean goLobby;
 
-    public removePlayerEvent(GamePlayer gamePlayer, Arena arena) {
+    public removePlayerEvent(GamePlayer gamePlayer, Arena arena, boolean goLobby) {
         this.gamePlayer = gamePlayer;
         this.arena = arena;
+        this.goLobby = goLobby;
     }
 
     public static HandlerList getHandlerList() {
@@ -40,6 +41,10 @@ public class removePlayerEvent extends Event
 
     public Arena getArena() {
         return arena;
+    }
+
+    public boolean isGoLobby() {
+        return goLobby;
     }
 
     public void setArena(Arena arena) {

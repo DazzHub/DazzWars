@@ -3,8 +3,8 @@ package com.dazzhub.skywars.Commands;
 import com.dazzhub.skywars.Commands.sub.*;
 import com.dazzhub.skywars.Commands.sub.arena.*;
 import com.dazzhub.skywars.Commands.sub.arena.config.addSpawn;
-import com.dazzhub.skywars.Commands.sub.arena.config.setMax;
 import com.dazzhub.skywars.Commands.sub.arena.config.setMin;
+import com.dazzhub.skywars.Commands.sub.arena.config.setSize;
 import com.dazzhub.skywars.Commands.sub.arena.config.setSpectator;
 import com.dazzhub.skywars.Commands.sub.cages.addCage;
 import com.dazzhub.skywars.Commands.sub.cages.wandCage;
@@ -35,7 +35,6 @@ public class adminCmd implements CommandExecutor {
         new Create(main);
         new addSpawn(main);
         new setSpectator(main);
-        new setMax(main);
         new setMin(main);
         new Coins(main);
         new Souls(main);
@@ -44,6 +43,7 @@ public class adminCmd implements CommandExecutor {
         new editChest(main);
         new SaveMap(main);
         new editMode(main);
+        new setSize(main);
 
         /* CAGES */
         new addCage(main);

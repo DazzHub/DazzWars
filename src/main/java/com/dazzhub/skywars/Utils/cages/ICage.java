@@ -13,6 +13,8 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 @Getter
 @Setter
@@ -75,4 +77,14 @@ public class ICage {
         }
     }
 
+    public void removeCage(Location loc) {
+        Location loc1 = new Location(loc.getWorld(), loc.getX() - getXDiff() / 2.0, loc.getY() - getYDiff() / 2.0, loc.getZ() - getZDiff() / 2.0);
+        Location loc2 = new Location(loc.getWorld(), loc.getX() + getXDiff() / 2.0, loc.getY() + getYDiff() / 2.0, loc.getZ() + getZDiff() / 2.0);
+
+        Cuboid cuboid = new Cuboid(loc1, loc2);
+
+        for (Block block : cuboid) {
+            block.setType(Material.AIR);
+        }
+    }
 }

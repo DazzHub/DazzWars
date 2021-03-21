@@ -51,6 +51,11 @@ public class ITopManager {
 
                 String[] lines = Stream.of(type[1].split(",")).toArray(String[]::new);
 
+                if (location.getWorld().getBlockAt(location) == null){
+
+                    return;
+                }
+
                 Block block = location.getWorld().getBlockAt(location);
                 Sign sign = (Sign) block.getState();
 
@@ -159,6 +164,10 @@ public class ITopManager {
                     GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
                     if (gamePlayer == null) continue;
+
+                    if (gamePlayer.getMenu() != null){
+                        gamePlayer.getMenu().addItems(gamePlayer.getPlayer());
+                    }
 
                     ScoreBoardBuilder scoreboard = gamePlayer.getScoreBoardBuilder();
 
