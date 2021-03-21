@@ -185,7 +185,7 @@ public class ITopManager {
                     int line = config.getStringList(scoreboard.getScoreboardType().toString() + ".lines").size();
 
                     for (String s : config.getStringList(scoreboard.getScoreboardType().toString() + ".lines")) {
-                        scoreboard.lines(line, main.getScoreBoardAPI().charsLobby(p, s));
+                        scoreboard.getEntry(String.valueOf(line)).update(main.getScoreBoardAPI().charsLobby(p, s));
                         line--;
                     }
 

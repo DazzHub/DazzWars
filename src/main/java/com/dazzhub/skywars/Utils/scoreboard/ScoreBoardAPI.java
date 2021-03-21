@@ -9,12 +9,10 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class ScoreBoardAPI {
 
-    private final Main main;
+    private Main main;
 
     public ScoreBoardAPI(Main main) {
         this.main = main;
@@ -24,6 +22,7 @@ public class ScoreBoardAPI {
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+
         ScoreBoardBuilder scoreboard = new ScoreBoardBuilder(p, randomString(),
                 health,
                 spectator,
@@ -32,9 +31,18 @@ public class ScoreBoardAPI {
                 scoreboardType
         );
 
-        gamePlayer.setScoreBoardBuilder(scoreboard);
-        p.setScoreboard(scoreboard.getScoreboard());
+        Configuration config = main.getPlayerManager().getPlayer(p.getUniqueId()).getScoreboardMessage();
+        scoreboard.setName(main.getScoreBoardAPI().charsLobby(p, config.getString(scoreboard.getScoreboardType().toString() + ".title")));
 
+        int line = config.getStringList(scoreboard.getScoreboardType().toString() + ".lines").size();
+
+        for (String s : config.getStringList(scoreboard.getScoreboardType().toString() + ".lines")) {
+            scoreboard.add(String.valueOf(line), main.getScoreBoardAPI().charsLobby(p, s), line);
+            line--;
+        }
+
+        gamePlayer.setScoreBoardBuilder(scoreboard);
+        scoreboard.add(p);
     }
 
     public String charsLobby(Player p, String msg) {
@@ -47,10 +55,9 @@ public class ScoreBoardAPI {
         String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         SecureRandom rnd = new SecureRandom();
 
-        StringBuilder sb = new StringBuilder(8);
+        StringBuilder sb = new StringBuilder(6);
         for (int i = 0; i < 8; i++)
             sb.append(AB.charAt(rnd.nextInt(AB.length())));
         return sb.toString();
     }
-
 }

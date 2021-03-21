@@ -1,12 +1,14 @@
 package com.dazzhub.skywars.Utils.scoreboard;
 
 import com.dazzhub.skywars.Arena.Arena;
+import com.dazzhub.skywars.Arena.ArenaTeam;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import lombok.Getter;
-import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,93 +20,73 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 @Getter
-@Setter
 public class ScoreBoardBuilder {
 
-    private Scoreboard scoreboard;
+    private final Scoreboard scoreboard;
+    private final Objective objective;
+    private final BiMap<String, ScoreBoardEntry> entries;
 
-    private Objective scoreObjective;
-    private Objective tabObjective;
+    private int teamId;
+
     private Objective nameHealthObj;
+    private Objective tabObjective;
 
-    private Team GameSpectator;
+    private Team gameSpectator;
     private Team gameTeams;
     private Team gameEnemy;
 
-    private boolean health, spectator, gamePlayers, teams;
-    private Enums.ScoreboardType scoreboardType;
+    private final boolean health, spectator, gamePlayers, teams;
+    private final Enums.ScoreboardType scoreboardType;
 
     public ScoreBoardBuilder(Player p, String score_name, boolean health, boolean spectator, boolean gamePlayers, boolean teams, Enums.ScoreboardType scoreboardType) {
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        this.scoreObjective = this.scoreboard.registerNewObjective(score_name, "dummy");
-        this.scoreObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        this.objective = scoreboard.registerNewObjective(score_name, "dummy");
+        this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        this.scoreboardType = scoreboardType;
+        this.entries = HashBiMap.create();
+        this.teamId = 1;
+
         this.health = health;
         this.spectator = spectator;
         this.gamePlayers = gamePlayers;
         this.teams = teams;
 
+        this.scoreboardType = scoreboardType;
+
         if (health) {
-            this.nameHealthObj = this.scoreboard.registerNewObjective("namelifee", "health");
+            this.nameHealthObj = this.scoreboard.registerNewObjective(score_name + "life", "health");
             this.nameHealthObj.setDisplaySlot(DisplaySlot.BELOW_NAME);
             this.nameHealthObj.setDisplayName(ChatColor.DARK_RED + "\u2764");
         }
 
-        GamePlayer player = Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId());
-        Arena arena = player.getArena();
+        GamePlayer gamePlayer = Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId());
 
-        if (!player.getLangMessage().getBoolean("Messages.ScoreBoard.Team.enabled", true)){
-            return;
+        if (!gamePlayer.getLangMessage().getBoolean("Messages.ScoreBoard.Team.enabled", true)){
+           return;
         }
 
-        if (spectator){
-            if (arena == null) return;
-
-            this.GameSpectator = this.scoreboard.registerNewTeam("3-Spectator");
-            this.GameSpectator.setCanSeeFriendlyInvisibles(true);
-
-            for (GamePlayer gamePlayer : arena.getSpectators()) {
-                if (gamePlayer != null) {
-                    if (!gamePlayer.getPlayer().isOnline()) {
-                        continue;
-                    }
-                    this.GameSpectator.addEntry(p.getName());
-                }
-            }
+        if (spectator) {
+            this.gameSpectator = this.scoreboard.registerNewTeam("3-S" + score_name);
+            this.gameSpectator.setCanSeeFriendlyInvisibles(true);
         }
 
-        if (gamePlayers){
-            this.gameEnemy = this.scoreboard.registerNewTeam("2-PlayerGaming");
+        if (gamePlayers) {
+            this.gameEnemy = this.scoreboard.registerNewTeam("2-P" + score_name);
 
-            if (player.getLangMessage().getBoolean("Messages.ScoreBoard.Team.killCount")) {
-                this.tabObjective = this.scoreboard.registerNewObjective("PlayerGaming", "dummy");
+            if (gamePlayer.getLangMessage().getBoolean("Messages.ScoreBoard.Team.killCount")) {
+                this.tabObjective = this.scoreboard.registerNewObjective(score_name + "kills", "dummy");
                 this.tabObjective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
             }
-
-            if (arena == null) return;
-            for (GamePlayer gamePlayer : arena.getPlayers()) {
-                if (gamePlayer.getLangMessage().getBoolean("Messages.ScoreBoard.Team.killCount")) {
-                    if (this.tabObjective != null){ this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak()); }
-                }
-                this.gameEnemy.addEntry(gamePlayer.getName());
-            }
         }
 
-        if (teams){
-            this.gameTeams = this.scoreboard.registerNewTeam("1-TeamsFriends");
+        if (teams) {
+            this.gameTeams = this.scoreboard.registerNewTeam("1-T" + score_name);
             this.gameTeams.setAllowFriendlyFire(false);
-
-            if (arena == null) return;
-            if (!player.isSpectating()) {
-                if (player.getArenaTeam() != null && !player.getArenaTeam().getMembers().isEmpty()) {
-                    for (GamePlayer gamePlayer1 : player.getArenaTeam().getMembers()) {
-                        this.gameTeams.setPrefix(chars(gamePlayer1.getPlayer(), player.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[0]));
-                        this.gameTeams.setSuffix(chars(gamePlayer1.getPlayer(), player.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer1.getKillsStreak())));
-                    }
-                }
-            }
         }
     }
 
@@ -119,64 +101,70 @@ public class ScoreBoardBuilder {
     }
 
     public void updateSpectator(Arena arena) {
-        if (GameSpectator == null) return;
+        if (gameSpectator == null) return;
+
         for (GamePlayer gamePlayer : arena.getSpectators()) {
-            if (gamePlayer != null) {
-                this.GameSpectator.setPrefix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Spectator").split(":")[0]));
-                this.GameSpectator.setSuffix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Spectator").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer.getKillsStreak())));
+
+            if (!this.gameSpectator.hasEntry(gamePlayer.getName())) {
+                this.gameSpectator.addEntry(gamePlayer.getName());
             }
+
+            this.gameSpectator.setPrefix(chars(gamePlayer, gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Spectator").split(":")[0]));
+            this.gameSpectator.setSuffix(chars(gamePlayer, gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Spectator").split(":")[1]));
         }
     }
 
     public void updateEnemy(GamePlayer player, Arena arena) {
         if (gameEnemy == null) return;
-        if (tabObjective == null) return;
+
         for (GamePlayer gamePlayer : arena.getPlayers()) {
 
             if (player.getArenaTeam() != null && player.getArenaTeam().getMembers().contains(gamePlayer)) continue;
 
             if (!this.gameEnemy.hasEntry(gamePlayer.getName())) {
-                this.tabObjective.getScore(gamePlayer.getName()).setScore(gamePlayer.getKillsStreak());
                 this.gameEnemy.addEntry(gamePlayer.getName());
+
+                if (tabObjective != null) {
+                    this.tabObjective.getScore(gamePlayer.getName()).setScore(gamePlayer.getKillsStreak());
+                }
             }
-            this.gameEnemy.setPrefix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Game").split(":")[0]));
-            this.gameEnemy.setSuffix(chars(gamePlayer.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Game").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer.getKillsStreak())));
-            this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak());
+
+            this.gameEnemy.setPrefix(chars(gamePlayer, gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Game").split(":")[0]));
+            this.gameEnemy.setSuffix(chars(gamePlayer, gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.Game").split(":")[1]));
+
+            if (tabObjective != null) {
+                this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak());
+            }
         }
 
-        for (GamePlayer gamePlayer : arena.getSpectators()){
-            this.gameEnemy.removeEntry(gamePlayer.getName());
-        }
     }
 
     public void updateTeams(GamePlayer gamePlayer) {
         if (gameTeams == null) return;
-        if (tabObjective == null) return;
 
-        if (!gamePlayer.isSpectating()) {
-            if (gamePlayer.getArenaTeam() != null && !gamePlayer.getArenaTeam().getMembers().isEmpty()) {
-                for (GamePlayer gamePlayer1 : gamePlayer.getArenaTeam().getMembers()) {
-                    if (!gameTeams.hasEntry(gamePlayer1.getName())){
-                        gameTeams.addEntry(gamePlayer1.getName());
-                        this.tabObjective.getScore(gamePlayer.getName()).setScore(gamePlayer.getKillsStreak());
-                    }
+        ArenaTeam arenaTeam = gamePlayer.getArenaTeam();
 
-                    this.gameTeams.setPrefix(chars(gamePlayer1.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[0]));
-                    this.gameTeams.setSuffix(chars(gamePlayer1.getPlayer(), gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[1]).replace("%kills%", String.valueOf(gamePlayer1.getKillsStreak())));
-                    this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak());
+        if (arenaTeam == null || arenaTeam.getMembers().isEmpty()) {
+            return;
+        }
+
+        for (GamePlayer members : gamePlayer.getArenaTeam().getMembers()) {
+
+            if (!this.gameTeams.hasEntry(members.getName())) {
+                this.gameTeams.addEntry(members.getName());
+
+                if (tabObjective != null) {
+                    this.tabObjective.getScore(gamePlayer.getName()).setScore(gamePlayer.getKillsStreak());
                 }
             }
+
+            this.gameTeams.setPrefix(chars(members, gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[0]));
+            this.gameTeams.setSuffix(chars(members, gamePlayer.getLangMessage().getString("Messages.ScoreBoard.Team.TeamsFriends").split(":")[1]));
+
+            if (tabObjective != null) {
+                this.tabObjective.getScore(gamePlayer.getPlayer().getName()).setScore(gamePlayer.getKillsStreak());
+            }
         }
-    }
-
-    private String chars(Player p, String c) {
-        String transformed = (ChatColor.translateAlternateColorCodes('&', c));
-
-        if (Main.getPlugin().getSettings().getBoolean("UsePlaceholderAPI")) {
-            transformed = PlaceholderAPI.setPlaceholders(p, transformed);
-        }
-
-        return transformed;
     }
 
     private int absorbHearts(Player pl) {
@@ -188,150 +176,147 @@ public class ScoreBoardBuilder {
         return 0;
     }
 
-    private String color(String s) {
-        return ChatColor.translateAlternateColorCodes('&', s);
-    }
-
-    public void setName(String substring) {
-        if (substring == null || substring.isEmpty()) return;
-
-        if (!(substring.length() < 42)) {
-            substring = substring.substring(0, 42);
-        }
-
-        this.scoreObjective.setDisplayName(this.color(substring));
-    }
-
-    public void lines(Integer line, String text) {
-        text = color(text);
-        Team team = this.scoreboard.getTeam("SCT_" + line);
-        if (text.length() > 32) {
-            text = text.substring(0, 32);
-        }
-        String[] splitStringLine = this.splitStringLine(text);
-        if (team == null) {
-            Team registerNewTeam = this.scoreboard.registerNewTeam("SCT_" + line);
-            registerNewTeam.addEntry(this.getEntry(line));
-            this.setPrefix(registerNewTeam, splitStringLine[0]);
-            this.setSuffix(registerNewTeam, splitStringLine[1]);
-            this.scoreObjective.getScore(this.getEntry(line)).setScore(line);
-        } else {
-            this.setPrefix(team, splitStringLine[0]);
-            this.setSuffix(team, splitStringLine[1]);
-        }
-    }
-
-    /*public boolean dLine(Integer line) {
-        Team team = this.scoreboard.getTeam("SCT_" + line);
-        if (team != null) {
-            team.unregister();
-            scoreObjective.getScoreboard().resetScores(getEntry(line));
-            return true;
-        }
-        return false;
-    }*/
-
-    public void setPrefix(Team team, String prefix) {
-        if (prefix.length() > 16) {
-            team.setPrefix(prefix.substring(0, 16));
-            return;
-        }
-        team.setPrefix(prefix);
-    }
-
-    public void setSuffix(Team team, String s) {
-        if (s.length() > 16) {
-            team.setSuffix(this.maxChars(16, s));
-        } else {
-            team.setSuffix(s);
-        }
-    }
-
-    public String maxChars(int n, String s) {
-        if (ChatColor.translateAlternateColorCodes('&', s).length() > n) {
-            return s.substring(0, n);
-        }
-        return ChatColor.translateAlternateColorCodes('&', s);
-    }
-
-    public String getEntry(Integer n) {
-        if (n == 0) {
-            return "§0";
-        }
-        if (n == 1) {
-            return "§1";
-        }
-        if (n == 2) {
-            return "§2";
-        }
-        if (n == 3) {
-            return "§3";
-        }
-        if (n == 4) {
-            return "§4";
-        }
-        if (n == 5) {
-            return "§5";
-        }
-        if (n == 6) {
-            return "§6";
-        }
-        if (n == 7) {
-            return "§7";
-        }
-        if (n == 8) {
-            return "§8";
-        }
-        if (n == 9) {
-            return "§9";
-        }
-        if (n == 10) {
-            return "§a";
-        }
-        if (n == 11) {
-            return "§b";
-        }
-        if (n == 12) {
-            return "§c";
-        }
-        if (n == 13) {
-            return "§d";
-        }
-        if (n == 14) {
-            return "§e";
-        }
-        if (n == 15) {
-            return "§f";
-        }
-        return "";
+    private String chars(GamePlayer gamePlayer, String c) {
+        return PlaceholderAPI.setPlaceholders(gamePlayer.getPlayer(), ChatColor.translateAlternateColorCodes('&', c));
     }
 
     public Scoreboard getScoreboard() {
-        return this.scoreboard;
+        return scoreboard;
     }
 
-    public void build(Player player) {
-        player.setScoreboard(this.scoreboard);
+    public Objective getObjective() {
+        return objective;
     }
 
-    private String[] splitStringLine(String s) {
-        StringBuilder sb = new StringBuilder(s.substring(0, Math.min(s.length(), 16)));
-        StringBuilder sb2 = new StringBuilder((s.length() > 16) ? s.substring(16) : "");
-        if (sb.toString().length() > 1 && sb.charAt(sb.length() - 1) == '§') {
-            sb.deleteCharAt(sb.length() - 1);
-            sb2.insert(0, '§');
+    public void setName(String title) {
+        objective.setDisplayName(title);
+    }
+
+    public BiMap<String, ScoreBoardEntry> getEntries() {
+        return HashBiMap.create(entries);
+    }
+
+    public ScoreBoardEntry getEntry(String key) {
+        return entries.get(key);
+    }
+
+    public ScoreBoardEntry add(String name, int value) {
+        return add((String) null, name, value, true);
+    }
+
+    public ScoreBoardEntry add(Enum key, String name, int value) {
+        return add(key.name(), name, value);
+    }
+
+    public ScoreBoardEntry add(String key, String name, int value) {
+        return add(key, name, value, false);
+    }
+
+    public ScoreBoardEntry add(Enum key, String name, int value, boolean overwrite) {
+        return add(key.name(), name, value, overwrite);
+    }
+
+    public ScoreBoardEntry add(String key, String name, int value, boolean overwrite) {
+        if (key == null && !contains(name)) {
+            throw new IllegalArgumentException("Entry could not be found with the supplied name and no key was supplied");
         }
-        StringBuilder string = new StringBuilder();
-        for (int i = 0; i < sb.toString().length(); ++i) {
-            if (sb.toString().charAt(i) == '§' && i < sb.toString().length() - 1) {
-                string.append("§").append(sb.toString().charAt(i + 1));
+
+        if (overwrite && contains(name)) {
+            ScoreBoardEntry entry = getEntryByName(name);
+            if (key != null && entries.get(key) != entry) {
+                throw new IllegalArgumentException("Supplied key references a different score than the one to be overwritten");
+            }
+
+            entry.setValue(value);
+            return entry;
+        }
+
+        if (entries.get(key) != null) {
+            throw new IllegalArgumentException("Score already exists with that key");
+        }
+
+        int count = 0;
+        String origName = name;
+        if (!overwrite) {
+            Map<Integer, String> created = create(name);
+            for (Entry<Integer, String> entry : created.entrySet()) {
+                count = entry.getKey();
+                name = entry.getValue();
             }
         }
-        String string2 = String.valueOf(sb2);
-        if (sb.length() > 14) {
-            string2 = ((string.length() == 0) ? ("§" + string2) : (string + string2));
-        }
-        return new String[]{(sb.toString().length() > 16) ? sb.toString().substring(0, 16) : sb.toString(), (string2.length() > 16) ? string2.substring(0, 16) : string2};
+
+        ScoreBoardEntry entry = new ScoreBoardEntry(key, this, value, origName, count);
+        entry.update(name);
+        entries.put(key, entry);
+        return entry;
     }
 
+    public void remove(String key) {
+        remove(getEntry(key));
+    }
+
+    public void remove(ScoreBoardEntry entry) {
+        if (entry.getScoreBoardBuilder() != this) {
+            throw new IllegalArgumentException("Supplied entry does not belong to this Scoreboard");
+        }
+
+        String key = entries.inverse().get(entry);
+        if (key != null) {
+            entries.remove(key);
+        }
+
+        entry.remove();
+    }
+
+    private Map<Integer, String> create(String name) {
+        int count = 0;
+        while (contains(name)) {
+            name = ChatColor.RESET + name;
+            count++;
+        }
+
+        if (name.length() > 48) {
+            name = name.substring(0, 47);
+        }
+
+        if (contains(name)) {
+            throw new IllegalArgumentException("Could not find a suitable replacement name for '" + name + "'");
+        }
+
+        Map<Integer, String> created = new HashMap<>();
+        created.put(count, name);
+        return created;
+    }
+
+    public int getTeamId() {
+        return teamId++;
+    }
+
+    public ScoreBoardEntry getEntryByName(String name) {
+        for (ScoreBoardEntry entry : entries.values()) {
+            if (entry.getName().equals(name)) {
+                return entry;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean contains(String name) {
+        for (ScoreBoardEntry entry : entries.values()) {
+            if (entry.getName().equals(name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void add(Player player) {
+        player.setScoreboard(scoreboard);
+    }
+
+    public Enums.ScoreboardType getScoreboardType() {
+        return scoreboardType;
+    }
 }

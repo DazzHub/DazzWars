@@ -20,19 +20,17 @@ public class IMenuManager {
     }
 
     public void loadFiles() {
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
-            loadDefaultFiles();
+        loadDefaultFiles();
 
-            File[] fileList = new File(main.getDataFolder(), "Inventory/Menu").listFiles();
+        File[] fileList = new File(main.getDataFolder(), "Inventory/Menu").listFiles();
 
-            if (fileList == null) return;
+        if (fileList == null) return;
 
-            for (File file : fileList) {
-                if (file.isDirectory()) {
-                    menuLangs.put(file.getName(), new IMenuLang(main, file.getName()));
-                }
+        for (File file : fileList) {
+            if (file.isDirectory()) {
+                menuLangs.put(file.getName(), new IMenuLang(main, file.getName()));
             }
-        });
+        }
     }
 
     private void loadDefaultFiles(){

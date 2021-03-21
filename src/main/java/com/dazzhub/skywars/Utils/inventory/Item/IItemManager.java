@@ -32,19 +32,17 @@ public class IItemManager {
     }
 
     public void loadFiles() {
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
-            loadDefaultFiles();
+        loadDefaultFiles();
 
-            File[] fileList = new File(main.getDataFolder(), "Inventory/Player").listFiles();
+        File[] fileList = new File(main.getDataFolder(), "Inventory/Player").listFiles();
 
-            if (fileList == null) return;
+        if (fileList == null) return;
 
-            for (File file : fileList) {
-                if (file.isDirectory()) {
-                    itemLangs.put(file.getName(), new IItemLang(main, file.getName()));
-                }
+        for (File file : fileList) {
+            if (file.isDirectory()) {
+                itemLangs.put(file.getName(), new IItemLang(main, file.getName()));
             }
-        });
+        }
     }
 
     private void loadDefaultFiles() {
