@@ -46,7 +46,7 @@ public class IHoloChest {
 
         IHolograms holo = new IHolograms(loc, new ArrayList<>());
 
-        holo.getLines().add(c(main.getSettings().getString("refillHolo.line1")).replace("%time%", refill()));
+        holo.getLines().add(c(main.getSettings().getString("refillHolo.line1")).replace("%time%", arena.refillTimer()));
         holo.getLines().add(c("&f"));
 
         holo.spawn();
@@ -71,7 +71,7 @@ public class IHoloChest {
                     continue;
                 }
 
-                holo.getLines().set(0, c(main.getSettings().getString("refillHolo.line1")).replace("%time%", refill()));
+                holo.getLines().set(0, c(main.getSettings().getString("refillHolo.line1")).replace("%time%", arena.refillTimer()));
 
                 Location loc1 = locUtils.stringToLocNoCenter(location);
 
@@ -87,7 +87,7 @@ public class IHoloChest {
                 Chest chest = (Chest) loc1.getBlock().getState();
 
                 if (checkInv(chest.getBlockInventory())) {
-                    holo.getLines().set(1, c(main.getSettings().getString("refillHolo.line2")).replace("%time%", refill()));
+                    holo.getLines().set(1, c(main.getSettings().getString("refillHolo.line2")).replace("%time%", arena.refillTimer()));
                 } else {
                     holo.getLines().set(1, c("&f"));
                 }
@@ -127,16 +127,6 @@ public class IHoloChest {
 
         return empty;
 
-    }
-
-    private String refill(){
-        if (arena.getRefillGame() != null && arena.getRefillGame().getTimer() >= 1) {
-            return String.valueOf(arena.calculateTime(arena.getRefillGame().getTimer()));
-        } else if (arena.getRefillGame() == null && !arena.getRefillTime().isEmpty()) {
-            return String.valueOf(arena.calculateTime(0));
-        } else {
-            return "0";
-        }
     }
 
     private String c(String msg) {

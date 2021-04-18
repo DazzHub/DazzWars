@@ -1,5 +1,6 @@
 package com.dazzhub.skywars.Arena;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.dazzhub.skywars.Arena.Menu.SpectatorMenu;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addPlayerEvent;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.addSpectatorEvent;
@@ -29,19 +30,13 @@ import com.dazzhub.skywars.Utils.events.tntfall.eventTNT;
 import com.dazzhub.skywars.Utils.holoChest.IHoloChest;
 import com.dazzhub.skywars.Utils.signs.arena.ISign;
 import com.dazzhub.skywars.Utils.vote.VotesSystem;
-import com.cryptomorin.xseries.XMaterial;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.inventory.ItemStack;
@@ -68,6 +63,7 @@ public class Arena implements Cloneable {
 
     /* Checks */
     private boolean isUsable;
+    private boolean forceStart;
 
     private int StartingGame;
     private int FinishedGame;
@@ -181,6 +177,7 @@ public class Arena implements Cloneable {
         this.killers = new HashMap<>();
 
         /* RESET MODE*/
+        this.forceStart = false;
         this.totalTime = -1;
         this.resetArena = Enums.ResetArena.valueOf(main.getSettings().getString("ResetArena"));
 
@@ -228,6 +225,7 @@ public class Arena implements Cloneable {
         this.totalTime = -1;
         this.gameStatus = Enums.GameStatus.DISABLED;
         this.isUsable = true;
+        this.forceStart = false;
 
         /* MENU SPECTATOR */
         this.spectatorMenu = new SpectatorMenu(this);
@@ -730,9 +728,33 @@ public class Arena implements Cloneable {
             return config.getString("Messages.ScoreBoard.Refill", "Error ScoreBoard.Refill").replace("%time%", String.valueOf(calculateTime(refillGame.getTimer())));
         } else if (refillGame == null && !refillTime.isEmpty()) {
             return config.getString("Messages.ScoreBoard.Refill", "Error ScoreBoard.Refill").replace("%time%", String.valueOf(calculateTime(0)));
-        } else  if (gameStatus.equals(Enums.GameStatus.RESTARTING)) {
+        }
+
+        else if (eventBorder != null && eventBorder.getTimer() >= 1) {
+            return config.getString("Messages.ScoreBoard.Border", "Error ScoreBoard.Border").replace("%time%", String.valueOf(calculateTime(eventBorder.getTimer())));
+        }
+
+        else if (eventDragon != null && eventDragon.getTimer() >= 1) {
+            return config.getString("Messages.ScoreBoard.Dragon", "Error ScoreBoard.Dragon").replace("%time%", String.valueOf(calculateTime(eventDragon.getTimer())));
+        }
+
+        else if (eventParty != null && eventParty.getTimer() >= 1) {
+            return config.getString("Messages.ScoreBoard.Party", "Error ScoreBoard.Party").replace("%time%", String.valueOf(calculateTime(eventParty.getTimer())));
+        }
+
+        else if (eventStorm != null && eventStorm.getTimer() >= 1) {
+            return config.getString("Messages.ScoreBoard.Storm", "Error ScoreBoard.Storm").replace("%time%", String.valueOf(calculateTime(eventStorm.getTimer())));
+        }
+
+        else if (eventTNT != null && eventTNT.getTimer() >= 1) {
+            return config.getString("Messages.ScoreBoard.TNT", "Error ScoreBoard.TNT").replace("%time%", String.valueOf(calculateTime(eventTNT.getTimer())));
+        }
+
+        else  if (gameStatus.equals(Enums.GameStatus.RESTARTING)) {
             return config.getString("Messages.ScoreBoard.EndGame", "Error ScoreBoard.EndGame");
-        } else {
+        }
+
+        else {
             return config.getString("Messages.ScoreBoard.None", "ScoreBoard.None");
         }
     }
@@ -790,6 +812,16 @@ public class Arena implements Cloneable {
 
     public String parseChat(GamePlayer gamePlayer, String msg){
         return PlaceholderAPI.setPlaceholders(gamePlayer.getPlayer(), c(msg.startsWith("%center%") ? CenterMessage.centerMessage(msg.replace("%center%", "")) : c(msg)));
+    }
+
+    public String refillTimer(){
+        if (getRefillGame() != null && getRefillGame().getTimer() >= 1) {
+            return String.valueOf(calculateTime(getRefillGame().getTimer()));
+        } else if (getRefillGame() == null && !getRefillTime().isEmpty()) {
+            return String.valueOf(calculateTime(0));
+        } else {
+            return "0";
+        }
     }
 
 }

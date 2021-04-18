@@ -43,24 +43,26 @@ public class ITopManager {
 
         if (!signs.getString("Top", "").isEmpty()) {
 
-            signs.getConfigurationSection("Top").getKeys(false).forEach(key ->{
+            try {
+                signs.getConfigurationSection("Top").getKeys(false).forEach(key ->{
 
-                String[] type = signs.getString("Top." + key).split(";");
+                    String[] type = signs.getString("Top." + key).split(";");
 
-                Location location = ISignLocation.getLocation(type[0]);
+                    Location location = ISignLocation.getLocation(type[0]);
 
-                String[] lines = Stream.of(type[1].split(",")).toArray(String[]::new);
+                    String[] lines = Stream.of(type[1].split(",")).toArray(String[]::new);
 
-                if (location.getWorld().getBlockAt(location) == null){
+                    if (location.getWorld() == null) return;
+                    if (location.getWorld().getBlockAt(location) == null) return;
 
-                    return;
-                }
+                    Block block = location.getWorld().getBlockAt(location);
+                    Sign sign = (Sign) block.getState();
 
-                Block block = location.getWorld().getBlockAt(location);
-                Sign sign = (Sign) block.getState();
+                    createSigns(null, sign, lines, false);
+                });
+            } catch (Exception ignored){
 
-                createSigns(null, sign, lines, false);
-            });
+            }
         }
 
         updateTop();
@@ -160,40 +162,41 @@ public class ITopManager {
             @Override
             public void run() {
 
-                for (Player p : Bukkit.getOnlinePlayers()){
+                for (Player p : Bukkit.getOnlinePlayers()) {
                     GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
                     if (gamePlayer == null) continue;
 
-                    if (gamePlayer.getMenu() != null){
+                    if (gamePlayer.getMenu() != null) {
                         gamePlayer.getMenu().addItems(gamePlayer.getPlayer());
                     }
 
                     ScoreBoardBuilder scoreboard = gamePlayer.getScoreBoardBuilder();
 
-                    if (scoreboard == null) continue;
+                    if (scoreboard != null) {
 
-                    if (scoreboard.getScoreboardType() == Enums.ScoreboardType.LOBBY) {
-                        if (!main.getSettings().getStringList("lobbies.onScoreboard").contains(p.getWorld().getName())){
-                            return;
+                        if (scoreboard.getScoreboardType() == Enums.ScoreboardType.LOBBY) {
+                            if (!main.getSettings().getStringList("lobbies.onScoreboard").contains(p.getWorld().getName())) {
+                                return;
+                            }
                         }
-                    }
 
-                    Configuration config = main.getPlayerManager().getPlayer(p.getUniqueId()).getScoreboardMessage();
-                    scoreboard.setName(main.getScoreBoardAPI().charsLobby(p, config.getString(scoreboard.getScoreboardType().toString() + ".title")));
+                        Configuration config = main.getPlayerManager().getPlayer(p.getUniqueId()).getScoreboardMessage();
+                        scoreboard.setName(main.getScoreBoardAPI().charsLobby(p, config.getString(scoreboard.getScoreboardType().toString() + ".title")));
 
-                    int line = config.getStringList(scoreboard.getScoreboardType().toString() + ".lines").size();
+                        int line = config.getStringList(scoreboard.getScoreboardType().toString() + ".lines").size();
 
-                    for (String s : config.getStringList(scoreboard.getScoreboardType().toString() + ".lines")) {
-                        scoreboard.getEntry(String.valueOf(line)).update(main.getScoreBoardAPI().charsLobby(p, s));
-                        line--;
-                    }
+                        for (String s : config.getStringList(scoreboard.getScoreboardType().toString() + ".lines")) {
+                            scoreboard.updateScore(main.getScoreBoardAPI().charsLobby(p, s), line);
+                            line--;
+                        }
 
-                    if (gamePlayer.isInArena()){
-                        if (scoreboard.isHealth()) scoreboard.updatelife(gamePlayer.getArena());
-                        if (scoreboard.isSpectator()) scoreboard.updateSpectator(gamePlayer.getArena());
-                        if (scoreboard.isGamePlayers()) scoreboard.updateEnemy(gamePlayer, gamePlayer.getArena());
-                        if (scoreboard.isTeams()) scoreboard.updateTeams(gamePlayer);
+                        if (gamePlayer.isInArena()) {
+                            if (scoreboard.isHealth()) scoreboard.updatelife(gamePlayer.getArena());
+                            if (scoreboard.isSpectator()) scoreboard.updateSpectator(gamePlayer.getArena());
+                            if (scoreboard.isGamePlayers()) scoreboard.updateEnemy(gamePlayer, gamePlayer.getArena());
+                            if (scoreboard.isTeams()) scoreboard.updateTeams(gamePlayer);
+                        }
                     }
                 }
 

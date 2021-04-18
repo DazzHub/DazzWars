@@ -22,6 +22,9 @@ public class VaultAPI extends AbstractEconomy
 
     public double getBalance(String name) {
         Player p = Bukkit.getPlayer(name);
+
+        if (Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId()) == null) return 0.0;
+
         GamePlayer gamePlayer = Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId());
 
         if (gamePlayer == null) return 0.0;

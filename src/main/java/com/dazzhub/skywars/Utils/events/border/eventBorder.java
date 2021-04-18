@@ -8,4 +8,6 @@ public interface eventBorder {
 
     void stopTimer();
 
+    int getTimer();
+
 }

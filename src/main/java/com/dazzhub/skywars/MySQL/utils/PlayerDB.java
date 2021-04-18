@@ -1,5 +1,6 @@
 package com.dazzhub.skywars.MySQL.utils;
 
+import com.dazzhub.skywars.Listeners.Custom.ConnectionsEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.MySQL;
 import com.dazzhub.skywars.MySQL.getPlayerDB;
@@ -9,6 +10,7 @@ import com.dazzhub.skywars.Utils.vault.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -114,27 +116,12 @@ public class PlayerDB implements getPlayerDB {
             addNewPlayerTeam(p, gamePlayer);
             addNewPlayerRanked(p, gamePlayer);
 
-            main.getPlayerManager().addPlayer(p.getUniqueId(), gamePlayer);
+            Bukkit.getScheduler().runTask(main, () -> {
+                main.getPlayerManager().addPlayer(p.getUniqueId(), gamePlayer);
+                Bukkit.getServer().getPluginManager().callEvent(new ConnectionsEvent(gamePlayer));
+            });
         } else {
             alreadyExistPlayer(p);
-        }
-
-        Bukkit.getScheduler().runTask(main, () -> {
-            if (main.getLobbyManager().getLobby() != null){
-                p.teleport(main.getLobbyManager().getLobby());
-            }
-
-            main.getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY,false,false, false,false);
-            main.getHologramsManager().loadHologram(p);
-
-        });
-
-        GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-
-        if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
-            if (gamePlayer != null){
-                main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), false);
-            }
         }
     }
 
@@ -434,7 +421,10 @@ public class PlayerDB implements getPlayerDB {
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-        main.getPlayerManager().addPlayer(p.getUniqueId(), gamePlayer);
+        Bukkit.getScheduler().runTask(main, () -> {
+            main.getPlayerManager().addPlayer(p.getUniqueId(), gamePlayer);
+            Bukkit.getServer().getPluginManager().callEvent(new ConnectionsEvent(gamePlayer));
+        });
     }
 
     @Override

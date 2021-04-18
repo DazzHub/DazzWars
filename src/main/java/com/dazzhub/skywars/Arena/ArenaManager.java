@@ -171,11 +171,19 @@ public class ArenaManager {
     }
 
     public void saveArena(Player p, String nameArena, String nameWorld) {
+        if (main.getLobbyManager().getLobby() != null) {
+            p.teleport(main.getLobbyManager().getLobby());
+        } else {
+          p.kickPlayer(c("&c&lFIRST SET LOBBY!"));
+        }
+
         switch (Enums.ResetArena.valueOf(main.getSettings().getString("ResetArena"))) {
             case RESETWORLD:
             case RESETCHUNK: {
                 File map = new File(main.getServer().getWorldContainer(), nameWorld);
                 File foldermaps = new File(main.getDataFolder(), "Arenas/" + nameArena + "/" + nameWorld);
+
+                Bukkit.getServer().unloadWorld(nameWorld, true);
 
                 main.getResetWorld().copyDir(map, foldermaps);
                 break;

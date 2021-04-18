@@ -6,4 +6,6 @@ public interface eventParty {
 
     void stopTimer();
 
+    int getTimer();
+
 }

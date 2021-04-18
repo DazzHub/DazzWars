@@ -37,7 +37,7 @@ public class ScoreBoardAPI {
         int line = config.getStringList(scoreboard.getScoreboardType().toString() + ".lines").size();
 
         for (String s : config.getStringList(scoreboard.getScoreboardType().toString() + ".lines")) {
-            scoreboard.add(String.valueOf(line), main.getScoreBoardAPI().charsLobby(p, s), line);
+            scoreboard.createScore(main.getScoreBoardAPI().charsLobby(p, s), line);
             line--;
         }
 

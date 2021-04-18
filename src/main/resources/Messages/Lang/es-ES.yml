@@ -213,8 +213,13 @@ Messages:
   ScoreBoard:
     Waiting: 'Esperando'
     Refill: 'Relleno: %time%'
-    EndGame: 'Fin del juego'
+    Border: 'Border: %time%'
+    Dragon: 'Dragon: %time%'
+    Party: 'Party: %time%'
+    Storm: 'Storm: %time%'
+    TNT: 'TNT: %time%'
     None: 'Ninguno'
+    EndGame: 'Fin del juego'
     Team:
       enabled: true
       killCount: true

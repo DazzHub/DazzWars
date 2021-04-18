@@ -78,6 +78,11 @@ public class Dragon implements eventDragon {
         dragon.remove();
     }
 
+    @Override
+    public int getTimer() {
+        return timer;
+    }
+
     private String c(final String c) {
         return ChatColor.translateAlternateColorCodes('&', c);
     }

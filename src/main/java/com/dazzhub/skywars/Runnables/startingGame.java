@@ -22,6 +22,7 @@ public class startingGame implements Runnable {
     private Arena arena;
     private RunnableFactory factory;
     private int timer;
+    private boolean checkForce;
 
     public startingGame(RunnableFactory factory, Arena arena) {
         this.main = Main.getPlugin();
@@ -29,10 +30,16 @@ public class startingGame implements Runnable {
         this.factory = factory;
         this.arena = arena;
         this.timer = arena.getStartingGame();
+        this.checkForce = true;
     }
 
     @Override
     public void run() {
+
+        if (this.checkForce && this.arena.isForceStart() && this.arena.checkStart()){
+            this.timer = 5;
+            this.checkForce = false;
+        }
 
         if (!this.arena.checkStart()) {
             this.cancel();
@@ -46,6 +53,9 @@ public class startingGame implements Runnable {
             arena.setGameStatus(Enums.GameStatus.WAITING);
             this.timer = arena.getStartingGame();
             this.arena.setUsable(false);
+
+            this.arena.setForceStart(false);
+            this.checkForce = true;
         }
 
 

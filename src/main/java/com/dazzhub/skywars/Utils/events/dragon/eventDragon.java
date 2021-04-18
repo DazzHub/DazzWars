@@ -5,4 +5,6 @@ public interface eventDragon {
     void startEvent();
 
     void killDragon();
+
+    int getTimer();
 }

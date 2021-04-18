@@ -199,6 +199,13 @@ public class Lines {
 
                 addDefaultLang("Messages.ScoreBoard.Waiting", "Waiting", lang);
                 addDefaultLang("Messages.ScoreBoard.Refill", "Refill: %time%", lang);
+
+                addDefaultLang("Messages.ScoreBoard.Border", "Border: %time%", lang);
+                addDefaultLang("Messages.ScoreBoard.Dragon", "Dragon: %time%", lang);
+                addDefaultLang("Messages.ScoreBoard.Party", "Party: %time%", lang);
+                addDefaultLang("Messages.ScoreBoard.Storm", "Storm: %time%", lang);
+                addDefaultLang("Messages.ScoreBoard.TNT", "TNT: %time%", lang);
+
                 addDefaultLang("Messages.ScoreBoard.EndGame", "End of game", lang);
                 addDefaultLang("Messages.ScoreBoard.None", "None", lang);
                 addDefaultLang("Messages.ScoreBoard.Team.enabled", true, lang);
@@ -355,7 +362,7 @@ public class Lines {
             addDefaultSettings("Inventory.Arena.Ranked", "arenaranked");
             addDefaultSettings("Inventory.Arena.Spectator", "spectator");
 
-            addDefaultSettings("ResetArena", "RESETCHUNK");
+            addDefaultSettings("ResetArena", "RESETWORLD");
             addDefaultSettings("SWM-TYPE", "file");
 
             addDefaultSettings("ReTeleportCage", 2);

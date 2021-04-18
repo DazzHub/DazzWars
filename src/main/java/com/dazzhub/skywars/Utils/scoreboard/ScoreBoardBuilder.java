@@ -4,8 +4,10 @@ import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Arena.ArenaTeam;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
+import com.dazzhub.skywars.Utils.CenterMessage;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
+import com.google.common.base.Splitter;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import lombok.Getter;
@@ -15,23 +17,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.scoreboard.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Getter
 public class ScoreBoardBuilder {
 
     private final Scoreboard scoreboard;
     private final Objective objective;
-    private final BiMap<String, ScoreBoardEntry> entries;
 
-    private int teamId;
+    private final BiMap<Integer, ScoreBoardEntry> entries;
 
     private Objective nameHealthObj;
     private Objective tabObjective;
@@ -49,7 +47,6 @@ public class ScoreBoardBuilder {
         this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         this.entries = HashBiMap.create();
-        this.teamId = 1;
 
         this.health = health;
         this.spectator = spectator;
@@ -67,7 +64,7 @@ public class ScoreBoardBuilder {
         GamePlayer gamePlayer = Main.getPlugin().getPlayerManager().getPlayer(p.getUniqueId());
 
         if (!gamePlayer.getLangMessage().getBoolean("Messages.ScoreBoard.Team.enabled", true)){
-           return;
+            return;
         }
 
         if (spectator) {
@@ -180,136 +177,155 @@ public class ScoreBoardBuilder {
         return PlaceholderAPI.setPlaceholders(gamePlayer.getPlayer(), ChatColor.translateAlternateColorCodes('&', c));
     }
 
-    public Scoreboard getScoreboard() {
-        return scoreboard;
+    public void createScore(String name, int value) {
+
+        if (name.isEmpty()){
+            objective.getScore(getEntry(value)).setScore(value);
+            return;
+        }
+
+        if (name.length() <= 16){
+            Team team = getScoreboard().registerNewTeam("score-" + value);
+            team.setPrefix(name);
+
+            Score score;
+            score = getObjective().getScore(name);
+            score.setScore(value);
+
+            entries.put(value, new ScoreBoardEntry(name, value, team, score));
+            return;
+        }
+
+        Team team = getScoreboard().registerNewTeam("score-" + value);
+        Iterator<String> iterator = Splitter.fixedLength(16).split(name).iterator();
+
+        team.setPrefix(iterator.next());
+        String entry = iterator.next();
+
+        if (name.length() > 32) {
+            team.setSuffix(iterator.next());
+        }
+
+        team.addEntry(entry);
+
+        Score score;
+        score = getObjective().getScore(entry);
+        score.setScore(value);
+
+        entries.put(value, new ScoreBoardEntry(name, value, team, score));
     }
 
-    public Objective getObjective() {
-        return objective;
+    public void updateScore(String name, int value){
+
+        if (entries.get(value) != null){
+            ScoreBoardEntry entryC = entries.get(value);
+
+            if (entryC.getName().equalsIgnoreCase(name)) return;
+
+            getScoreboard().resetScores(entryC.getScore().getEntry());
+            entryC.getTeam().unregister();
+
+            if (name.length() <= 16){
+                Team team = getScoreboard().registerNewTeam("score-" + value);
+                team.setPrefix(name);
+
+                Score score;
+                score = getObjective().getScore(name);
+                score.setScore(value);
+
+                entries.replace(value, new ScoreBoardEntry(name, value, team, score));
+                return;
+            }
+
+            Team team = getScoreboard().registerNewTeam("score-" + value);
+            Iterator<String> iterator = Splitter.fixedLength(16).split(name).iterator();
+
+            team.setPrefix(iterator.next());
+            String entry = iterator.next();
+
+            if (name.length() > 32) {
+                team.setSuffix(iterator.next());
+            }
+
+            team.addEntry(entry);
+
+            Score score;
+            score = getObjective().getScore(entry);
+            score.setScore(value);
+
+            entries.replace(value, new ScoreBoardEntry(name, value, team, score));
+        }
     }
 
     public void setName(String title) {
         objective.setDisplayName(title);
     }
 
-    public BiMap<String, ScoreBoardEntry> getEntries() {
-        return HashBiMap.create(entries);
-    }
-
-    public ScoreBoardEntry getEntry(String key) {
-        return entries.get(key);
-    }
-
-    public ScoreBoardEntry add(String name, int value) {
-        return add((String) null, name, value, true);
-    }
-
-    public ScoreBoardEntry add(Enum key, String name, int value) {
-        return add(key.name(), name, value);
-    }
-
-    public ScoreBoardEntry add(String key, String name, int value) {
-        return add(key, name, value, false);
-    }
-
-    public ScoreBoardEntry add(Enum key, String name, int value, boolean overwrite) {
-        return add(key.name(), name, value, overwrite);
-    }
-
-    public ScoreBoardEntry add(String key, String name, int value, boolean overwrite) {
-        if (key == null && !contains(name)) {
-            throw new IllegalArgumentException("Entry could not be found with the supplied name and no key was supplied");
+    private String getEntry(Integer n) {
+        if (n == 0) {
+            return "§0";
         }
-
-        if (overwrite && contains(name)) {
-            ScoreBoardEntry entry = getEntryByName(name);
-            if (key != null && entries.get(key) != entry) {
-                throw new IllegalArgumentException("Supplied key references a different score than the one to be overwritten");
-            }
-
-            entry.setValue(value);
-            return entry;
+        if (n == 1) {
+            return "§1";
         }
-
-        if (entries.get(key) != null) {
-            throw new IllegalArgumentException("Score already exists with that key");
+        if (n == 2) {
+            return "§2";
         }
-
-        int count = 0;
-        String origName = name;
-        if (!overwrite) {
-            Map<Integer, String> created = create(name);
-            for (Entry<Integer, String> entry : created.entrySet()) {
-                count = entry.getKey();
-                name = entry.getValue();
-            }
+        if (n == 3) {
+            return "§3";
         }
-
-        ScoreBoardEntry entry = new ScoreBoardEntry(key, this, value, origName, count);
-        entry.update(name);
-        entries.put(key, entry);
-        return entry;
+        if (n == 4) {
+            return "§4";
+        }
+        if (n == 5) {
+            return "§5";
+        }
+        if (n == 6) {
+            return "§6";
+        }
+        if (n == 7) {
+            return "§7";
+        }
+        if (n == 8) {
+            return "§8";
+        }
+        if (n == 9) {
+            return "§9";
+        }
+        if (n == 10) {
+            return "§a";
+        }
+        if (n == 11) {
+            return "§b";
+        }
+        if (n == 12) {
+            return "§c";
+        }
+        if (n == 13) {
+            return "§d";
+        }
+        if (n == 14) {
+            return "§e";
+        }
+        if (n == 15) {
+            return "§f";
+        }
+        return "";
     }
 
-    public void remove(String key) {
-        remove(getEntry(key));
+    public Scoreboard getScoreboard() {
+        return scoreboard;
     }
 
-    public void remove(ScoreBoardEntry entry) {
-        if (entry.getScoreBoardBuilder() != this) {
-            throw new IllegalArgumentException("Supplied entry does not belong to this Scoreboard");
+    public String maxChars(int n, String s) {
+        if (ChatColor.translateAlternateColorCodes('&', s).length() > n) {
+            return s.substring(0, n);
         }
-
-        String key = entries.inverse().get(entry);
-        if (key != null) {
-            entries.remove(key);
-        }
-
-        entry.remove();
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 
-    private Map<Integer, String> create(String name) {
-        int count = 0;
-        while (contains(name)) {
-            name = ChatColor.RESET + name;
-            count++;
-        }
-
-        if (name.length() > 48) {
-            name = name.substring(0, 47);
-        }
-
-        if (contains(name)) {
-            throw new IllegalArgumentException("Could not find a suitable replacement name for '" + name + "'");
-        }
-
-        Map<Integer, String> created = new HashMap<>();
-        created.put(count, name);
-        return created;
-    }
-
-    public int getTeamId() {
-        return teamId++;
-    }
-
-    public ScoreBoardEntry getEntryByName(String name) {
-        for (ScoreBoardEntry entry : entries.values()) {
-            if (entry.getName().equals(name)) {
-                return entry;
-            }
-        }
-
-        return null;
-    }
-
-    public boolean contains(String name) {
-        for (ScoreBoardEntry entry : entries.values()) {
-            if (entry.getName().equals(name)) {
-                return true;
-            }
-        }
-
-        return false;
+    public Objective getObjective() {
+        return objective;
     }
 
     public void add(Player player) {

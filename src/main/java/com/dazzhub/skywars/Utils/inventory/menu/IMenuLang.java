@@ -77,7 +77,13 @@ public class IMenuLang {
         String skullPerms = null;
 
         if (config.getString("menu-settings.permissionView.ICON-ITEM") != null) {
-            materialview = config.isInt("menu-settings.permissionView.ICON-ITEM") ? Material.getMaterial(config.getInt("menu-settings.permissionView.ICON-ITEM")) : Material.getMaterial(config.getString("menu-settings.permissionView.ICON-ITEM"));
+
+            if (config.getString("menu-settings.permissionView.ICON-ITEM","").isEmpty()) {
+                materialview = config.isInt("menu-settings.permissionView.ICON-ITEM") ? Material.getMaterial(config.getInt("menu-settings.permissionView.ICON-ITEM")) : Material.getMaterial(config.getString("menu-settings.permissionView.ICON-ITEM"));
+            } else {
+                materialview = Material.BEDROCK;
+            }
+            
             dataView = Short.parseShort(config.getString("menu-settings.permissionView.DATA-VALUE"));
             loreView = config.getStringList("menu-settings.permissionView.DESCRIPTION");
             enableIcon = config.getBoolean("menu-settings.permissionView.ICON-VIEW");

@@ -8,7 +8,7 @@ MySQL:
 #Upon entering, it will show you an update announcement
 checkVersion: true
 #Modo reset arena
-ResetArena: 'RESETCHUNK' #SLIMEWORLDMANAGER #RESETWORLD
+ResetArena: 'RESETWORLD' #SLIMEWORLDMANAGER #RESETCHUNK
 SWM-TYPE: 'file' #file, mysql, mongodb
 #Join player save dates in mysql/sql
 Default:

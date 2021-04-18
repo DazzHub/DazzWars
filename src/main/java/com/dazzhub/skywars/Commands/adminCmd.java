@@ -63,7 +63,7 @@ public class adminCmd implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("skywars") || cmd.getName().equalsIgnoreCase("sw")){
+        if (cmd.getName().equalsIgnoreCase("skywars") || cmd.getName().equalsIgnoreCase("sw") || cmd.getName().equalsIgnoreCase("dw")){
 
             if (args.length < 1){
                 this.helpCmd(sender);

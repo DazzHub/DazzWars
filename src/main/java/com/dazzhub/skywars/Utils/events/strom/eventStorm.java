@@ -6,4 +6,6 @@ public interface eventStorm {
 
     void stopTimer();
 
+    int getTimer();
+
 }

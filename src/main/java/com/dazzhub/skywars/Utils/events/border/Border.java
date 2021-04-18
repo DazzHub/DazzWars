@@ -118,4 +118,8 @@ public class Border implements eventBorder {
         task = 0;
     }
 
+    @Override
+    public int getTimer() {
+        return timer;
+    }
 }

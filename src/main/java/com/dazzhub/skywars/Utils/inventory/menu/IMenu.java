@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -69,6 +70,7 @@ public class IMenu implements Listener {
         if (this.inv == null) return;
         if (!e.getInventory().equals(this.inv)) return;
         if (!(e.getWhoClicked() instanceof Player)) return;
+        if (e.getClickedInventory() != e.getView().getTopInventory()) return;
 
         Player p = (Player) e.getWhoClicked();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());

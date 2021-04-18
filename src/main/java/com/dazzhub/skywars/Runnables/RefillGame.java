@@ -1,21 +1,19 @@
 package com.dazzhub.skywars.Runnables;
 
+import com.cryptomorin.xseries.messages.Titles;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.cryptomorin.xseries.messages.Titles;
-import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.scheduler.BukkitRunnable;
 
 @Getter
 public class RefillGame implements Runnable {
 
-    private RunnableFactory factory;
-    private Arena arena;
+    private final RunnableFactory factory;
+    private final Arena arena;
     private int timer;
 
     public RefillGame(RunnableFactory factory, Arena arena, int timer){
@@ -42,7 +40,7 @@ public class RefillGame implements Runnable {
                 p.sendMessage(c(p.getLangMessage().getString("Messages.RefillTitle.ChatAlert", "Error RefillTitle.ChatAlert")));
             }
 
-            Bukkit.getScheduler().runTask(Main.getPlugin(), () -> arena.fillChests());
+            Bukkit.getScheduler().runTask(Main.getPlugin(), arena::fillChests);
             this.arena.setRefillGame(null);
         }
 

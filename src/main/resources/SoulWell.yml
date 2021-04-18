@@ -1,3 +1,4 @@
+#ACTIONS: console:, coin:, cage:, trail:, kit:, wineffect:, killeffect:
 TypesSoul:
   - 'COMMON:70'
   - 'RARE:20'

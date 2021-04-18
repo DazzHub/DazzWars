@@ -5,7 +5,7 @@ api-version: 1.13
 authors: [DazzHub]
 commands:
   skywars:
-    aliases: ['sw']
+    aliases: ['sw', 'dw']
   join:
   leave:
     aliases: ['quit', 'salir']

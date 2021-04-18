@@ -80,4 +80,9 @@ public class Storm implements eventStorm {
         Bukkit.getScheduler().cancelTask(task);
         task = 0;
     }
+
+    @Override
+    public int getTimer() {
+        return timer;
+    }
 }

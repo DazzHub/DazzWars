@@ -70,4 +70,9 @@ public class TNTFall implements eventTNT{
         Bukkit.getScheduler().cancelTask(task);
         task = 0;
     }
+
+    @Override
+    public int getTimer() {
+        return timer;
+    }
 }

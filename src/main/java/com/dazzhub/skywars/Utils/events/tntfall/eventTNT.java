@@ -6,4 +6,6 @@ public interface eventTNT {
 
     void stopEvent();
 
+    int getTimer();
+
 }
