@@ -99,7 +99,7 @@ public class startingGame implements Runnable {
                     }
                     case RANKED: {
                         main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.INGAMERANKED, true, false, true, true);
-                        main.getCageManager().getCagesRanked().get(p.getCageSolo()).removeCage(p.getArenaTeam().getSpawn());
+                        main.getCageManager().getCagesRanked().get(p.getCageRanked()).removeCage(p.getArenaTeam().getSpawn());
                         if (!p.getKitTeam().equals("none")) {
                             main.getKitManager().giveKit(p.getKitRanked().toLowerCase(), arena.getMode().name(), p.getPlayer(), p);
                         }

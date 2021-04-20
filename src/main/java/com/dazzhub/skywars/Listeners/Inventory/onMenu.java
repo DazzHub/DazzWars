@@ -547,8 +547,10 @@ public class onMenu implements Listener {
                 if (gamePlayer.isInArena()) {
                     Arena arena = gamePlayer.getArena();
 
-                    if (!arena.getVotesSystem().containsVote(p, vote.replace("%", ""))) {
-                        arena.getVotesSystem().addVote(p, Enums.TypeVotes.valueOf(vote.replace("%", "")));
+                    Enums.TypeVotes typeVotes = Enums.TypeVotes.valueOf(vote.toUpperCase().replaceAll("%", ""));
+
+                    if (!arena.getVotesSystem().containsVote(p, typeVotes)) {
+                        arena.getVotesSystem().addVote(p, typeVotes);
 
                         for (GamePlayer game : arena.getPlayers()) {
                             Configuration lang = game.getLangMessage();
@@ -580,7 +582,7 @@ public class onMenu implements Listener {
                                     .replace("%NOFALL%", lang.getString("Messages.TypeVote.Scenario.nofall", "nofall"))
                                     .replace("%NOPROJECTILE%", lang.getString("Messages.TypeVote.Scenario.noprojectile", "noprojectile"))
 
-                                    .replace("%votes%", String.valueOf(arena.getVotesSystem().getVotes(vote.replace("%", ""))))
+                                    .replace("%votes%", String.valueOf(arena.getVotesSystem().getVotes(typeVotes)))
                                     .replace("%NONE%", lang.getString("Messages.TypeVote.none"))
                             );
 

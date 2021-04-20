@@ -419,7 +419,7 @@ public class ArenaManager {
         WorldCreator wc = new WorldCreator(arena);
 
         wc.type (WorldType.FLAT);
-        wc.generatorSettings("36");
+        wc.generatorSettings("0");
         wc.generateStructures(false);
 
         Bukkit.createWorld(wc);

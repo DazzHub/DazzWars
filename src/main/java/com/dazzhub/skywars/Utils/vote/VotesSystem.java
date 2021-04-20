@@ -13,36 +13,36 @@ import java.util.*;
 @Getter
 public class VotesSystem
 {
-    private Arena arena;
+    private final Arena arena;
 
-    private List<UUID> basicChests;
-    private List<UUID> normalChests;
-    private List<UUID> opChests;
-    private List<UUID> customChests;
+    private final List<UUID> basicChests;
+    private final List<UUID> normalChests;
+    private final List<UUID> opChests;
+    private final List<UUID> customChests;
 
-    private List<UUID> dayTime;
-    private List<UUID> sunsetTime;
-    private List<UUID> nightTime;
+    private final List<UUID> dayTime;
+    private final List<UUID> sunsetTime;
+    private final List<UUID> nightTime;
 
-    private List<UUID> normalLife;
-    private List<UUID> doubleLife;
-    private List<UUID> tripleLife;
+    private final List<UUID> normalLife;
+    private final List<UUID> doubleLife;
+    private final List<UUID> tripleLife;
 
-    private List<UUID> noclean;
-    private List<UUID> nofall;
-    private List<UUID> noprojectil;
+    private final List<UUID> noclean;
+    private final List<UUID> nofall;
+    private final List<UUID> noprojectil;
 
-    private List<UUID> dragon;
-    private List<UUID> border;
-    private List<UUID> dropParty;
-    private List<UUID> tntfall;
-    private List<UUID> storm;
+    private final List<UUID> dragon;
+    private final List<UUID> border;
+    private final List<UUID> dropParty;
+    private final List<UUID> tntfall;
+    private final List<UUID> storm;
 
-    private HashMap<String, Integer> checkChest;
-    private HashMap<Enums.TypeVotes, Integer> checkTime;
-    private HashMap<Enums.TypeVotes, Integer> checkLife;
-    private HashMap<Enums.TypeVotes, Integer> checkScenarios;
-    private HashMap<Enums.TypeVotes, Integer> checkEvent;
+    private final HashMap<String, Integer> checkChest;
+    private final HashMap<Enums.TypeVotes, Integer> checkTime;
+    private final HashMap<Enums.TypeVotes, Integer> checkLife;
+    private final HashMap<Enums.TypeVotes, Integer> checkScenarios;
+    private final HashMap<Enums.TypeVotes, Integer> checkEvent;
 
     public VotesSystem(Arena arena) {
         this.arena = arena;
@@ -260,105 +260,107 @@ public class VotesSystem
         }
     }
 
-    public boolean containsVote(Player p2, String Type) {
-        UUID p = p2.getUniqueId();
-        if (Type.equals("noclean") || Type.equals("nofall") || Type.equals("noprojectile")) {
-            return this.noclean.contains(p) || this.nofall.contains(p) || this.noprojectil.contains(p);
-        }
-        if (Type.equals("dragon") || Type.equals("border") || Type.equals("dropparty") || Type.equals("tntfall") || Type.equals("storm")) {
-            return this.dragon.contains(p) || this.border.contains(p) || this.dropParty.contains(p) || this.tntfall.contains(p) || this.storm.contains(p);
-        }
-        if (Type.equalsIgnoreCase("basic") || Type.equalsIgnoreCase("normal") || Type.equalsIgnoreCase("op")) {
-            return this.basicChests.contains(p) || this.normalChests.contains(p) || this.opChests.contains(p);
-        }
-        if (Type.equalsIgnoreCase("day") || Type.equalsIgnoreCase("sunset") || Type.equalsIgnoreCase("night")) {
-            return this.dayTime.contains(p) || this.sunsetTime.contains(p) || this.nightTime.contains(p);
-        }
-        if (Type.equalsIgnoreCase("heart10") || Type.equalsIgnoreCase("heart20") || Type.equalsIgnoreCase("heart30")) {
-            return (this.normalLife.contains(p) || this.doubleLife.contains(p) || this.tripleLife.contains(p));
-        }
-
-        return false;
-    }
-
-    public void removeFromVotes(Player pl) {
-        UUID p = pl.getUniqueId();
-        this.customChests.remove(p);
-        this.basicChests.remove(p);
-        this.normalChests.remove(p);
-        this.opChests.remove(p);
-        this.dayTime.remove(p);
-        this.sunsetTime.remove(p);
-        this.nightTime.remove(p);
-        this.normalLife.remove(p);
-        this.doubleLife.remove(p);
-        this.tripleLife.remove(p);
-        this.noclean.remove(p);
-        this.nofall.remove(p);
-        this.noprojectil.remove(p);
-        this.dragon.remove(p);
-        this.border.remove(p);
-        this.dropParty.remove(p);
-        this.tntfall.remove(p);
-        this.storm.remove(p);
-    }
-
-
-
-    public int getVotes(String Type) {
-        Type = Type.toLowerCase();
+    public boolean containsVote(Player p, Enums.TypeVotes Type) {
         switch (Type) {
-            case "basic": {
+
+            case BASIC:
+            case NORMAL:
+            case OP: {
+                return this.normalChests.contains(p.getUniqueId()) || this.basicChests.contains(p.getUniqueId()) || this.opChests.contains(p.getUniqueId());
+            }
+
+            case DAY:
+            case SUNSET:
+            case NIGHT: {
+                return this.nightTime.contains(p.getUniqueId()) || this.sunsetTime.contains(p.getUniqueId()) || this.dayTime.contains(p.getUniqueId());
+            }
+
+            case HEART10:
+            case HEART20:
+            case HEART30: {
+                return this.normalLife.contains(p.getUniqueId()) || this.doubleLife.contains(p.getUniqueId()) || this.tripleLife.contains(p.getUniqueId());
+            }
+
+            case BORDER:
+            case DRAGON:
+            case DROPPARTY:
+            case STORM:
+            case TNTFALL: {
+                return this.tntfall.contains(p.getUniqueId()) || this.border.contains(p.getUniqueId()) || this.dragon.contains(p.getUniqueId()) || this.dropParty.contains(p.getUniqueId()) || this.storm.contains(p.getUniqueId());
+            }
+
+            case NOCLEAN:
+            case NOFALL:
+            case NOPROJECTILE: {
+                return this.nofall.contains(p.getUniqueId()) || this.noclean.contains(p.getUniqueId()) || this.noprojectil.contains(p.getUniqueId());
+            }
+
+            default: {
+                return false;
+            }
+        }
+
+    }
+
+    public int getVotes(Enums.TypeVotes Type) {
+        switch (Type) {
+
+            case BASIC: {
                 return this.basicChests.size();
             }
-            case "normal": {
+            case NORMAL: {
                 return this.normalChests.size();
             }
-            case "op": {
+            case OP: {
                 return this.opChests.size();
             }
-            case "day": {
-                return this.dayTime.size();
-            }
-            case "heart10": {
+
+            case HEART10: {
                 return this.normalLife.size();
             }
-            case "heart20": {
+            case HEART20: {
                 return this.doubleLife.size();
             }
-            case "heart30": {
+            case HEART30: {
                 return this.tripleLife.size();
             }
-            case "sunset": {
+
+            case DAY: {
+                return this.dayTime.size();
+            }
+            case SUNSET: {
                 return this.sunsetTime.size();
             }
-            case "night": {
+            case NIGHT: {
                 return this.nightTime.size();
             }
-            case "noclean": {
+
+            case NOCLEAN: {
                 return this.noclean.size();
             }
-            case "nofall": {
+            case NOFALL: {
                 return this.nofall.size();
             }
-            case "noprojectile": {
+            case NOPROJECTILE: {
                 return this.noprojectil.size();
             }
-            case "dragon": {
+
+            case DRAGON: {
                 return this.dragon.size();
             }
-            case "border": {
+            case BORDER: {
                 return this.border.size();
             }
-            case "dropparty": {
+            case DROPPARTY: {
                 return this.dropParty.size();
             }
-            case "tntfall": {
+            case TNTFALL: {
                 return this.tntfall.size();
             }
-            case "storm": {
+            case STORM: {
                 return this.storm.size();
             }
+
             default: {
                 return 404;
             }

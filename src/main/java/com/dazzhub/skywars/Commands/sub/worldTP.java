@@ -85,7 +85,7 @@ public class worldTP implements subCommand {
         WorldCreator wc = new WorldCreator(world);
 
         wc.type (WorldType.FLAT);
-        wc.generatorSettings("36");
+        wc.generatorSettings("0");
         wc.generateStructures(false);
 
         Bukkit.createWorld(wc);

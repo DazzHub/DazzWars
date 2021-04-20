@@ -44,6 +44,7 @@ public class adminCmd implements CommandExecutor {
         new SaveMap(main);
         new editMode(main);
         new setSize(main);
+        new forceStart(main);
 
         /* CAGES */
         new addCage(main);
