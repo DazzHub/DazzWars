@@ -409,6 +409,12 @@ public class ArenaManager {
 
     public boolean loadWorld(String arena)
     {
+        if (this.main.getMvWorldManager() != null) {
+            this.main.getMvWorldManager().addWorld(arena, World.Environment.NORMAL, null, WorldType.NORMAL,true, null);
+            this.main.getMvWorldManager().loadWorld(arena);
+            return true;
+        }
+
         if(new File(main.getDataFolder(),arena).exists())
         {
             File f = new File(Bukkit.getWorldContainer(), arena);

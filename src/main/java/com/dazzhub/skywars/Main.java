@@ -38,6 +38,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MVWorldManager;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -107,6 +109,7 @@ public class Main extends JavaPlugin {
     public HashMap<String, ArrayList<SongPlayer>> playingSongs;
 
     private boolean isVaultEnable;
+    private MVWorldManager mvWorldManager;
 
     public Main(){
         this.configUtils = new configUtils();
@@ -217,6 +220,11 @@ public class Main extends JavaPlugin {
 
         if (isVaultEnable){
             new EconomyAPI(this);
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("Multiverse-Core") != null) {
+            MultiverseCore core = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
+            this.mvWorldManager = core.getMVWorldManager();
         }
     }
 
@@ -340,6 +348,10 @@ public class Main extends JavaPlugin {
 
     public IAchievementManager getAchievementManager() {
         return achievementManager;
+    }
+
+    public MVWorldManager getMvWorldManager() {
+        return mvWorldManager;
     }
 
     public String getVersion() {

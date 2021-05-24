@@ -40,6 +40,10 @@ public class resetWorld {
                         unLoadWorld(nameWorld);
                     }
 
+                    if (this.main.getMvWorldManager() != null){
+                        this.main.getMvWorldManager().deleteWorld(nameWorld);
+                    }
+
                     copyDir(source, target);
 
                     Bukkit.getScheduler().runTask(main, () -> {
@@ -88,8 +92,10 @@ public class resetWorld {
         File target = new File(this.main.getServer().getWorldContainer(), worldName);
         World world = Bukkit.getWorld(worldName);
 
-        if (target.isDirectory()) {
-            if (world != null) {
+        if (target.isDirectory() && world != null) {
+            if (this.main.getMvWorldManager() != null) {
+                this.main.getMvWorldManager().unloadWorld(worldName, false);
+            } else {
                 Bukkit.getServer().unloadWorld(world, false);
                 target.delete();
             }

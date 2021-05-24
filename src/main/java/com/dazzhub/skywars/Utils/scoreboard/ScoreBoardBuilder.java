@@ -184,6 +184,23 @@ public class ScoreBoardBuilder {
             return;
         }
 
+        if (!Main.getPlugin().checkVersion()){
+
+            if (name.length() > 64) {
+                name = "to long";
+            }
+
+            Team team = getScoreboard().registerNewTeam("score-" + value);
+            team.setPrefix(name);
+
+            Score score;
+            score = getObjective().getScore(name);
+            score.setScore(value);
+
+            entries.put(value, new ScoreBoardEntry(name, value, team, score));
+            return;
+        }
+
         if (name.length() <= 16){
             Team team = getScoreboard().registerNewTeam("score-" + value);
             team.setPrefix(name);
@@ -224,6 +241,23 @@ public class ScoreBoardBuilder {
 
             getScoreboard().resetScores(entryC.getScore().getEntry());
             entryC.getTeam().unregister();
+
+            if (!Main.getPlugin().checkVersion()){
+
+                if (name.length() > 64) {
+                    name = "to long";
+                }
+
+                Team team = getScoreboard().registerNewTeam("score-" + value);
+                team.setPrefix(name);
+
+                Score score;
+                score = getObjective().getScore(name);
+                score.setScore(value);
+
+                entries.put(value, new ScoreBoardEntry(name, value, team, score));
+                return;
+            }
 
             if (name.length() <= 16){
                 Team team = getScoreboard().registerNewTeam("score-" + value);
