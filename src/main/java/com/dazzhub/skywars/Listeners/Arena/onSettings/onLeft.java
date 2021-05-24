@@ -1,12 +1,10 @@
 package com.dazzhub.skywars.Listeners.Arena.onSettings;
 
 import com.dazzhub.skywars.Arena.Arena;
-import com.dazzhub.skywars.Listeners.Custom.JoinEvent;
 import com.dazzhub.skywars.Listeners.Custom.LeftEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Party.Party;
-import com.dazzhub.skywars.Utils.Enums;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

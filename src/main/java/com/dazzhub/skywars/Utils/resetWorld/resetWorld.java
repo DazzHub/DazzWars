@@ -2,19 +2,14 @@ package com.dazzhub.skywars.Utils.resetWorld;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
-import com.dazzhub.skywars.Runnables.inGame;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
-import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
-import com.dazzhub.skywars.Utils.Runnable.RunnableType;
-import com.dazzhub.skywars.Utils.Runnable.RunnableWorkerType;
+import com.dazzhub.skywars.Utils.Runnable.utils.SnakeRunnableAsync;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.*;
-import java.util.Arrays;
 
 public class resetWorld {
 
@@ -28,38 +23,37 @@ public class resetWorld {
         String nameArena = arena.getNameArena();
         String nameWorld = arena.getNameWorld();
 
-        RunnableFactory factory = Main.getPlugin().getFactory();
+        File source = new File(this.main.getDataFolder(), "Arenas/" + nameArena + "/" + nameWorld);
 
-        factory.registerRunnable(RunnableWorkerType.ASYNC, RunnableType.LATER, 5L,
-            () -> {
-                File source = new File(this.main.getDataFolder(), "Arenas/" + nameArena + "/" + nameWorld);
-
-                if (source.isDirectory()) {
-                    File target = new File(this.main.getServer().getWorldContainer(), source.getName());
-                    if (unLoad) {
-                        unLoadWorld(nameWorld);
-                    }
-
-                    if (this.main.getMvWorldManager() != null){
-                        this.main.getMvWorldManager().deleteWorld(nameWorld);
-                    }
-
-                    copyDir(source, target);
-
-                    Bukkit.getScheduler().runTask(main, () -> {
-                        main.getArenaManager().loadWorld(nameWorld);
-
-                        arena.setGameStatus(Enums.GameStatus.WAITING);
-                        arena.setUsable(false);
-
-                        arena.loadSpawns(arena.getNameWorld());
-
-                        if (arena.getISign() != null) arena.getISign().updateSign();
-                    });
-                }
+        if (source.isDirectory()) {
+            File target = new File(this.main.getServer().getWorldContainer(), source.getName());
+            if (unLoad) {
+                unLoadWorld(nameWorld);
             }
-        );
 
+            if (this.main.getMvWorldManager() != null) {
+                this.main.getMvWorldManager().deleteWorld(nameWorld);
+            }
+
+            new SnakeRunnableAsync() {
+                @Override
+                public void onTick() {
+                    copyDir(source, target);
+                    this.cancel();
+                }
+            }.run();
+
+            Bukkit.getScheduler().runTask(main, () -> {
+                main.getArenaManager().loadWorld(nameWorld);
+
+                arena.setGameStatus(Enums.GameStatus.WAITING);
+                arena.setUsable(false);
+
+                arena.loadSpawns(arena.getNameWorld());
+
+                if (arena.getISign() != null) arena.getISign().updateSign();
+            });
+        }
     }
 
     public void importWorld(Arena arena, boolean importMap) {

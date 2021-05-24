@@ -14,9 +14,6 @@ import com.dazzhub.skywars.Runnables.endGame;
 import com.dazzhub.skywars.Runnables.inGame;
 import com.dazzhub.skywars.Runnables.startingGame;
 import com.dazzhub.skywars.Utils.*;
-import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
-import com.dazzhub.skywars.Utils.Runnable.RunnableType;
-import com.dazzhub.skywars.Utils.Runnable.RunnableWorkerType;
 import com.dazzhub.skywars.Utils.events.border.Border;
 import com.dazzhub.skywars.Utils.events.border.eventBorder;
 import com.dazzhub.skywars.Utils.events.dragon.Dragon;
@@ -685,34 +682,25 @@ public class Arena implements Cloneable {
      * ARENA
      */
     public void startingGame() {
-        RunnableFactory factory = Main.getPlugin().getFactory();
-
-        factory.registerRunnable(RunnableWorkerType.SYNC, RunnableType.TIMER, 20L, new startingGame(factory, this));
+        new startingGame(this).run();
 
         setUsable(true);
         setGameStatus(Enums.GameStatus.STARTING);
     }
 
     public void inGame() {
-        RunnableFactory factory = Main.getPlugin().getFactory();
-
-        factory.registerRunnable(RunnableWorkerType.SYNC, RunnableType.TIMER, 20L, new inGame(factory, this));
+        new inGame(this).run();
         this.setGameStatus(Enums.GameStatus.INGAME);
     }
 
 
     public void endGame() {
-        RunnableFactory factory = Main.getPlugin().getFactory();
-
-        factory.registerRunnable(RunnableWorkerType.SYNC, RunnableType.TIMER, 20L, new endGame(factory, this));
+        new endGame(this).run();
     }
 
     public RefillGame RefillGame(int timer) {
-        RunnableFactory factory = Main.getPlugin().getFactory();
-
-        RefillGame refillGame = new RefillGame(factory, this, timer);
-
-        factory.registerRunnable(RunnableWorkerType.SYNC, RunnableType.TIMER, 20L, refillGame);
+        RefillGame refillGame = new RefillGame(this, timer);
+        refillGame.run();
 
         return refillGame;
     }

@@ -75,8 +75,10 @@ refillHolo:
   line2: '&cEmpty'
 lobbies:
   onScoreboard:
-    - world
+    - 'world_in_which_it_does_not_work'
   onItemJoin:
+    - 'world_in_which_it_does_not_work'
+  onJoinTp:
     - world
   onBreak:
     - world

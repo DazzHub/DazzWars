@@ -11,10 +11,12 @@ import com.dazzhub.skywars.MySQL.getPlayerDB;
 import com.dazzhub.skywars.MySQL.utils.PlayerDB;
 import com.dazzhub.skywars.MySQL.utils.PlayerManager;
 import com.dazzhub.skywars.Party.PartyManager;
+import com.dazzhub.skywars.Runnables.taskGlobal;
 import com.dazzhub.skywars.Utils.*;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.SongPlayer;
 import com.dazzhub.skywars.Utils.NoteBlockAPI.lSong;
-import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
+import com.dazzhub.skywars.Utils.Runnable.TaskAsync;
+import com.dazzhub.skywars.Utils.Runnable.TaskSync;
 import com.dazzhub.skywars.Utils.achievements.IAchievementManager;
 import com.dazzhub.skywars.Utils.cages.ICageManager;
 import com.dazzhub.skywars.Utils.chests.IChestManager;
@@ -100,9 +102,6 @@ public class Main extends JavaPlugin {
     /* SOUL MANAGER */
     private final SoulManager soulManager;
 
-    /* RUNNABLES */
-    private final RunnableFactory runnableFactories;
-
     private String version;
 
     /* NOTE BLOCK API*/
@@ -147,8 +146,6 @@ public class Main extends JavaPlugin {
         this.soulManager = new SoulManager(this);
 
         this.lobbyManager = new lobbyManager(this);
-
-        this.runnableFactories = new RunnableFactory(this);
 
         this.playingSongs = new HashMap<>();
     }
@@ -207,6 +204,10 @@ public class Main extends JavaPlugin {
             Bukkit.getScheduler().runTask(this, () -> Bukkit.getOnlinePlayers().forEach(p -> getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY,false,false,false,false)));
         });
 
+        new TaskAsync().runTaskTimerAsynchronously(this, 0, 20);
+        new TaskSync().runTaskTimer(this, 0, 20);
+        new taskGlobal(this).run();
+
         new Placeholders(this).register();
 
         this.getCommand("skywars").setExecutor(new adminCmd(this));
@@ -264,10 +265,6 @@ public class Main extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public RunnableFactory getFactory() {
-        return runnableFactories;
     }
 
     public ArenaManager getArenaManager() {

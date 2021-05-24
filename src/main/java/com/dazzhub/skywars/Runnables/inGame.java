@@ -2,30 +2,27 @@ package com.dazzhub.skywars.Runnables;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.WinEvent;
-import com.dazzhub.skywars.Utils.Console;
-import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
+import com.dazzhub.skywars.Utils.Runnable.utils.SnakeRunnableSync;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 
 @Getter
-public class inGame implements Runnable {
+public class inGame extends SnakeRunnableSync {
 
-    private RunnableFactory factory;
     private Arena arena;
     private int timer;
 
     private int falldamage;
     private int nextRefill;
 
-    public inGame(RunnableFactory factory, Arena arena) {
+    public inGame(Arena arena) {
         this.arena = arena;
         this.timer = arena.getDurationGame();
         this.falldamage = 5;
-        this.factory = factory;
     }
 
     @Override
-    public void run() {
+    public void onTick() {
 
         if (this.arena.getAliveTeams().size() <= 1) {
             this.cancel();
@@ -61,10 +58,6 @@ public class inGame implements Runnable {
 
         falldamage--;
         timer--;
-    }
-
-    private void cancel(){
-        this.factory.getRunnableWorker(this, false).remove(this);
     }
 
 }

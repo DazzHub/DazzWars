@@ -32,6 +32,7 @@ public class regListeners {
 
         /* CUSTOM */
         this.onLoad(new onArena(main));
+        this.onLoad(new onCombat(main));
         this.onLoad(new onWin(main));
         this.onLoad(new onDeath(main));
         this.onLoad(new onJoin(main));

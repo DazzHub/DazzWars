@@ -30,16 +30,14 @@ public class onJoinServer implements Listener {
         GamePlayer gamePlayer = e.getGamePlayer();
         Player p = gamePlayer.getPlayer();
 
-        if (main.getLobbyManager().getLobby() != null) {
+        if (main.getSettings().getStringList("lobbies.onJoinTp").contains("onJoinTp") && main.getLobbyManager().getLobby() != null) {
             p.teleport(main.getLobbyManager().getLobby());
         }
 
         main.getScoreBoardAPI().setScoreBoard(p, Enums.ScoreboardType.LOBBY, false, false, false, false);
         main.getHologramsManager().loadHologram(p);
 
-        if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
-            main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), false);
-        }
+        main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), false);
     }
 
     @EventHandler

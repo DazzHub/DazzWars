@@ -2,11 +2,13 @@ package com.dazzhub.skywars.Listeners.Arena.onArena;
 
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Listeners.Custom.DeathEvent;
+import com.dazzhub.skywars.Listeners.Custom.PlayerDamageByPlayerEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.locUtils;
+import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,6 +22,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -33,13 +36,17 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.awt.geom.Area;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class onArena implements Listener {
 
-    private Main main;
+    private final Main main;
 
     public onArena(Main main) {
         this.main = main;
@@ -172,10 +179,8 @@ public class onArena implements Listener {
     }
 
     @EventHandler
-    public void PlayerDamage(EntityDamageEvent e) {
-        if (!(e.getEntity() instanceof Player)) {
-            return;
-        }
+    public void PickupItems2(EntityPickupItemEvent e) {
+        if (!(e.getEntity() instanceof Player)) return;
 
         Player p = (Player) e.getEntity();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
@@ -192,50 +197,6 @@ public class onArena implements Listener {
             if (gamePlayer.isSpectating()) {
                 e.setCancelled(true);
             }
-
-            if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                if (gamePlayer.isSpectating() || arena.getGameStatus() == Enums.GameStatus.RESTARTING) {
-                    p.setFallDistance(0);
-                    p.teleport(arena.getSpawnSpectator());
-                    e.setCancelled(true);
-                }
-            }
-
-            if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                if (arena.isDamageFallStarting()) {
-                    e.setCancelled(true);
-                }
-
-                if (arena.isNoFall()) {
-                    e.setCancelled(true);
-                }
-            }
-        }
-    }
-
-    @EventHandler
-    public void onDamage(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
-
-            GamePlayer gamePlayer = main.getPlayerManager().getPlayer(e.getEntity().getUniqueId());
-            GamePlayer gamePlayerDamage = main.getPlayerManager().getPlayer(e.getDamager().getUniqueId());
-
-            if (gamePlayer == null || gamePlayerDamage == null) {
-                return;
-            }
-
-            if (!gamePlayer.isInArena() || !gamePlayerDamage.isInArena()) return;
-
-            if (gamePlayerDamage.isSpectating()) {
-                e.setCancelled(true);
-            }
-
-            if (gamePlayerDamage.getArenaTeam() != null) {
-                if (gamePlayerDamage.getArenaTeam().hasPlayer(gamePlayer)) {
-                    e.setCancelled(true);
-                }
-            }
-
         }
     }
 
@@ -273,90 +234,6 @@ public class onArena implements Listener {
             }
         } else {
             return 0;
-        }
-    }
-
-    @EventHandler
-    public void ArrowShot(EntityShootBowEvent e) {
-        if (e.getEntity() instanceof Player) {
-            Player p = (Player)e.getEntity();
-            GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-
-            if (gamePlayer == null) {
-                return;
-            }
-
-            if (gamePlayer.isInArena()) {
-                Arena arena = gamePlayer.getArena();
-
-                if (arena.getGameStatus() == Enums.GameStatus.INGAME) {
-                    switch (arena.getMode()){
-                        case SOLO:{
-                            gamePlayer.addShotsSolo();
-                            break;
-                        }
-                        case TEAM:{
-                            gamePlayer.addShotsTeam();
-                            break;
-                        }
-                        case RANKED:{
-                            gamePlayer.addShotsRanked();
-                            break;
-                        }
-                    }
-                    main.getAchievementManager().checkPlayer(p, Enums.AchievementType.PROJECTILES_SHOT, gamePlayer.totalShots());
-                }
-            }
-        }
-    }
-
-    @EventHandler
-    public void ArrowHits(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof Player && e.getDamager() instanceof Arrow) {
-            final Arrow a = (Arrow) e.getDamager();
-            if (a.getShooter() instanceof Player) {
-                Player p = (Player) a.getShooter();
-
-                GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-
-                if (gamePlayer == null) {
-                    return;
-                }
-
-                if (gamePlayer.isInArena()) {
-                    Arena arena = gamePlayer.getArena();
-
-                    if (arena.getGameStatus() == Enums.GameStatus.INGAME) {
-                        switch (arena.getMode()) {
-                            case SOLO: {
-                                gamePlayer.addHitsSolo();
-                                break;
-                            }
-                            case TEAM: {
-                                gamePlayer.addHitsTeam();
-                                break;
-                            }
-                            case RANKED: {
-                                gamePlayer.addHitsRanked();
-                                break;
-                            }
-                        }
-
-                        main.getAchievementManager().checkPlayer(p, Enums.AchievementType.PROJECTILES_HIT, gamePlayer.totalHits());
-                    }
-
-
-                    if (e.getDamager() instanceof Projectile || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
-                        if (arena.isNoProjectile()) {
-                            if (gamePlayer.getLangMessage().getBoolean("Messages.notifyVotes.Scenario.Projectile.enabled")) {
-                                gamePlayer.sendMessage(c(gamePlayer.getLangMessage().getString("Messages.notifyVotes.Scenario.Projectile.isProjectile", "Error notifyVotes.Scenario.Projectile.isProjectile")));
-                            }
-                            e.setCancelled(true);
-                        }
-
-                    }
-                }
-            }
         }
     }
 
@@ -400,7 +277,6 @@ public class onArena implements Listener {
 
     @EventHandler
     public void onBlockBroken2(BlockBreakEvent e) {
-        Block block = e.getBlock();
         Player p = e.getPlayer();
         GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
 
@@ -434,28 +310,6 @@ public class onArena implements Listener {
                 main.getAchievementManager().checkPlayer(p, Enums.AchievementType.ITEMS_ENCHANTED, gamePlayer.getItemsEnchanted());
             }
         }
-    }
-
-    @EventHandler
-    public void PlayerDied(PlayerDeathEvent event) {
-        GamePlayer gamePlayer = main.getPlayerManager().getPlayer(event.getEntity().getUniqueId());
-
-        GamePlayer target = null;
-
-        if (gamePlayer == null) return;
-
-        if (!gamePlayer.isInArena()){
-            return;
-        }
-
-        if (event.getEntity().getKiller() != null) {
-            target = main.getPlayerManager().getPlayer(event.getEntity().getKiller().getUniqueId());
-        }
-
-        DeathEvent deathEvent = new DeathEvent(gamePlayer, target, gamePlayer.getArena(), event);
-        Bukkit.getPluginManager().callEvent(deathEvent);
-
-        event.setDeathMessage(null);
     }
 
     @EventHandler

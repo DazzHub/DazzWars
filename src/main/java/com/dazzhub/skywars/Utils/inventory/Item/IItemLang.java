@@ -120,6 +120,10 @@ public class IItemLang {
     }
 
     public void giveItems(Player p, String Type, boolean clearinv) {
+        if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
+            return;
+        }
+
         if (clearinv) {
             ItemStack[] emptyinv = new ItemStack[p.getInventory().getContents().length];
             p.getInventory().setContents(emptyinv);

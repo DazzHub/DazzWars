@@ -168,6 +168,18 @@ public class onDeath implements Listener {
         PlayerDeathEvent event = e.getEvent();
 
         dead.getArena().getPlayers().forEach(gamePlayer -> {
+
+            if (event == null){
+                gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.DeathMessages.Player", "Error DeathMessages.Player")
+                        .replace("%player%", dead.getPlayer().getName())
+                        .replace("%killer%", killerg.getPlayer().getName())
+                        .replaceAll("%blocks%", String.valueOf(checkDistance(dead.getPlayer(), killerg.getPlayer())))
+                        .replaceAll("%p_kill_count%", String.valueOf(dead.getKillsStreak()))
+                        .replaceAll("%k_kill_count%", String.valueOf(killerg.getKillsStreak()))
+                );
+                return;
+            }
+
             if (killerg != null) {
                 switch (event.getEntity().getLastDamageCause().getCause()) {
                     case ENTITY_ATTACK: {

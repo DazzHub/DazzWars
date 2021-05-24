@@ -1,20 +1,17 @@
 package com.dazzhub.skywars.Listeners.Arena.onSettings;
 
 import com.dazzhub.skywars.Arena.Arena;
-import com.dazzhub.skywars.Listeners.Custom.typeJoin.addSpectatorEvent;
 import com.dazzhub.skywars.Listeners.Custom.typeJoin.removeSpectatorEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
 import com.dazzhub.skywars.Utils.Enums;
-import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class removeSpectator implements Listener {
 
-    private Main main;
+    private final Main main;
 
     public removeSpectator(Main main) {
         this.main = main;
@@ -39,9 +36,7 @@ public class removeSpectator implements Listener {
 
                 main.getScoreBoardAPI().setScoreBoard(p.getPlayer(), Enums.ScoreboardType.LOBBY,false,false,false, false);
 
-                //if (main.getSettings().getStringList("lobbies.onItemJoin").contains(p.getWorld().getName())) {
                 main.getItemManager().getItemLangs().get(gamePlayer.getLang()).giveItems(p, main.getSettings().getString("Inventory.Lobby", "lobby"), false);
-                //}
 
                 if (gamePlayer.getHolograms() != null) gamePlayer.getHolograms().reloadHologram();
             } else {

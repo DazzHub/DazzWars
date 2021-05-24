@@ -4,9 +4,8 @@ import com.cryptomorin.xseries.messages.Titles;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
-import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
+import com.dazzhub.skywars.Utils.Runnable.utils.SnakeRunnableSync;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
@@ -15,26 +14,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class startingGame implements Runnable {
+public class startingGame extends SnakeRunnableSync {
 
     private Main main;
 
     private Arena arena;
-    private RunnableFactory factory;
     private int timer;
     private boolean checkForce;
 
-    public startingGame(RunnableFactory factory, Arena arena) {
+    public startingGame(Arena arena) {
         this.main = Main.getPlugin();
 
-        this.factory = factory;
         this.arena = arena;
         this.timer = arena.getStartingGame();
         this.checkForce = true;
     }
 
     @Override
-    public void run() {
+    public void onTick() {
 
         if (this.checkForce && this.arena.isForceStart()){
             this.timer = 5;
@@ -161,10 +158,6 @@ public class startingGame implements Runnable {
         ).collect(Collectors.toList());
 
         message.forEach(gamePlayer::sendMessage);
-    }
-
-    private void cancel(){
-        this.factory.getRunnableWorker(this, false).remove(this);
     }
 
     private String c(String c) {

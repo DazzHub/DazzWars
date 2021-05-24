@@ -374,6 +374,8 @@ public class Lines {
             addDefaultSettings("refillHolo.line1", "&a%time%");
             addDefaultSettings("refillHolo.line2", "&cEmpty");
 
+            addDefaultSettings("lobbies.onJoinTp", Collections.singletonList("world"));
+/*
             addDefaultSettings("lobbies.onScoreboard", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onItemJoin", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onBreak", Collections.singletonList("world"));
@@ -390,6 +392,7 @@ public class Lines {
             addDefaultSettings("lobbies.onResetGameMode", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onMonsters", Collections.singletonList("world"));
             addDefaultSettings("lobbies.onAnimals", Collections.singletonList("world"));
+ */
 
         });
     }

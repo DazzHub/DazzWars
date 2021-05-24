@@ -4,26 +4,24 @@ import com.cryptomorin.xseries.messages.Titles;
 import com.dazzhub.skywars.Arena.Arena;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
+import com.dazzhub.skywars.Utils.Runnable.utils.SnakeRunnableSync;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 @Getter
-public class RefillGame implements Runnable {
+public class RefillGame extends SnakeRunnableSync {
 
-    private final RunnableFactory factory;
     private final Arena arena;
     private int timer;
 
-    public RefillGame(RunnableFactory factory, Arena arena, int timer){
+    public RefillGame(Arena arena, int timer){
         this.arena = arena;
         this.timer = timer;
-        this.factory = factory;
     }
 
     @Override
-    public void run() {
+    public void onTick() {
 
         if (timer <= 1){
             this.cancel();
@@ -45,10 +43,6 @@ public class RefillGame implements Runnable {
         }
 
         timer--;
-    }
-
-    public void cancel(){
-        this.factory.getRunnableWorker(this, false).remove(this);
     }
 
     private String c(String c) {

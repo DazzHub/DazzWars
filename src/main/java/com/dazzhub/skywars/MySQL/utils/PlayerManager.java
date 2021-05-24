@@ -6,9 +6,11 @@ import java.util.UUID;
 public class PlayerManager {
 
     private HashMap<UUID, GamePlayer> gamePlayers;
+    private TaggedCooldown taggedCooldown;
 
     public PlayerManager() {
         this.gamePlayers = new HashMap<>();
+        this.taggedCooldown = new TaggedCooldown();
     }
 
     public void addPlayer(UUID uuid, GamePlayer gamePlayer) {
@@ -31,6 +33,10 @@ public class PlayerManager {
         } else {
             return null;
         }
+    }
+
+    public TaggedCooldown getTaggedCooldown() {
+        return taggedCooldown;
     }
 
     public HashMap<UUID, GamePlayer> getGamePlayers() {

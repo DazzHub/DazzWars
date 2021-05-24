@@ -3,12 +3,9 @@ package com.dazzhub.skywars.Utils.signs.top;
 import com.cryptomorin.xseries.XSound;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Runnables.inGame;
 import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
-import com.dazzhub.skywars.Utils.Runnable.RunnableFactory;
-import com.dazzhub.skywars.Utils.Runnable.RunnableType;
-import com.dazzhub.skywars.Utils.Runnable.RunnableWorkerType;
+import com.dazzhub.skywars.Utils.Runnable.utils.SnakeRunnableAsync;
 import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardBuilder;
 import com.dazzhub.skywars.Utils.signs.ISignLocation;
 import org.bukkit.Bukkit;
@@ -19,7 +16,6 @@ import org.bukkit.block.Sign;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -151,55 +147,13 @@ public class ITopManager {
         }
     }
 
-    private void updateTop(){
-        RunnableFactory factory = Main.getPlugin().getFactory();
+    private void updateTop() {
 
-        factory.registerRunnable(RunnableWorkerType.ASYNC, RunnableType.TIMER, 20L,
-
-        new Runnable() {
+        new SnakeRunnableAsync() {
             int timer = main.getSettings().getInt("TopUpdate");
 
             @Override
-            public void run() {
-
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    GamePlayer gamePlayer = main.getPlayerManager().getPlayer(p.getUniqueId());
-
-                    if (gamePlayer == null) continue;
-
-                    if (gamePlayer.getMenu() != null) {
-                        gamePlayer.getMenu().addItems(gamePlayer.getPlayer());
-                    }
-
-                    ScoreBoardBuilder scoreboard = gamePlayer.getScoreBoardBuilder();
-
-                    if (scoreboard != null) {
-
-                        if (scoreboard.getScoreboardType() == Enums.ScoreboardType.LOBBY) {
-                            if (!main.getSettings().getStringList("lobbies.onScoreboard").contains(p.getWorld().getName())) {
-                                return;
-                            }
-                        }
-
-                        Configuration config = main.getPlayerManager().getPlayer(p.getUniqueId()).getScoreboardMessage();
-                        scoreboard.setName(main.getScoreBoardAPI().charsLobby(p, config.getString(scoreboard.getScoreboardType().toString() + ".title")));
-
-                        int line = config.getStringList(scoreboard.getScoreboardType().toString() + ".lines").size();
-
-                        for (String s : config.getStringList(scoreboard.getScoreboardType().toString() + ".lines")) {
-                            scoreboard.updateScore(main.getScoreBoardAPI().charsLobby(p, s), line);
-                            line--;
-                        }
-
-                        if (gamePlayer.isInArena()) {
-                            if (scoreboard.isHealth()) scoreboard.updatelife(gamePlayer.getArena());
-                            if (scoreboard.isSpectator()) scoreboard.updateSpectator(gamePlayer.getArena());
-                            if (scoreboard.isGamePlayers()) scoreboard.updateEnemy(gamePlayer, gamePlayer.getArena());
-                            if (scoreboard.isTeams()) scoreboard.updateTeams(gamePlayer);
-                        }
-                    }
-                }
-
+            public void onTick() {
                 if (timer <= 1) {
                     for (ITop iTop : tops.values()) {
                         iTop.updateSign();
@@ -212,7 +166,7 @@ public class ITopManager {
 
                 timer--;
             }
-        });
+        }.run();
     }
 
     private String c(String c) {
