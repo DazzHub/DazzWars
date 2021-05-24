@@ -31,6 +31,7 @@ public class Lines {
                 addDefaultLang("Messages.LeaveSpectator", "&8» &fYou left spectator mode", lang);
                 addDefaultLang("Messages.Arena-Not-Available", "&c&l✘ &fYou can''t join the arena now", lang);
                 addDefaultLang("Messages.NoUseChat", "&e&l⚠&e You can''t chat until the game starts", lang);
+                addDefaultLang("Messages.forceStartMinPlayer", "&e&l⚠&e Not enough players to force the arena to start", lang);
                 addDefaultLang("Messages.EndTime", "&e&l⚠&e Game time over", lang);
                 addDefaultLang("Messages.item-deny", "&e&l⚠&e You do not have permission", lang);
                 addDefaultLang("Messages.menu-deny", "&e&l⚠&e You do not have permission", lang);

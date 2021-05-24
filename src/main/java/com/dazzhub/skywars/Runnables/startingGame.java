@@ -36,7 +36,7 @@ public class startingGame implements Runnable {
     @Override
     public void run() {
 
-        if (this.checkForce && this.arena.isForceStart() && this.arena.checkStart()){
+        if (this.checkForce && this.arena.isForceStart()){
             this.timer = 5;
             this.checkForce = false;
         }

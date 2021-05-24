@@ -8,6 +8,7 @@ Messages:
   LeaveSpectator: '&8» &fYou left spectator mode'
   Arena-Not-Available: '&c&l✘ &fYou can''t join the arena now'
   NoUseChat: '&e&l⚠&e You can''t chat until the game starts'
+  forceStartMinPlayer: '&e&l⚠&e Not enough players to force the arena to start'
   EndTime: '&e&l⚠&e Game time over'
   item-deny: '&e&l⚠&e You do not have permission'
   menu-deny: '&e&l⚠&e You do not have permission'

@@ -42,8 +42,20 @@ public class forceStart implements subCommand {
 
         Arena arena = gamePlayer.getArena();
 
-        if (arena.getGameStatus().equals(Enums.GameStatus.STARTING) || arena.getGameStatus().equals(Enums.GameStatus.WAITING) && !arena.isForceStart() && arena.checkStart()){
-            arena.setForceStart(true);
+        if (arena.getGameStatus().equals(Enums.GameStatus.STARTING) || arena.getGameStatus().equals(Enums.GameStatus.WAITING) && !arena.isForceStart()){
+            if (arena.getMode().equals(Enums.Mode.SOLO) || arena.getMode().equals(Enums.Mode.RANKED)){
+                if (arena.getPlayers().size() >= 2){
+                    arena.setForceStart(true);
+                } else {
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.forceStartMinPlayer"));
+                }
+            } else if (arena.getMode().equals(Enums.Mode.TEAM)){
+                if (arena.getPlayers().size() >= 3){
+                    arena.setForceStart(true);
+                } else {
+                    gamePlayer.sendMessage(gamePlayer.getLangMessage().getString("Messages.forceStartMinPlayer"));
+                }
+            }
         }
     }
 
