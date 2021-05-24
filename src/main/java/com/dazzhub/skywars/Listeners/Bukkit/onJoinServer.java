@@ -3,23 +3,19 @@ package com.dazzhub.skywars.Listeners.Bukkit;
 import com.dazzhub.skywars.Listeners.Custom.ConnectionsEvent;
 import com.dazzhub.skywars.Main;
 import com.dazzhub.skywars.MySQL.utils.GamePlayer;
-import com.dazzhub.skywars.Utils.Console;
 import com.dazzhub.skywars.Utils.Enums;
 import com.dazzhub.skywars.Utils.Tools;
-import com.dazzhub.skywars.Utils.scoreboard.ScoreBoardAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 
 public class onJoinServer implements Listener {
 
-    private Main main;
+    private final Main main;
 
     public onJoinServer(Main main) {
         this.main = main;
@@ -30,7 +26,7 @@ public class onJoinServer implements Listener {
         GamePlayer gamePlayer = e.getGamePlayer();
         Player p = gamePlayer.getPlayer();
 
-        if (main.getSettings().getStringList("lobbies.onJoinTp").contains("onJoinTp") && main.getLobbyManager().getLobby() != null) {
+        if (main.getSettings().getStringList("lobbies.onJoinTp").contains(p.getWorld().getName()) && main.getLobbyManager().getLobby() != null) {
             p.teleport(main.getLobbyManager().getLobby());
         }
 
@@ -44,13 +40,11 @@ public class onJoinServer implements Listener {
     public void Join(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
-            main.getPlayerDB().loadPlayer(p.getUniqueId());
-        });
+        Bukkit.getScheduler().runTaskAsynchronously(main, () -> main.getPlayerDB().loadPlayer(p.getUniqueId()));
 
         if (p.hasPermission("skywars.admin") && main.getSettings().getBoolean("checkVersion"))
             main.checkVersionPlayer(p);
-        if (p.getName().equals("DazzHub")) p.sendMessage(c("&d&l➠ &fDazzWars use"));
+        if (p.getName().equals("DazzHub")) p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&l➠ &fDazzWars use"));
     }
 
     @EventHandler
@@ -69,8 +63,5 @@ public class onJoinServer implements Listener {
         });
     }
 
-    private String c(String c) {
-        return ChatColor.translateAlternateColorCodes('&', c);
-    }
 }
 
